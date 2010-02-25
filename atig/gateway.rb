@@ -3,7 +3,7 @@
 
 module Atig
   class Gateway
-    def initialize(api, db)
+    def initialize(logger, api, db)
       db.listen(:status) do|s|
         puts s
       end

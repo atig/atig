@@ -3,6 +3,9 @@
 
 module Atig
   class Database
+    def initialize(logger)
+    end
+
     def listen(kind, &f)
     end
   end

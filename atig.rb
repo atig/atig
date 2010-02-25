@@ -1,13 +1,16 @@
+require 'logger'
 require 'atig/scheduler'
 require 'atig/timeline'
 require 'atig/database'
 require 'atig/gateway'
 
+logger = Logger.new(STDERR)
+
 include Atig
-s = Scheduler.new
-db = Database.new
+s = Scheduler.new logger
+db = Database.new logger
 
 # recv
-Timeline.new(s, db)
-Gateway.new(s, db)
+Timeline.new(logger, s, db)
+Gateway.new(logger, s, db)
 

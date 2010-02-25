@@ -3,6 +3,9 @@
 
 module Atig
   class Scheduler
+    def initialize(logger)
+    end
+
     def repeat(interval,&f)
     end
   end

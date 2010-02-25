@@ -3,10 +3,12 @@
 
 module Atig
   class Timeline
-    def initialize(scheduler, db)
+    def initialize(logger, scheduler, db)
       @scheduler = scheduler
 
       @scheduler.repeat(30) do|t|
+        logger.debug "timeline agent is called"
+
         t.get('/status/home_timeline').each do|status|
           db.add :status, status
         end
