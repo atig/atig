@@ -8,7 +8,7 @@ module Atig
       include Util
       def initialize(logger,opts)
         @log = logger
-        @opts = opts[:opts]
+        @opts = opts
         @http = Atig::Http.new logger
       end
 

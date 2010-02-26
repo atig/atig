@@ -45,7 +45,7 @@ module Atig
 
       @ifilters = @@ifilters.map do|ifilter|
         if ifilter.respond_to? :new
-          ifilter.new(@log, :db => @db, :opts => @opts)
+          ifilter.new(@log, @opts)
         else
           ifilter
         end
