@@ -1,16 +1,19 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'atig/util'
+
 module Atig
   module Agent
     class Timeline
+      include Util
+
       def initialize(logger, api, db)
-        logger.info "initialize #{self.class}"
+        @log = logger
+        log :info, "initialize"
+
         @api = api
-
         @api.repeat(5) do|t|
-          logger.debug "start #{self.class}"
-
           t.get('/status/home_timeline').each do|status|
             db.add :status, status
           end

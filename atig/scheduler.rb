@@ -1,46 +1,30 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'atig/util'
+
 module Atig
   class Scheduler
+    include Util
+
     def initialize(log, api)
       @log = log
       @api = api
-      @id  = 0
+      @agents = []
     end
 
     def repeat(interval,&f)
-      @id += 1
-
-      log :info, "repeat #{@id}"
-      Thread.new do
-        begin
-          log :debug, "#{@id} handler is invoked"
-          safe { f.call @api }
+      t = Thread.new do
+        loop do
           sleep interval
-        rescue => e
-          @log.error e.inspect
+          log :debug, "agent #{t.inspect} is invoked"
+          safe { f.call @api }
         end
       end
-      @id
-    end
 
-    private
-    def log(:type, s)
-      @log.send "[#{self.class}] s"
-    end
-
-    def safe(&f)
-      begin
-        f.call
-      rescue Exception => e
-        s = e.inspect + "\n"
-        e.backtrace.each do |l|
-          s += "\t#{l}\n"
-        end
-
-        @log.error s
-      end
+      log :info, "repeat agent #{t.inspect} is registered"
+      @agents << t
+      t
     end
   end
 end

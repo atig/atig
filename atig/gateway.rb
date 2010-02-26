@@ -1,10 +1,15 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'atig/util'
+
 module Atig
   class Gateway
+    include Util
+
     def initialize(logger, api, db)
-      logger.info "initialize #{self.class}"
+      @log = logger
+      log :info, "initialize"
 
       db.listen(:status) do|s|
         puts s
