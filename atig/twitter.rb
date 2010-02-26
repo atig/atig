@@ -41,6 +41,19 @@ module Atig
       r
     end
 
+    def self.http_methods(*methods)
+      methods.each do |m|
+        self.module_eval <<END
+          def #{m}(path, query = {}, opts = {})
+            opts.update( :method => :#{m})
+            api path, query, opts
+          end
+END
+      end
+    end
+    http_methods :get, :post, :put, :delete
+
+
     def api(path, query = {}, opts = {})
       path.sub!(%r{\A/+}, "")
 
