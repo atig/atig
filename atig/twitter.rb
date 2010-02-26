@@ -2,14 +2,7 @@
 # -*- coding: utf-8 -*-
 
 require "net/https"
-#require "uri"
-#require "time"
-#require "logger"
-#require "yaml"
-#require "pathname"
-#require "ostruct"
 require "json"
-#require 'jcode'
 require 'atig/twitter_struct'
 
 module Atig
