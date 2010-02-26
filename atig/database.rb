@@ -17,7 +17,7 @@ module Atig
 
       def add(src, status)
         unless @db.include? status.id then
-          @db.push status.id, status
+          @db << status
           call_listener src, status
         end
       end

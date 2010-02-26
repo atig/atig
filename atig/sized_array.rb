@@ -4,17 +4,17 @@
 class SizedArray
   def initialize(size)
     @size = size
+    @index = 0
     @xs = []
   end
 
   def include?(id)
-    @xs.find{|item| item[:id] == id }
+    @xs.find{|item| item.id == id }
   end
 
-  def push(id, status)
-    @xs << {:id => id, :entry => :status}
-    if @xs.size > @size then
-      @xs = @xs[-@size..-1]
-    end
+  def push(status)
+    @xs[@index] = status
+    @index = (@index + 1) % @size
   end
+  alias_method :<<, :push
 end
