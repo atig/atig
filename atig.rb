@@ -2,6 +2,7 @@ require 'rubygems'
 require 'pp'
 require 'logger'
 
+$KCODE = "u" unless defined? ::Encoding # json use this
 Dir.chdir(File.dirname(__FILE__))
 case
 when File.directory?("lib")
@@ -24,6 +25,12 @@ end
 require 'atig/database'
 require 'atig/gateway'
 
+Atig::Gateway.agents   = [ Atig::Agent::Timeline ]
+Atig::Gateway.ifilters = [ Atig::IFilter::DecodeUtf7,
+                           Atig::IFilter::Sanitize,
+                           Atig::IFilter::ExpandUrl,
+                           Atig::IFilter::Strip.new(%w{ *tw* }),
+                           Atig::IFilter::Retweet ]
 
 if __FILE__ == $0
   require "optparse"
@@ -76,12 +83,5 @@ EOB
 
   opts[:logger] = Logger.new(opts[:log], "daily")
   opts[:logger].level = opts[:debug] ? Logger::DEBUG : Logger::INFO
-
-  Atig::Gateway.agents = [ Atig::Agent::Timeline ]
-  Atig::Gateway.ifilters = [ Atig::IFilter::DecodeUtf7,
-                             Atig::IFilter::Sanitize,
-                             Atig::IFilter::ExpandUrl,
-                             Atig::IFilter::Strip.new(%w{ *tw* }),
-                             Atig::IFilter::Retweet ]
   Net::IRC::Server.new(opts[:host], opts[:port], Atig::Gateway, opts).start
 end
