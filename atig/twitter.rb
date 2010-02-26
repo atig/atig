@@ -4,6 +4,7 @@
 require "net/https"
 require "json"
 require 'atig/twitter_struct'
+require 'atig/http'
 
 module Atig
   # from tig.rb
@@ -15,27 +16,14 @@ module Atig
     CONSUMER_KEY='C8UoekGb32mVZ8ERtE66A'
     CONSUMER_SECRET='Pe08j2pooXJm4SgT4uU590fVcyvgRVaN13m9u4wqGQ'
 
-    def initialize(logger, username, pass, httpproxy)
+    def initialize(logger, username, pass)
       @log = logger
       @username = username
       @pass = pass
-
-      if httpproxy then
-        httpproxy.sub!(/\A(?:([^:@]+)(?::([^@]+))?@)?([^:]+)(?::(\d+))?\z/) do
-          @httpproxy = OpenStruct.new({
-                                        :user => $1,
-                                        :password => $2,
-                                        :address => $3,
-                                        :port => $4.to_i,
-                                     })
-          $&.sub(/[^:@]+(?=@)/, "********")
-        end
-      end
+      @http = Atig::Http.new @log
 
       @ip_limit   = 52
       @auth_limit = 150
-      @cert_store = OpenSSL::X509::Store.new
-      @cert_store.set_default_paths
     end
 
     def page(path, name, authenticate = false, &block)
@@ -79,14 +67,14 @@ END
 
       header      = {}
       credentials = authenticate ? [@username, @pass] : nil
-      req         = http_req method, uri, header, credentials
+      req         = @http.req method, uri, header, credentials
 
       @log.debug [req.method, uri.to_s]
       begin
         if @oauth
           ret = oauth(req)
         else
-          ret = http(uri, 30, 30).request req
+          ret = @http.http(uri, 30, 30).request req
         end
       rescue OpenSSL::SSL::SSLError => e
         @log.error e.inspect
