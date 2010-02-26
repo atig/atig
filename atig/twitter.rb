@@ -206,7 +206,7 @@ END
     end
 
     def api_base(secure = true)
-      URI("http#{"" if secure}://twitter.com/")
+      URI("http#{"s" if secure}://twitter.com/")
     end
 
     def api_source
