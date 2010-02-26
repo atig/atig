@@ -13,9 +13,13 @@ module Atig
         log :info, "initialize"
 
         @api = api
-        @api.repeat(5) do|t|
-          t.get('/status/home_timeline').each do|status|
-            db.add :status, status
+        @api.repeat(30) do|t|
+          statuses = t.get('/statuses/home_timeline')
+
+          db.transaction do|t|
+            statuses.reverse_each do|status|
+              t.add :status,status
+            end
           end
         end
       end

@@ -12,7 +12,7 @@ module Atig
       log :info, "initialize"
 
       db.listen(:status) do|s|
-        puts s
+        log :info, s
       end
 
       db.listen(:member) do|s|
