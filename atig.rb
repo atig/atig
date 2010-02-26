@@ -1,16 +1,24 @@
+require 'rubygems'
+require 'pp'
+
 require 'logger'
+require 'atig/twitter'
 require 'atig/scheduler'
-require 'atig/timeline'
+require 'atig/agent/timeline'
 require 'atig/database'
 require 'atig/gateway'
 
 logger = Logger.new(STDERR)
+logger.level = Logger::DEBUG
 
 include Atig
-s = Scheduler.new logger
+
+# FIXME: use OAuth
+twitter = Twitter.new(logger,'nzp','madpro')
+
+s = Scheduler.new logger, twitter
 db = Database.new logger
 
-# recv
-Timeline.new(logger, s, db)
-Gateway.new(logger, s, db)
+Agent::Timeline.new(logger, s, db)
 
+Gateway.new(logger, s, db)
