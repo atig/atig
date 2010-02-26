@@ -1,24 +1,76 @@
 require 'rubygems'
 require 'pp'
-
 require 'logger'
+
+Dir.chdir(File.dirname(__FILE__))
+case
+when File.directory?("lib")
+  $LOAD_PATH << "lib"
+when File.directory?(File.expand_path("lib", ".."))
+  $LOAD_PATH << File.expand_path("lib", "..")
+end
+
 require 'atig/twitter'
 require 'atig/scheduler'
 require 'atig/agent/timeline'
 require 'atig/database'
 require 'atig/gateway'
 
-logger = Logger.new(STDERR)
-logger.level = Logger::DEBUG
 
-include Atig
+if __FILE__ == $0
+  require "optparse"
 
-# FIXME: use OAuth
-twitter = Twitter.new(logger,'nzp','madpro')
+  opts = {
+    :port  => 16668,
+    :host  => "localhost",
+    :log   => nil,
+    :debug => false,
+    :foreground => false,
+  }
 
-s = Scheduler.new logger, twitter
-db = Database.new logger
+  OptionParser.new do |parser|
+    parser.instance_eval do
+      self.banner = <<-EOB.gsub(/^\t+/, "")
+				Usage: #{$0} [opts]
 
-Agent::Timeline.new(logger, s, db)
+			EOB
 
-Gateway.new(logger, s, db)
+      separator ""
+
+      separator "Options:"
+      on("-p", "--port [PORT=#{opts[:port]}]", "port number to listen") do |port|
+        opts[:port] = port
+      end
+
+      on("-h", "--host [HOST=#{opts[:host]}]", "host name or IP address to listen") do |host|
+        opts[:host] = host
+      end
+
+      on("-l", "--log LOG", "log file") do |log|
+        opts[:log] = log
+      end
+
+      on("--debug", "Enable debug mode") do |debug|
+        opts[:log]   = $stderr
+        opts[:debug] = true
+      end
+
+      on("-f", "--foreground", "run foreground") do |foreground|
+        opts[:log]        = $stderr
+        opts[:foreground] = true
+      end
+
+      on("-n", "--name [user name or email address]") do |name|
+        opts[:name] = name
+      end
+
+      parse!(ARGV)
+    end
+  end
+
+  opts[:logger] = Logger.new(opts[:log], "daily")
+  opts[:logger].level = opts[:debug] ? Logger::DEBUG : Logger::INFO
+
+  Net::IRC::Server.new(opts[:host], opts[:port], Atig::Gateway, opts).start
+end
+
