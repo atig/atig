@@ -16,8 +16,10 @@ module Atig
       end
 
       def add(src, status)
-        @db.push status.id, status
-        call_listener src,status
+        unless @db.include? status.id then
+          @db.push status.id, status
+          call_listener src, status
+        end
       end
 
       def listen(&f)

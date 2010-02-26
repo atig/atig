@@ -7,10 +7,12 @@ class SizedArray
     @xs = []
   end
 
-  def push(id, x)
-    if @xs.find{|item| item[:id] == id } then
-      @xs << { :id => id, :entry => x }
-    end
+  def include?(id)
+    @xs.find{|item| item[:id] == id }
+  end
+
+  def push(id, status)
+    @xs << {:id => id, :entry => :status}
     if @xs.size > @size then
       @xs = @xs[-@size..-1]
     end
