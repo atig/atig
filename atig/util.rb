@@ -20,5 +20,13 @@ module Atig
         log :error,s
       end
     end
+
+    def daemon(&f)
+      Thread.new do
+        safe do
+          loop(&f)
+        end
+      end
+    end
   end
 end

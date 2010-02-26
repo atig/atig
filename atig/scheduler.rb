@@ -14,12 +14,10 @@ module Atig
     end
 
     def repeat(interval,&f)
-      t = Thread.new do
-        loop do
-          sleep interval
-          log :debug, "agent #{t.inspect} is invoked"
-          safe { f.call @api }
-        end
+      t = daemon do
+        log :debug, "agent #{t.inspect} is invoked"
+        f.call @api
+        sleep interval
       end
 
       log :info, "repeat agent #{t.inspect} is registered"
