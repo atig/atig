@@ -22,6 +22,10 @@ module Atig
       @@ifilters = ifilters
     end
 
+    def self.ofilters=(ofilters)
+      @@ofilters = ofilters
+    end
+
     include Util
 
     MAX_MODE_PARAMS = 3
@@ -52,6 +56,14 @@ module Atig
         end
       end
 
+      @ofilters = @@ofilters.map do|ofilter|
+        if ofilter.respond_to? :new
+          ofilter.new(@log, @opts)
+        else
+          ofilter
+        end
+      end
+
       check_login
 
       @@agents.each do|agent|
@@ -70,8 +82,7 @@ module Atig
         return
       end
 
-        q = { :status => mesg, :source => "tigrb" }
-        ret = @twitter.post("statuses/update", q)
+      q = @ofilters.inject(:status => mesg, :source => "tigrb") {|x, f| f.call x }
 
       @api.delay(0, :retry=>3) do|t|
         ret = t.post("statuses/update", q)

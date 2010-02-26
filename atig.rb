@@ -22,6 +22,10 @@ Dir['atig/ifilter/*.rb'].each do|file|
   load file
 end
 
+Dir['atig/ofilter/*.rb'].each do|file|
+  load file
+end
+
 require 'atig/database'
 require 'atig/gateway'
 
@@ -32,6 +36,10 @@ Atig::Gateway.ifilters = [ Atig::IFilter::DecodeUtf7,
                            Atig::IFilter::Strip.new(%w{ *tw* }),
                            Atig::IFilter::Retweet,
                            Atig::IFilter::Tid
+                         ]
+Atig::Gateway.ofilters = [
+                          Atig::OFilter::EscapeUrl,
+                          Atig::OFilter::ShortUrl,
                          ]
 
 if __FILE__ == $0
