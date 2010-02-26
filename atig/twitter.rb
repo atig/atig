@@ -15,10 +15,22 @@ module Atig
     CONSUMER_KEY='C8UoekGb32mVZ8ERtE66A'
     CONSUMER_SECRET='Pe08j2pooXJm4SgT4uU590fVcyvgRVaN13m9u4wqGQ'
 
-    def initialize(logger, username, pass)
+    def initialize(logger, username, pass, httpproxy)
       @log = logger
       @username = username
       @pass = pass
+
+      if httpproxy then
+        httpproxy.sub!(/\A(?:([^:@]+)(?::([^@]+))?@)?([^:]+)(?::(\d+))?\z/) do
+          @httpproxy = OpenStruct.new({
+                                        :user => $1,
+                                        :password => $2,
+                                        :address => $3,
+                                        :port => $4.to_i,
+                                     })
+          $&.sub(/[^:@]+(?=@)/, "********")
+        end
+      end
 
       @ip_limit   = 52
       @auth_limit = 150
@@ -78,7 +90,6 @@ END
         end
       rescue OpenSSL::SSL::SSLError => e
         @log.error e.inspect
-        log "Fatal SSL error was happened #{e.inspect}"
         raise e.inspect
       end
 
@@ -118,9 +129,9 @@ END
         []
       when Net::HTTPBadRequest # 400: exceeded the rate limitation
         if ret.key?("X-RateLimit-Reset")
+          @log.info "waiting for rate limit reset"
           s = ret["X-RateLimit-Reset"].to_i - Time.now.to_i
           if s > 0
-            log "RateLimit: #{(s / 60.0).ceil} min remaining to get timeline"
             sleep (s > 60 * 10) ? 60 * 10 : s # 10 分に一回はとってくるように
           end
         end
