@@ -12,7 +12,15 @@ end
 
 require 'atig/twitter'
 require 'atig/scheduler'
-require 'atig/agent/timeline'
+
+Dir['atig/agent/*.rb'].each do|file|
+  load file
+end
+
+Dir['atig/ifilter/*.rb'].each do|file|
+  load file
+end
+
 require 'atig/database'
 require 'atig/gateway'
 
@@ -30,11 +38,9 @@ if __FILE__ == $0
 
   OptionParser.new do |parser|
     parser.instance_eval do
-      self.banner = <<-EOB.gsub(/^\t+/, "")
-				Usage: #{$0} [opts]
-
-			EOB
-
+      self.banner = <<EOB.gsub(/^\t+/, "")
+Usage: #{$0} [opts]
+EOB
       separator ""
 
       separator "Options:"
@@ -71,6 +77,11 @@ if __FILE__ == $0
   opts[:logger] = Logger.new(opts[:log], "daily")
   opts[:logger].level = opts[:debug] ? Logger::DEBUG : Logger::INFO
 
+  Atig::Gateway.agents = [ Atig::Agent::Timeline ]
+  Atig::Gateway.ifilters = [ Atig::IFilter::DecodeUtf7,
+                             Atig::IFilter::Sanitize,
+                             Atig::IFilter::ExpandUrl,
+                             Atig::IFilter::Strip.new(%w{ *tw* }),
+                             Atig::IFilter::Retweet ]
   Net::IRC::Server.new(opts[:host], opts[:port], Atig::Gateway, opts).start
 end
-
