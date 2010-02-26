@@ -5,7 +5,7 @@ module Atig
   module IFilter
     class Strip
       def initialize(suffix=[])
-        @rsuffix = /#{Regexp.union(suffix)}\z/
+        @rsuffix = /#{Regexp.union(*suffix)}\z/
       end
 
       def call(s, _)
