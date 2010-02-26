@@ -74,9 +74,9 @@ END
 
 
       @api = Scheduler.new @log, @twitter
-      @db = Database.new @log
+      @db = Database.new @log,100
       Agent::Timeline.new(@log, @api, @db)
-      @db.listen(:status) do|s|
+      @db.status.listen do|_, s|
         message(s, main_channel)
       end
     end

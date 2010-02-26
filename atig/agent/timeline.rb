@@ -18,7 +18,7 @@ module Atig
 
           db.transaction do|t|
             statuses.reverse_each do|status|
-              t.add :status,status
+              t.status.add :timeline, status
             end
           end
         end

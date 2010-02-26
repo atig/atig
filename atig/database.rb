@@ -2,28 +2,46 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
 require 'atig/util'
+require 'atig/sized_array'
 require 'thread'
-require 'set'
 
 module Atig
   class Database
     include Util
-    def initialize(logger)
+
+    class Statuses
+      def initialize(size)
+        @db = SizedArray.new(size)
+        @listeners = []
+      end
+
+      def add(src, status)
+        @db.push status.id, status
+        call_listener src,status
+      end
+
+      def listen(&f)
+        @listeners << f
+      end
+
+      private
+      def call_listener(src,status)
+        @listeners.each do| f |
+          f.call src, status
+        end
+      end
+    end
+
+    class Followeres; end
+
+    attr_reader :status, :follower
+
+    def initialize(logger, size)
       @log = logger
       log :info, "initialize"
 
-      @db = Hash.new do| hash, key |
-        hash[key] = []
-      end
-
-
-      @listeners =  Hash.new do| hash, key |
-        hash[key] = []
-      end
-
       @queue = SizedQueue.new 10
       daemon do
-        @updated = Set.new
         f = @queue.pop
         log :debug, "transaction is poped"
 
@@ -31,32 +49,14 @@ module Atig
 
         log :debug, "transaction is finished"
       end
-    end
 
-    def listen(kind, &f)
-      @listeners[kind] << f
+      @status   = Statuses.new size
+      @follower = Followeres.new
     end
 
     def transaction(&f)
       log :debug, "transaction is registered"
       @queue.push f
-    end
-
-    def add(kind, x)
-      @db[kind] << x
-      call_listener(kind, x)
-    end
-
-    def set(kind, xs)
-      @db[kind] = xs
-      call_listener(kind, xs)
-    end
-
-    private
-    def call_listener(kind, s)
-      @listeners[kind].each do|f|
-        f.call s
-      end
     end
   end
 end
