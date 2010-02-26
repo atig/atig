@@ -62,32 +62,23 @@ module Atig
     def on_privmsg(m)
       target, mesg = *m.params
 
-      ret         = nil
-      retry_count = 3
-      begin
-        previous = @me.status
-        if previous and
-            ((Time.now - Time.parse(previous.created_at)).to_i < 60 rescue true) and
-            mesg.strip == previous.text
-          log :info, "You can't submit the same status twice in a row."
-          return
-        end
+      previous = @me.status
+      if previous and
+          ((Time.now - Time.parse(previous.created_at)).to_i < 60 rescue true) and
+          mesg.strip == previous.text
+        log :info, "You can't submit the same status twice in a row."
+        return
+      end
 
         q = { :status => mesg, :source => "tigrb" }
         ret = @twitter.post("statuses/update", q)
 
+      @api.delay(0, :retry=>3) do|t|
+        ret = t.post("statuses/update", q)
         log :info, oops(ret) if ret.truncated
         ret.user.status = ret
         @me = ret.user
         log :info, "Status updated"
-      rescue => e
-        @log.error [retry_count, e.inspect].inspect
-        if retry_count > 0
-          retry_count -= 1
-          @log.debug "Retry to setting status..."
-          retry
-        end
-        log :error, "Some Error Happened on Sending #{mesg}. #{e}"
       end
     end
 
