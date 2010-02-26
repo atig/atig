@@ -10,6 +10,69 @@ module Net::IRC::Constants
   RPL_CREATEONTIME = "329"
 end
 
+class Hash
+  # { :f  => "v" }    #=> "f=v"
+  # { "f" => [1, 2] } #=> "f=1&f=2"
+  # { "f" => "" }     #=> "f="
+  # { "f" => nil }    #=> "f"
+  def to_query_str separator = "&"
+    inject([]) do |r, (k, v)|
+      k = URI.encode_component k.to_s
+      (v.is_a?(Array) ? v : [v]).each do |i|
+        if i.nil?
+          r << k
+        else
+          r << "#{k}=#{URI.encode_component i.to_s}"
+        end
+      end
+      r
+    end.join separator
+  end
+end
+
+class String
+  def ch?
+    /\A[&#+!][^ \007,]{1,50}\z/ === self
+  end
+
+  def screen_name?
+    /\A[A-Za-z0-9_]{1,15}\z/ === self
+  end
+
+  def encoding! enc
+    return self unless respond_to? :force_encoding
+    force_encoding enc
+  end
+end
+
+module URI::Escape
+  alias :_orig_escape :escape
+
+  if defined? ::RUBY_REVISION and RUBY_REVISION < 24544
+		# URI.escape("あ１") #=> "%E3%81%82\xEF\xBC\x91"
+    # URI("file:///４")  #=> #<URI::Generic:0x9d09db0 URL:file:/４>
+    #   "\\d" -> "[0-9]" for Ruby 1.9
+    def escape str, unsafe = %r{[^-_.!~*'()a-zA-Z0-9;/?:@&=+$,\[\]]} #'
+      _orig_escape(str, unsafe)
+    end
+    alias :encode :escape
+  end
+
+  def encode_component str, unsafe = /[^-_.!~*'()a-zA-Z0-9 ]/
+    _orig_escape(str, unsafe).tr(" ", "+")
+  end
+
+  def rstrip str
+		str.sub(%r{
+			(?: ( / [^/?#()]* (?: \( [^/?#()]* \) [^/?#()]* )* ) \) [^/?#()]*
+			  | \.
+			) \z
+		}x, "\\1")
+  end
+end
+
+
+
 module Atig
   class Gateway < Net::IRC::Server::Session
 
@@ -58,7 +121,50 @@ module Atig
       end
     end
 
+    def on_privmsg(m)
+      target, mesg = *m.params
+
+      ret         = nil
+      retry_count = 3
+      begin
+        previous = @me.status
+        if previous and
+            ((Time.now - Time.parse(previous.created_at)).to_i < 60 rescue true) and
+            mesg.strip == previous.text
+          log :info, "You can't submit the same status twice in a row."
+          return
+        end
+
+        q = { :status => mesg, :source => "tigrb" }
+        ret = @twitter.post("statuses/update", q)
+
+        log :info, oops(ret) if ret.truncated
+        ret.user.status = ret
+        @me = ret.user
+        log :info, "Status updated"
+      rescue => e
+        @log.error [retry_count, e.inspect].inspect
+        if retry_count > 0
+          retry_count -= 1
+          @log.debug "Retry to setting status..."
+          retry
+        end
+        log :error, "Some Error Happened on Sending #{mesg}. #{e}"
+      end
+    end
+
+
     private
+    def oops(status)
+      "Oops! Your update was over 140 characters. We sent the short version" <<
+        " to your friends (they can view the entire update on the Web <" <<
+        permalink(status) << ">)."
+    end
+
+    def permalink(struct)
+      "http://twitter.com/#{struct.user.screen_name}/statuses/#{struct.id}"
+    end
+
     def check_login
       retry_count = 0
       begin
@@ -153,7 +259,7 @@ END
 
     alias_method :__log__, :log
     def log(kind, str)
-      if kind == :info
+      if kind == :info or kind == :error
         post server_name, NOTICE, main_channel, str.gsub(/\r\n|[\r\n]/, " ")
       end
       __log__(kind, str)
