@@ -30,7 +30,9 @@ Atig::Gateway.ifilters = [ Atig::IFilter::DecodeUtf7,
                            Atig::IFilter::Sanitize,
                            Atig::IFilter::ExpandUrl,
                            Atig::IFilter::Strip.new(%w{ *tw* }),
-                           Atig::IFilter::Retweet ]
+                           Atig::IFilter::Retweet,
+                           Atig::IFilter::Tid
+                         ]
 
 if __FILE__ == $0
   require "optparse"

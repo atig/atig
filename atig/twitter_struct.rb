@@ -32,6 +32,10 @@ module Atig
       @obj[name.to_s]
     end
 
+    def []=(name,val)
+      @obj[name.to_s] = val
+    end
+
     def hash
       self.id ? self.id.hash : super
     end

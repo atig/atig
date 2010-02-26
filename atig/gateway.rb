@@ -132,7 +132,7 @@ END
        @ifilters.inject(mesg) {|s, f| f.call(s, status) }
     end
 
-    def message(struct, target, tid = nil, str = nil, command = PRIVMSG)
+    def message(struct, target, str = nil, command = PRIVMSG)
       unless str
         status = struct.status || struct
         str = status.text
@@ -146,7 +146,6 @@ END
 
       prefix = prefix(user)
       str    = generate_status_message(str, status)
-      str    = "#{str} #{@opts.tid % tid}" if tid
 
       post prefix, command, target, str
     end
