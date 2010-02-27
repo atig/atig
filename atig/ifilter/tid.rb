@@ -15,11 +15,8 @@ module Atig
       end
 
       def call(s, status)
-        if status.tid then
-          "#{s} #{@format % status.tid}"
-        else
-          s
-        end
+        return s unless status.tid
+        "#{s} #{@format % status.tid}"
       end
     end
   end

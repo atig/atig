@@ -7,11 +7,8 @@ module Atig
       def initialize(*_); end
 
       def call(s, status)
-        if status.retweeted_status
-          "\00310♺ \017#{s}"
-        else
-          s
-        end
+        return s unless status.retweeted_status
+        "\00310♺ \017#{s}"
       end
     end
   end
