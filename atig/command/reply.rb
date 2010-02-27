@@ -1,9 +1,13 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'atig/util'
+
 module Atig
   module Command
     class Reply
+      include Util
+
       def initialize(gateway)
 	gateway.ctcp_action "mention","re","reply" do |target, mesg, command, args|
           # reply, re, mention
@@ -20,11 +24,12 @@ module Atig
 
             gateway.api.delay(0) do|t|
               ret = t.post("statuses/update", q)
-              gateway.update_my_status ret
-
-              msg = gateway.input_message(status)
-              url = gateway.permalink(status)
-              gateway.log :info, "Status updated (In reply to #{tid}: #{msg} <#{url}>)"
+              safe {
+                gateway.update_my_status ret
+                msg = gateway.input_message(status)
+                url = gateway.permalink(status)
+                gateway.log :info, "Status updated (In reply to #{tid}: #{msg} <#{url}>)"
+              }
             end
           end
 	end

@@ -170,8 +170,10 @@ module Atig
 
       @api.delay(0, :retry=>3) do|t|
         ret = t.post("statuses/update", q)
-        update_my_status ret
-        log :info, "Status updated"
+        safe {
+          update_my_status ret
+          log :info, "Status updated"
+        }
       end
     end
 
