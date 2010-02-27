@@ -46,6 +46,10 @@ Atig::Gateway.ofilters = [
                           Atig::OFilter::ShortUrl,
                           Atig::OFilter::Geo,
                          ]
+Atig::Gateway.commands = [
+                          Atig::Command::Utf7,
+                          Atig::Command::Footer,
+                         ]
 
 if __FILE__ == $0
   require "optparse"

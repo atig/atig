@@ -15,11 +15,16 @@ end
 
 module Atig
   class Gateway < Net::IRC::Server::Session
-    @@agents =
+    @@commands =
+      @@agents =
       @@ifilters =
       @@ofilters = []
 
     class << self
+      def commands=(cmds)
+        @@commands = cmds
+      end
+
       def agents=(agents)
         @@agents = agents
       end
@@ -40,6 +45,13 @@ module Atig
     attr_reader :api, :db, :opts, :ifilters, :ofilters
 
     def initialize(*args); super end
+
+    def ctcp_action(*commands, &block)
+      commands.each do |command|
+        @ctcp_actions[command] = block
+      end
+    end
+
 
     def message(struct, target, str = nil, command = PRIVMSG)
       unless str
@@ -91,6 +103,8 @@ module Atig
         message(s, main_channel)
       end
 
+      @ctcp_actions = {}
+
       @ifilters = @@ifilters.map do|ifilter|
         if ifilter.respond_to? :new
           ifilter.new(@log, @opts)
@@ -107,6 +121,11 @@ module Atig
         end
       end
 
+      @@commands.each do|c|
+        log :debug,"command #{c.inspect}"
+        c.new @log, self
+      end
+
       check_login
 
       @@agents.each do|agent|
@@ -116,6 +135,11 @@ module Atig
 
     def on_privmsg(m)
       target, mesg = *m.params
+
+      m.ctcps.each {|ctcp| on_ctcp(target, ctcp) } if m.ctcp?
+
+      return if mesg.empty?
+      return on_ctcp_action(target, mesg) if mesg.sub!(/\A +/, "")
 
       previous = @me.status
       if previous and
@@ -133,6 +157,30 @@ module Atig
         ret.user.status = ret
         @me = ret.user
         log :info, "Status updated"
+      end
+    end
+
+    def on_ctcp(target, mesg)
+      type, mesg = mesg.split(" ", 2)
+      method = "on_ctcp_#{type.downcase}".to_sym
+      send(method, target, mesg) if respond_to? method, true
+    end
+
+    def on_ctcp_action(target, mesg)
+      safe do
+        command, *args = mesg.split(" ")
+        command.downcase!
+        if @ctcp_actions.key? command then
+          @ctcp_actions[command].call(target,
+                                      mesg,
+                                      Regexp.last_match || command,
+                                      args)
+        else
+          log :info, "[tig.rb] CTCP ACTION COMMANDS:"
+          @ctcp_actions.keys.each do |c|
+            log :info, c
+          end
+        end
       end
     end
 
