@@ -64,12 +64,11 @@ module Atig
       user        = struct.user || struct
       screen_name = user.screen_name
 
-      prefix = prefix(user)
-      str    = generate_status_message(str, status)
+      prefix = prefix user
+      str    = input_message status
 
       post prefix, command, target, str
     end
-
 
     alias_method :__log__, :log
     def log(kind, str)
@@ -78,6 +77,7 @@ module Atig
       end
       __log__(kind, str)
     end
+
     def oops(status)
       "Oops! Your update was over 140 characters. We sent the short version" <<
         " to your friends (they can view the entire update on the Web <" <<
@@ -86,6 +86,14 @@ module Atig
 
     def permalink(struct)
       "http://twitter.com/#{struct.user.screen_name}/statuses/#{struct.id}"
+    end
+
+    def input_message(status)
+      @ifilters.inject(status) {|x, f| f.call x }.text
+    end
+
+    def output_message(query)
+      @ofilters.inject(query) {|x, f| f.call x }
     end
 
     protected
@@ -148,7 +156,7 @@ module Atig
         return
       end
 
-      q = @ofilters.inject(:status => mesg, :source => "tigrb") {|x, f| f.call x }
+      q = output_message(:status => mesg, :source => "tigrb")
 
       @api.delay(0, :retry=>3) do|t|
         ret = t.post("statuses/update", q)
@@ -210,8 +218,7 @@ END
       post server_name, MODE, main_channel, "+mto", @nick
       post server_name, MODE, main_channel, "+q", @nick
       if @me.status
-        post @prefix, TOPIC, main_channel, generate_status_message(@me.status.text,
-                                                                   @me.status)
+        post @prefix, TOPIC, main_channel, input_message(@me.status)
       end
 
       log :info,"Client options: #{@opts.marshal_dump.inspect}"
@@ -251,10 +258,6 @@ END
 
     def main_channel
       @opts.main_channel || "#twitter"
-    end
-
-    def generate_status_message(mesg, status)
-       @ifilters.inject(mesg) {|s, f| f.call(s, status) }
     end
   end
 end

@@ -12,15 +12,15 @@ module Atig
         @log = log
       end
 
-      def call(str, _)
-        return str unless defined? ::Iconv and str.include?("+")
+      def call(status)
+        return status unless defined? ::Iconv and status.text.include?("+")
 
-        str.sub(/\A(?:.+ > |.+\z)/) { Iconv.iconv("UTF-8", "UTF-7", $&).join }
+        status.merge :text => status.text.sub(/\A(?:.+ > |.+\z)/) { Iconv.iconv("UTF-8", "UTF-7", $&).join }
       rescue Iconv::IllegalSequence
-        str
+        status
       rescue => e
         log :error,e
-        str
+        status
       end
     end
   end

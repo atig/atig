@@ -8,12 +8,13 @@ module Atig
 
       def initialize(*_); end
 
-      def call(s, _)
-        s.
+      def call(status)
+        text = status.text.
           delete("\000\001").
           gsub("&gt;", ">").
           gsub("&lt;", "<").
           gsub(WSP_REGEX, " ")
+        status.merge :text => text
       end
     end
   end

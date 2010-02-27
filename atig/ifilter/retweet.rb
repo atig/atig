@@ -6,9 +6,9 @@ module Atig
     class Retweet
       def initialize(*_); end
 
-      def call(s, status)
-        return s unless status.retweeted_status
-        "\00310♺ \017#{s}"
+      def call(status)
+        return status unless status.retweeted_status
+        status.merge :text => "\00310♺ \017#{status.text}"
       end
     end
   end

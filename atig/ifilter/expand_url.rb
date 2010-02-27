@@ -12,7 +12,7 @@ module Atig
         @http = Atig::Http.new logger
       end
 
-      def call(s, _)
+      def call(status)
         target = if @opts.untiny_whole_urls then
                    URI.regexp(%w[http https])
                  else
@@ -29,7 +29,7 @@ module Atig
 		   }ix
                  end
 
-        s.gsub(target) {|url|
+        status.merge :text => status.text.gsub(target) {|url|
           resolve_http_redirect(URI(url)).to_s || url
         }
       end

@@ -14,9 +14,9 @@ module Atig
         end
       end
 
-      def call(s, status)
-        return s unless status.tid
-        "#{s} #{@format % status.tid}"
+      def call(status)
+        return status unless status.tid
+        status.merge :text => "#{status.text} #{@format % status.tid}"
       end
     end
   end

@@ -8,8 +8,8 @@ module Atig
         @rsuffix = /#{Regexp.union(*suffix)}\z/
       end
 
-      def call(s, _)
-        s.sub(@rsuffix, "").strip
+      def call(status)
+        status.merge :text => status.text.sub(@rsuffix, "").strip
       end
     end
   end
