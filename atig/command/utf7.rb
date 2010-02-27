@@ -16,9 +16,9 @@ module Atig
 	end
 
         gateway.ofilters << lambda{|q|
-          return q if @utf7
+          return q unless @utf7
 
-          Iconv.iconv("UTF-7", "UTF-8", q[:status]).join.encoding!("ASCII-8BIT")
+          m = Iconv.iconv("UTF-7", "UTF-8", q[:status]).join.encoding!("ASCII-8BIT")
           q.merge :status => m
         }
       end
