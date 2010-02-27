@@ -40,6 +40,7 @@ Atig::Gateway.ifilters = [ Atig::IFilter::DecodeUtf7,
 Atig::Gateway.ofilters = [
                           Atig::OFilter::EscapeUrl,
                           Atig::OFilter::ShortUrl,
+                          Atig::OFilter::Geo,
                          ]
 
 if __FILE__ == $0
