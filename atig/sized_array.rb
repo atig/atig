@@ -25,7 +25,7 @@ class SizedArray
   end
 
   def include?(id)
-    @xs.find{|item| item.id == id }
+    @xs.any?{|item| item.id == id }
   end
 
   def index(s)
@@ -53,4 +53,3 @@ class SizedArray
     @tid[tid]
   end
 end
-

@@ -4,6 +4,8 @@
 require 'atig/util'
 require 'atig/sized_array'
 require 'thread'
+require 'set'
+require 'forwardable'
 
 module Atig
   class Database
@@ -38,9 +40,44 @@ module Atig
       end
     end
 
-    class Followeres; end
+    class Friends
+      extend Forwardable
+      def_delegators(:@xs, :size, :empty?,:[])
 
-    attr_reader :status, :follower
+      def initialize
+        @xs = []
+        @listeners = []
+      end
+
+      def update(xs)
+        diff(xs, @xs).each do|friend|
+          call_listener :come, friend
+        end
+
+        diff(@xs, xs).each do|friend|
+          call_listener :bye, friend
+        end
+
+        @xs = xs
+      end
+
+      def listen(&f)
+        @listeners << f
+      end
+
+      private
+      def call_listener(kind, friend)
+        @listeners.each do| f |
+          f.call kind, friend
+        end
+      end
+
+      def diff(xs, ys)
+        xs.select{|x| not ys.any?{|y| x.id == y.id } }
+      end
+    end
+
+    attr_reader :status, :friends
 
     def initialize(logger, size)
       @log = logger
@@ -57,7 +94,7 @@ module Atig
       end
 
       @status   = Statuses.new size
-      @follower = Followeres.new
+      @friends  = Friends.new
     end
 
     def transaction(&f)

@@ -127,6 +127,15 @@ module Atig
         message(status, main_channel)
       end
 
+      @db.friends.listen do|kind, friend|
+        case kind
+        when :come
+          join main_channel, friend
+        when :bye
+          post prefix(friend), PART, main_channel, ""
+        end
+      end
+
       @ctcp_actions = {}
 
       @ifilters = @@ifilters.map do|ifilter|
@@ -253,6 +262,16 @@ END
                         end
       end
       OpenStruct.new opts
+    end
+
+    def join(channel, user)
+      prefix = prefix(user)
+
+      params = []
+      params << ["v", prefix.nick] if user.protected
+
+      post prefix, JOIN, channel
+      post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n}
     end
 
     def prefix(u)

@@ -33,7 +33,10 @@ end
 require 'atig/database'
 require 'atig/gateway'
 
-Atig::Gateway.agents   = [ Atig::Agent::Timeline ]
+Atig::Gateway.agents   = [
+                          Atig::Agent::Timeline,
+                          Atig::Agent::Friend
+                         ]
 Atig::Gateway.ifilters = [
                           Atig::IFilter::DecodeUtf7,
                           Atig::IFilter::Sanitize,
