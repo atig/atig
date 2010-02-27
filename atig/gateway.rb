@@ -113,7 +113,7 @@ module Atig
       @real, *opts = (@opts.name || @real).split(" ")
       @opts = parse_opts opts
 
-      @twitter = FakeTwitter.new @log, @real, @pass
+      @twitter = Twitter.new @log, @real, @pass
       @api     = Scheduler.new @log, @twitter
       @db      = Database.new @log,100
       @db.status.listen do|_, s|

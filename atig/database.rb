@@ -26,6 +26,10 @@ module Atig
         @listeners << f
       end
 
+      def tid(id)
+        @db[id]
+      end
+
       private
       def call_listener(src,status)
         @listeners.each do| f |
