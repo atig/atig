@@ -116,8 +116,15 @@ module Atig
       @twitter = Twitter.new @log, @real, @pass
       @api     = Scheduler.new @log, @twitter
       @db      = Database.new @log,100
-      @db.status.listen do|_, s|
-        message(s, main_channel)
+      @db.status.listen do|_, status|
+        user = status.user
+        if user.id == @me.id
+          mesg = input_message(status)
+          post @prefix, TOPIC, main_channel, mesg
+          @me = user
+        end
+
+        message(status, main_channel)
       end
 
       @ctcp_actions = {}
