@@ -36,6 +36,14 @@ module Atig
       @obj[name.to_s] = val
     end
 
+    def merge(hash)
+      obj = @obj.dup
+      hash.each do|key,value|
+        obj[key.to_s] = value
+      end
+      TwitterStruct.make obj
+    end
+
     def hash
       self.id ? self.id.hash : super
     end

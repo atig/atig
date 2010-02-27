@@ -70,6 +70,10 @@ module Atig
       post prefix, command, target, str
     end
 
+    def api_source
+      "#{@opts.api_source || "tigrb"}"
+    end
+
     alias_method :__log__, :log
     def log(kind, str)
       if kind == :info or kind == :error
@@ -96,6 +100,12 @@ module Atig
       @ofilters.inject(query) {|x, f| f.call x }
     end
 
+    def update_my_status(ret)
+      log :info, oops(ret) if ret.truncated
+      ret.user.status = ret
+      @me = ret.user
+    end
+
     protected
     def on_user(m)
       super
@@ -103,7 +113,7 @@ module Atig
       @real, *opts = (@opts.name || @real).split(" ")
       @opts = parse_opts opts
 
-      @twitter = Twitter.new @log, @real, @pass
+      @twitter = FakeTwitter.new @log, @real, @pass
       @api     = Scheduler.new @log, @twitter
       @db      = Database.new @log,100
       @db.status.listen do|_, s|
@@ -156,13 +166,11 @@ module Atig
         return
       end
 
-      q = output_message(:status => mesg, :source => "tigrb")
+      q = output_message(:status => mesg, :source => api_source)
 
       @api.delay(0, :retry=>3) do|t|
         ret = t.post("statuses/update", q)
-        log :info, oops(ret) if ret.truncated
-        ret.user.status = ret
-        @me = ret.user
+        update_my_status ret
         log :info, "Status updated"
       end
     end

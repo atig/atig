@@ -34,12 +34,13 @@ require 'atig/database'
 require 'atig/gateway'
 
 Atig::Gateway.agents   = [ Atig::Agent::Timeline ]
-Atig::Gateway.ifilters = [ Atig::IFilter::DecodeUtf7,
-                           Atig::IFilter::Sanitize,
-                           Atig::IFilter::ExpandUrl,
-                           Atig::IFilter::Strip.new(%w{ *tw* }),
-                           Atig::IFilter::Retweet,
-                           Atig::IFilter::Tid
+Atig::Gateway.ifilters = [
+                          Atig::IFilter::DecodeUtf7,
+                          Atig::IFilter::Sanitize,
+                          Atig::IFilter::ExpandUrl,
+                          Atig::IFilter::Strip.new(%w{ *tw* }),
+                          Atig::IFilter::Retweet,
+                          Atig::IFilter::Tid
                          ]
 Atig::Gateway.ofilters = [
                           Atig::OFilter::EscapeUrl,
