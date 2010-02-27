@@ -4,7 +4,7 @@
 module Atig
   module Command
     class Footer
-      def initialize(logger, gateway)
+      def initialize(gateway)
         @footer = ""
 	gateway.ctcp_action "footer" do |target, mesg, command, args|
           @footer = args.join ' '

@@ -52,7 +52,6 @@ module Atig
       end
     end
 
-
     def message(struct, target, str = nil, command = PRIVMSG)
       unless str
         status = struct.status || struct
@@ -123,7 +122,7 @@ module Atig
 
       @@commands.each do|c|
         log :debug,"command #{c.inspect}"
-        c.new @log, self
+        c.new self
       end
 
       check_login

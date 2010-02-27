@@ -4,7 +4,7 @@
 module Atig
   module Command
     class Utf7
-      def initialize(logger, gateway)
+      def initialize(gateway)
         @utf7 = false
 	gateway.ctcp_action "utf-7", "utf7" do |target, mesg, command, args|
           unless defined? ::Iconv
