@@ -36,13 +36,13 @@ module Atig
       begin
         f.call
       rescue => e
-        log :error, [retry_count, e.inspect].inspect
+        log :error, [count, e.inspect].inspect
         if count > 0
           count -= 1
           log :debug, "retry"
           retry
         end
-        log :error, "Some Error Happened on Sending #{mesg}. #{e}"
+        log :error, "Some Error Happened: #{e}"
         raise e
       end
     end
