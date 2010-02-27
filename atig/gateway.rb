@@ -13,28 +13,69 @@ end
 
 module Atig
   class Gateway < Net::IRC::Server::Session
+    @@agents =
+      @@ifilters =
+      @@ofilters = []
 
-    def self.agents=(agents)
-      @@agents = agents
-    end
+    class << self
+      def agents=(agents)
+        @@agents = agents
+      end
 
-    def self.ifilters=(ifilters)
-      @@ifilters = ifilters
-    end
+      def ifilters=(ifilters)
+        @@ifilters = ifilters
+      end
 
-    def self.ofilters=(ofilters)
-      @@ofilters = ofilters
+      def ofilters=(ofilters)
+        @@ofilters = ofilters
+      end
     end
 
     include Util
 
     MAX_MODE_PARAMS = 3
 
-    def initialize(*args)
-      super
+    attr_reader :api, :db, :opts
 
+    def initialize(*args); super end
+
+    def message(struct, target, str = nil, command = PRIVMSG)
+      unless str
+        status = struct.status || struct
+        str = status.text
+        if command != PRIVMSG
+          time = Time.parse(status.created_at) rescue Time.now
+          str  = "#{time.strftime(@opts.strftime || "%m-%d %H:%M")} #{str}" # TODO: color
+        end
+      end
+      user        = struct.user || struct
+      screen_name = user.screen_name
+
+      prefix = prefix(user)
+      str    = generate_status_message(str, status)
+
+      post prefix, command, target, str
     end
 
+
+    alias_method :__log__, :log
+    def log(kind, str)
+      if kind == :info or kind == :error
+        post server_name, NOTICE, main_channel, str.gsub(/\r\n|[\r\n]/, " ")
+      end
+      __log__(kind, str)
+    end
+    def oops(status)
+      "Oops! Your update was over 140 characters. We sent the short version" <<
+        " to your friends (they can view the entire update on the Web <" <<
+        permalink(status) << ">)."
+    end
+
+    def permalink(struct)
+      "http://twitter.com/#{struct.user.screen_name}/statuses/#{struct.id}"
+    end
+
+    protected
     def on_user(m)
       super
 
@@ -93,18 +134,7 @@ module Atig
       end
     end
 
-
     private
-    def oops(status)
-      "Oops! Your update was over 140 characters. We sent the short version" <<
-        " to your friends (they can view the entire update on the Web <" <<
-        permalink(status) << ">)."
-    end
-
-    def permalink(struct)
-      "http://twitter.com/#{struct.user.screen_name}/statuses/#{struct.id}"
-    end
-
     def check_login
       retry_count = 0
       begin
@@ -177,33 +207,5 @@ END
     def generate_status_message(mesg, status)
        @ifilters.inject(mesg) {|s, f| f.call(s, status) }
     end
-
-    def message(struct, target, str = nil, command = PRIVMSG)
-      unless str
-        status = struct.status || struct
-        str = status.text
-        if command != PRIVMSG
-          time = Time.parse(status.created_at) rescue Time.now
-          str  = "#{time.strftime(@opts.strftime || "%m-%d %H:%M")} #{str}" # TODO: color
-        end
-      end
-      user        = struct.user || struct
-      screen_name = user.screen_name
-
-      prefix = prefix(user)
-      str    = generate_status_message(str, status)
-
-      post prefix, command, target, str
-    end
-
-
-    alias_method :__log__, :log
-    def log(kind, str)
-      if kind == :info or kind == :error
-        post server_name, NOTICE, main_channel, str.gsub(/\r\n|[\r\n]/, " ")
-      end
-      __log__(kind, str)
-    end
-
   end
 end
