@@ -19,11 +19,15 @@ Dir['atig/agent/*.rb'].each do|file|
 end
 
 Dir['atig/ifilter/*.rb'].each do|file|
-  load file
+  require file
 end
 
 Dir['atig/ofilter/*.rb'].each do|file|
-  load file
+  require file
+end
+
+Dir['atig/command/*.rb'].each do|file|
+  require file
 end
 
 require 'atig/database'

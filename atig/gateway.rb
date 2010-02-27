@@ -5,6 +5,8 @@ require 'atig/util'
 require "net/irc"
 require "ostruct"
 require 'atig/url_escape'
+require 'atig/fake_twitter'
+require 'atig/twitter'
 module Net::IRC::Constants
   RPL_WHOISBOT = "335"
   RPL_CREATEONTIME = "329"
@@ -35,7 +37,7 @@ module Atig
 
     MAX_MODE_PARAMS = 3
 
-    attr_reader :api, :db, :opts
+    attr_reader :api, :db, :opts, :ifilters, :ofilters
 
     def initialize(*args); super end
 
