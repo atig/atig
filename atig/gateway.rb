@@ -147,7 +147,6 @@ module Atig
       end
 
       @db.status.listen do|src, status|
-        log :debug, [src, status.text].inspect
         case src
         when :me
           mesg = input_message(status)
