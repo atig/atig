@@ -155,6 +155,16 @@ module Atig
         end
       end
 
+      @db.status.listen do|src,status|
+        case src
+        when :timeline,:me
+          name = @db.me.screen_name
+          message(status, mention_channel) if status.text.include?(name)
+        when :mention
+          message(status, mention_channel)
+        end
+      end
+
       @db.friends.listen do|kind, friend|
         case kind
         when :come
@@ -189,9 +199,8 @@ module Atig
       @host   = @prefix.host
 
       post server_name, MODE, @nick, "+o"
-      post @prefix, JOIN, main_channel
-      post server_name, MODE, main_channel, "+mto", @nick
-      post server_name, MODE, main_channel, "+q", @nick
+      create_channel main_channel
+      create_channel mention_channel
       log :info,"Client options: #{@opts.marshal_dump.inspect}"
 
       @db.transaction do|db|
@@ -252,6 +261,13 @@ module Atig
     end
 
     private
+
+    def create_channel(channel)
+      post @prefix, JOIN, channel
+      post server_name, MODE, channel, "+mto", @nick
+      post server_name, MODE, channel, "+q", @nick
+    end
+
     def update_profile
       @api.delay(0, :retry=>3) do|t|
         t.post "account/update_profile"
@@ -322,6 +338,10 @@ END
 
     def main_channel
       @opts.main_channel || "#twitter"
+    end
+
+    def mention_channel
+      @opts.mention_channel || "#mention"
     end
   end
 end
