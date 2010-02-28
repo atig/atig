@@ -39,6 +39,7 @@ module Atig
         log :error, [count, e.inspect].inspect
         if count > 0
           count -= 1
+          sleep 1
           log :debug, "retry"
           retry
         end
