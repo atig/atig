@@ -1,7 +1,6 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 
-require "net/https"
 require "json"
 require 'atig/twitter_struct'
 require 'atig/http'

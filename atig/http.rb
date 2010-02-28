@@ -1,4 +1,6 @@
+require "net/https"
 require 'atig/util'
+
 module Atig
   class Http
     include Util

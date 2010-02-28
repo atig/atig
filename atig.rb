@@ -41,7 +41,7 @@ Atig::Gateway.agents   = [
                           Atig::Agent::DirectMessage
                          ]
 Atig::Gateway.ifilters = [
-                          Atig::IFilter::DecodeUtf7,
+                          Atig::IFilter::Utf7,
                           Atig::IFilter::Sanitize,
                           Atig::IFilter::ExpandUrl,
                           Atig::IFilter::Strip.new(%w{ *tw* }),

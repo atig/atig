@@ -2,6 +2,8 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
 require 'atig/util'
+require 'atig/http'
+
 module Atig
   module IFilter
     class ExpandUrl

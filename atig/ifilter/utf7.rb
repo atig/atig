@@ -6,7 +6,7 @@ require "iconv"
 
 module Atig
   module IFilter
-    class DecodeUtf7
+    class Utf7
       include Util
       def initialize(log, *_)
         @log = log

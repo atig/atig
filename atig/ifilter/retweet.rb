@@ -3,12 +3,11 @@
 
 module Atig
   module IFilter
-    class Retweet
-      def initialize(*_); end
-
-      def call(status)
+    module Retweet
+      Prefix = "\00310♺ \017"
+      def self.call(status)
         return status unless status.retweeted_status
-        status.merge :text => "\00310♺ \017#{status.text}"
+        status.merge :text => "#{Prefix}#{status.text}"
       end
     end
   end
