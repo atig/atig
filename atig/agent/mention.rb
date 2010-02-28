@@ -12,15 +12,16 @@ module Atig
         @log = logger
         @api = api
         @prev = nil
-        @first = true
 
         log :info, "initialize"
 
         @api.repeat(180) do|t|
           q = { :count => 200 }
-          q.update :since_id => @prev if @prev
-          q.update(:count => 20) if @first
-          @first = false
+          if @prev
+            q.update :since_id => @prev
+          else
+            q.update :count => 20
+          end
 
           mentions = t.get("statuses/mentions", q)
 

@@ -11,15 +11,17 @@ module Atig
       def initialize(logger, api, db)
         @log = logger
         @prev = nil
-        @first = true
         log :info, "initialize"
 
         @api = api
         @api.repeat(30) do|t|
           q = { :count => 200 }
-          q.update(:since_id => @prev) if @prev
-          q.update(:count => 20) if @first
-          @first = false
+
+          if @prev
+            q.update :since_id => @prev
+          else
+            q.update :count => 20
+          end
 
           statuses = t.get('/statuses/home_timeline', q)
 
