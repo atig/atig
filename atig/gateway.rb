@@ -12,7 +12,6 @@ module Net::IRC::Constants
   RPL_CREATEONTIME = "329"
 end
 
-
 module Atig
   class Gateway < Net::IRC::Server::Session
     @@commands =
@@ -58,7 +57,7 @@ module Atig
         str = status.text
         if command != PRIVMSG
           time = Time.parse(status.created_at) rescue Time.now
-          str  = "#{time.strftime(@opts.strftime || "%m-%d %H:%M")} #{str}" # TODO: color
+          str  = "#{time.strftime(@opts.strftime || "%m-%d %H:%M")} #{str}"
         end
       end
       user        = struct.user || struct
