@@ -12,13 +12,45 @@ module Atig
   class Database
     include Util
 
+    class Listeners
+      def initialize; @xs = [] end
+
+      def <<(f)
+        @xs << f
+      end
+
+      def call(*args)
+        @xs.each do| f |
+          f.call(*args)
+        end
+      end
+    end
+
+    class DirectMessages
+      def initialize(size)
+        @db = SizedArray.new size
+        @listeners = Listeners.new
+      end
+
+      def add(dm)
+        unless @db.include? dm.id then
+          @db << dm
+          @listeners.call dm
+        end
+      end
+
+      def listen(&f)
+        @listeners << f
+      end
+    end
+
     class Statuses
       attr_reader :me
 
       def initialize(me, size)
         @me = me
         @db = SizedArray.new(size)
-        @listeners = []
+        @listeners = Listeners.new
       end
 
       def add(src, status)
@@ -26,13 +58,13 @@ module Atig
           @db << status
 
           if is_me? status then
-            call_listener :me, status
+            @listeners.call :me, status
 
             user = status.user
             user[:status] = status
             @me = status.user
           else
-            call_listener src,status
+            @listeners.call src,status
           end
         end
       end
@@ -55,12 +87,6 @@ module Atig
           true
         end
       end
-
-      def call_listener(src,status)
-        @listeners.each do| f |
-          f.call src, status
-        end
-      end
     end
 
     class Friends
@@ -69,18 +95,18 @@ module Atig
 
       def initialize(&f)
         @xs = []
-        @listeners = []
+        @listeners = Listeners.new
         @get_id = f
       end
 
       def update(xs)
         @xs, old = xs, @xs
         diff(xs, old).each do|friend|
-          call_listener :come, friend
+          @listeners.call :come, friend
         end
 
         diff(old, xs).each do|friend|
-          call_listener :bye, friend
+          @listeners.call :bye, friend
         end
       end
 
@@ -95,12 +121,6 @@ module Atig
       end
 
       private
-      def call_listener(kind, friend)
-        @listeners.each do| f |
-          f.call kind, friend
-        end
-      end
-
       def diff(xs, ys)
         xs.select{|x| not ys.any?{|y|
             @get_id.call(x) == @get_id.call(y)
@@ -109,7 +129,7 @@ module Atig
       end
     end
 
-    attr_reader :status, :friends, :followers
+    attr_reader :status, :friends, :followers, :direct_messages
 
     def initialize(logger, opt)
       @log = logger
@@ -125,9 +145,10 @@ module Atig
         log :debug, "transaction is finished"
       end
 
-      @status    = Statuses.new opt[:me], opt[:size]
+      @status    = Statuses.new(opt[:me], opt[:size] || 1000)
       @friends   = Friends.new {|item| item.id }
       @followers = Friends.new {|item| item }
+      @direct_messages = DirectMessages.new(opt[:dm_size] || 3)
     end
 
     def me; self.status.me end

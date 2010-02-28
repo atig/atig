@@ -51,20 +51,11 @@ module Atig
       end
     end
 
-    def message(struct, target, str = nil, command = PRIVMSG)
-      unless str
-        status = struct.status || struct
-        str = status.text
-        if command != PRIVMSG
-          time = Time.parse(status.created_at) rescue Time.now
-          str  = "#{time.strftime(@opts.strftime || "%m-%d %H:%M")} #{str}"
-        end
-      end
-      user        = struct.user || struct
+    def message(struct, target,  command = PRIVMSG)
+      user = struct.user || struct.sender || struct
       screen_name = user.screen_name
-
       prefix = prefix user
-      str    = input_message status
+      str    = input_message struct
 
       post prefix, command, target, str
     end
@@ -178,6 +169,10 @@ module Atig
       @db.followers.listen do|_, _|
         log :debug, "set modes for #{db.friends.size} friend"
         set_modes main_channel, @db.friends
+      end
+
+      @db.direct_messages.listen do|dm|
+        message(dm, @nick)
       end
 
       log :debug, "initialize actions"

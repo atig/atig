@@ -38,6 +38,7 @@ Atig::Gateway.agents   = [
                           Atig::Agent::Follower,
                           Atig::Agent::Friend,
                           Atig::Agent::Mention,
+                          Atig::Agent::DirectMessage
                          ]
 Atig::Gateway.ifilters = [
                           Atig::IFilter::DecodeUtf7,
