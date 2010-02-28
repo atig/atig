@@ -35,7 +35,8 @@ require 'atig/gateway'
 
 Atig::Gateway.agents   = [
                           Atig::Agent::Timeline,
-                          Atig::Agent::Friend
+                          Atig::Agent::Follower,
+                          Atig::Agent::Friend,
                          ]
 Atig::Gateway.ifilters = [
                           Atig::IFilter::DecodeUtf7,

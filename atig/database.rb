@@ -65,23 +65,29 @@ module Atig
 
     class Friends
       extend Forwardable
-      def_delegators(:@xs, :size, :empty?,:[])
+      def_delegators(:@xs, :size, :empty?,:[], :each)
 
-      def initialize
+      def initialize(&f)
         @xs = []
         @listeners = []
+        @get_id = f
       end
 
       def update(xs)
-        diff(xs, @xs).each do|friend|
+        @xs, old = xs, @xs
+        diff(xs, old).each do|friend|
           call_listener :come, friend
         end
 
-        diff(@xs, xs).each do|friend|
+        diff(old, xs).each do|friend|
           call_listener :bye, friend
         end
+      end
 
-        @xs = xs
+      def include?(id)
+        @xs.any?{|x|
+          @get_id.call(x) == id
+        }
       end
 
       def listen(&f)
@@ -96,11 +102,14 @@ module Atig
       end
 
       def diff(xs, ys)
-        xs.select{|x| not ys.any?{|y| x.id == y.id } }
+        xs.select{|x| not ys.any?{|y|
+            @get_id.call(x) == @get_id.call(y)
+          }
+        }
       end
     end
 
-    attr_reader :status, :friends
+    attr_reader :status, :friends, :followers
 
     def initialize(logger, opt)
       @log = logger
@@ -116,8 +125,9 @@ module Atig
         log :debug, "transaction is finished"
       end
 
-      @status   = Statuses.new opt[:me], opt[:size]
-      @friends  = Friends.new
+      @status    = Statuses.new opt[:me], opt[:size]
+      @friends   = Friends.new {|item| item.id }
+      @followers = Friends.new {|item| item }
     end
 
     def me; self.status.me end

@@ -163,6 +163,13 @@ module Atig
         when :bye
           post prefix(friend), PART, main_channel, ""
         end
+        log :debug, "set modes for #{db.friends.size} friend"
+        set_modes main_channel, @db.friends
+      end
+
+      @db.followers.listen do|_, _|
+        log :debug, "set modes for #{db.friends.size} friend"
+        set_modes main_channel, @db.friends
       end
 
       log :debug, "initialize actions"
@@ -275,12 +282,25 @@ END
 
     def join(channel, user)
       prefix = prefix(user)
-
-      params = []
-      params << ["v", prefix.nick] if user.protected
-
       post prefix, JOIN, channel
-      post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n}
+    end
+
+    def set_modes(channel, users)
+      params = []
+      users.each do |user|
+        prefix = prefix(user)
+        case
+        when user.protected
+          params << ["v", prefix.nick]
+        when ! @db.followers.include?(user.id)
+          params << ["o", prefix.nick]
+        end
+        next if params.size < MAX_MODE_PARAMS
+
+        post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n}
+        params = []
+      end
+      post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n} unless params.empty?
     end
 
     def prefix(u)
