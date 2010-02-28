@@ -204,8 +204,8 @@ module Atig
 
       previous = @db.me.status
       if previous and
-          ((Time.now - Time.parse(previous.created_at)).to_i < 60 rescue true) and
-          mesg.strip == previous.text
+          ((Time.now - Time.parse(previous.created_at)).to_i < 60*60*24 rescue true) and
+          mesg.strip == previous.text.strip
         log :info, "You can't submit the same status twice in a row."
         return
       end
