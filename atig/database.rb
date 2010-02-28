@@ -120,6 +120,8 @@ module Atig
       @friends  = Friends.new
     end
 
+    def me; self.status.me end
+
     def transaction(&f)
       log :debug, "transaction is registered"
       @queue.push f

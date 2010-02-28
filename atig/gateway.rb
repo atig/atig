@@ -202,7 +202,7 @@ module Atig
       return if mesg.empty?
       return on_ctcp_action(target, mesg) if mesg.sub!(/\A +/, "")
 
-      previous = @db.status.me.status
+      previous = @db.me.status
       if previous and
           ((Time.now - Time.parse(previous.created_at)).to_i < 60 rescue true) and
           mesg.strip == previous.text

@@ -13,10 +13,8 @@ module Atig
         log :info, "initialize"
 
         api.repeat(3600) do|t|
-          @me = t.post("account/update_profile")
-
-          if db.friends.empty? or @me.friends_count != db.friends.size
-            friends = t.page("statuses/friends/#{@me.id}", :users)
+          if db.friends.empty? or db.me.friends_count != db.friends.size
+            friends = t.page("statuses/friends/#{db.me.id}", :users)
             log :info, "You have #{friends.size} friends"
 
             db.friends.update friends
