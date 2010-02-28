@@ -6,13 +6,17 @@ require 'atig/sized_array'
 require 'thread'
 require 'set'
 require 'forwardable'
+require 'time'
 
 module Atig
   class Database
     include Util
 
     class Statuses
-      def initialize(size)
+      attr_reader :me
+
+      def initialize(me, size)
+        @me = me
         @db = SizedArray.new(size)
         @listeners = []
       end
@@ -20,7 +24,16 @@ module Atig
       def add(src, status)
         unless @db.include? status.id then
           @db << status
-          call_listener src, status
+
+          if is_me? status then
+            call_listener :me, status
+
+            user = status.user
+            user[:status] = status
+            @me = status.user
+          else
+            call_listener src,status
+          end
         end
       end
 
@@ -33,6 +46,16 @@ module Atig
       end
 
       private
+      def is_me?(status)
+        return false unless status.user.id == @me.id
+
+        begin
+          Time.parse(status.created_at) >= Time.parse(@me.status.created_at)
+        rescue
+          true
+        end
+      end
+
       def call_listener(src,status)
         @listeners.each do| f |
           f.call src, status
@@ -79,7 +102,7 @@ module Atig
 
     attr_reader :status, :friends
 
-    def initialize(logger, size)
+    def initialize(logger, opt)
       @log = logger
       log :info, "initialize"
 
@@ -93,7 +116,7 @@ module Atig
         log :debug, "transaction is finished"
       end
 
-      @status   = Statuses.new size
+      @status   = Statuses.new opt[:me], opt[:size]
       @friends  = Friends.new
     end
 

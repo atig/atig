@@ -102,42 +102,24 @@ module Atig
 
     def update_my_status(ret)
       log :info, oops(ret) if ret.truncated
-      ret.user.status = ret
-      @me = ret.user
+      @db.transaction do|db|
+        db.status.add :ret, ret
+      end
     end
 
     protected
     def on_user(m)
       super
 
+      log :debug, "client option"
       @real, *opts = (@opts.name || @real).split(" ")
       @opts = parse_opts opts
 
+      log :debug, "initialize Twitter"
       @twitter = Twitter.new @log, @real, @pass
       @api     = Scheduler.new @log, @twitter
-      @db      = Database.new @log,100
-      @db.status.listen do|_, status|
-        user = status.user
-        if user.id == @me.id
-          mesg = input_message(status)
-          post @prefix, TOPIC, main_channel, mesg
-          @me = user
-        end
 
-        message(status, main_channel)
-      end
-
-      @db.friends.listen do|kind, friend|
-        case kind
-        when :come
-          join main_channel, friend
-        when :bye
-          post prefix(friend), PART, main_channel, ""
-        end
-      end
-
-      @ctcp_actions = {}
-
+      log :debug, "initialize filter"
       @ifilters = @@ifilters.map do|ifilter|
         if ifilter.respond_to? :new
           ifilter.new(@log, @opts)
@@ -154,15 +136,61 @@ module Atig
         end
       end
 
+      log :debug, "initialize Database"
+      me  = update_profile
+      @db = Database.new @log, :me=>me, :size=> 100
+
+      @db.status.listen do|src, status|
+        case src
+        when :timeline, :me
+          message(status, main_channel)
+        end
+      end
+
+      @db.status.listen do|src, status|
+        log :debug, [src, status.text].inspect
+        case src
+        when :me
+          mesg = input_message(status)
+          post @prefix, TOPIC, main_channel, mesg
+        end
+      end
+
+      @db.friends.listen do|kind, friend|
+        case kind
+        when :come
+          join main_channel, friend
+        when :bye
+          post prefix(friend), PART, main_channel, ""
+        end
+      end
+
+      log :debug, "initialize actions"
+      @ctcp_actions = {}
       @@commands.each do|c|
         log :debug,"command #{c.inspect}"
         c.new self
       end
 
-      check_login
-
+      log :debug, "initialize agent"
       @@agents.each do|agent|
         agent.new(@log, @api, @db)
+      end
+
+      log :debug, "server response"
+      @prefix = prefix(me)
+      @user   = @prefix.user
+      @host   = @prefix.host
+
+      post server_name, MODE, @nick, "+o"
+      post @prefix, JOIN, main_channel
+      post server_name, MODE, main_channel, "+mto", @nick
+      post server_name, MODE, main_channel, "+q", @nick
+      log :info,"Client options: #{@opts.marshal_dump.inspect}"
+
+      @db.transaction do|db|
+        me.status[:user] = me
+        db.status.add(:profile, me.status)
       end
     end
 
@@ -174,7 +202,7 @@ module Atig
       return if mesg.empty?
       return on_ctcp_action(target, mesg) if mesg.sub!(/\A +/, "")
 
-      previous = @me.status
+      previous = @db.status.me.status
       if previous and
           ((Time.now - Time.parse(previous.created_at)).to_i < 60 rescue true) and
           mesg.strip == previous.text
@@ -218,36 +246,17 @@ module Atig
     end
 
     private
-    def check_login
-      retry_count = 0
-      begin
-        @me = @twitter.post "account/update_profile"
-      rescue Twitter::APIFailed => e
-        log :error,e.inspect
-        sleep 1
-        retry_count += 1
-        retry if retry_count < 3
-        log :info, <<END
+    def update_profile
+      @api.delay(0, :retry=>3) do|t|
+        t.post "account/update_profile"
+      end
+    rescue Twitter::APIFailed => e
+      log :info, <<END
 Failed to access API 3 times.
 Please check your username/email and password combination,
 Twitter Status <http://status.twitter.com/> and try again later.
 END
-        finish
-      end
-
-      @prefix = prefix(@me)
-      @user   = @prefix.user
-      @host   = @prefix.host
-
-      post server_name, MODE, @nick, "+o"
-      post @prefix, JOIN, main_channel
-      post server_name, MODE, main_channel, "+mto", @nick
-      post server_name, MODE, main_channel, "+q", @nick
-      if @me.status
-        post @prefix, TOPIC, main_channel, input_message(@me.status)
-      end
-
-      log :info,"Client options: #{@opts.marshal_dump.inspect}"
+      finish
     end
 
     def parse_opts(opts)
