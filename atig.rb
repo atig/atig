@@ -37,6 +37,7 @@ Atig::Gateway.agents   = [
                           Atig::Agent::Timeline,
                           Atig::Agent::Follower,
                           Atig::Agent::Friend,
+                          Atig::Agent::Mention,
                          ]
 Atig::Gateway.ifilters = [
                           Atig::IFilter::DecodeUtf7,
