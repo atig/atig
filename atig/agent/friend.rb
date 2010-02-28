@@ -17,7 +17,9 @@ module Atig
             friends = t.page("statuses/friends/#{db.me.id}", :users)
             log :info, "You have #{friends.size} friends"
 
-            db.friends.update friends
+            db.transaction do|d|
+              d.friends.update friends
+            end
           end
         end
       end

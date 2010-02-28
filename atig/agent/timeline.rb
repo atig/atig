@@ -25,9 +25,9 @@ module Atig
 
           statuses = t.get('/statuses/home_timeline', q)
 
-          db.transaction do|t|
+          db.transaction do|d|
             statuses.reverse_each do|status|
-              t.status.add :timeline, status
+              d.status.add :timeline, status
             end
           end
           @prev = statuses[0].id if statuses && statuses.size > 0

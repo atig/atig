@@ -16,7 +16,9 @@ module Atig
           log :info, "follower agent is invoked"
           followers = t.page("followers/ids/#{db.me.id}", :ids)
           log :info, "You have #{followers.size} followers"
-          db.followers.update followers
+          db.transaction do|d|
+            d.followers.update followers
+          end
         end
       end
     end
