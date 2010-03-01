@@ -19,11 +19,11 @@ Dir['atig/agent/*.rb'].each do|file|
 end
 
 Dir['atig/ifilter/*.rb'].each do|file|
-  require file
+  require file unless file =~ /_spec.rb\Z/
 end
 
 Dir['atig/ofilter/*.rb'].each do|file|
-  require file
+  require file unless file =~ /_spec.rb\Z/
 end
 
 Dir['atig/command/*.rb'].each do|file|
