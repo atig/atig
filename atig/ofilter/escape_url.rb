@@ -2,6 +2,9 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
 require 'atig/util'
+require 'atig/http'
+require 'atig/url_escape'
+
 begin
   require "punycode"
 rescue LoadError
@@ -13,10 +16,37 @@ module Atig
       include Util
       def initialize(logger,_)
         @log = logger
+        @http = Atig::Http.new logger
       end
 
       def call(status)
         status.merge(:status => escape_http_urls(status[:status]))
+      end
+
+      def exist_uri?(uri, limit = 1)
+        ret = nil
+        #raise "Not supported." unless uri.is_a?(URI::HTTP)
+        return ret if limit.zero? or uri.nil? or not uri.is_a?(URI::HTTP)
+        @log.debug uri.inspect
+
+        req = @http.req :head, uri
+        @http.http(uri, 3, 2).request(req) do |res|
+          ret = case res
+                when Net::HTTPSuccess
+                true
+                when Net::HTTPRedirection
+                uri = resolve_http_redirect(uri)
+                  exist_uri?(uri, limit - 1)
+                when Net::HTTPClientError
+                  false
+                else
+                  nil
+                end
+        end
+        ret
+      rescue => e
+        @log.error e.inspect
+        ret
       end
 
       def escape_http_urls(text)
@@ -39,7 +69,7 @@ module Atig
             end.join(".")
           end
           if text != original_text
-            log "Punycode encoded: #{text}"
+            log :info, "Punycode encoded: #{text}"
             original_text = text.dup
           end
         end
@@ -51,7 +81,7 @@ module Atig
           escaped_str = URI.escape(str, %r{[^-_.!~*'()a-zA-Z0-9;/?:@&=+$,\[\]#]}) #'
           URI.extract(escaped_str, %w[http https]).each do |url|
             uri = URI(URI.rstrip(url))
-            if not urls.include?(uri.to_s) and exist_uri?(uri)
+            if not urls.include?(uri.to_s) and self.exist_uri?(uri)
               urls << uri.to_s
             end
           end if escaped_str != str
@@ -60,11 +90,11 @@ module Atig
           unescaped_url = URI.unescape(url).encoding!("UTF-8")
           text.gsub!(unescaped_url, url)
         end
-        log "Percent encoded: #{text}" if text != original_text
+        log :info, "Percent encoded: #{text}" if text != original_text
 
-        text.encoding!("ASCII-8BIT")
+        text.encoding!("UTF-8")
       rescue => e
-        @log.error e
+        log :error, e
         text
       end
     end
