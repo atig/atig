@@ -9,19 +9,36 @@ module Atig
       include Enumerable
       def_delegators :@xs,:[]
 
-      def initialize(size)
-        @size = size
-        @index = 0
-        @xs = []
+      def initialize(capacity)
+        @size     = 0
+        @index    = 0
+        @capacity = capacity
+        @xs       = Array.new(capacity, nil)
       end
 
       def each(&f)
+        if @size < @capacity then
+          0.upto(@size - 1) {|i|
+            f.call @xs[i]
+          }
+        else
+          0.upto(@size - 1){|i|
+            f.call @xs[ (i + @index) % @capacity ]
+          }
+        end
       end
 
-      def push(status)
+      def include?(item)
+        self.any?{|x| x.id == item.id }
+      end
+
+      def push(item)
+        return nil if include? item
         i = @index
-        @xs[i] = status
-        @index = (i + 1) % @size
+        @xs[i] = item
+        @size = [ @size + 1, @capacity ].min
+        @index = ( @index + 1 ) % @capacity
+        i
       end
       alias_method :<<, :push
     end

@@ -5,8 +5,8 @@ require 'ostruct'
 
 describe Atig::Db::SizedUniqArray do
   def item(id)
-    item = mock 'Item'
-    item.should_receive(:id).and_return id
+    item = stub "Item-#{id}"
+    item.stub!(:id).and_return id
     item
   end
 
@@ -32,7 +32,7 @@ describe Atig::Db::SizedUniqArray do
   end
 
   it "should not have duplicate element" do
-    @array << item 1
+    @array << item(1)
     @array.to_a.should == [ @item1, @item2, @item3 ]
   end
 
