@@ -2,6 +2,16 @@
 # -*- mode:ruby; coding:utf-8 -*-
 require 'atig/db/followings'
 
+describe Atig::Db::Followings,"when it is empty" do
+  before do
+    @db = Atig::Db::Followings.new
+  end
+
+  it "should be emtpy" do
+    @db.empty?.should be_true
+  end
+end
+
 describe Atig::Db::Followings,"when updated users" do
   def user(name, protect, only)
     user = stub('User')
@@ -23,6 +33,14 @@ describe Atig::Db::Followings,"when updated users" do
     @db.listen do|kind, users|
       @listen[kind] = users
     end
+  end
+
+  it "should return size" do
+    @db.size.should == 2
+  end
+
+  it "should not empty" do
+    @db.empty?.should be_false
   end
 
   it "should call listener with :join" do

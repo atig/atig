@@ -13,6 +13,9 @@ module Atig
         @users = []
       end
 
+      def size; @users.size end
+      def empty?; @users.empty? end
+
       def update(users)
         bye   = diff(@users,users ){|x,y| x.screen_name == y.screen_name }
         join  = diff(users ,@users){|x,y| x.screen_name == y.screen_name }
