@@ -7,6 +7,8 @@ require "ostruct"
 require 'atig/url_escape'
 require 'atig/fake_twitter'
 require 'atig/twitter'
+require 'atig/db/db'
+
 module Net::IRC::Constants
   RPL_WHOISBOT = "335"
   RPL_CREATEONTIME = "329"
@@ -128,52 +130,52 @@ module Atig
 
       log :debug, "initialize Database"
       me  = update_profile
-      @db = Database.new @log, :me=>me, :size=> 100
+      @db = Atig::Db::Db.new @log, :me=>me, :size=> 100
 
-      @db.status.listen do|src, status|
-        case src
+      @db.statuses.listen do|entry|
+        case entry.source
         when :timeline, :me
-          message(status, main_channel)
+          message(entry.status, main_channel)
         end
       end
 
-      @db.status.listen do|src, status|
-        case src
-        when :me
-          mesg = input_message(status)
-          post @prefix, TOPIC, main_channel, mesg
-        end
-      end
+      # @db.statuses.listen do|entry|
+      #   case src
+      #   when :me
+      #     mesg = input_message(status)
+      #     post @prefix, TOPIC, main_channel, mesg
+      #   end
+      # end
 
-      @db.status.listen do|src,status|
-        case src
-        when :timeline,:me
-          name = @db.me.screen_name
-          message(status, mention_channel) if status.text.include?(name)
-        when :mention
-          message(status, mention_channel)
-        end
-      end
+      # @db.status.listen do|src,status|
+      #   case src
+      #   when :timeline,:me
+      #     name = @db.me.screen_name
+      #     message(status, mention_channel) if status.text.include?(name)
+      #   when :mention
+      #     message(status, mention_channel)
+      #   end
+      # end
 
-      @db.friends.listen do|kind, friend|
-        case kind
-        when :come
-          join main_channel, friend
-        when :bye
-          post prefix(friend), PART, main_channel, ""
-        end
-        log :debug, "set modes for #{db.friends.size} friend"
-        set_modes main_channel, @db.friends
-      end
+      # @db.friends.listen do|kind, friend|
+      #   case kind
+      #   when :come
+      #     join main_channel, friend
+      #   when :bye
+      #     post prefix(friend), PART, main_channel, ""
+      #   end
+      #   log :debug, "set modes for #{db.friends.size} friend"
+      #   set_modes main_channel, @db.friends
+      # end
 
-      @db.followers.listen do|_, _|
-        log :debug, "set modes for #{db.friends.size} friend"
-        set_modes main_channel, @db.friends
-      end
+      # @db.followers.listen do|_, _|
+      #   log :debug, "set modes for #{db.friends.size} friend"
+      #   set_modes main_channel, @db.friends
+      # end
 
-      @db.direct_messages.listen do|dm|
-        message(dm, @nick)
-      end
+      # @db.direct_messages.listen do|dm|
+      #   message(dm, @nick)
+      # end
 
       log :debug, "initialize actions"
       @ctcp_actions = {}
@@ -196,11 +198,6 @@ module Atig
       create_channel main_channel
       create_channel mention_channel
       log :info,"Client options: #{@opts.marshal_dump.inspect}"
-
-      @db.transaction do|db|
-        me.status[:user] = me
-        db.status.add(:profile, me.status)
-      end
     end
 
     def on_privmsg(m)
