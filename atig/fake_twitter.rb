@@ -11,7 +11,6 @@ module Atig
   class FakeTwitter
     def initialize(logger,*_)
       @log = logger
-      @http = Atig::Http.new logger
     end
 
     def self.http_methods(*methods)
@@ -28,22 +27,8 @@ END
 
     def api(path, query = {}, opts = {})
       path.sub!(%r{\A/+}, "")
+      json = File.read(path+".json")
 
-      method = :get
-      uri = URI("http://localhost:8001/")
-      uri.path += path
-      uri.path += ".json" if path != "users/username_available"
-
-      req  = @http.req method, uri, {},nil
-      @log.debug [req.method, uri.to_s]
-      begin
-        ret = @http.http(uri, 30, 30).request req
-      rescue OpenSSL::SSL::SSLError => e
-        @log.error e.inspect
-        raise e.inspect
-      end
-
-      json = ret.body.strip.sub(/\A(?:false|true)\z/, "[\\&]")
 
       res = JSON.parse(json)
       TwitterStruct.make(res)
