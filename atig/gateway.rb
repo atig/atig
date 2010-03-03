@@ -171,9 +171,9 @@ module Atig
         log :debug, "set modes for #{db.followings.size} friend"
       end
 
-      # @db.direct_messages.listen do|dm|
-      #   message(dm, @nick)
-      #end
+      @db.dms.listen do|dm|
+        message(dm, @nick)
+      end
 
       log :debug, "initialize actions"
       @ctcp_actions = {}

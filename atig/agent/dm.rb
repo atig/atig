@@ -5,7 +5,7 @@ require 'atig/util'
 
 module Atig
   module Agent
-    class DirectMessage
+    class Dm
       include Util
 
       def initialize(logger, api, db)
@@ -27,7 +27,7 @@ module Atig
 
           db.transaction do|d|
             dms.reverse_each do|dm|
-              d.direct_messages.add dm
+              d.dms.add :status => dm, :user => dm.sender
             end
           end
         end

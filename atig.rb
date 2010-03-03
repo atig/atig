@@ -30,15 +30,13 @@ Dir['atig/command/*.rb'].each do|file|
   require file
 end
 
-require 'atig/database'
 require 'atig/gateway'
 
 Atig::Gateway.agents   = [
+                          Atig::Agent::Following,
                           Atig::Agent::Timeline,
-                          Atig::Agent::Follower,
-                          Atig::Agent::Friend,
                           Atig::Agent::Mention,
-                          Atig::Agent::DirectMessage
+                          Atig::Agent::Dm
                          ]
 Atig::Gateway.ifilters = [
                           Atig::IFilter::Utf7,
