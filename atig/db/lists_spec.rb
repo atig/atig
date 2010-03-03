@@ -1,6 +1,8 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'atig/db/lists'
+
 describe Atig::Db::Lists do
   def user(name, protect, only)
     user = stub("user-#{name}")
@@ -16,36 +18,52 @@ describe Atig::Db::Lists do
     @bob      = user 'bob'     , true , false
     @charriey = user 'charriey', false, true
 
-    @args = []
-    @lists.listen{|*args| @args << args }
+    @args = {}
+    @lists.listen{|kind,*args| @args[kind] = args }
   end
 
   it "should have list" do
-    @lists.update("a", [ @alice, @bob ])
-    @lists.update("b", [ @alice, @bob , @charriey ])
+    @lists.update("a" => [ @alice, @bob ],
+                  "b" => [ @alice, @bob , @charriey ])
 
-    @lists.find_by_screen_name('alice').should == ["a", "b"]
+    @lists.find_by_screen_name('alice').sort.should == ["a", "b"]
     @lists.find_by_screen_name('charriey').should == ["b"]
   end
 
   it "should call listener when new list" do
+    @lists.update("a" => [ @alice, @bob ])
 
+    @args.keys.sort.should == [:new, :join].sort
+    @args[:new].should == [ "a" ]
+    @args[:join].should == [ "a", [ @alice, @bob ] ]
   end
 
   it "should call listener when delete list" do
-
+    @lists.update("a" => [ @alice, @bob ])
+    @lists.update({})
+    @args.keys.sort == [:new, :join, :del].sort
+    @args[:del].should == ["a"]
   end
 
   it "should call listener when join user" do
+    @lists.update("a" => [ @alice ])
+    @lists.update("a" => [ @alice, @bob, @charriey ])
 
+    @args[:join].should == ["a", [ @bob, @charriey ]]
   end
 
   it "should call listener when exit user" do
-
+    @lists.update("a" => [ @alice, @bob, @charriey ])
+    @lists.update("a" => [ @alice ])
+    @args[:bye].should == ["a", [ @bob, @charriey ]]
   end
 
   it "should call listener when change user mode" do
+    @lists.update("a" => [ @alice, @bob ])
+    bob = user 'bob', false, false
+    @lists.update("a" => [ @alice, bob ])
 
+    @args[:mode].should == [ "a", [ bob ]]
   end
 end
 
