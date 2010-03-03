@@ -176,6 +176,23 @@ module Atig
         log :debug, "set modes for #{db.followings.size} friend"
       end
 
+      @db.lists.listen do|kind, name, users=[]|
+        channel = "##{name}"
+        case kind
+        when :new
+          create_channel channel
+        when :del
+          post @prefix, PART, channel, "No longer follow the list #{name}"
+        when :join
+          join channel, users
+        when :bye
+          users.each {|u|
+            post prefix(u), PART, main_channel, ""
+          }
+        when :mode
+        end
+      end
+
       @db.dms.listen do|dm|
         message(dm, @nick)
       end
