@@ -148,15 +148,15 @@ module Atig
         end
       end
 
-      # @db.status.listen do|src,status|
-      #   case src
-      #   when :timeline,:me
-      #     name = @db.me.screen_name
-      #     message(status, mention_channel) if status.text.include?(name)
-      #   when :mention
-      #     message(status, mention_channel)
-      #   end
-      # end
+      @db.statuses.listen do|entry|
+        case entry.source
+        when :timeline,:me
+          name = @db.me.screen_name
+          message(entry, mention_channel) if entry.status.text.include?(name)
+         when :mention
+          message(entry, mention_channel)
+        end
+      end
 
       @db.followings.listen do|kind, users|
         case kind
@@ -171,14 +171,9 @@ module Atig
         log :debug, "set modes for #{db.followings.size} friend"
       end
 
-      # @db.followers.listen do|_, _|
-      #   log :debug, "set modes for #{db.friends.size} friend"
-      #   set_modes main_channel, @db.friends
-      # end
-
       # @db.direct_messages.listen do|dm|
       #   message(dm, @nick)
-      # end
+      #end
 
       log :debug, "initialize actions"
       @ctcp_actions = {}

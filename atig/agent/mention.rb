@@ -26,8 +26,8 @@ module Atig
           mentions = t.get("statuses/mentions", q)
 
           db.transaction do|t|
-            mentions.reverse_each do|mention|
-              db.status.add :mention, mention
+            mentions.reverse_each do|m|
+              db.statuses.add :source =>:mention, :status => m, :user => m.user
             end
           end
           @prev = mentions[0].id if mentions && mentions.size > 0

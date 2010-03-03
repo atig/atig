@@ -11,7 +11,8 @@ module Atig
   module Db
     class Db
       include Util
-      attr_reader :followings, :statuses, :me
+      attr_reader :followings, :statuses
+      attr_accessor :me
 
       def initialize(logger, opt={})
         @followings = Followings.new
