@@ -4,35 +4,53 @@ require 'atig/db/sized_uniq_array'
 require 'ostruct'
 
 describe Atig::Db::SizedUniqArray do
+  def item(id)
+    item = mock 'Item'
+    item.should_receive(:id).and_return id
+    item
+  end
+
   before do
     @array = Atig::Db::SizedUniqArray.new 3
-    @item1 = OpenStruct.new 'id' => 1
-    @item2 = OpenStruct.new 'id' => 2
-    @item3 = OpenStruct.new 'id' => 3
-    @item4 = OpenStruct.new 'id' => 4
+    @item1 = item 1
+    @item2 = item 2
+    @item3 = item 3
+    @item4 = item 4
 
     @array << @item1
     @array << @item2
     @array << @item3
+  end
+
+  it "should include items" do
+    @array.to_a.should == [ @item1, @item2, @item3 ]
+  end
+
+  it "should rorate array" do
     @array << @item4
+    @array.to_a.should == [ @item2, @item3, @item4 ]
   end
 
-  it "should have 3 elements" do
-    @array.include?(@item1).should be_false
-    @array.include?(@item2).should be_true
-    @array.include?(@item3).should be_true
-    @array.include?(@item4).should be_true
+  it "should not have duplicate element" do
+    @array << item 1
+    @array.to_a.should == [ @item1, @item2, @item3 ]
   end
 
-  it "should not move index" do
-    i = @array.index @item3
-    @array << @item1
-    j = @array.index @item3
-    i.should == j
+  it "should be accesible by index" do
+    @array[0].should == @item1
+    @array[1].should == @item2
+    @array[2].should == @item3
   end
 
   it "should not change index" do
-    @array << @item1
+    @array << @item4
+    @array[0].should == @item4
+    @array[1].should == @item2
     @array[2].should == @item3
+  end
+
+  it "should return index when add element" do
+    (@array << @item4).should == 0
+    (@array << @item3).should == nil
   end
 end

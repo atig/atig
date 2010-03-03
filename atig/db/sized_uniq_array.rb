@@ -7,7 +7,7 @@ module Atig
     class SizedUniqArray
       extend Forwardable
       include Enumerable
-      def_delegators :@xs,:[],:each
+      def_delegators :@xs,:[]
 
       def initialize(size)
         @size = size
@@ -15,17 +15,13 @@ module Atig
         @xs = []
       end
 
-      def include?(x)
-        @xs.any?{|item| item.id == x.id }
-      end
-
-      def index(s)
-        @xs.index(s)
+      def each(&f)
       end
 
       def push(status)
-        @xs[@index] = status
-        @index = (@index + 1) % @size
+        i = @index
+        @xs[i] = status
+        @index = (i + 1) % @size
       end
       alias_method :<<, :push
     end
