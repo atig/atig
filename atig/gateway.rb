@@ -53,11 +53,12 @@ module Atig
       end
     end
 
-    def message(struct, target,  command = PRIVMSG)
-      user = struct.user || struct.sender || struct
+    def message(entry, target,  command = PRIVMSG)
+      user        = entry.user
       screen_name = user.screen_name
-      prefix = prefix user
-      str    = input_message struct
+      prefix      = prefix user
+      status      = entry.status.merge(:tid=>entry.tid)
+      str         = input_message(status).text
 
       post prefix, command, target, str
     end
@@ -85,7 +86,7 @@ module Atig
     end
 
     def input_message(status)
-      @ifilters.inject(status) {|x, f| f.call x }.text
+      @ifilters.inject(status) {|x, f| f.call x }
     end
 
     def output_message(query)
@@ -135,7 +136,7 @@ module Atig
       @db.statuses.listen do|entry|
         case entry.source
         when :timeline, :me
-          message(entry.status, main_channel)
+          message(entry, main_channel)
         end
       end
 
