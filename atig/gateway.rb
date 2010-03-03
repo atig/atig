@@ -57,8 +57,7 @@ module Atig
       user        = entry.user
       screen_name = user.screen_name
       prefix      = prefix user
-      status      = entry.status.merge(:tid=>entry.tid)
-      str         = input_message(status).text
+      str         = input_message(entry)
 
       post prefix, command, target, str
     end
@@ -85,8 +84,9 @@ module Atig
       "http://twitter.com/#{struct.user.screen_name}/statuses/#{struct.id}"
     end
 
-    def input_message(status)
-      @ifilters.inject(status) {|x, f| f.call x }
+    def input_message(entry)
+      status = entry.status.merge(:tid=>entry.tid)
+      @ifilters.inject(status) {|x, f| f.call x }.text
     end
 
     def output_message(query)
@@ -96,7 +96,7 @@ module Atig
     def update_my_status(ret)
       log :info, oops(ret) if ret.truncated
       @db.transaction do|db|
-        db.status.add :ret, ret
+        db.statuses.add(:source => :me, :status => ret, :user => ret.user )
       end
     end
 
@@ -140,13 +140,13 @@ module Atig
         end
       end
 
-      # @db.statuses.listen do|entry|
-      #   case src
-      #   when :me
-      #     mesg = input_message(status)
-      #     post @prefix, TOPIC, main_channel, mesg
-      #   end
-      # end
+      @db.statuses.listen do|entry|
+        case entry.source
+        when :me
+          mesg = input_message(entry)
+          post @prefix, TOPIC, main_channel, mesg
+        end
+      end
 
       # @db.status.listen do|src,status|
       #   case src
@@ -201,6 +201,8 @@ module Atig
       create_channel main_channel
       create_channel mention_channel
       log :info,"Client options: #{@opts.marshal_dump.inspect}"
+
+      @db.statuses.add :user => me, :source => :me, :status => me.status
     end
 
     def on_privmsg(m)
