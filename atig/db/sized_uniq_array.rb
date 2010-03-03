@@ -9,6 +9,8 @@ module Atig
       include Enumerable
       def_delegators :@xs,:[]
 
+      attr_reader :size
+
       def initialize(capacity)
         @size     = 0
         @index    = 0
