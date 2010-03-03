@@ -21,7 +21,7 @@ module Atig
 
         if i = @queue.push(entry) then
           entry.tid = @roman.make i
-          notify entry.status, entry.tid, entry.user
+          notify entry
         end
       end
 

@@ -29,20 +29,21 @@ describe Atig::Db::Statuses do
     @alice = user 'alice'
     @bob = user 'bob'
 
-    @db.add :status => @a , :user => @alice
-    @db.add :status => @b , :user => @bob
-    @db.add :status => @c , :user => @alice
+    @db.add :status => @a , :user => @alice, :source => :timeline
+    @db.add :status => @b , :user => @bob  , :source => :timeline
+    @db.add :status => @c , :user => @alice, :source => :timeline
   end
 
   it "should call listeners" do
-    status = tid = user = nil
-    @db.listen{|*x| status,tid,user = *x }
+    entry = nil
+    @db.listen{|x| entry = x }
 
-    @db.add :status => @d, :user => @alice
+    @db.add :status => @d, :user => @alice, :source => :timeline
 
-    status.should == @d
-    tid.should match(/\w+/)
-    user.should   == @alice
+    entry.source.should == :timeline
+    entry.status.should == @d
+    entry.tid.should match(/\w+/)
+    entry.user.should   == @alice
   end
 
   it "should have only 4 statuses" do
@@ -57,7 +58,7 @@ describe Atig::Db::Statuses do
     called = false
     @db.listen{|*_| called = true }
 
-    @db.add :status => @c, :user => @bob
+    @db.add :status => @c, :user => @bob, :source => :timeline
     called.should be_false
   end
 
