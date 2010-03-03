@@ -12,7 +12,7 @@ module Atig
 	gateway.ctcp_action "mention","re","reply" do |target, mesg, command, args|
           # reply, re, mention
           tid = args.first
-          if status = gateway.db.status.tid(tid) then
+          if status = gateway.db.statuses.find_by_tid(tid) then
             text = mesg.split(" ", 3)[2]
             name = status.user.screen_name
 
