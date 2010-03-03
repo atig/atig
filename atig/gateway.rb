@@ -158,16 +158,18 @@ module Atig
       #   end
       # end
 
-      # @db.friends.listen do|kind, friend|
-      #   case kind
-      #   when :come
-      #     join main_channel, friend
-      #   when :bye
-      #     post prefix(friend), PART, main_channel, ""
-      #   end
-      #   log :debug, "set modes for #{db.friends.size} friend"
-      #   set_modes main_channel, @db.friends
-      # end
+      @db.followings.listen do|kind, users|
+        case kind
+        when :join
+          join main_channel, users
+        when :bye
+          users.each {|u|
+            post prefix(u), PART, main_channel, ""
+          }
+        when :mode
+        end
+        log :debug, "set modes for #{db.followings.size} friend"
+      end
 
       # @db.followers.listen do|_, _|
       #   log :debug, "set modes for #{db.friends.size} friend"
@@ -287,10 +289,26 @@ END
       OpenStruct.new opts
     end
 
-    def join(channel, user)
-      prefix = prefix(user)
-      post prefix, JOIN, channel
+    def join(channel, users)
+      params = []
+      users.each do |user|
+        prefix = prefix(user)
+        post prefix, JOIN, channel
+        case
+        when user.protected
+          params << ["v", prefix.nick]
+        when user.only
+          params << ["o", prefix.nick]
+        end
+        next if params.size < MAX_MODE_PARAMS
+
+        post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n}
+        params = []
+      end
+      post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n} unless params.empty?
+      users
     end
+
 
     def set_modes(channel, users)
       params = []
