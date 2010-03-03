@@ -145,6 +145,11 @@ module Atig
         when :me
           mesg = input_message(entry)
           post @prefix, TOPIC, main_channel, mesg
+        when :timeline
+          if entry.user.id == @db.me.id then
+            mesg = input_message(entry)
+            post @prefix, TOPIC, main_channel, mesg
+          end
         end
       end
 
