@@ -31,6 +31,12 @@ describe Atig::Db::SizedUniqArray do
     @array.to_a.should == [ @item2, @item3, @item4 ]
   end
 
+  it "should have reverse_each" do
+    xs = []
+    @array.reverse_each {|x| xs << x }
+    xs.should == [ @item3, @item2, @item1 ]
+  end
+
   it "should not have duplicate element" do
     @array << item(1)
     @array.to_a.should == [ @item1, @item2, @item3 ]
