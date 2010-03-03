@@ -33,10 +33,11 @@ end
 require 'atig/gateway'
 
 Atig::Gateway.agents   = [
+                          Atig::Agent::List,
                           Atig::Agent::Following,
-                          Atig::Agent::Timeline,
                           Atig::Agent::Mention,
-                          Atig::Agent::Dm
+                          Atig::Agent::Dm,
+                          Atig::Agent::Timeline,
                          ]
 Atig::Gateway.ifilters = [
                           Atig::IFilter::Utf7,

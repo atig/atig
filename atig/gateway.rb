@@ -137,6 +137,9 @@ module Atig
         case entry.source
         when :timeline, :me
           message(entry, main_channel)
+          (@db.lists.find_by_screen_name(entry.user.screen_name)).each do|name|
+            message(entry, "##{name}")
+          end
         end
       end
 
