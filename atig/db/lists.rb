@@ -45,6 +45,10 @@ module Atig
         return [] unless @members
         @members[name]
       end
+
+      def find_by_list_name(name)
+        @lists[name].users
+      end
     end
   end
 end

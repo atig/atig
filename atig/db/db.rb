@@ -3,6 +3,7 @@
 
 require 'atig/db/followings'
 require 'atig/db/statuses'
+require 'atig/db/lists'
 require 'atig/util'
 require 'thread'
 require 'set'
@@ -11,13 +12,14 @@ module Atig
   module Db
     class Db
       include Util
-      attr_reader :followings, :statuses, :dms
+      attr_reader :followings, :statuses, :dms, :lists
       attr_accessor :me
 
       def initialize(logger, opt={})
         @followings = Followings.new
         @statuses   = Statuses.new(opt[:size] || 1000)
         @dms        = Statuses.new(opt[:dm_size] || 1000)
+        @lists      = Lists.new
         @me         = opt[:me]
         @log     = logger
 

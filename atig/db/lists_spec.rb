@@ -30,6 +30,13 @@ describe Atig::Db::Lists do
     @lists.find_by_screen_name('charriey').should == ["b"]
   end
 
+  it "should have lists" do
+    @lists.update("a" => [ @alice, @bob ],
+                  "b" => [ @alice, @bob , @charriey ])
+
+    @lists.find_by_list_name('a').should == [ @alice, @bob ]
+  end
+
   it "should call listener when new list" do
     @lists.update("a" => [ @alice, @bob ])
 
