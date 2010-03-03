@@ -27,7 +27,7 @@ module Atig
 
           db.transaction do|d|
             statuses.reverse_each do|status|
-              d.status.add :timeline, status
+              d.statuses.add :status => status, :user => status.user, :source => :timeline
             end
           end
           @prev = statuses[0].id if statuses && statuses.size > 0
