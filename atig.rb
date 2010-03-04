@@ -59,6 +59,7 @@ Atig::Gateway.commands = [
                           Atig::Command::Retweet,
                           Atig::Command::Reply,
                           Atig::Command::User,
+                          Atig::Command::Favorite,
                          ]
 
 if __FILE__ == $0
