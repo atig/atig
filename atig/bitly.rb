@@ -1,6 +1,6 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
+require 'rubygems'
 require 'json'
 require 'atig/http'
 
