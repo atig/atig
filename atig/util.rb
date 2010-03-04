@@ -5,7 +5,11 @@ module Atig
   module Util
     private
     def log(type, s)
-      @log.send type, "[#{self.class}] #{s}"
+      if @log then
+        @log.send type, "[#{self.class}] #{s}"
+      else
+        STDERR.puts s
+      end
     end
 
     def safe(&f)
