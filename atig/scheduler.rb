@@ -26,10 +26,8 @@ module Atig
     end
 
     def delay(interval, opts={}, &f)
-      safe do
-        sleep interval
-        re_try(opts[:retry] || 0){ f.call @api }
-      end
+      sleep interval
+      re_try(opts[:retry] || 0){ f.call @api }
     end
 
     def re_try(count, &f)
