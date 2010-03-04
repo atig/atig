@@ -263,12 +263,13 @@ module Atig
     def on_ctcp_action(target, mesg)
       safe do
         command, *args = mesg.split(" ")
-        command.downcase!
-        if @ctcp_actions.key? command then
-          @ctcp_actions[command].call(target,
-                                      mesg,
-                                      Regexp.last_match || command,
-                                      args)
+        if command
+          command.downcase!
+          @ctcp_actions.each do |define, f|
+            if define === command
+                f.call(target, mesg, Regexp.last_match || command, args)
+            end
+          end
         else
           log :info, "[tig.rb] CTCP ACTION COMMANDS:"
           @ctcp_actions.keys.each do |c|
