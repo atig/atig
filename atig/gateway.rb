@@ -4,6 +4,7 @@
 require 'atig/util'
 require "net/irc"
 require "ostruct"
+require "time"
 require 'atig/url_escape'
 require 'atig/fake_twitter'
 require 'atig/twitter'
@@ -131,6 +132,7 @@ module Atig
 
       log :debug, "initialize Database"
       me  = update_profile
+      return unless me
       @db = Atig::Db::Db.new @log, :me=>me, :size=> 100
 
       @db.statuses.listen do|entry|

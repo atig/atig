@@ -58,6 +58,7 @@ Atig::Gateway.commands = [
                           Atig::Command::Footer,
                           Atig::Command::Retweet,
                           Atig::Command::Reply,
+                          Atig::Command::User,
                          ]
 
 if __FILE__ == $0
