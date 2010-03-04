@@ -41,7 +41,7 @@ module Atig
 
           safe {
             gateway.update_my_status ret
-            notify "Status updated (RT to #{entry.tid}: #{enty.status.text})"
+            notify "Status updated (RT to #{entry.tid}: #{entry.status.text})"
           }
         end
       end
