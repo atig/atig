@@ -99,8 +99,7 @@ describe Atig::Db::Statuses do
   end
 
   it "should be found by screen_name with limit" do
-    xs = *@db.find_by_screen_name('alice', :limit => 1)
-
+    xs = @db.find_by_screen_name('alice', :limit => 1)
     xs.size.should == 1
   end
 end

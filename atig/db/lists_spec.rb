@@ -40,7 +40,7 @@ describe Atig::Db::Lists do
   it "should call listener when new list" do
     @lists.update("a" => [ @alice, @bob ])
 
-    @args.keys.sort.should == [:new, :join].sort
+    @args.keys.should include(:new, :join)
     @args[:new].should == [ "a" ]
     @args[:join].should == [ "a", [ @alice, @bob ] ]
   end
@@ -48,7 +48,7 @@ describe Atig::Db::Lists do
   it "should call listener when delete list" do
     @lists.update("a" => [ @alice, @bob ])
     @lists.update({})
-    @args.keys.sort == [:new, :join, :del].sort
+    @args.keys.should include(:new, :join, :del)
     @args[:del].should == ["a"]
   end
 

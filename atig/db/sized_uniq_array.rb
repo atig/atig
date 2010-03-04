@@ -2,6 +2,7 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
 require 'forwardable'
+
 module Atig
   module Db
     class SizedUniqArray
@@ -30,8 +31,22 @@ module Atig
         end
       end
 
+      def reverse_each(&f)
+        if @size < @capacity then
+          (@size - 1).downto(0) {|i|
+            f.call @xs[i]
+          }
+        else
+          (@size - 1).downto(0){|i|
+            f.call @xs[ (i + @index) % @capacity ]
+          }
+        end
+      end
+
       def include?(item)
-        self.any?{|x| x.id == item.id }
+        self.any?{|x|
+          x.id == item.id
+        }
       end
 
       def push(item)

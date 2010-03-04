@@ -179,7 +179,7 @@ module Atig
         log :debug, "set modes for #{db.followings.size} friend"
       end
 
-      @db.lists.listen do|kind, name, users=[]|
+      @db.lists.listen do|kind, name, users|
         channel = "##{name}"
         case kind
         when :new

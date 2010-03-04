@@ -4,6 +4,10 @@ require 'atig/db/listenable'
 require 'atig/db/sized_uniq_array'
 require 'atig/db/roman'
 
+class OpenStruct
+  def id; method_missing(:id) end
+end
+
 module Atig
   module Db
     class Statuses
