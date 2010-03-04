@@ -3,7 +3,10 @@
 
 require 'atig/util'
 require 'atig/command/single_action'
-require 'jcode'
+begin
+  require 'jcode'
+rescue LoadError
+end
 
 module Atig
   module Command
@@ -18,7 +21,7 @@ module Atig
         screen_name = "@#{entry.user.screen_name}"
         text = "#{comment} RT #{screen_name}: #{entry.status.text}"
 
-        chars = text.each_char
+        chars = text.each_char.to_a
         if chars.size > 140 then
           url = gateway.output_message(:status =>
                                        "http://twitter.com/#{entry.user.screen_name}/status/#{entry.status.id}")[:status]
