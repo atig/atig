@@ -56,6 +56,7 @@ Atig::Gateway.ofilters = [
 Atig::Gateway.commands = [
                           Atig::Command::Utf7,
                           Atig::Command::Footer,
+                          Atig::Command::Retweet,
                           Atig::Command::Reply,
                          ]
 

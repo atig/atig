@@ -111,3 +111,17 @@ describe Atig::OFilter::ShortUrl,"when no-login unu with size" do
     }
   end
 end
+
+describe Atig::OFilter::ShortUrl,"when nop" do
+  before do
+    logger = mock('Logger')
+
+    @ofilter = Atig::OFilter::ShortUrl.new logger,OpenStruct.new
+  end
+
+  it "should only not do anything" do
+    @ofilter.call({:status => "this is http://example.com/a http://a.com"}).should == {
+      :status => "this is http://example.com/a http://a.com"
+    }
+  end
+end

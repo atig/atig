@@ -74,6 +74,10 @@ describe Atig::Db::Statuses do
     @db.find_by_tid(entry.tid).should == entry
   end
 
+  it "should be found by tid" do
+    @db.find_by_tid('__').should be_nil
+  end
+
   it "should be found by user" do
     a,b = *@db.find_by_user(@alice)
 
