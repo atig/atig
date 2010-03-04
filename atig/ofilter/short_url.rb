@@ -33,7 +33,8 @@ module Atig
       end
 
       def short_urls(mesg)
-        mesg unless @shorten
+        return mesg unless @shorten
+
         mesg.gsub(URI.regexp(%w[http https])) do|url|
           if URI.rstrip(url).size < @len then
             url
