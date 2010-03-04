@@ -38,7 +38,9 @@ module Atig
       end
 
       def find_by_tid(tid)
-        @queue[@roman[tid]]
+        if i = @roman[tid] then
+          @queue[i]
+        end
       end
 
       def find_by_id(id)
