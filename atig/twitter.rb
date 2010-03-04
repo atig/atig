@@ -86,7 +86,6 @@ END
         unless hourly_limit.zero?
           if @auth_limit != hourly_limit
             msg = "The rate limit per hour was changed: #{@auth_limit} to #{hourly_limit}"
-            log msg
             @log.info msg
             @auth_limit = hourly_limit
           end
