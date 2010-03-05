@@ -19,7 +19,7 @@ module Atig
           if @db.followings.empty?
             friends = t.page("statuses/friends/#{@db.me.id}", :users)
           else
-            @db.me = t.get("account/update_profile")
+            @db.me = t.post("account/update_profile")
             return if @db.me.friends_count == @db.followings.size
             friends = t.get("statuses/friends/#{@db.me.id}", :users)
           end
