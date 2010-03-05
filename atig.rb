@@ -94,8 +94,8 @@ EOB
       end
 
       on("--debug", "Enable debug mode") do |debug|
-        opts[:log]   = $stderr
-        opts[:debug] = true
+        opts[:log]   ||= $stderr
+        opts[:debug]   = true
       end
 
       on("-f", "--foreground", "run foreground") do |foreground|
