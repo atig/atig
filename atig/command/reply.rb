@@ -1,12 +1,13 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
-require 'atig/util'
+require 'atig/exception_util'
 require 'atig/command/single_action'
 
 module Atig
   module Command
     class Reply < SingleAction
+      include ExceptionUtil
       def initialize(gateway)
         super(gateway,%w(mention re reply))
       end
