@@ -38,12 +38,14 @@ describe Atig::Db::Statuses do
     entry = nil
     @db.listen{|x| entry = x }
 
-    @db.add :status => @d, :user => @alice, :source => :timeline
+    @db.add :status => @d, :user => @alice, :source => :timeline, :fuga => :hoge
 
     entry.source.should == :timeline
     entry.status.should == @d
     entry.tid.should match(/\w+/)
     entry.user.should   == @alice
+    entry.source.should == :timeline
+    entry.fuga.should == :hoge
   end
 
   it "should have only 4 statuses" do
