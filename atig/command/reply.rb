@@ -31,10 +31,8 @@ module Atig
           gateway.api.delay(0) do|t|
             ret = t.post("statuses/update", q)
             safe {
-              gateway.update_my_status ret
               msg = gateway.input_message(status)
-              url = gateway.permalink(status)
-              notify "Status updated (In reply to #{tid}: #{msg} <#{url}>)"
+              gateway.update_my_status ret,target, "In reply to #{tid}: #{msg}"
             }
           end
         end

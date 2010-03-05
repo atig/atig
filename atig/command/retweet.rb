@@ -32,8 +32,7 @@ module Atig
         gateway.api.delay(0) do|t|
           ret = t.post("statuses/update", q)
           safe {
-            gateway.update_my_status ret
-            notify "Status updated (RT to #{entry.tid}: #{text})"
+            gateway.update_my_status ret,target, "RT to #{entry.tid}: #{text}"
           }
         end
       end
@@ -43,8 +42,7 @@ module Atig
           ret = t.post("statuses/retweet/#{entry.status.id}",{ :source => gateway.api_source })
 
           safe {
-            gateway.update_my_status ret
-            notify "Status updated (RT to #{entry.tid}: #{entry.status.text})"
+            gateway.update_my_status ret,target, "RT to #{entry.tid}: #{text}"
           }
         end
       end

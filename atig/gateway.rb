@@ -70,9 +70,13 @@ module Atig
     alias_method :__log__, :log
     def log(kind, str)
       if kind == :info or kind == :error
-        post server_name, NOTICE, main_channel, str.gsub(/\r\n|[\r\n]/, " ")
+        notify main_channel, str
       end
       __log__(kind, str)
+    end
+
+    def notify(target, str)
+      post server_name, NOTICE, target, str.gsub(/\r\n|[\r\n]/, " ")
     end
 
     def oops(status)
@@ -94,11 +98,14 @@ module Atig
       @ofilters.inject(query) {|x, f| f.call x }
     end
 
-    def update_my_status(ret)
-      log :info, oops(ret) if ret.truncated
+    def update_my_status(ret, target, msg='')
+      notify target, oops(ret) if ret.truncated
       @db.transaction do|db|
         db.statuses.add(:source => :me, :status => ret, :user => ret.user )
       end
+
+      msg = "(#{msg})" unless msg.empty?
+      notify target, "Status updated #{msg}"
     end
 
     protected
@@ -250,8 +257,7 @@ module Atig
       @api.delay(0, :retry=>3) do|t|
         ret = t.post("statuses/update", q)
         safe {
-          update_my_status ret
-          log :info, "Status updated"
+          update_my_status ret,target
         }
       end
     end
