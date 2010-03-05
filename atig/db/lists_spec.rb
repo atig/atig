@@ -37,6 +37,20 @@ describe Atig::Db::Lists do
     @lists.find_by_list_name('a').should == [ @alice, @bob ]
   end
 
+  it "should have each" do
+    data = {
+      "a" => [ @alice, @bob ],
+      "b" => [ @alice, @bob , @charriey ]
+    }
+    @lists.update(data)
+
+    hash = {}
+    @lists.each do|name,users|
+      hash[name] = users
+    end
+    hash.should == data
+  end
+
   it "should call listener when new list" do
     @lists.update("a" => [ @alice, @bob ])
 

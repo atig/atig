@@ -49,6 +49,12 @@ module Atig
       def find_by_list_name(name)
         @lists[name].users
       end
+
+      def each(&f)
+        @lists.each do|name,users|
+          f.call name,users.users
+        end
+      end
     end
   end
 end
