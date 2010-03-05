@@ -26,7 +26,7 @@ module Atig
 
       def action(target,mesg, command,args)
         if args.empty?
-          notify "/me list <NICK> [<NUM>]"
+          notify "/me #{command} <NICK> [<NUM>]"
           return
         end
         nick, num,*_ = args
