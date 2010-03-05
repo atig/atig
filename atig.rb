@@ -59,6 +59,7 @@ Atig::Gateway.commands = [
                           Atig::Command::Retweet,
                           Atig::Command::Reply,
                           Atig::Command::User,
+                          Atig::Command::Bio,
                           Atig::Command::Favorite,
                          ]
 
