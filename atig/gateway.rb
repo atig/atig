@@ -151,16 +151,28 @@ module Atig
 
       @db = Atig::Db::Db.new @log, :me=>me, :size=> 100
 
+      # main channel
       @db.statuses.listen do|entry|
         case entry.source
         when :timeline, :me
           message(entry, main_channel)
-          (@db.lists.find_by_screen_name(entry.user.screen_name)).each do|name|
-            message(entry, "##{name}")
-          end
         end
       end
 
+      # lists
+      @db.statuses.listen do|entry|
+        case entry.source
+        when :timeline, :me
+          lists = @db.lists.find_by_screen_name(entry.user.screen_name)
+          lists.each do|name|
+            message(entry, "##{name}")
+          end
+        when :list
+          message(entry,"##{entry.list}")
+        end
+      end
+
+      # main topic
       @db.statuses.listen do|entry|
         case entry.source
         when :me
@@ -174,6 +186,7 @@ module Atig
         end
       end
 
+      # mention
       @db.statuses.listen do|entry|
         case entry.source
         when :timeline,:me
@@ -184,6 +197,7 @@ module Atig
         end
       end
 
+      # followings
       @db.followings.listen do|kind, users|
         case kind
         when :join
@@ -197,6 +211,7 @@ module Atig
         log :debug, "set modes for #{db.followings.size} friend"
       end
 
+      # list followings
       @db.lists.listen do|kind, name, users|
         channel = "##{name}"
         case kind
@@ -214,6 +229,7 @@ module Atig
         end
       end
 
+      # dm
       @db.dms.listen do|dm|
         message(dm, @nick)
       end

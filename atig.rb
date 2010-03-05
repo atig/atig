@@ -35,6 +35,7 @@ require 'atig/gateway'
 
 Atig::Gateway.agents   = [
                           Atig::Agent::List,
+                          Atig::Agent::ListStatus,
                           Atig::Agent::Following,
                           Atig::Agent::Mention,
                           Atig::Agent::Dm,
