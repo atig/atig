@@ -108,6 +108,7 @@ module Atig
       log :debug, "client option"
       @real, *opts = (@opts.name || @real).split(" ")
       @opts = parse_opts opts
+      log :info,"Client options: #{@opts.marshal_dump.inspect}"
 
       log :debug, "initialize Twitter"
       @twitter = Twitter.new @log, @real, @pass
@@ -133,6 +134,14 @@ module Atig
       log :debug, "initialize Database"
       me  = update_profile
       return unless me
+
+      @prefix = prefix(me)
+      @user   = @prefix.user
+      @host   = @prefix.host
+      post server_name, MODE, @nick, "+o"
+      create_channel main_channel
+      create_channel mention_channel
+
       @db = Atig::Db::Db.new @log, :me=>me, :size=> 100
 
       @db.statuses.listen do|entry|
@@ -215,14 +224,7 @@ module Atig
       end
 
       log :debug, "server response"
-      @prefix = prefix(me)
-      @user   = @prefix.user
-      @host   = @prefix.host
 
-      post server_name, MODE, @nick, "+o"
-      create_channel main_channel
-      create_channel mention_channel
-      log :info,"Client options: #{@opts.marshal_dump.inspect}"
 
       @db.statuses.add :user => me, :source => :me, :status => me.status
     end
