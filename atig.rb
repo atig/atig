@@ -62,6 +62,7 @@ Atig::Gateway.commands = [
                           Atig::Command::User,
                           Atig::Command::Bio,
                           Atig::Command::Favorite,
+                          Atig::Command::Uptime,
                          ]
 
 if __FILE__ == $0
