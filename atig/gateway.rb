@@ -149,7 +149,7 @@ module Atig
       create_channel main_channel
       create_channel mention_channel
 
-      @db = Atig::Db::Db.new @log, :me=>me, :size=> 100
+      @db = Atig::Db::Db.new @log, :me=>me, :size=> 1000
 
       # main channel
       @db.statuses.listen do|entry|
