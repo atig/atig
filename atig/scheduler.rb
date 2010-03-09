@@ -16,7 +16,7 @@ module Atig
     def repeat(interval,opts={}, &f)
       t = daemon do
         log :debug, "agent #{t.inspect} is invoked"
-        re_try(opts[:retry] || 0){ f.call @api }
+        safe { f.call @api }
         sleep interval
       end
 
