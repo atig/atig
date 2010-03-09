@@ -22,7 +22,7 @@ module Atig
 
         s = ""
         s += "#{day} days" if day > 0
-        s += "%02d" % hour if hour > 0
+        s += "%02d:" % hour if hour > 0
         s += "%02d:%02d" % [min,sec]
         s
       end
