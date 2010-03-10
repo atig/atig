@@ -5,10 +5,17 @@ require 'atig/util'
 require "net/irc"
 require "ostruct"
 require "time"
+require 'yaml'
 require 'atig/url_escape'
 require 'atig/fake_twitter'
 require 'atig/twitter'
+require 'atig/oauth'
 require 'atig/db/db'
+
+begin
+  require 'continuation'
+rescue LoadError => e
+end
 
 module Net::IRC::Constants
   RPL_WHOISBOT = "335"
@@ -109,6 +116,10 @@ module Atig
     end
 
     protected
+    def on_message(m)
+      @on_message.call(m) if @on_message
+    end
+
     def on_user(m)
       super
 
@@ -116,9 +127,29 @@ module Atig
       @real, *opts = (@opts.name || @real).split(" ")
       @opts = parse_opts opts
       log :info,"Client options: #{@opts.marshal_dump.inspect}"
+      load_config
+
+      oauth = OAuth.new(@real)
+      unless oauth.verified? then
+        notify main_channel, "Access this URL and approve => #{oauth.url}"
+        notify main_channel, "Please input OAuth Verifier"
+        callcc{|cc|
+          @on_message = lambda{|m|
+            if m.command.downcase == 'privmsg' then
+              _, mesg = *m.params
+              if oauth.verify(mesg.strip)
+                save_config
+                cc.call
+              end
+            end
+            return true
+          }
+          return
+        }
+      end
 
       log :debug, "initialize Twitter"
-      @twitter = Twitter.new @log, @real, @pass
+      @twitter = Twitter.new @log, oauth.access
       @api     = Scheduler.new @log, @twitter
 
       log :debug, "initialize filter"
@@ -250,6 +281,17 @@ module Atig
 
 
       @db.statuses.add :user => me, :source => :me, :status => me.status
+    end
+
+    def save_config
+      File.open(File.expand_path("~/.atig"),"w") {|io|
+        YAML.dump({'oauth'=> OAuth.dump },io)
+      }
+    end
+
+    def load_config
+      config = YAML.load_file(File.expand_path("~/.atig"))
+      OAuth.load config['oauth']
     end
 
     def on_privmsg(m)
