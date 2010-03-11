@@ -33,7 +33,7 @@ module Atig
 
     def delay(interval, opts={}, &f)
       sleep interval
-      f.call @api
+      @queue.push(lambda{ safe { f.call @api } })
     end
 
     def re_try(count, &f)
