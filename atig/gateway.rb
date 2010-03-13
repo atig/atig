@@ -1,6 +1,7 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'fileutils'
 require 'atig/util'
 require "net/irc"
 require "ostruct"
@@ -286,14 +287,15 @@ module Atig
     end
 
     def save_config
-      File.open(File.expand_path("~/.atig"),"w") {|io|
-        YAML.dump({'oauth'=> OAuth.dump },io)
+      FileUtils.mkdir_p File.expand_path("~/.atig/")
+      File.open(File.expand_path("~/.atig/oauth"),"w") {|io|
+        YAML.dump(OAuth.dump,io)
       }
     end
 
     def load_config
-      config = YAML.load_file(File.expand_path("~/.atig"))
-      OAuth.load config['oauth']
+      FileUtils.mkdir_p File.expand_path("~/.atig/")
+      OAuth.load(YAML.load_file(File.expand_path("~/.atig/oauth"))) rescue nil
     end
 
     def on_privmsg(m)
