@@ -1,14 +1,22 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'fileutils'
 require 'atig/util'
 require "net/irc"
 require "ostruct"
 require "time"
+require 'yaml'
 require 'atig/url_escape'
 require 'atig/fake_twitter'
 require 'atig/twitter'
+require 'atig/oauth'
 require 'atig/db/db'
+
+begin
+  require 'continuation'
+rescue LoadError => e
+end
 
 module Net::IRC::Constants
   RPL_WHOISBOT = "335"
@@ -109,6 +117,10 @@ module Atig
     end
 
     protected
+    def on_message(m)
+      @on_message.call(m) if @on_message
+    end
+
     def on_user(m)
       super
 
@@ -116,9 +128,29 @@ module Atig
       @real, *opts = (@opts.name || @real).split(" ")
       @opts = parse_opts opts
       log :info,"Client options: #{@opts.marshal_dump.inspect}"
+      load_config
+
+      oauth = OAuth.new(@real)
+      unless oauth.verified? then
+        notify main_channel, "Access this URL and approve => #{oauth.url}"
+        notify main_channel, "Please input OAuth Verifier"
+        callcc{|cc|
+          @on_message = lambda{|m|
+            if m.command.downcase == 'privmsg' then
+              _, mesg = *m.params
+              if oauth.verify(mesg.strip)
+                save_config
+                cc.call
+              end
+            end
+            return true
+          }
+          return
+        }
+      end
 
       log :debug, "initialize Twitter"
-      @twitter = Twitter.new @log, @real, @pass
+      @twitter = Twitter.new @log, oauth.access
       @api     = Scheduler.new @log, @twitter
 
       log :debug, "initialize filter"
@@ -139,117 +171,131 @@ module Atig
       end
 
       log :debug, "initialize Database"
-      me  = update_profile
-      return unless me
+      @api.delay(0) do|t|
+        me  = update_profile t
+        return unless me
 
-      @prefix = prefix(me)
-      @user   = @prefix.user
-      @host   = @prefix.host
-      post server_name, MODE, @nick, "+o"
-      create_channel main_channel
-      create_channel mention_channel
+        @prefix = prefix(me)
+        @user   = @prefix.user
+        @host   = @prefix.host
+        post server_name, MODE, @nick, "+o"
+        create_channel main_channel
+        create_channel mention_channel
 
-      @db = Atig::Db::Db.new @log, :me=>me, :size=> 1000
+        @db = Atig::Db::Db.new @log, :me=>me, :size=> 100
 
-      # main channel
-      @db.statuses.listen do|entry|
-        case entry.source
-        when :timeline, :me
-          message(entry, main_channel)
-        end
-      end
-
-      # lists
-      @db.statuses.listen do|entry|
-        case entry.source
-        when :timeline, :me
-          lists = @db.lists.find_by_screen_name(entry.user.screen_name)
-          lists.each do|name|
-            message(entry, "##{name}")
+        # main channel
+        @db.statuses.listen do|entry|
+          case entry.source
+          when :timeline, :me
+            message(entry, main_channel)
           end
-        when :list
-          message(entry,"##{entry.list}")
         end
-      end
 
-      # main topic
-      @db.statuses.listen do|entry|
-        case entry.source
-        when :me
-          mesg = input_message(entry)
-          post @prefix, TOPIC, main_channel, mesg
-        when :timeline
-          if entry.user.id == @db.me.id then
+        # lists
+        @db.statuses.listen do|entry|
+          case entry.source
+          when :timeline, :me
+            lists = @db.lists.find_by_screen_name(entry.user.screen_name)
+            lists.each do|name|
+              message(entry, "##{name}")
+            end
+          when :list
+            message(entry,"##{entry.list}")
+          end
+        end
+
+        # main topic
+        @db.statuses.listen do|entry|
+          case entry.source
+          when :me
             mesg = input_message(entry)
             post @prefix, TOPIC, main_channel, mesg
+          when :timeline
+            if entry.user.id == @db.me.id then
+              mesg = input_message(entry)
+              post @prefix, TOPIC, main_channel, mesg
+            end
           end
         end
-      end
 
-      # mention
-      @db.statuses.listen do|entry|
-        case entry.source
-        when :timeline,:me
-          name = @db.me.screen_name
-          message(entry, mention_channel) if entry.status.text.include?(name)
-         when :mention
-          message(entry, mention_channel)
+        # mention
+        @db.statuses.listen do|entry|
+          case entry.source
+          when :timeline,:me
+            name = @db.me.screen_name
+            message(entry, mention_channel) if entry.status.text.include?(name)
+          when :mention
+            message(entry, mention_channel)
+          end
         end
-      end
 
-      # followings
-      @db.followings.listen do|kind, users|
-        case kind
-        when :join
-          join main_channel, users
-        when :bye
-          users.each {|u|
-            post prefix(u), PART, main_channel, ""
-          }
-        when :mode
+        # followings
+        @db.followings.listen do|kind, users|
+          case kind
+          when :join
+            join main_channel, users
+          when :bye
+            users.each {|u|
+              post prefix(u), PART, main_channel, ""
+            }
+          when :mode
+          end
+          log :debug, "set modes for #{db.followings.size} friend"
         end
-        log :debug, "set modes for #{db.followings.size} friend"
-      end
 
-      # list followings
-      @db.lists.listen do|kind, name, users|
-        channel = "##{name}"
-        case kind
-        when :new
-          create_channel channel
-        when :del
-          post @prefix, PART, channel, "No longer follow the list #{name}"
-        when :join
-          join channel, users
-        when :bye
-          users.each {|u|
-            post prefix(u), PART, main_channel, ""
-          }
-        when :mode
+        # list followings
+        @db.lists.listen do|kind, name, users|
+          channel = "##{name}"
+          case kind
+          when :new
+            create_channel channel
+          when :del
+            post @prefix, PART, channel, "No longer follow the list #{name}"
+          when :join
+            join channel, users
+          when :bye
+            users.each {|u|
+              post prefix(u), PART, main_channel, ""
+            }
+          when :mode
+          end
         end
+
+        # dm
+        @db.dms.listen do|dm|
+          message(dm, @nick)
+        end
+
+        log :debug, "initialize actions"
+        @ctcp_actions = {}
+        @@commands.each do|c|
+          log :debug,"command #{c.inspect}"
+          c.new self
+        end
+
+        log :debug, "initialize agent"
+        @@agents.each do|agent|
+          agent.new(@log, @api, @db)
+        end
+
+        log :debug, "server response"
+
+
+        @db.statuses.add :user => me, :source => :me, :status => me.status
       end
+    end
 
-      # dm
-      @db.dms.listen do|dm|
-        message(dm, @nick)
-      end
+    def save_config
+      FileUtils.mkdir_p File.expand_path("~/.atig/")
+      File.open(File.expand_path("~/.atig/oauth"),"w") {|io|
+        YAML.dump(OAuth.dump,io)
+      }
+    end
 
-      log :debug, "initialize actions"
-      @ctcp_actions = {}
-      @@commands.each do|c|
-        log :debug,"command #{c.inspect}"
-        c.new self
-      end
-
-      log :debug, "initialize agent"
-      @@agents.each do|agent|
-        agent.new(@log, @api, @db)
-      end
-
-      log :debug, "server response"
-
-
-      @db.statuses.add :user => me, :source => :me, :status => me.status
+    def load_config
+      FileUtils.mkdir_p File.expand_path("~/.atig/")
+      OAuth.load(YAML.load_file(File.expand_path("~/.atig/oauth"))) rescue nil
     end
 
     def on_privmsg(m)
@@ -291,7 +337,7 @@ module Atig
           command.downcase!
           @ctcp_actions.each do |define, f|
             if define === command
-                f.call(target, mesg, Regexp.last_match || command, args)
+              f.call(target, mesg, Regexp.last_match || command, args)
             end
           end
         else
@@ -311,13 +357,12 @@ module Atig
       post server_name, MODE, channel, "+q", @nick
     end
 
-    def update_profile
-      @api.delay(0, :retry=>3) do|t|
-        t.post "account/update_profile"
-      end
+    def update_profile(t)
+      # fixme: retry 3 times
+      t.post "account/update_profile"
     rescue Twitter::APIFailed => e
       log :info, <<END
-Failed to access API 3 times.
+Failed to access API.
 Please check your username/email and password combination,
 Twitter Status <http://status.twitter.com/> and try again later.
 END

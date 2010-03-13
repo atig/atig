@@ -11,12 +11,18 @@ module Atig
       @log = log
       @api = api
       @agents = []
+
+      @queue = SizedQueue.new 10
+      daemon do
+        f = @queue.pop
+        f.call
+      end
     end
 
     def repeat(interval,opts={}, &f)
       t = daemon do
         log :debug, "agent #{t.inspect} is invoked"
-        safe { f.call @api }
+        @queue.push(lambda{ safe { f.call @api } })
         sleep interval
       end
 
@@ -27,7 +33,7 @@ module Atig
 
     def delay(interval, opts={}, &f)
       sleep interval
-      re_try(opts[:retry] || 0){ f.call @api }
+      @queue.push(lambda{ safe { f.call @api } })
     end
 
     def re_try(count, &f)

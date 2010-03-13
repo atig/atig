@@ -12,13 +12,9 @@ module Atig
 
     class APIFailed < StandardError; end
 
-    CONSUMER_KEY='C8UoekGb32mVZ8ERtE66A'
-    CONSUMER_SECRET='Pe08j2pooXJm4SgT4uU590fVcyvgRVaN13m9u4wqGQ'
-
-    def initialize(logger, username, pass)
+    def initialize(logger, oauth)
       @log = logger
-      @username = username
-      @pass = pass
+      @oauth = oauth
       @http = Atig::Http.new @log
 
       @ip_limit   = 52
@@ -65,15 +61,14 @@ END
       uri.query = query.to_query_str unless query.empty?
 
       header      = {}
-      credentials = authenticate ? [@username, @pass] : nil
-      req         = @http.req method, uri, header, credentials
+      req         = @http.req method, uri, header
 
       @log.debug [req.method, uri.to_s]
       begin
-        if @oauth
-          ret = oauth(req)
+        if authenticate
+          ret = oauth req
         else
-          ret = @http.http(uri, 30, 30).request req
+          ret = http(uri, 30, 30).request req
         end
       rescue OpenSSL::SSL::SSLError => e
         @log.error e.inspect
