@@ -63,6 +63,7 @@ Atig::Gateway.commands = [
                           Atig::Command::Bio,
                           Atig::Command::Favorite,
                           Atig::Command::Uptime,
+                          Atig::Command::Destroy,
                          ]
 
 if __FILE__ == $0
