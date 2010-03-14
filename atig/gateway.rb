@@ -90,6 +90,7 @@ END
       load_config
 
       @real, @opts = Atig::Option.parse @real
+      context = OpenStruct.new(:log=>@log, :opts=>@opts)
 
       oauth = OAuth.new(@real)
       unless oauth.verified? then
@@ -113,12 +114,12 @@ END
       end
 
       log :debug, "initialize Twitter"
-      @twitter = Twitter.new @log, oauth.access
-      @api     = Scheduler.new @log, @twitter
+      @twitter = Twitter.new   @log, oauth.access
+      @api     = Scheduler.new context, @twitter
 
       log :debug, "initialize filter"
-      @ifilters = run_new @@ifilters, @log, @opts
-      @ofilters = run_new @@ofilters, @log, @opts
+      @ifilters = run_new @@ifilters, context
+      @ofilters = run_new @@ofilters, context
 
       @api.delay(0) do|t|
         me  = t.post "account/update_profile"
@@ -131,10 +132,11 @@ END
         end
 
         post server_name, MODE, @nick, "+o"
-        @db = Atig::Db::Db.new @log, :me=>me, :size=> 100
-        run_new @@commands, @log, self, @api, @db, @opts
-        run_new @@agents  , @log, @api, @db
-        run_new @@channels, self, @db
+
+        @db = Atig::Db::Db.new context, :me=>me, :size=> 100
+        run_new @@commands, context, self, @api, @db
+        run_new @@agents  , context, @api, @db
+        run_new @@channels, context, self, @db
 
         @db.statuses.add :user => me, :source => :me, :status => me.status
       end

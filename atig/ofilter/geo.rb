@@ -4,8 +4,8 @@
 module Atig
   module OFilter
     class Geo
-      def initialize(_, opts)
-        @opts = opts
+      def initialize(context)
+        @opts = context.opts
       end
 
       def call(q)

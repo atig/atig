@@ -8,8 +8,8 @@ module Atig
     class Mention
       include Util
 
-      def initialize(logger, api, db)
-        @log = logger
+      def initialize(context, api, db)
+        @log = context.log
         @api = api
         @prev = nil
 

@@ -8,8 +8,8 @@ module Atig
   module IFilter
     class Utf7
       include Util
-      def initialize(log, *_)
-        @log = log
+      def initialize(context)
+        @log = context.log
       end
 
       def call(status)

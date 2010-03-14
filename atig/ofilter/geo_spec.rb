@@ -6,7 +6,7 @@ require 'ostruct'
 
 describe Atig::OFilter::Geo,"when disabled" do
   def filtered(text,opt={})
-    geo = Atig::OFilter::Geo.new(mock("logger"),OpenStruct.new(opt))
+    geo = Atig::OFilter::Geo.new(OpenStruct.new(:opts=>OpenStruct.new(opt)))
     geo.call :status => text
   end
 
@@ -19,7 +19,7 @@ end
 
 describe Atig::OFilter::Geo,"when enabled" do
   def filtered(text,opt={})
-    geo = Atig::OFilter::Geo.new(mock("logger"),OpenStruct.new(opt))
+    geo = Atig::OFilter::Geo.new(OpenStruct.new(:opts=>OpenStruct.new(opt)))
     geo.call :status => text
   end
 

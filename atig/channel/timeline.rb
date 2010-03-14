@@ -5,8 +5,8 @@ require 'atig/channel/channel'
 module Atig
   module Channel
     class Timeline < Atig::Channel::Channel
-      def initialize(gateway, db)
-        super("#twitter", gateway, db)
+      def initialize(context, gateway, db)
+        super
 
         db.statuses.listen do|entry|
           case entry.source
@@ -19,6 +19,8 @@ module Atig
           @channel.send kind,users
         end
       end
+
+      def channel_name; "#twitter" end
     end
   end
 end

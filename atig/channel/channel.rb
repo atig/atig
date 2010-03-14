@@ -4,8 +4,8 @@
 module Atig
   module Channel
     class Channel
-      def initialize(name, gateway, db)
-        @channel = gateway.channel name
+      def initialize(context, gateway, db)
+        @channel = gateway.channel channel_name
         @channel.join_me
 
         db.statuses.listen do|entry|

@@ -5,8 +5,9 @@ require 'atig/channel/channel'
 module Atig
   module Channel
     class Mention < Atig::Channel::Channel
-      def initialize(gateway, db)
-        super("#mention", gateway, db)
+      def initialize(context, gateway, db)
+        super
+
         db.statuses.listen do|entry|
           case entry.source
           when :timeline,:me,:mention
@@ -16,6 +17,8 @@ module Atig
           end
         end
       end
+
+      def channel_name; "#mention" end
     end
   end
 end

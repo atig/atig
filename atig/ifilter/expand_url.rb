@@ -8,10 +8,10 @@ module Atig
   module IFilter
     class ExpandUrl
       include Util
-      def initialize(logger,opts)
-        @log = logger
-        @opts = opts
-        @http = Atig::Http.new logger
+      def initialize(context)
+        @log  = context.log
+        @opts = context.opts
+        @http = Atig::Http.new @log
       end
 
       def call(status)

@@ -11,8 +11,7 @@ end
 
 describe Atig::IFilter::ExpandUrl, "when disable whole url" do
   def filtered(text)
-    logger = mock('logger')
-    ifilter = Atig::IFilter::ExpandUrl.new logger,OpenStruct.new
+    ifilter = Atig::IFilter::ExpandUrl.new OpenStruct.new(:log=>mock('log'),:opts=>OpenStruct.new)
     ifilter.call status(text)
   end
 
@@ -27,8 +26,10 @@ end
 
 describe Atig::IFilter::ExpandUrl, "when enable whole url" do
   def filtered(text)
-    logger = mock('logger')
-    ifilter = Atig::IFilter::ExpandUrl.new(logger,OpenStruct.new(:untiny_whole_urls=>true))
+    context = OpenStruct.new(
+                             :log  => mock('log'),
+                             :opts => OpenStruct.new(:untiny_whole_urls=>true))
+    ifilter = Atig::IFilter::ExpandUrl.new(context)
     ifilter.call status(text)
   end
 

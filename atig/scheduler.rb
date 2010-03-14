@@ -7,8 +7,8 @@ module Atig
   class Scheduler
     include Util
 
-    def initialize(log, api)
-      @log = log
+    def initialize(context, api)
+      @log = context.log
       @api = api
       @agents = []
 

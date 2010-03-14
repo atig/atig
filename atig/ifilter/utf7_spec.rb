@@ -8,7 +8,8 @@ require 'atig/spec_helper'
 describe Atig::IFilter::Utf7 do
   def filtered(text)
     logger = mock('logger').should_receive(:error).at_most(:once)
-    ifilter = Atig::IFilter::Utf7.new logger
+    ifilter = Atig::IFilter::Utf7.new(OpenStruct.new(:log=>logger,
+                                                     :opts=>OpenStruct.new))
     ifilter.call status(text)
   end
 

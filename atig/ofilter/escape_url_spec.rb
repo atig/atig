@@ -16,7 +16,7 @@ describe Atig::OFilter::EscapeUrl do
   end
 
   def filtered(text,opt={})
-    esc = Atig::OFilter::EscapeUrl.new(@logger,nil)
+    esc = Atig::OFilter::EscapeUrl.new(OpenStruct.new(:log=>@logger,:opts=>nil))
     esc.call :status => text
   end
 
@@ -39,7 +39,7 @@ if defined? ::Punycode then
     end
 
     def filtered(text,opt={})
-      esc = Atig::OFilter::EscapeUrl.new(@logger,nil)
+      esc = Atig::OFilter::EscapeUrl.new(OpenStruct.new(:log=>@logger,:opts=>nil))
       esc.call :status => text
     end
 

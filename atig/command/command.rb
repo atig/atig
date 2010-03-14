@@ -4,12 +4,12 @@ module Atig
   module Command
     class Command
       attr_reader :gateway, :api, :db, :opts
-      def initialize(logger, gateway, api, db, opts)
-        @log     = logger
+      def initialize(context, gateway, api, db)
+        @log     = context.log
+        @opts    = context.opts
         @gateway = gateway
         @api     = api
         @db      = db
-        @opts    = opts
 	@gateway.ctcp_action(*command_name) do |target, mesg, command, args|
           action(target, mesg, command, args){|mesg|
             gateway[target].notify mesg

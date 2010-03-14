@@ -8,8 +8,8 @@ module Atig
     class Following
       include Util
 
-      def initialize(logger, api, db)
-        @log = logger
+      def initialize(context, api, db)
+        @log = context.log
         @db  = db
         log :info, "initialize"
 

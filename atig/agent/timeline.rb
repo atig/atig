@@ -8,8 +8,8 @@ module Atig
     class Timeline
       include Util
 
-      def initialize(logger, api, db)
-        @log = logger
+      def initialize(context, api, db)
+        @log = context.log
         @prev = nil
         log :info, "initialize"
 

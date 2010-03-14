@@ -15,13 +15,13 @@ module Atig
       attr_reader :followings, :statuses, :dms, :lists
       attr_accessor :me
 
-      def initialize(logger, opt={})
+      def initialize(context, opt={})
+        @log        = context.log
         @followings = Followings.new
         @statuses   = Statuses.new(opt[:size] || 1000)
         @dms        = Statuses.new(opt[:dm_size] || 1000)
         @lists      = Lists.new
         @me         = opt[:me]
-        @log     = logger
 
         log :info, "initialize"
 

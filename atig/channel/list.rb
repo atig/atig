@@ -4,7 +4,7 @@
 module Atig
   module Channel
     class List
-      def initialize(gateway, db)
+      def initialize(context, gateway, db)
         @channels = Hash.new do|hash,name|
           channel = gateway.channel "##{name}"
           channel.join_me

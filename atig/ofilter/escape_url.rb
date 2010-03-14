@@ -14,9 +14,9 @@ module Atig
   module OFilter
     class EscapeUrl
       include Util
-      def initialize(logger,_)
-        @log = logger
-        @http = Atig::Http.new logger
+      def initialize(context)
+        @log  = context.log
+        @http = Atig::Http.new @log
       end
 
       def call(status)
