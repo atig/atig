@@ -260,20 +260,21 @@ END
 
         log :debug, "initialize actions"
         @ctcp_actions = {}
-        (@@commands || []).each do|c|
-          log :debug,"command #{c.inspect}"
-          c.new self
-        end
+        each_new @@commands, self
 
-        log :debug, "initialize agent"
-        (@@agents || []).each do|agent|
-          agent.new(@log, @api, @db)
-        end
+        log :debug, "initialize agents"
+        each_new @@agents, @log, @api, @db
 
         log :debug, "server response"
 
 
         @db.statuses.add :user => me, :source => :me, :status => me.status
+      end
+    end
+
+    def each_new(klasses,*args)
+      (klasses || []).each do|klass|
+        klass.new(*args)
       end
     end
 
