@@ -25,27 +25,18 @@ end
 
 module Atig
   class Gateway < Net::IRC::Server::Session
-    @@commands =
-      @@agents =
-      @@ifilters =
-      @@ofilters = []
-
     class << self
-      def commands=(cmds)
-        @@commands = cmds
+      def self.class_writer(*ids)
+        ids.each do|id|
+          module_eval <<END
+def #{id}=(arg)
+  @@#{id} = arg
+end
+END
+        end
       end
 
-      def agents=(agents)
-        @@agents = agents
-      end
-
-      def ifilters=(ifilters)
-        @@ifilters = ifilters
-      end
-
-      def ofilters=(ofilters)
-        @@ofilters = ofilters
-      end
+      class_writer :commands, :agents, :ifilters, :ofilters
     end
 
     include Util
@@ -154,7 +145,7 @@ module Atig
       @api     = Scheduler.new @log, @twitter
 
       log :debug, "initialize filter"
-      @ifilters = @@ifilters.map do|ifilter|
+      @ifilters = (@@ifilters || []).map do|ifilter|
         if ifilter.respond_to? :new
           ifilter.new(@log, @opts)
         else
@@ -162,7 +153,7 @@ module Atig
         end
       end
 
-      @ofilters = @@ofilters.map do|ofilter|
+      @ofilters = (@@ofilters || []).map do|ofilter|
         if ofilter.respond_to? :new
           ofilter.new(@log, @opts)
         else
@@ -269,13 +260,13 @@ module Atig
 
         log :debug, "initialize actions"
         @ctcp_actions = {}
-        @@commands.each do|c|
+        (@@commands || []).each do|c|
           log :debug,"command #{c.inspect}"
           c.new self
         end
 
         log :debug, "initialize agent"
-        @@agents.each do|agent|
+        (@@agents || []).each do|agent|
           agent.new(@log, @api, @db)
         end
 
