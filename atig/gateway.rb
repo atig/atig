@@ -125,8 +125,7 @@ END
         unless me then
           log :info, <<END
 Failed to access API.
-Please check your username/email and password combination,
-Twitter Status <http://status.twitter.com/> and try again later.
+Please check Twitter Status <http://status.twitter.com/> and try again later.
 END
           finish
         end
