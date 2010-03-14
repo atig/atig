@@ -73,6 +73,7 @@ Atig::Gateway.channels = [
                           Atig::Channel::Timeline,
                           Atig::Channel::Mention,
                           Atig::Channel::Dm,
+                          Atig::Channel::List,
                          ]
 
 if __FILE__ == $0

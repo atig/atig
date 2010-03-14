@@ -23,6 +23,10 @@ module Atig
       @session.post @session.server_name, MODE, @name, "+q", @me.screen_name
     end
 
+    def part_me(msg)
+      @session.post @prefix, PART, channel, msg
+    end
+
     def message(entry, command = PRIVMSG)
       user        = entry.user
       screen_name = user.screen_name
