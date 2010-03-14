@@ -76,7 +76,7 @@ describe Atig::Db::Lists do
   it "should call listener when exit user" do
     @lists.update("a" => [ @alice, @bob, @charriey ])
     @lists.update("a" => [ @alice ])
-    @args[:bye].should == ["a", [ @bob, @charriey ]]
+    @args[:part].should == ["a", [ @bob, @charriey ]]
   end
 
   it "should call listener when change user mode" do

@@ -46,14 +46,14 @@ describe Atig::Db::Followings,"when updated users" do
   it "should call listener with :join" do
     @db.update [ @alice, @bob, @charriey ]
     @listen[:join].should == [ @charriey ]
-    @listen[:bye ].should == nil
+    @listen[:part].should == nil
     @listen[:mode].should == nil
   end
 
-  it "should call listener with :bye" do
+  it "should call listener with :part" do
     @db.update [ @alice ]
     @listen[:join].should == nil
-    @listen[:bye ].should == [ @bob ]
+    @listen[:part].should == [ @bob ]
     @listen[:mode].should == nil
   end
 
@@ -62,7 +62,7 @@ describe Atig::Db::Followings,"when updated users" do
 
     @db.update [ @alice, bob ]
     @listen[:join].should == nil
-    @listen[:bye ].should == nil
+    @listen[:part].should == nil
     @listen[:mode].should == [ bob ]
   end
 

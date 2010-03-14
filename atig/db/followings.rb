@@ -26,7 +26,7 @@ module Atig
           }
         }
 
-        notify(:bye , bye)  unless bye  == []
+        notify(:part, bye)  unless bye  == []
         notify(:join, join) unless join == []
         notify(:mode, mode) unless mode == []
 
