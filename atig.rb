@@ -31,6 +31,10 @@ Dir['atig/command/*.rb'].each do|file|
   require file
 end
 
+Dir['atig/channel/*.rb'].each do|file|
+  require file
+end
+
 require 'atig/gateway'
 
 Atig::Gateway.agents   = [
@@ -64,6 +68,11 @@ Atig::Gateway.commands = [
                           Atig::Command::Favorite,
                           Atig::Command::Uptime,
                           Atig::Command::Destroy,
+                         ]
+Atig::Gateway.channels = [
+                          Atig::Channel::Timeline,
+                          Atig::Channel::Mention,
+                          Atig::Channel::Dm,
                          ]
 
 if __FILE__ == $0

@@ -12,6 +12,7 @@ require 'atig/fake_twitter'
 require 'atig/twitter'
 require 'atig/oauth'
 require 'atig/db/db'
+require 'atig/channel_gateway'
 
 begin
   require 'continuation'
@@ -25,6 +26,8 @@ end
 
 module Atig
   class Gateway < Net::IRC::Server::Session
+    include Util
+
     class << self
       def self.class_writer(*ids)
         ids.each do|id|
@@ -36,13 +39,8 @@ END
         end
       end
 
-      class_writer :commands, :agents, :ifilters, :ofilters
+      class_writer :commands, :agents, :ifilters, :ofilters, :channels
     end
-
-    include Util
-
-    MAX_MODE_PARAMS = 3
-
     attr_reader :api, :db, :opts, :ifilters, :ofilters
 
     def initialize(*args); super end
@@ -51,31 +49,6 @@ END
       commands.each do |command|
         @ctcp_actions[command] = block
       end
-    end
-
-    def message(entry, target,  command = PRIVMSG)
-      user        = entry.user
-      screen_name = user.screen_name
-      prefix      = prefix user
-      str         = input_message(entry)
-
-      post prefix, command, target, str
-    end
-
-    def api_source
-      "#{@opts.api_source || "tigrb"}"
-    end
-
-    alias_method :__log__, :log
-    def log(kind, str)
-      if kind == :info or kind == :error
-        notify main_channel, str
-      end
-      __log__(kind, str)
-    end
-
-    def notify(target, str)
-      post server_name, NOTICE, target, str.gsub(/\r\n|[\r\n]/, " ")
     end
 
     def oops(status)
@@ -88,13 +61,12 @@ END
       "http://twitter.com/#{struct.user.screen_name}/statuses/#{struct.id}"
     end
 
-    def input_message(entry)
-      status = entry.status.merge(:tid=>entry.tid)
-      @ifilters.inject(status) {|x, f| f.call x }.text
-    end
-
     def output_message(query)
       @ofilters.inject(query) {|x, f| f.call x }
+    end
+
+    def post(*args)
+      super
     end
 
     def update_my_status(ret, target, msg='')
@@ -105,6 +77,14 @@ END
 
       msg = "(#{msg})" unless msg.empty?
       notify target, "Status updated #{msg}"
+    end
+
+    def channel(name)
+      ChannelGateway.new(:session => self,
+                         :name    => name,
+                         :filters => @ifilters,
+                         :me      => @db.me,
+                         :opts    => @opts)
     end
 
     protected
@@ -166,97 +146,8 @@ END
         me  = update_profile t
         return unless me
 
-        @prefix = prefix(me)
-        @user   = @prefix.user
-        @host   = @prefix.host
         post server_name, MODE, @nick, "+o"
-        create_channel main_channel
-        create_channel mention_channel
-
         @db = Atig::Db::Db.new @log, :me=>me, :size=> 100
-
-        # main channel
-        @db.statuses.listen do|entry|
-          case entry.source
-          when :timeline, :me
-            message(entry, main_channel)
-          end
-        end
-
-        # lists
-        @db.statuses.listen do|entry|
-          case entry.source
-          when :timeline, :me
-            lists = @db.lists.find_by_screen_name(entry.user.screen_name)
-            lists.each do|name|
-              message(entry, "##{name}")
-            end
-          when :list
-            message(entry,"##{entry.list}")
-          end
-        end
-
-        # main topic
-        @db.statuses.listen do|entry|
-          case entry.source
-          when :me
-            mesg = input_message(entry)
-            post @prefix, TOPIC, main_channel, mesg
-          when :timeline
-            if entry.user.id == @db.me.id then
-              mesg = input_message(entry)
-              post @prefix, TOPIC, main_channel, mesg
-            end
-          end
-        end
-
-        # mention
-        @db.statuses.listen do|entry|
-          case entry.source
-          when :timeline,:me
-            name = @db.me.screen_name
-            message(entry, mention_channel) if entry.status.text.include?(name)
-          when :mention
-            message(entry, mention_channel)
-          end
-        end
-
-        # followings
-        @db.followings.listen do|kind, users|
-          case kind
-          when :join
-            join main_channel, users
-          when :bye
-            users.each {|u|
-              post prefix(u), PART, main_channel, ""
-            }
-          when :mode
-          end
-          log :debug, "set modes for #{db.followings.size} friend"
-        end
-
-        # list followings
-        @db.lists.listen do|kind, name, users|
-          channel = "##{name}"
-          case kind
-          when :new
-            create_channel channel
-          when :del
-            post @prefix, PART, channel, "No longer follow the list #{name}"
-          when :join
-            join channel, users
-          when :bye
-            users.each {|u|
-              post prefix(u), PART, main_channel, ""
-            }
-          when :mode
-          end
-        end
-
-        # dm
-        @db.dms.listen do|dm|
-          message(dm, @nick)
-        end
 
         log :debug, "initialize actions"
         @ctcp_actions = {}
@@ -265,10 +156,96 @@ END
         log :debug, "initialize agents"
         each_new @@agents, @log, @api, @db
 
-        log :debug, "server response"
-
+        log :debug, "initialize channels"
+        each_new @@channels, self, @db
 
         @db.statuses.add :user => me, :source => :me, :status => me.status
+
+        # create_channel main_channel
+        # create_channel mention_channel
+
+        # # main channel
+        # @db.statuses.listen do|entry|
+        #   case entry.source
+        #   when :timeline, :me
+        #     message(entry, main_channel)
+        #   end
+        # end
+
+        # # lists
+        # @db.statuses.listen do|entry|
+        #   case entry.source
+        #   when :timeline, :me
+        #     lists = @db.lists.find_by_screen_name(entry.user.screen_name)
+        #     lists.each do|name|
+        #       message(entry, "##{name}")
+        #     end
+        #   when :list
+        #     message(entry,"##{entry.list}")
+        #   end
+        # end
+
+        # # main topic
+        # @db.statuses.listen do|entry|
+        #   case entry.source
+        #   when :me
+        #     mesg = input_message(entry)
+        #     post @prefix, TOPIC, main_channel, mesg
+        #   when :timeline
+        #     if entry.user.id == @db.me.id then
+        #       mesg = input_message(entry)
+        #       post @prefix, TOPIC, main_channel, mesg
+        #     end
+        #   end
+        # end
+
+        # # mention
+        # @db.statuses.listen do|entry|
+        #   case entry.source
+        #   when :timeline,:me
+        #     name = @db.me.screen_name
+        #     message(entry, mention_channel) if entry.status.text.include?(name)
+        #   when :mention
+        #     message(entry, mention_channel)
+        #   end
+        # end
+
+        # # followings
+        # @db.followings.listen do|kind, users|
+        #   case kind
+        #   when :join
+        #     join main_channel, users
+        #   when :bye
+        #     users.each {|u|
+        #       post prefix(u), PART, main_channel, ""
+        #     }
+        #   when :mode
+        #   end
+        #   log :debug, "set modes for #{db.followings.size} friend"
+        # end
+
+        # # list followings
+        # @db.lists.listen do|kind, name, users|
+        #   channel = "##{name}"
+        #   case kind
+        #   when :new
+        #     create_channel channel
+        #   when :del
+        #     post @prefix, PART, channel, "No longer follow the list #{name}"
+        #   when :join
+        #     join channel, users
+        #   when :bye
+        #     users.each {|u|
+        #       post prefix(u), PART, main_channel, ""
+        #     }
+        #   when :mode
+        #   end
+        # end
+
+        # # dm
+        # @db.dms.listen do|dm|
+        #   message(dm, @nick)
+        # end
       end
     end
 
@@ -306,7 +283,7 @@ END
         return
       end
 
-      q = output_message(:status => mesg, :source => api_source)
+      q = output_message(:status => mesg)
 
       @api.delay(0, :retry=>3) do|t|
         ret = t.post("statuses/update", q)
@@ -342,13 +319,6 @@ END
     end
 
     private
-
-    def create_channel(channel)
-      post @prefix, JOIN, channel
-      post server_name, MODE, channel, "+mto", @nick
-      post server_name, MODE, channel, "+q", @nick
-    end
-
     def update_profile(t)
       # fixme: retry 3 times
       t.post "account/update_profile"
@@ -375,69 +345,12 @@ END
       OpenStruct.new opts
     end
 
-    def join(channel, users)
-      params = []
-      users.each do |user|
-        prefix = prefix(user)
-        post prefix, JOIN, channel
-        case
-        when user.protected
-          params << ["v", prefix.nick]
-        when user.only
-          params << ["o", prefix.nick]
-        end
-        next if params.size < MAX_MODE_PARAMS
-
-        post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n}
-        params = []
-      end
-      post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n} unless params.empty?
-      users
-    end
-
-
-    def set_modes(channel, users)
-      params = []
-      users.each do |user|
-        prefix = prefix(user)
-        case
-        when user.protected
-          params << ["v", prefix.nick]
-        when ! @db.followers.include?(user.id)
-          params << ["o", prefix.nick]
-        end
-        next if params.size < MAX_MODE_PARAMS
-
-        post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n}
-        params = []
-      end
-      post server_name, MODE, channel, "+#{params.map {|m,_| m }.join}", *params.map {|_,n| n} unless params.empty?
-    end
-
-    def prefix(u)
-      nick = u.screen_name
-      nick = "@#{nick}" if @opts.athack
-      user = "id=%.9d" % u.id
-      host = "twitter"
-      host += "/protected" if u.protected
-
-      Prefix.new("#{nick}!#{user}@#{host}")
-    end
-
     def available_user_modes
       "o"
     end
 
     def available_channel_modes
       "mntiovah"
-    end
-
-    def main_channel
-      @opts.main_channel || "#twitter"
-    end
-
-    def mention_channel
-      @opts.mention_channel || "#mention"
     end
   end
 end
