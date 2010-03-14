@@ -1,33 +1,23 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
-require 'atig/exception_util'
-require 'atig/command/single_action'
+require 'atig/command/command'
 
 module Atig
   module Command
-    class Bio < SingleAction
-      include ExceptionUtil
-      def initialize(gateway)
-        super(gateway,%w(bio))
-      end
+    class Bio < Atig::Command::Command
+      def initialize(*args); super end
+      def command_name; "bio" end
 
-      def action(target,mesg, command,args)
+      def action(target, mesg, command,args)
         if args.empty?
-          notify "/me #{command} <ID>"
+          yield "/me #{command} <ID>"
           return
         end
-        nick = args.first
+        nick,*_ = args
 
-        gateway.api.delay(0) do|t|
+        api.delay(0) do|t|
           user = t.get("users/show", { :screen_name => nick})
-          status = user.status.merge(:text => user.description)
-          gateway.message(TwitterStruct.make({
-                                               'status' => status,
-                                               'user' => user
-                                             }),
-                          target,
-                          Net::IRC::Constants::NOTICE)
+          yield user.description
         end
       end
     end

@@ -59,8 +59,6 @@ Atig::Gateway.ofilters = [
                           Atig::OFilter::Geo,
                          ]
 Atig::Gateway.commands = [
-                          Atig::Command::Utf7,
-                          Atig::Command::Footer,
                           Atig::Command::Retweet,
                           Atig::Command::Reply,
                           Atig::Command::User,
@@ -68,6 +66,7 @@ Atig::Gateway.commands = [
                           Atig::Command::Favorite,
                           Atig::Command::Uptime,
                           Atig::Command::Destroy,
+                          Atig::Command::Status,
                          ]
 Atig::Gateway.channels = [
                           Atig::Channel::Timeline,

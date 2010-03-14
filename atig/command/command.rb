@@ -1,0 +1,25 @@
+#! /opt/local/bin/ruby -w
+# -*- mode:ruby; coding:utf-8 -*-
+module Atig
+  module Command
+    class Command
+      attr_reader :gateway, :api, :db, :opts
+      def initialize(logger, gateway, api, db, opts)
+        @log     = logger
+        @gateway = gateway
+        @api     = api
+        @db      = db
+        @opts    = opts
+	@gateway.ctcp_action(*command_name) do |target, mesg, command, args|
+          action(target, mesg, command, args){|mesg|
+            gateway[target].notify mesg
+          }
+	end
+      end
+
+      def find_by_tid(tid)
+        @db.statuses.find_by_tid tid
+      end
+    end
+  end
+end

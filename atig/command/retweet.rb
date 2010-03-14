@@ -1,8 +1,8 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
-require 'atig/util'
-require 'atig/command/single_action'
+require 'atig/bitly'
+require 'atig/command/command'
 begin
   require 'jcode'
 rescue LoadError
@@ -10,46 +10,40 @@ end
 
 module Atig
   module Command
-    class Retweet < SingleAction
-      include Util
-
-      def initialize(gateway)
-        super(gateway,%w(ort rt retweet qt))
+    class Retweet < Atig::Command::Command
+      def initialize(*args)
+        super
+        @bitly = Bitly.no_login @log
       end
 
-      def rt_with_comment(comment, entry)
+      def command_name; %w(ort rt retweet qt) end
+
+      def rt_with_comment(target, comment, entry)
         screen_name = "@#{entry.user.screen_name}"
         text = "#{comment} RT #{screen_name}: #{entry.status.text}"
 
         chars = text.each_char.to_a
         if chars.size > 140 then
-          url = gateway.output_message(:status =>
-                                       "http://twitter.com/#{entry.user.screen_name}/status/#{entry.status.id}")[:status]
+          url = @bitly.shorten "http://twitter.com/#{entry.user.screen_name}/status/#{entry.status.id}"
           text = chars[0,140-url.size].join('') + url
         end
-        q = gateway.output_message(:status => text,
-                                   :source => gateway.api_source)
-        gateway.api.delay(0) do|t|
+        q = gateway.output_message(:status => text)
+        api.delay(0) do|t|
           ret = t.post("statuses/update", q)
-          safe {
-            gateway.update_my_status ret,target, "RT to #{entry.tid}: #{text}"
-          }
+          gateway.update_status ret,target, "RT to #{entry.tid}: #{text}"
         end
       end
 
-      def rt_with_no_comment(entry)
-        gateway.api.delay(0) do|t|
-          ret = t.post("statuses/retweet/#{entry.status.id}",{ :source => gateway.api_source })
-
-          safe {
-            gateway.update_my_status ret,target, "RT to #{entry.tid}: #{text}"
-          }
+      def rt_with_no_comment(target, entry)
+        api.delay(0) do|t|
+          ret = t.post("statuses/retweet/#{entry.status.id}")
+          gateway.update_status ret,target, "RT to #{entry.tid}: #{entry.status.text}"
         end
       end
 
-      def action(target,mesg, command,args)
+      def action(target, mesg, command, args)
         if args.empty?
-          notify "/me #{command} <ID> blah blah"
+          yield "/me #{command} <ID> blah blah"
           return
         end
 
@@ -57,12 +51,12 @@ module Atig
         if status = find_by_tid(tid) then
           if args.size >= 2
             comment = mesg.split(" ", 3)[2] + " "
-            rt_with_comment(comment, status)
+            rt_with_comment(target, comment, status)
           else
-            rt_with_no_comment(status)
+            rt_with_no_comment(target, status)
           end
         end
       end
-  end
+    end
   end
 end

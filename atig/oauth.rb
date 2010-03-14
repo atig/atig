@@ -45,6 +45,8 @@ module Atig
       if @access then
         @@profiles[@nick] = [ @access.token , @access.secret ]
       end
+    rescue
+      false
     end
   end
 end

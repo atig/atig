@@ -13,18 +13,18 @@ module Atig
       @name     = opts[:name]
       @filters  = opts[:filters] || []
       @opts     = opts[:opts]
-      @me       = opts[:me]
-      @prefix   = prefix @me
+      @prefix   = opts[:prefix]
+      @nick     = opts[:nick]
     end
 
     def join_me
       @session.post @prefix, JOIN, @name
-      @session.post @session.server_name, MODE, @name, "+mto", @me.screen_name
-      @session.post @session.server_name, MODE, @name, "+q", @me.screen_name
+      @session.post @session.server_name, MODE, @name, "+mto", @nick
+      @session.post @session.server_name, MODE, @name, "+q", @nick
     end
 
     def part_me(msg)
-      @session.post @prefix, PART, channel, msg
+      @session.post @prefix, PART, @name, msg
     end
 
     def message(entry, command = PRIVMSG)
