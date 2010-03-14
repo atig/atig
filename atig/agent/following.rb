@@ -14,8 +14,6 @@ module Atig
         log :info, "initialize"
 
         api.repeat(3600) do|t|
-          followers = t.page("followers/ids/#{@db.me.id}", :ids)
-
           if @db.followings.empty?
             friends = t.page("statuses/friends/#{@db.me.id}", :users)
           else
@@ -24,8 +22,11 @@ module Atig
             friends = t.get("statuses/friends/#{@db.me.id}", :users)
           end
 
-          friends.each do|friend|
-            friend[:only] = !followers.include?(friend.id)
+          if context.opts.only
+            followers = t.page("followers/ids/#{@db.me.id}", :ids)
+            friends.each do|friend|
+              friend[:only] = !followers.include?(friend.id)
+            end
           end
 
           @db.transaction{|d|
