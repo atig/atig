@@ -1,0 +1,21 @@
+# OMakefile for Sphinx documentation
+#
+
+# You can set these variables from the command line.
+SPHINXOPTS    =
+SPHINXBUILD   = sphinx-build
+PAPER         =
+BUILDDIR      = _build
+
+# Internal variables.
+PAPEROPT_a4     = -D latex_paper_size=a4
+ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_a4) $(SPHINXOPTS) .
+
+SRCS = $(glob *.rst)
+
+.PHONY : clean
+.DEFAULT: $(SRCS)
+	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
+
+clean:
+	rm -rf $(BUILDDIR)/*
