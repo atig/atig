@@ -1,1 +1,5 @@
 *~
+*.omc
+.omakedb
+.omakedb.lock
+_build
