@@ -14,6 +14,7 @@ atig.rbはTwitterとIRCを結ぶゲートウェイです。
 
    quickstart
    feature
+   irc
    options
    commands
    tiarra
