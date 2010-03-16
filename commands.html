@@ -1,0 +1,157 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>CTCP ACTION &mdash; atig v1.0a documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '1.0a',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="atig v1.0a documentation" href="index.html" />
+    <link rel="next" title="Tiarraとの連携" href="tiarra.html" />
+    <link rel="prev" title="クライアントオプション" href="options.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="tiarra.html" title="Tiarraとの連携"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="options.html" title="クライアントオプション"
+             accesskey="P">previous</a> |</li>
+        <li><a href="index.html">atig v1.0a documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">CTCP ACTION</a><ul>
+<li><a class="reference external" href="#id1">概要</a></li>
+<li><a class="reference external" href="#id2">発言関係</a></li>
+<li><a class="reference external" href="#id9">ユーザ関係</a></li>
+<li><a class="reference external" href="#id12">システム関係</a></li>
+</ul>
+</li>
+</ul>
+
+            <h4>Previous topic</h4>
+            <p class="topless"><a href="options.html"
+                                  title="previous chapter">クライアントオプション</a></p>
+            <h4>Next topic</h4>
+            <p class="topless"><a href="tiarra.html"
+                                  title="next chapter">Tiarraとの連携</a></p>
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/commands.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="ctcp-action">
+<h1>CTCP ACTION<a class="headerlink" href="#ctcp-action" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id1">
+<h2>概要<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<p>CTCP ACTIONによって、特定の発言への返信などが行なえます。</p>
+<p>CTCP ACTIONの送り方はクライアントによって異なりますが、LimeChatやirssi
+では <tt class="docutils literal"><span class="pre">/me</span></tt> です。 例えば、 <tt class="docutils literal"><span class="pre">/me</span> <span class="pre">reply</span> <span class="pre">a</span></tt> などのようになります。</p>
+</div>
+<div class="section" id="id2">
+<h2>発言関係<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>reply <tt class="docutils literal"><span class="pre">tid</span></tt> <a href="#id3"><span class="problematic" id="id4">``</span></a>comment``(別名: mention/rp)</dt>
+<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言に対して返信します。</dd>
+<dt>retweet <tt class="docutils literal"><span class="pre">tid</span></tt> <a href="#id5"><span class="problematic" id="id6">``</span></a>comment``(別名: rt ort)</dt>
+<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言をリツイートする。
+コメントが省略された場合は、公式リツイートになります。</dd>
+<dt>destroy <a href="#id7"><span class="problematic" id="id8">``</span></a>tid``(別名: remove/rm)</dt>
+<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言を削除する。 <tt class="docutils literal"><span class="pre">tid</span></tt> の発言が自分のものでない場合はエラーになります。</dd>
+<dt>fav <tt class="docutils literal"><span class="pre">tid</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言をお気に入りに追加します。</dd>
+<dt>unfav <tt class="docutils literal"><span class="pre">tid</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言をお気に入りから削除します。</dd>
+</dl>
+</div>
+<div class="section" id="id9">
+<h2>ユーザ関係<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>bio <tt class="docutils literal"><span class="pre">screen_name</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">screen_name</span></tt> のユーザのプロフィールを表示します。</dd>
+<dt>user <tt class="docutils literal"><span class="pre">screen_name</span></tt> <a href="#id10"><span class="problematic" id="id11">``</span></a>count``(別名: u)</dt>
+<dd><tt class="docutils literal"><span class="pre">screen_name</span></tt> のユーザの最新の発言``count``件を表示します。
+<tt class="docutils literal"><span class="pre">count</span></tt> が省略された場合は20件になります。また、 <tt class="docutils literal"><span class="pre">count</span></tt> は
+200件以上を指定しても無視されます。</dd>
+</dl>
+</div>
+<div class="section" id="id12">
+<h2>システム関係<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>uptime</dt>
+<dd>atig.rbの連続起動を表示します。</dd>
+</dl>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="tiarra.html" title="Tiarraとの連携"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="options.html" title="クライアントオプション"
+             >previous</a> |</li>
+        <li><a href="index.html">atig v1.0a documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, mzp.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+    </div>
+  </body>
+</html>

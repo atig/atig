@@ -5,24 +5,18 @@
 
 atig : Another Twitter Irc Gateway
 ==================================
-
-概要
-----
 atig.rbはTwitterとIRCを結ぶゲートウェイです。
-
-OAuth/Lists/RTなど先進的な機能に対応しています。
 
 .. image:: _static/screenshot.png
 
-動作環境
---------
-
- * Ruby 1.8/1.9
- * json
- * oauth
-
 .. toctree::
    :maxdepth: 2
+
+   quickstart
+   feature
+   options
+   commands
+   tiarra
 
 Indices and tables
 ==================
