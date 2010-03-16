@@ -219,7 +219,7 @@ END
       when Net::HTTP::Put
         @oauth.put req.path,req.body,headers
       when Net::HTTP::Delete
-        @oauth.delete req.path,req.body,headers
+        @oauth.delete req.path,headers
       end
     end
   end

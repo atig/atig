@@ -52,13 +52,14 @@ END
       self[target].notify "Status updated #{msg}"
     end
 
-    def channel(name)
-      channel = ChannelGateway.new(:session => self,
-                                   :name    => name,
-                                   :filters => @ifilters,
-                                   :prefix  => @prefix,
-                                   :nick    => @nick,
-                                   :opts    => @opts)
+    def channel(name,opts={})
+      opts.update(:session => self,
+                  :name    => name,
+                  :filters => @ifilters,
+                  :prefix  => @prefix,
+                  :nick    => @nick,
+                  :opts    => @opts)
+      channel = ChannelGateway.new(opts)
       @channels[name] = channel
       channel
     end
@@ -195,6 +196,53 @@ END
             log :info, c
           end
         end
+      end
+    end
+
+    def on_invite(m)
+      nick, channel = *m.params
+      if not nick.screen_name? or @db.me.screen_name.casecmp(nick).zero?
+        post server_name, ERR_NOSUCHNICK, nick, "No such nick: #{nick}" # or yourself
+        return
+      end
+
+      unless @channels.key? channel
+        post server_name, ERR_NOSUCHNICK, nick, "No such channel: #{channel}"
+        return
+      end
+
+      if @db.followings.find_by_screen_name(nick) then
+        @api.delay(0){|api|
+          @channels[channel].on_invite(api, nick)
+        }
+      else
+        @api.delay(0)do|api|
+          if api.get("users/username_available", { :username => nick }).valid then
+            post server_name, ERR_NOSUCHNICK, nick, "No such nick: #{nick}"
+          else
+            @channels[channel].on_invite(api, nick)
+          end
+        end
+      end
+    end
+
+    def on_kick(m)
+      channel, nick, msg = *m.params
+
+      if not nick.screen_name? or @db.me.screen_name.casecmp(nick).zero?
+        post server_name, ERR_NOSUCHNICK, nick, "No such nick: #{nick}" # or yourself
+        return
+      end
+
+      unless @channels.key? channel
+        post server_name, ERR_NOSUCHNICK, nick, "No such channel: #{channel}"
+        return
+      end
+
+      if @db.followings.find_by_screen_name(nick) then
+        @api.delay(0){|api| @channels[channel].on_kick(api, nick) }
+      else
+        @api.delay(0){|api| @channels[channel].on_kick(api, nick) }
       end
     end
 

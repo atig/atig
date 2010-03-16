@@ -69,4 +69,9 @@ describe Atig::Db::Followings,"when updated users" do
   it "should have users" do
     @db.users.should == [ @alice, @bob ]
   end
+
+  it "should be found by screen_name" do
+    @db.find_by_screen_name('alice').should == @alice
+    @db.find_by_screen_name('???').should == nil
+  end
 end

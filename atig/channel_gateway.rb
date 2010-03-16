@@ -15,6 +15,15 @@ module Atig
       @opts     = opts[:opts]
       @prefix   = opts[:prefix]
       @nick     = opts[:nick]
+      @handler  = opts[:handler]
+    end
+
+    def on_invite(*args)
+      @handler && @handler.respond_to?(:on_invite) && @handler.on_invite(*args)
+    end
+
+    def on_kick(*args)
+      @handler && @handler.respond_to?(:on_kick)   && @handler.on_kick(*args)
     end
 
     def join_me
