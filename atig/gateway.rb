@@ -8,7 +8,6 @@ require "ostruct"
 require "time"
 require 'yaml'
 require 'atig/url_escape'
-require 'atig/fake_twitter'
 require 'atig/twitter'
 require 'atig/oauth'
 require 'atig/db/db'
