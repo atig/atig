@@ -12,10 +12,5 @@ describe Atig::Db::Roman do
     @roman.make(1).should == 'i'
     @roman.make(2).should == 'u'
   end
-
-  it "should reverse tid" do
-    tid = @roman.make(42)
-    @roman[tid].should == 42
-  end
 end
 
