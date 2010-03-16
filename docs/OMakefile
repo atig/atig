@@ -11,11 +11,17 @@ BUILDDIR      = _build
 PAPEROPT_a4     = -D latex_paper_size=a4
 ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_a4) $(SPHINXOPTS) .
 
-SRCS = $(glob *.rst)
+SRCS[] =
+	index
+	options
+	tiarra
+	commands
+	quickstart
+	feature
 
 .PHONY : clean
-.DEFAULT: $(SRCS)
+.DEFAULT: $(addsuffix .rst, $(SRCS))
 	$(SPHINXBUILD) -b html $(ALLSPHINXOPTS) $(BUILDDIR)/html
 
 clean:
-	rm -rf $(BUILDDIR)/*
+	rm -rf $(BUILDDIR)/html/* *~
