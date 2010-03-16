@@ -19,18 +19,19 @@ module Atig
         end
         text = mesg.split(" ", 2)[1]
         previous,*_ = db.statuses.find_by_user( db.me, :limit => 1)
-        time = Time.parse(previous.status.created_at)
         if previous and
-            ((Time.now - time).to_i < 60*60*24 rescue true) and
+            ((Time.now - Time.parse(previous.status.created_at)).to_i < 60*60*24 rescue true) and
             text.strip == previous.status.text.strip
           yield "You can't submit the same status twice in a row."
           return
         end
-        if text.each_char.to_a.size > 140 then
+        q = gateway.output_message(:status => text)
+
+        if q[:status].each_char.to_a.size > 140 then
           yield "You can't submit the status over 140 chars"
           return
         end
-        q = gateway.output_message(:status => text)
+
         api.delay(0, :retry=>3) do|t|
           ret = t.post("statuses/update", q)
           gateway.update_status ret,target
