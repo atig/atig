@@ -49,7 +49,7 @@ Atig::Gateway.ifilters = [
                           Atig::IFilter::Utf7,
                           Atig::IFilter::Sanitize,
                           Atig::IFilter::ExpandUrl,
-                          Atig::IFilter::Strip.new(%w{ *tw* }),
+                          Atig::IFilter::Strip.new(%w{ *tw* *Sh*}),
                           Atig::IFilter::Retweet,
                           Atig::IFilter::Tid
                          ]
