@@ -17,11 +17,12 @@ module Atig
 
       def initialize(context, opt={})
         @log        = context.log
-        @followings = Followings.new
-        @statuses   = Statuses.new 'status.db'
-        @dms        = Statuses.new 'dm.db'
-        @lists      = Lists.new
         @me         = opt[:me]
+        @followings = Followings.new
+        @statuses   = Statuses.new "#{@me.screen_name}-status.db"
+        @dms        = Statuses.new "#{@me.screen_name}-dm.db"
+        @lists      = Lists.new
+
 
         log :info, "initialize"
 
