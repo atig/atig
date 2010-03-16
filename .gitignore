@@ -3,3 +3,4 @@
 .omakedb
 .omakedb.lock
 _build
+*.db
