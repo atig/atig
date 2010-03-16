@@ -18,22 +18,7 @@ module Atig
 	pya     pyu     pyo
       ].freeze
 
-      def initialize
-        @tid = {}
-      end
-
       def make(n)
-        tid = generate n
-        @tid[tid] = n
-        tid
-      end
-
-      def [](tid)
-        @tid[tid]
-      end
-
-      private
-      def generate(n)
         ret = []
         begin
           n, r = n.divmod(Seq.size)

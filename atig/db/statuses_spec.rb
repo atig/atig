@@ -1,37 +1,37 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
+require 'fileutils'
 require 'atig/db/statuses'
 
 describe Atig::Db::Statuses do
-  def status(id, text)
-    status = stub("Status-#{id}")
-    status.stub!(:id  ).and_return(id)
-    status.stub!(:text).and_return(text)
-    status
+  def status(id, text, time)
+    OpenStruct.new(:id => id, :text => text, :created_at => time)
   end
 
   def user(name)
-    user = stub("User-#{name}")
-    user.stub!(:screen_name).and_return(name)
-    user
+    OpenStruct.new(:screen_name => name, :id => name)
   end
 
   before do
     @listened = []
-    @db = Atig::Db::Statuses.new 4
+    FileUtils.rm_f 'test.db'
+    @db = Atig::Db::Statuses.new 'test.db'
 
-    @a = status 1, 'a'
-    @b = status 2, 'b'
-    @c = status 3, 'c'
-    @d = status 4, 'd'
+    @a = status 1, 'a',1
+    @b = status 2, 'b',2
+    @c = status 3, 'c',3
+    @d = status 4, 'd',4
 
     @alice = user 'alice'
     @bob = user 'bob'
 
-    @db.add :status => @a , :user => @alice, :source => :timeline
-    @db.add :status => @b , :user => @bob  , :source => :timeline
-    @db.add :status => @c , :user => @alice, :source => :timeline
+    @db.add :status => @a , :user => @alice, :source => :srcA
+    @db.add :status => @b , :user => @bob  , :source => :srcB
+    @db.add :status => @c , :user => @alice, :source => :srcC
+  end
+
+  it "should be re-openable" do
+    Atig::Db::Statuses.new 'test.db'
   end
 
   it "should call listeners" do
@@ -48,14 +48,6 @@ describe Atig::Db::Statuses do
     entry.fuga.should == :hoge
   end
 
-  it "should have only 4 statuses" do
-    @db.add :status => @d, :user => @alice
-    @db.size.should == 4
-
-    @db.add :status => status(42,'new'), :user => @alice
-    @db.size.should == 4
-  end
-
   it "should not contain duplicate" do
     called = false
     @db.listen{|*_| called = true }
@@ -69,6 +61,24 @@ describe Atig::Db::Statuses do
     entry.status.should == @a
     entry.user  .should == @alice
     entry.tid   .should match(/\w+/)
+  end
+
+  it "should be found all" do
+    db = @db.find_all
+    db.size.should == 3
+    a,b,c = db
+
+    a.status.should == @c
+    a.user  .should == @alice
+    a.tid   .should match(/\w+/)
+
+    b.status.should == @b
+    b.user  .should == @bob
+    b.tid   .should match(/\w+/)
+
+    c.status.should == @a
+    c.user.should   == @alice
+    c.tid.should    match(/\w+/)
   end
 
   it "should be found by tid" do
@@ -93,7 +103,9 @@ describe Atig::Db::Statuses do
   end
 
   it "should be found by screen_name" do
-    a,b = *@db.find_by_screen_name('alice')
+    db = @db.find_by_screen_name('alice')
+    db.size.should == 2
+    a,b = db
 
     a.status.should == @c
     a.user  .should == @alice

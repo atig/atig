@@ -18,8 +18,8 @@ module Atig
       def initialize(context, opt={})
         @log        = context.log
         @followings = Followings.new
-        @statuses   = Statuses.new(opt[:size] || 1000)
-        @dms        = Statuses.new(opt[:dm_size] || 1000)
+        @statuses   = Statuses.new 'status.db'
+        @dms        = Statuses.new 'dm.db'
         @lists      = Lists.new
         @me         = opt[:me]
 
