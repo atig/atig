@@ -39,6 +39,16 @@ describe Atig::Db::Followings,"when updated users" do
     @db.size.should == 2
   end
 
+  it "should be invalidated" do
+    called = false
+    @db.on_invalidated do
+      called = true
+    end
+    @db.invalidate
+
+    called.should be_true
+  end
+
   it "should not empty" do
     @db.empty?.should be_false
   end

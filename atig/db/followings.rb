@@ -9,12 +9,22 @@ module Atig
       include Listenable
       attr_reader :users
 
+
       def initialize
         @users = []
+        @on_invalidated = lambda{}
       end
 
       def size; @users.size end
       def empty?; @users.empty? end
+
+      def invalidate
+        @on_invalidated.call
+      end
+
+      def on_invalidated(&f)
+        @on_invalidated = f
+      end
 
       def update(users)
         bye   = diff(@users,users ){|x,y| x.screen_name == y.screen_name }

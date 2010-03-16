@@ -10,6 +10,7 @@ module Atig
 
       def initialize
         @lists   = {}
+        @on_invalidated = lambda{|*_| }
       end
 
       def update(lists)
@@ -39,6 +40,18 @@ module Atig
             @members[user.screen_name] << list
           end
         end
+      end
+
+      def [](name)
+        @lists[name]
+      end
+
+      def invalidate(name)
+        @on_invalidated.call name
+      end
+
+      def on_invalidated(&f)
+        @on_invalidated = f
       end
 
       def find_by_screen_name(name)

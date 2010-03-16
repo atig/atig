@@ -59,6 +59,23 @@ describe Atig::Db::Lists do
     @args[:join].should == [ "a", [ @alice, @bob ] ]
   end
 
+  it "should call listener when partcial update" do
+    @lists.update("a" => [ @alice ])
+    @lists["a"].update([ @alice, @bob, @charriey ])
+    @args[:join].should == ["a", [ @bob, @charriey ]]
+  end
+
+  it "should call on_invalidated" do
+    called = false
+    @lists.on_invalidated do|name|
+      name.should == "a"
+      called = true
+    end
+    @lists.invalidate("a")
+
+    called.should be_true
+  end
+
   it "should call listener when delete list" do
     @lists.update("a" => [ @alice, @bob ])
     @lists.update({})
