@@ -63,6 +63,15 @@ describe Atig::Db::Statuses do
     entry.tid   .should match(/\w+/)
   end
 
+  it "should have unique tid" do
+    db = Atig::Db::Statuses.new 'test.db'
+    db.add :status => @d , :user => @alice, :source => :srcA
+
+    a = @db.find_by_id(@a.id)
+    d = @db.find_by_id(@d.id)
+    a.tid.should_not == d.tid
+  end
+
   it "should be found all" do
     db = @db.find_all
     db.size.should == 3

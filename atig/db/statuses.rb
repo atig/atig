@@ -16,13 +16,13 @@ module Atig
 
       def initialize(name)
         @db_name = name
-        @id    = 0
         @roman = Roman.new
 
         unless File.exist? name then
           execute do|db|
             db.execute %{create table status (
-                          id   text,
+                          id integer primary key,
+                          status_id   text,
                           tid  text,
                           screen_name text,
                           user_id     text,
@@ -33,20 +33,20 @@ module Atig
       end
 
       def add(opt)
-        entry = OpenStruct.new opt.merge(:id  => opt[:status].id,
-                                         :tid => @roman.make(@id))
         execute do|db|
-          return unless db.execute(%{SELECT id FROM status WHERE id = ?}, entry.id).empty?
+          id  = opt[:status].id
+          return unless db.execute(%{SELECT id FROM status WHERE status_id = ?}, id).empty?
 
+          tid = @roman.make db.get_first_value("SELECT count(*) FROM status").to_i
+          entry = OpenStruct.new opt.merge(:id  => id, :tid => tid)
           db.execute(%{INSERT INTO status
-                      VALUES(:id, :tid, :screen_name, :user_id, :created_at, :data)},
+                      VALUES(NULL, :id, :tid, :screen_name, :user_id, :created_at, :data)},
                      :id          => entry.id,
                      :tid         => entry.tid,
                      :screen_name => opt[:user].screen_name,
                      :user_id     => opt[:user].id,
                      :created_at  => opt[:status].created_at,
                      :data        => [Marshal.dump(entry)].pack('m'))
-          @id += 1
           notify entry
         end
       end
@@ -68,7 +68,7 @@ module Atig
       end
 
       def find_by_id(id)
-        find('id', id).first
+        find('status_id', id).first
       end
 
       private
