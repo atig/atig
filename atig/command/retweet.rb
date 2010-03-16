@@ -30,14 +30,14 @@ module Atig
         q = gateway.output_message(:status => text)
         api.delay(0) do|t|
           ret = t.post("statuses/update", q)
-          gateway.update_status ret,target, "RT to #{entry.tid}: #{text}"
+          gateway.update_status ret,target, "RT to #{screen_name}: #{text}"
         end
       end
 
       def rt_with_no_comment(target, entry)
         api.delay(0) do|t|
           ret = t.post("statuses/retweet/#{entry.status.id}")
-          gateway.update_status ret,target, "RT to #{entry.tid}: #{entry.status.text}"
+          gateway.update_status ret,target, "RT to #{entry.user.screen_name}: #{entry.status.text}"
         end
       end
 

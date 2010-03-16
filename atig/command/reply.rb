@@ -15,18 +15,18 @@ module Atig
         end
 
         tid = args.first
-        if status = find_by_tid(tid) then
+        if entry = find_by_tid(tid) then
           text = mesg.split(" ", 3)[2]
-          name = status.user.screen_name
+          name = entry.user.screen_name
 
           text = "@#{name} #{text}" if text.nil? or not text.include?(name)
 
           q = gateway.output_message(:status => text,
-                                     :in_reply_to_status_id => status.id)
+                                     :in_reply_to_status_id => entry.status.id)
 
           api.delay(0) do|t|
             ret = t.post("statuses/update", q)
-            gateway.update_status ret, target, "In reply to #{tid}: #{status.text}"
+            gateway.update_status ret, target, "In reply to #{name}: #{entry.status.text}"
           end
         end
       end
