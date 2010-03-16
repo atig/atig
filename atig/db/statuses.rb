@@ -19,14 +19,16 @@ module Atig
         @id    = 0
         @roman = Roman.new
 
-        execute do|db|
-          db.execute %{create table status (
-                         id   text,
-                         tid  text,
-                         screen_name text,
-                         user_id     text,
-                         created_at  text,
-                         data blob);}
+        unless File.exist? name then
+          execute do|db|
+            db.execute %{create table status (
+                          id   text,
+                          tid  text,
+                          screen_name text,
+                          user_id     text,
+                          created_at  text,
+                          data blob);}
+          end
         end
       end
 

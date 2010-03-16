@@ -30,6 +30,10 @@ describe Atig::Db::Statuses do
     @db.add :status => @c , :user => @alice, :source => :timeline
   end
 
+  it "should be re-openable" do
+    Atig::Db::Statuses.new 'test.db'
+  end
+
   it "should call listeners" do
     entry = nil
     @db.listen{|x| entry = x }
