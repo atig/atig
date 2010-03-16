@@ -5,23 +5,25 @@ module Atig
   module Channel
     class List
       class Handler
-        def initialize(me, name)
-          @me   = me
+        def initialize(db, name)
+          @db   = db
           @name = name
         end
 
         def on_invite(api, nick)
-          api.post("#{@me.screen_name}/#{@name}/members", :id => nick )
+          api.post("#{@db.me.screen_name}/#{@name}/members", :id => nick )
+          @db.lists.invalidate @name
         end
 
         def on_kick(api, nick)
-          api.delete("#{@me.screen_name}/#{@name}/members", :id => nick )
+          api.delete("#{@db.me.screen_name}/#{@name}/members", :id => nick )
+          @db.lists.invalidate @name
         end
       end
 
       def initialize(context, gateway, db)
         @channels = Hash.new do|hash,name|
-          channel = gateway.channel "##{name}", :handler => Handler.new(db.me, name)
+          channel = gateway.channel "##{name}", :handler => Handler.new(db, name)
           channel.join_me
           hash[name] = channel
         end

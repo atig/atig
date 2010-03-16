@@ -9,30 +9,37 @@ module Atig
       include Util
 
       def initialize(context, api, db)
-        @log = context.log
+        @opts = context.opts
+        @log  = context.log
         @db  = db
         log :info, "initialize"
 
-        api.repeat(3600) do|t|
-          if @db.followings.empty?
-            friends = t.page("statuses/friends/#{@db.me.id}", :users)
-          else
-            @db.me = t.post("account/update_profile")
-            next if @db.me.friends_count == @db.followings.size
-            friends = t.get("statuses/friends/#{@db.me.id}", :users)
-          end
+        api.repeat(3600){|t| update t }
+        @db.followings.on_invalidated{
+          log :info, "invalidated followings"
+          api.delay(0){|t| update t }
+        }
+      end
 
-          if context.opts.only
-            followers = t.page("followers/ids/#{@db.me.id}", :ids)
-            friends.each do|friend|
-              friend[:only] = !followers.include?(friend.id)
-            end
-          end
-
-          @db.transaction{|d|
-            d.followings.update friends
-          }
+      def update(api)
+        if @db.followings.empty?
+          friends = api.page("statuses/friends/#{@db.me.id}", :users)
+        else
+          @db.me = api.post("account/update_profile")
+          return if @db.me.friends_count == @db.followings.size
+          friends = api.page("statuses/friends/#{@db.me.id}", :users)
         end
+
+        if @opts.only
+          followers = api.page("followers/ids/#{@db.me.id}", :ids)
+          friends.each do|friend|
+            friend[:only] = !followers.include?(friend.id)
+          end
+        end
+
+        @db.transaction{|d|
+          d.followings.update friends
+        }
       end
     end
   end

@@ -13,6 +13,12 @@ module Atig
         @db  = db
         log :info, "initialize"
 
+        @db.lists.on_invalidated{|name|
+          log :info, "invalidated #{name}"
+          api.delay(0){|t|
+            @db.lists[name].update t.page("#{@db.me.screen_name}/#{name}/members", :users, true)
+          }
+        }
         api.repeat(3600) do|t|
           lists = t.page("#{@db.me.screen_name}/lists", :lists, true)
           users = {}

@@ -20,6 +20,16 @@ module Atig
         end
       end
 
+      def on_invite(api, nick)
+        api.post("friendships/create/#{nick}")
+        @db.followings.invalidate
+      end
+
+      def on_kick(api, nick)
+        api.post("friendships/destroy/#{nick}")
+        @db.followings.invalidate
+      end
+
       def channel_name; "#twitter" end
     end
   end
