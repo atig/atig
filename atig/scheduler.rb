@@ -20,10 +20,11 @@ module Atig
     end
 
     def repeat(interval,opts={}, &f)
+      @queue.push(lambda{ safe { f.call @api } })
       t = daemon do
+        sleep interval
         log :debug, "agent #{t.inspect} is invoked"
         @queue.push(lambda{ safe { f.call @api } })
-        sleep interval
       end
 
       log :info, "repeat agent #{t.inspect} is registered"
