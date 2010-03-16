@@ -25,9 +25,9 @@ describe Atig::Db::Statuses do
     @alice = user 'alice'
     @bob = user 'bob'
 
-    @db.add :status => @a , :user => @alice, :source => :timeline
-    @db.add :status => @b , :user => @bob  , :source => :timeline
-    @db.add :status => @c , :user => @alice, :source => :timeline
+    @db.add :status => @a , :user => @alice, :source => :srcA
+    @db.add :status => @b , :user => @bob  , :source => :srcB
+    @db.add :status => @c , :user => @alice, :source => :srcC
   end
 
   it "should be re-openable" do
@@ -61,6 +61,24 @@ describe Atig::Db::Statuses do
     entry.status.should == @a
     entry.user  .should == @alice
     entry.tid   .should match(/\w+/)
+  end
+
+  it "should be found all" do
+    db = @db.find_all
+    db.size.should == 3
+    a,b,c = db
+
+    a.status.should == @c
+    a.user  .should == @alice
+    a.tid   .should match(/\w+/)
+
+    b.status.should == @b
+    b.user  .should == @bob
+    b.tid   .should match(/\w+/)
+
+    c.status.should == @a
+    c.user.should   == @alice
+    c.tid.should    match(/\w+/)
   end
 
   it "should be found by tid" do

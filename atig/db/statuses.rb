@@ -51,6 +51,10 @@ module Atig
         end
       end
 
+      def find_all(opt={})
+        find '1', 1, opt
+      end
+
       def find_by_screen_name(name, opt={})
         find 'screen_name',name, opt
       end
@@ -69,10 +73,11 @@ module Atig
 
       private
       def find(lhs,rhs, opt={},&f)
+        query  = "SELECT data FROM status WHERE #{lhs} = :rhs ORDER BY created_at DESC LIMIT :limit"
+        params = { :rhs => rhs, :limit => opt.fetch(:limit,20) }
         res = []
         execute do|db|
-          db.execute("SELECT data FROM status WHERE #{lhs} = ? ORDER BY created_at DESC LIMIT ?",
-                     rhs,opt.fetch(:limit,20)) do|data,*_|
+          db.execute(query,params) do|data,*_|
             res << Marshal.load(data.unpack('m').first)
           end
         end

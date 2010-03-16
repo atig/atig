@@ -8,6 +8,14 @@ module Atig
       def initialize(context, gateway, db)
         super
 
+        # つないだときに発言がないとさみしいので
+        db.statuses.find_all(:limit=>50).reverse_each do|entry|
+          case entry.source
+          when :timeline, :me
+            @channel.message entry
+          end
+        end
+
         db.statuses.listen do|entry|
           case entry.source
           when :timeline, :me
