@@ -28,7 +28,7 @@ Dir['atig/ofilter/*.rb'].each do|file|
 end
 
 Dir['atig/command/*.rb'].each do|file|
-  require file
+  require file unless file =~ /(?:_spec\.rb|_helper\.rb)\Z/
 end
 
 Dir['atig/channel/*.rb'].each do|file|
