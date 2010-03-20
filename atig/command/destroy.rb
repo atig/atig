@@ -19,7 +19,7 @@ module Atig
             if entry.user.id == db.me.id
               api.delay(0) do|t|
                 res = t.post("statuses/destroy/#{entry.status.id}")
-                yield "Destroyed: #{res.text}"
+                yield "Destroyed: #{entry.status.text}"
               end
             else
               yield "The status you specified by the ID tid is not yours."
