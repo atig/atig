@@ -8,13 +8,13 @@ module Atig
     class Uptime < Atig::Command::Command
       def initialize(*args)
         super
-        @time = Time.now
+        @time = ::Time.now
       end
 
       def command_name; "uptime" end
 
       def action(target, mesg, command, args)
-        yield format(Time.now - @time)
+        yield format(::Time.now - @time)
       end
 
       def format(x)
