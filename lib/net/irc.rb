@@ -66,9 +66,11 @@ module Net::IRC
 	def low_quote(str)
 		str.gsub("\x10", "\x10\x10").gsub("\x00", "\x10\x30").gsub("\r", "\x10r").gsub("\n", "\x10n")
 	end
+	module_function :low_quote
 
 	def low_dequote(str)
 		str.gsub("\x10n", "\n").gsub("\x10r", "\r").gsub("\x10\x30", "\x00").gsub("\x10\x10", "\x10")
 	end
+	module_function :low_dequote
 end
 
