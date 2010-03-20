@@ -7,6 +7,7 @@ require 'atig/db/lists'
 require 'atig/util'
 require 'thread'
 require 'set'
+require 'fileutils'
 
 module Atig
   module Db
@@ -14,13 +15,15 @@ module Atig
       include Util
       attr_reader :followings, :statuses, :dms, :lists
       attr_accessor :me
+      VERSION = 1
 
       def initialize(context, opt={})
         @log        = context.log
         @me         = opt[:me]
         @followings = Followings.new
-        @statuses   = Statuses.new "#{@me.screen_name}-status.db"
-        @dms        = Statuses.new "#{@me.screen_name}-dm.db"
+        FileUtils.mkdir_p "cache/#{@me.screen_name}/"
+        @statuses   = Statuses.new "cache/#{@me.screen_name}/status.#{VERSION}.db"
+        @dms        = Statuses.new "cache/#{@me.screen_name}/dm.#{VERSION}.db"
         @lists      = Lists.new
 
 
