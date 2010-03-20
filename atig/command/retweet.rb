@@ -20,17 +20,17 @@ module Atig
 
       def rt_with_comment(target, comment, entry)
         screen_name = "@#{entry.user.screen_name}"
-        text = "#{comment} RT #{screen_name}: #{entry.status.text}"
+        text = "#{comment.strip} RT #{screen_name}: #{entry.status.text}"
 
         chars = text.each_char.to_a
         if chars.size > 140 then
           url = @bitly.shorten "http://twitter.com/#{entry.user.screen_name}/status/#{entry.status.id}"
-          text = chars[0,140-url.size].join('') + url
+          text = chars[0,140-url.size-1].join('') + ' ' + url
         end
         q = gateway.output_message(:status => text)
         api.delay(0) do|t|
           ret = t.post("statuses/update", q)
-          gateway.update_status ret,target, "RT to #{screen_name}: #{text}"
+          gateway.update_status ret,target, "RT to #{entry.user.screen_name}: #{entry.status.text}"
         end
       end
 
