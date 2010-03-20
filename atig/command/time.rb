@@ -22,8 +22,9 @@ module Atig
                                          "%+.2d:%.2d" % (offset/60).divmod(60),
                                          user.time_zone
                                         ]
-          entry = TwitterStruct.new('user'   => user,
-                                    'status' => TwitterStruct.new('text' => Net::IRC.ctcp_encode(time)))
+          entry = TwitterStruct.make('user'   => user,
+                                     'status' => { 'text' =>
+                                       Net::IRC.ctcp_encode(time) })
           gateway[target].message entry, Net::IRC::Constants::NOTICE
         }
       end
