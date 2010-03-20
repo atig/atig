@@ -28,6 +28,8 @@ module Atig
             ret = t.post("statuses/update", q)
             gateway.update_status ret, target, "In reply to #{name}: #{entry.status.text}"
           end
+        else
+          yield "No such ID : #{tid}"
         end
       end
     end
