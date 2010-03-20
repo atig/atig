@@ -18,7 +18,7 @@ describe Atig::Command::Thread do
     @command = init Atig::Command::Thread
     @messages = []
     @channel.stub!(:message).and_return{|entry,_|
-      @messages << entry
+      @messages.unshift entry
     }
     @statuses.stub!(:find_by_id).with(anything).and_return{|id|
       @entries[id.to_i]

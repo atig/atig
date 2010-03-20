@@ -30,7 +30,6 @@ module Atig
 
       def chain(entry,count, &f)
         return if count <= 0
-        f.call entry
         if id = entry.status.in_reply_to_status_id then
           if next_ = db.statuses.find_by_id(id) then
             chain(next_, count - 1, &f)
@@ -45,6 +44,7 @@ module Atig
             end
           end
         end
+        f.call entry
       end
     end
   end
