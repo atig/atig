@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>クイックスタート &mdash; atig.rb v1.0a documentation</title>
+    <title>内部構造 &mdash; atig.rb v1.0a documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -20,8 +20,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="atig.rb v1.0a documentation" href="index.html" />
-    <link rel="next" title="主な機能" href="feature.html" />
-    <link rel="prev" title="atig.rb : Another Twitter Irc Gateway" href="index.html" /> 
+    <link rel="prev" title="Tiarraとの連携" href="tiarra.html" /> 
   </head>
   <body>
     <div class="related">
@@ -31,10 +30,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="feature.html" title="主な機能"
-             accesskey="N">next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="atig.rb : Another Twitter Irc Gateway"
+          <a href="tiarra.html" title="Tiarraとの連携"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">atig.rb v1.0a documentation</a> &raquo;</li> 
       </ul>
@@ -43,23 +39,27 @@
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference external" href="#">クイックスタート</a><ul>
-<li><a class="reference external" href="#id2">動作環境</a></li>
-<li><a class="reference external" href="#id3">インストール</a></li>
-<li><a class="reference external" href="#id4">投稿してみる</a></li>
+<li><a class="reference external" href="#">内部構造</a><ul>
+<li><a class="reference external" href="#id2">全体図</a></li>
+<li><a class="reference external" href="#twitter">Twitter</a></li>
+<li><a class="reference external" href="#scheduler">Scheduler</a></li>
+<li><a class="reference external" href="#agent">Agent</a></li>
+<li><a class="reference external" href="#db">Db</a></li>
+<li><a class="reference external" href="#gateway">Gateway</a></li>
+<li><a class="reference external" href="#channel">Channel</a></li>
+<li><a class="reference external" href="#ifilter">IFilter</a></li>
+<li><a class="reference external" href="#ofilter">OFilter</a></li>
+<li><a class="reference external" href="#command">Command</a></li>
 </ul>
 </li>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="index.html"
-                                  title="previous chapter">atig.rb : Another Twitter Irc Gateway</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="feature.html"
-                                  title="next chapter">主な機能</a></p>
+            <p class="topless"><a href="tiarra.html"
+                                  title="previous chapter">Tiarraとの連携</a></p>
             <h3>This Page</h3>
             <ul class="this-page-menu">
-              <li><a href="_sources/quickstart.txt"
+              <li><a href="_sources/hacking_guide.txt"
                      rel="nofollow">Show Source</a></li>
             </ul>
           <div id="searchbox" style="display: none">
@@ -84,23 +84,53 @@
           <div class="body">
             
   <div class="section" id="id1">
-<h1>クイックスタート<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<h1>内部構造<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id2">
-<h2>動作環境<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<h2>全体図<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<img alt="_images/structure.png" src="_images/structure.png" />
+</div>
+<div class="section" id="twitter">
+<h2>Twitter<a class="headerlink" href="#twitter" title="Permalink to this headline">¶</a></h2>
 <blockquote>
 <ul class="simple">
-<li>Ruby 1.8/1.9</li>
-<li>json</li>
-<li>oauth</li>
-<li>sqlite3-ruby</li>
+<li>TwitterのAPIを叩くためのクラス</li>
 </ul>
 </blockquote>
 </div>
-<div class="section" id="id3">
-<h2>インストール<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="scheduler">
+<h2>Scheduler<a class="headerlink" href="#scheduler" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>API呼び出し回数を最適化するためのクラス(予定)</li>
+</ul>
+</blockquote>
 </div>
-<div class="section" id="id4">
-<h2>投稿してみる<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="agent">
+<h2>Agent<a class="headerlink" href="#agent" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Twitterから情報を取得し、DBに登録するクラス</li>
+<li>例: メインタイムラインを取得し、DBに登録する</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="db">
+<h2>Db<a class="headerlink" href="#db" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="gateway">
+<h2>Gateway<a class="headerlink" href="#gateway" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="channel">
+<h2>Channel<a class="headerlink" href="#channel" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ifilter">
+<h2>IFilter<a class="headerlink" href="#ifilter" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="ofilter">
+<h2>OFilter<a class="headerlink" href="#ofilter" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="command">
+<h2>Command<a class="headerlink" href="#command" title="Permalink to this headline">¶</a></h2>
 </div>
 </div>
 
@@ -117,10 +147,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="feature.html" title="主な機能"
-             >next</a> |</li>
-        <li class="right" >
-          <a href="index.html" title="atig.rb : Another Twitter Irc Gateway"
+          <a href="tiarra.html" title="Tiarraとの連携"
              >previous</a> |</li>
         <li><a href="index.html">atig.rb v1.0a documentation</a> &raquo;</li> 
       </ul>

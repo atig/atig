@@ -7,16 +7,16 @@ CTCP ACTION
 CTCP ACTIONによって、特定の発言への返信などが行なえます。
 
 CTCP ACTIONの送り方はクライアントによって異なりますが、LimeChatやirssi
-では ``/me`` です。 例えば、 ``/me reply a`` などのようになります。
+では ``/me`` です。 例えば、replyコマンド送信する場合は ``/me reply a`` のようになります。
 
 発言関係
 ------------------------------
-reply ``tid`` ``comment``(別名: mention/rp)
+reply ``tid`` ``comment`` (別名: mention/rp)
   ``tid`` の発言に対して返信します。
-retweet ``tid`` ``comment``(別名: rt ort)
+retweet ``tid`` ``comment`` (別名: rt ort)
   ``tid`` の発言をリツイートする。
   コメントが省略された場合は、公式リツイートになります。
-destroy ``tid``(別名: remove/rm)
+destroy ``tid`` (別名: remove/rm)
   ``tid`` の発言を削除する。 ``tid`` の発言が自分のものでない場合はエラーになります。
 fav ``tid``
   ``tid`` の発言をお気に入りに追加します。
@@ -27,9 +27,9 @@ unfav ``tid``
 ------------------------------
 bio ``screen_name``
   ``screen_name`` のユーザのプロフィールを表示します。
-user ``screen_name`` ``count``(別名: u)
-  ``screen_name`` のユーザの最新の発言``count``件を表示します。
-  ``count`` が省略された場合は20件になります。また、 ``count`` は
+user ``screen_name`` ``count`` (別名: u)
+  ``screen_name`` のユーザの最新の発言 ``count`` 件を表示します。
+  ``count`` が省略された場合は20件になります。 ``count`` は
   200件以上を指定しても無視されます。
 
 システム関係

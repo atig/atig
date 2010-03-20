@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>atig : Another Twitter Irc Gateway &mdash; atig v1.0a documentation</title>
+    <title>atig.rb : Another Twitter Irc Gateway &mdash; atig.rb v1.0a documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="atig v1.0a documentation" href="#" />
+    <link rel="top" title="atig.rb v1.0a documentation" href="#" />
     <link rel="next" title="クイックスタート" href="quickstart.html" /> 
   </head>
   <body>
@@ -32,14 +32,20 @@
         <li class="right" >
           <a href="quickstart.html" title="クイックスタート"
              accesskey="N">next</a> |</li>
-        <li><a href="#">atig v1.0a documentation</a> &raquo;</li> 
+        <li><a href="#">atig.rb v1.0a documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
             <h3><a href="#">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference external" href="#">atig : Another Twitter Irc Gateway</a><ul>
+<li><a class="reference external" href="#">atig.rb : Another Twitter Irc Gateway</a><ul>
+<li><a class="reference external" href="#irc">必要なのはIRCクライアントだけ</a></li>
+<li><a class="reference external" href="#id1">サーバ上で動作可能</a></li>
+<li><a class="reference external" href="#lists">Listsにも対応してます</a></li>
+<li><a class="reference external" href="#os">大抵のOSで動きます</a><ul>
+</ul>
+</li>
 </ul>
 </li>
 <li><a class="reference external" href="#indices-and-tables">Indices and tables</a></li>
@@ -74,10 +80,43 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="atig-another-twitter-irc-gateway">
-<h1>atig : Another Twitter Irc Gateway<a class="headerlink" href="#atig-another-twitter-irc-gateway" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="atig-rb-another-twitter-irc-gateway">
+<h1>atig.rb : Another Twitter Irc Gateway<a class="headerlink" href="#atig-rb-another-twitter-irc-gateway" title="Permalink to this headline">¶</a></h1>
 <p>atig.rbはTwitterとIRCを結ぶゲートウェイです。</p>
-<img alt="_images/screenshot.png" src="_images/screenshot.png" />
+<div class="section" id="irc">
+<h2>必要なのはIRCクライアントだけ<a class="headerlink" href="#irc" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>IRCクライアントさえあれば、どこでもTwitterできます。</li>
+<li>こんな画面なら仕事中にやっててもバレないよ</li>
+<li>CUIラブ♥の人でも安心</li>
+<li>Emacsラブ♥の人でも安心</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id1">
+<h2>サーバ上で動作可能<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Tiarraと連携すれば24時間Twitterのログがとれます。</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="lists">
+<h2>Listsにも対応してます<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Listsはチャンネルになります</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="os">
+<h2>大抵のOSで動きます<a class="headerlink" href="#os" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Rubyで書いてあるので大抵のOSで動作します</li>
+</ul>
+</blockquote>
 <ul>
 <li class="toctree-l1"><a class="reference external" href="quickstart.html">クイックスタート</a><ul>
 <li class="toctree-l2"><a class="reference external" href="quickstart.html#id2">動作環境</a></li>
@@ -87,6 +126,7 @@
 </li>
 <li class="toctree-l1"><a class="reference external" href="feature.html">主な機能</a></li>
 <li class="toctree-l1"><a class="reference external" href="irc.html">IRCコマンドとの対応</a></li>
+<li class="toctree-l1"><a class="reference external" href="commandline_options.html">コマンドラインオプション</a></li>
 <li class="toctree-l1"><a class="reference external" href="options.html">クライアントオプション</a><ul>
 <li class="toctree-l2"><a class="reference external" href="options.html#id2">概要</a></li>
 <li class="toctree-l2"><a class="reference external" href="options.html#id3">発言関係</a></li>
@@ -97,12 +137,26 @@
 <li class="toctree-l1"><a class="reference external" href="commands.html">CTCP ACTION</a><ul>
 <li class="toctree-l2"><a class="reference external" href="commands.html#id1">概要</a></li>
 <li class="toctree-l2"><a class="reference external" href="commands.html#id2">発言関係</a></li>
-<li class="toctree-l2"><a class="reference external" href="commands.html#id9">ユーザ関係</a></li>
-<li class="toctree-l2"><a class="reference external" href="commands.html#id12">システム関係</a></li>
+<li class="toctree-l2"><a class="reference external" href="commands.html#id3">ユーザ関係</a></li>
+<li class="toctree-l2"><a class="reference external" href="commands.html#id4">システム関係</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference external" href="tiarra.html">Tiarraとの連携</a></li>
+<li class="toctree-l1"><a class="reference external" href="hacking_guide.html">内部構造</a><ul>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#id2">全体図</a></li>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#twitter">Twitter</a></li>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#scheduler">Scheduler</a></li>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#agent">Agent</a></li>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#db">Db</a></li>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#gateway">Gateway</a></li>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#channel">Channel</a></li>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#ifilter">IFilter</a></li>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#ofilter">OFilter</a></li>
+<li class="toctree-l2"><a class="reference external" href="hacking_guide.html#command">Command</a></li>
 </ul>
+</li>
+</ul>
+</div>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
@@ -127,7 +181,7 @@
         <li class="right" >
           <a href="quickstart.html" title="クイックスタート"
              >next</a> |</li>
-        <li><a href="#">atig v1.0a documentation</a> &raquo;</li> 
+        <li><a href="#">atig.rb v1.0a documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
