@@ -19,7 +19,7 @@ module Atig
           text = mesg.split(" ", 3)[2]
           name = entry.user.screen_name
 
-          text = "@#{name} #{text}" if text.nil? or not text.include?(name)
+          text = "@#{name} #{text}" if text.nil? or not text.include?("@#{name}")
 
           q = gateway.output_message(:status => text,
                                      :in_reply_to_status_id => entry.status.id)
