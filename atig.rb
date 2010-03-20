@@ -68,6 +68,7 @@ Atig::Gateway::Session.commands = [
                                    Atig::Command::Destroy,
                                    Atig::Command::Status,
                                    Atig::Command::Thread,
+                                   Atig::Command::Time,
                                   ]
 Atig::Gateway::Session.channels = [
                                    Atig::Channel::Timeline,
