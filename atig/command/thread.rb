@@ -1,6 +1,8 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'atig/command/info'
+
 module Atig
   module Command
     class Thread < Atig::Command::Command
@@ -29,20 +31,12 @@ module Atig
       end
 
       def chain(entry,count, &f)
-        return if count <= 0
-        if id = entry.status.in_reply_to_status_id then
-          if next_ = db.statuses.find_by_id(id) then
+        if count <= 0 then
+          return
+        elsif id = entry.status.in_reply_to_status_id then
+          Info.status(db, api, id){|next_|
             chain(next_, count - 1, &f)
-          else
-            api.delay(0) do|t|
-              status = t.get "statuses/show/#{id}"
-              db.transaction do|d|
-                d.statuses.add :status => status, :user => status.user, :source => :thread
-                next_ = db.statuses.find_by_id(id)
-                chain(next_, count - 1, &f)
-              end
-            end
-          end
+          }
         end
         f.call entry
       end
