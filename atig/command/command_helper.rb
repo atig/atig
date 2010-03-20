@@ -33,26 +33,6 @@ class FakeScheduler
   end
 end
 
-def user(id, name)
-  user = stub("User-#{name}")
-  user.stub!(:id).and_return(id)
-  user.stub!(:screen_name).and_return(name)
-  user
-end
-
-def status(text)
-  status = stub("Status-#{text}")
-  status.stub!(:text).and_return(text)
-  status
-end
-
-def entry(user,status)
-  entry = stub 'entry'
-  entry.stub!('user').and_return(user)
-  entry.stub!('status').and_return(status)
-  entry
-end
-
 module CommandHelper
   def init(klass)
     @log    = mock 'log'

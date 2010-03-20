@@ -1,6 +1,7 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'atig/spec_helper'
 require 'atig/command/status'
 require 'atig/command/command_helper'
 
