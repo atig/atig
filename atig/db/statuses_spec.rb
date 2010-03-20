@@ -5,7 +5,7 @@ require 'atig/db/statuses'
 
 describe Atig::Db::Statuses do
   def status(id, text, time)
-    OpenStruct.new(:id => id, :text => text, :created_at => time)
+    OpenStruct.new(:id => id, :text => text, :created_at => time.strftime("%a %b %d %H:%M:%S +0000 %Y"))
   end
 
   def user(name)
@@ -17,10 +17,10 @@ describe Atig::Db::Statuses do
     FileUtils.rm_f 'test.db'
     @db = Atig::Db::Statuses.new 'test.db'
 
-    @a = status 1, 'a',1
-    @b = status 2, 'b',2
-    @c = status 3, 'c',3
-    @d = status 4, 'd',4
+    @a = status 1, 'a', Time.utc(2010,1,5)
+    @b = status 2, 'b', Time.utc(2010,1,6)
+    @c = status 3, 'c', Time.utc(2010,1,7)
+    @d = status 4, 'd', Time.utc(2010,1,8)
 
     @alice = user 'alice'
     @bob = user 'bob'
