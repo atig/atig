@@ -128,5 +128,10 @@ describe Atig::Db::Statuses do
   it "should be found by screen_name with limit" do
     xs = @db.find_by_screen_name('alice', :limit => 1)
     xs.size.should == 1
+
+    a,_ = xs
+    a.status.should == @c
+    a.user  .should == @alice
+    a.tid   .should match(/\w+/)
   end
 end
