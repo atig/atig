@@ -35,46 +35,46 @@ Dir['atig/channel/*.rb'].each do|file|
   require file
 end
 
-require 'atig/gateway'
+require 'atig/gateway/session'
 
-Atig::Gateway.agents   = [
-                          Atig::Agent::List,
-                          Atig::Agent::ListStatus,
-                          Atig::Agent::Following,
-                          Atig::Agent::Mention,
-                          Atig::Agent::Dm,
-                          Atig::Agent::Timeline,
+Atig::Gateway::Session.agents   = [
+                                   Atig::Agent::List,
+                                   Atig::Agent::ListStatus,
+                                   Atig::Agent::Following,
+                                   Atig::Agent::Mention,
+                                   Atig::Agent::Dm,
+                                   Atig::Agent::Timeline,
                          ]
-Atig::Gateway.ifilters = [
-                          Atig::IFilter::Utf7,
-                          Atig::IFilter::Sanitize,
-                          Atig::IFilter::ExpandUrl,
-                          Atig::IFilter::Strip.new(%w{ *tw* *Sh*}),
-                          Atig::IFilter::Retweet,
-                          Atig::IFilter::Tid
-                         ]
-Atig::Gateway.ofilters = [
-                          Atig::OFilter::EscapeUrl,
-                          Atig::OFilter::ShortUrl,
-                          Atig::OFilter::Geo,
-                         ]
-Atig::Gateway.commands = [
-                          Atig::Command::Retweet,
-                          Atig::Command::Reply,
-                          Atig::Command::User,
-                          Atig::Command::Bio,
-                          Atig::Command::Favorite,
-                          Atig::Command::Uptime,
-                          Atig::Command::Destroy,
-                          Atig::Command::Status,
-                          Atig::Command::Thread,
-                         ]
-Atig::Gateway.channels = [
-                          Atig::Channel::Timeline,
-                          Atig::Channel::Mention,
-                          Atig::Channel::Dm,
-                          Atig::Channel::List,
-                         ]
+Atig::Gateway::Session.ifilters = [
+                                   Atig::IFilter::Utf7,
+                                   Atig::IFilter::Sanitize,
+                                   Atig::IFilter::ExpandUrl,
+                                   Atig::IFilter::Strip.new(%w{ *tw* *Sh*}),
+                                   Atig::IFilter::Retweet,
+                                   Atig::IFilter::Tid
+                                  ]
+Atig::Gateway::Session.ofilters = [
+                                   Atig::OFilter::EscapeUrl,
+                                   Atig::OFilter::ShortUrl,
+                                   Atig::OFilter::Geo,
+                                  ]
+Atig::Gateway::Session.commands = [
+                                   Atig::Command::Retweet,
+                                   Atig::Command::Reply,
+                                   Atig::Command::User,
+                                   Atig::Command::Bio,
+                                   Atig::Command::Favorite,
+                                   Atig::Command::Uptime,
+                                   Atig::Command::Destroy,
+                                   Atig::Command::Status,
+                                   Atig::Command::Thread,
+                                  ]
+Atig::Gateway::Session.channels = [
+                                   Atig::Channel::Timeline,
+                                   Atig::Channel::Mention,
+                                   Atig::Channel::Dm,
+                                   Atig::Channel::List,
+                                  ]
 
 if __FILE__ == $0
   require "optparse"
@@ -127,5 +127,5 @@ EOB
 
   opts[:logger] = Logger.new(opts[:log], "daily")
   opts[:logger].level = opts[:debug] ? Logger::DEBUG : Logger::INFO
-  Net::IRC::Server.new(opts[:host], opts[:port], Atig::Gateway, opts).start
+  Net::IRC::Server.new(opts[:host], opts[:port], Atig::Gateway::Session, opts).start
 end
