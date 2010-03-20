@@ -12,6 +12,10 @@ describe Atig::Command::Uptime do
     @command = init Atig::Command::Uptime
   end
 
+  it "should register uptime command" do
+    @gateway.names.should == ['uptime']
+  end
+
   it "should return mm:ss(min)" do
     Time.should_receive(:now).and_return(Time.at(0))
     @channel.should_receive(:notify).with("00:00")
