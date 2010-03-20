@@ -17,7 +17,7 @@ module Atig
         end
 
         tid, num = args
-        count = 20 unless (1..20).include?(count = num.to_i)
+        count = 10 unless (1..20).include?(count = num.to_i)
 
         if entry = find_by_tid(tid) then
           chain(entry,count){|x|
