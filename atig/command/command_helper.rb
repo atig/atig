@@ -52,3 +52,24 @@ def entry(user,status)
   entry.stub!('status').and_return(status)
   entry
 end
+
+module CommandHelper
+  def init(klass)
+    @log    = mock 'log'
+    @opts   = mock 'opts'
+    context = OpenStruct.new :log=>@log, :opts=>@opts
+
+    @channel    = mock 'channel'
+    @gateway    = FakeGateway.new @channel
+    @api        = mock 'api'
+    @statuses   = mock 'status DB'
+    @followings = mock 'following DB'
+    @me         = user 1,'me'
+    db = OpenStruct.new :statuses=>@statuses,:followings=>@followings,:me=>@me
+    @command = klass.new context, @gateway, FakeScheduler.new(@api), db
+  end
+
+  def call(channel, command, args)
+    @gateway.action.call channel, "#{command} #{args.join(' ')}", command, args
+  end
+end

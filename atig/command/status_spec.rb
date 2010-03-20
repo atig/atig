@@ -5,19 +5,9 @@ require 'atig/command/status'
 require 'atig/command/command_helper'
 
 describe Atig::Command::Status do
+  include CommandHelper
   before do
-    @log    = mock 'log'
-    @opts   = mock 'opts'
-    context = OpenStruct.new :log=>@log, :opts=>@opts
-
-    @channel    = mock 'channel'
-    @gateway    = FakeGateway.new @channel
-    @api        = mock 'api'
-    @statuses   = mock 'status DB'
-    @followings = mock 'following DB'
-    @me         = user 1,'me'
-    db = OpenStruct.new :statuses=>@statuses,:followings=>@followings,:me=>@me
-    @command = Atig::Command::Status.new context, @gateway, FakeScheduler.new(@api), db
+    @command = init Atig::Command::Status
   end
 
   it "should have '/me status' name" do
@@ -29,7 +19,7 @@ describe Atig::Command::Status do
     @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return(nil)
     @api.should_receive(:post).with('statuses/update', {:status=>'blah blah'}).and_return(res)
 
-    @gateway.action.call '#twitter',"status blah blah","status",%w(blah blah)
+    call '#twitter', "status", %w(blah blah)
 
     @gateway.updated.should  == [ res, '#twitter' ]
     @gateway.filtered.should == { :status => 'blah blah' }
@@ -40,7 +30,7 @@ describe Atig::Command::Status do
     @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return(e)
     @channel.should_receive(:notify).with("You can't submit the same status twice in a row.")
 
-    @gateway.action.call '#twitter',"status blah blah","status",%w(blah blah)
+    call '#twitter', "status", %w(blah blah)
     @gateway.notified.should == '#twitter'
   end
 
@@ -48,7 +38,7 @@ describe Atig::Command::Status do
     @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return(nil)
     @channel.should_receive(:notify).with("You can't submit the status over 140 chars")
 
-    @gateway.action.call '#twitter',"status #{'a'*141}","status",'a'*141
+    call '#twitter', "status", [ 'a' * 141 ]
     @gateway.notified.should == '#twitter'
   end
 end
