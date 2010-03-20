@@ -15,10 +15,12 @@ SRCS[] =
 	index
 	options
 	tiarra
+	commandline_options
 	commands
 	quickstart
 	feature
 	irc
+	hacking_guide
 
 .PHONY : clean
 .DEFAULT: $(addsuffix .rst, $(SRCS))

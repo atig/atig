@@ -16,7 +16,7 @@ module Atig
         end
         args.each do|tid|
           if entry = find_by_tid(tid)
-            if entry.user.id == gateway.db.me.id
+            if entry.user.id == db.me.id
               api.delay(0) do|t|
                 res = t.post("statuses/destroy/#{entry.status.id}")
                 yield "Destroyed: #{res.text}"
