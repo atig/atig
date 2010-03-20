@@ -67,6 +67,7 @@ Atig::Gateway.commands = [
                           Atig::Command::Uptime,
                           Atig::Command::Destroy,
                           Atig::Command::Status,
+                          Atig::Command::Thread,
                          ]
 Atig::Gateway.channels = [
                           Atig::Channel::Timeline,
