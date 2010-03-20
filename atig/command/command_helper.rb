@@ -28,7 +28,7 @@ class FakeScheduler
     @api = api
   end
 
-  def delay(*args,&f)
+  def delay(interval,opt={},&f)
     f.call @api
   end
 end
