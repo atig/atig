@@ -26,7 +26,7 @@ module Atig
                           tid  text,
                           screen_name text,
                           user_id     text,
-                          created_at  text,
+                          created_at  integer,
                           data blob);}
           end
         end
@@ -45,7 +45,7 @@ module Atig
                      :tid         => entry.tid,
                      :screen_name => opt[:user].screen_name,
                      :user_id     => opt[:user].id,
-                     :created_at  => opt[:status].created_at,
+                     :created_at  => Time.parse(opt[:status].created_at).to_i,
                      :data        => [Marshal.dump(entry)].pack('m'))
           notify entry
         end
