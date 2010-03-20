@@ -25,11 +25,12 @@ module Atig
             statuses.reverse_each do|status|
               d.statuses.add :status => status, :user => status.user, :source => :user
             end
-            db.statuses.find_by_screen_name(nick, :limit=>count).sort{|x,y|
-              Time.parse(y.status.created_at) <=> Time.parse(x.status.created_at)
-            }.reverse_each do|entry|
-              gateway[target].message entry, Net::IRC::Constants::NOTICE
-            end
+            db.
+              statuses.
+              find_by_screen_name(nick, :limit=>count).
+              reverse_each do|entry|
+                gateway[target].message entry, Net::IRC::Constants::NOTICE
+              end
           end
         end
       end

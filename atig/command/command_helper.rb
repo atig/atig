@@ -33,6 +33,19 @@ class FakeScheduler
   end
 end
 
+class FakeDb
+  attr_reader :statuses, :followings, :me
+  def initialize(statuses, followings, me)
+    @statuses = statuses
+    @followings = followings
+    @me = me
+  end
+
+  def transaction(&f)
+    f.call self
+  end
+end
+
 module CommandHelper
   def init(klass)
     @log    = mock 'log'
@@ -45,8 +58,8 @@ module CommandHelper
     @statuses   = mock 'status DB'
     @followings = mock 'following DB'
     @me         = user 1,'me'
-    db = OpenStruct.new :statuses=>@statuses,:followings=>@followings,:me=>@me
-    @command = klass.new context, @gateway, FakeScheduler.new(@api), db
+    @db         = FakeDb.new @statuses, @followings, @me
+    @command = klass.new context, @gateway, FakeScheduler.new(@api), @db
   end
 
   def call(channel, command, args)
