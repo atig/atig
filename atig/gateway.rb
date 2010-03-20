@@ -85,6 +85,8 @@ END
 
     def on_user(m)
       super
+      @thread_group = ThreadGroup.new
+      @thread_group.add Thread.current
       @ctcp_actions = {}
       @channels     = {}
       load_config
@@ -150,6 +152,10 @@ END
           klass
         end
       end
+    end
+
+    def on_disconnected
+      (@thread_group.list - [Thread.current]).each {|t| t.kill }
     end
 
     def save_config
