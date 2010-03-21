@@ -13,3 +13,5 @@ IRCコマンドとの対応
 
 \/whois ``screen_name``
   ``screen_name`` の情報を表示します。ID番号、名前、自己紹介、現在地などを表示します。
+\/who ``channel``
+  ``channel`` の参加者の情報を表示します。ID番号、名前などを表示します。
