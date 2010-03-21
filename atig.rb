@@ -57,6 +57,7 @@ Atig::Gateway::Session.ofilters = [
                                    Atig::OFilter::EscapeUrl,
                                    Atig::OFilter::ShortUrl,
                                    Atig::OFilter::Geo,
+                                   Atig::OFilter::Footer,
                                   ]
 Atig::Gateway::Session.commands = [
                                    Atig::Command::Retweet,

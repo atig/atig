@@ -98,4 +98,9 @@ describe Atig::Command::Option, 'when have string property' do
     call '#twitter', 'opt', %w(foo baz)
     @value.should == 'baz'
   end
+
+  it "should update the value" do
+    call '#twitter', 'opt', %w(foo blah Blah)
+    @value.should == 'blah Blah'
+  end
 end

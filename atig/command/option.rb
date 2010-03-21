@@ -15,7 +15,7 @@ module Atig
           return
         end
 
-        name, value, *_ = args
+        _,name,value = mesg.split ' ', 3
         unless value then
           # show the value
           yield "#{name} => #{@opts.send name}"
