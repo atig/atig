@@ -6,9 +6,11 @@ require 'atig/command/whois'
 require 'atig/command/command_helper'
 require 'atig/command/info'
 
+include Net::IRC::Constants
+
 describe Atig::Command::Whois do
   include CommandHelper
-  include Net::IRC::Constants
+
 
   def time(t)
     t.utc.strftime("%a %b %d %H:%M:%S +0000 %Y")
