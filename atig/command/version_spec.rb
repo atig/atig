@@ -8,12 +8,6 @@ require 'atig/command/command_helper'
 describe Atig::Command::Version do
   include CommandHelper
 
-  def s(source)
-    s = mock "status-#{source}"
-    s.stub!(:source).and_return(source)
-    s
-  end
-
   before do
     @command = init Atig::Command::Version
     @status  = stub "status"
@@ -31,18 +25,28 @@ describe Atig::Command::Version do
       should_receive(:find_by_screen_name).
       with('mzp',:limit => 1).
       and_return([ entry(@user,@status) ])
-    @channel.should_receive(:notify).with("Echofon <http://echofon.com/>")
+    @channel.
+      should_receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE).
+      and_return{|s,_|
+        s.status.text.should == "\x01Echofon <http://echofon.com/>\x01"
+      }
     call '#twitter','version',%w(mzp)
   end
 
   it "should show the source of web" do
     status  = stub "status"
-    status.stub!(:source).and_return(nil)
+    status.stub!(:source).and_return('web')
     @statuses.
       should_receive(:find_by_screen_name).
       with('mzp',:limit => 1).
       and_return([ entry(@user,status) ])
-    @channel.should_receive(:notify).with("web")
+    @channel.
+      should_receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE).
+      and_return{|s,_|
+        s.status.text.should == "\x01web\x01"
+      }
     call '#twitter','version',%w(mzp)
   end
 
@@ -52,7 +56,12 @@ describe Atig::Command::Version do
     @statuses.should_receive(:add).with(:status => @status, :user => @user, :source=>:version)
     @api.should_receive(:get).with('users/show',:screen_name=>'mzp').and_return(@user)
 
-    @channel.should_receive(:notify).with("Echofon <http://echofon.com/>")
+    @channel.
+      should_receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE).
+      and_return{|s,_|
+        s.status.text.should == "\x01Echofon <http://echofon.com/>\x01"
+      }
 
     call '#twitter','version',%w(mzp)
   end

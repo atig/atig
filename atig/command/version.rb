@@ -1,6 +1,7 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'atig/twitter'
 require 'atig/command/command'
 
 module Atig
@@ -17,14 +18,20 @@ module Atig
 
         entries = db.statuses.find_by_screen_name(nick, :limit => 1)
         if entries && !entries.empty? then
-          yield format(entries.first.status.source)
+          entry = TwitterStruct.make('user'   => entries.first.user,
+                                     'status' => { 'text' =>
+                                       format(entries.first.status.source) })
+          gateway[target].message entry, Net::IRC::Constants::NOTICE
         else
           api.delay(0) do|t|
             begin
               user = t.get("users/show", { :screen_name => nick})
               db.transaction do|d|
                 d.statuses.add :user => user, :status => user.status, :source => :version
-                yield format(user.status.source)
+                entry = TwitterStruct.make('user'   => user,
+                                           'status' => { 'text' =>
+                                             format(user.status.source) })
+                gateway[target].message entry, Net::IRC::Constants::NOTICE
               end
             rescue Twitter::APIFailed => e
               yield e.to_s
@@ -36,8 +43,8 @@ module Atig
       def format(source)
         version = source.gsub(/<[^>]*>/, "").strip
         version << " <#{$1}>" if source =~ / href="([^"]+)/
-        version
-      end
+        Net::IRC.ctcp_encode version
+       end
     end
   end
 end
