@@ -66,7 +66,7 @@ END
       @log.debug [req.method, uri.to_s]
       begin
         if authenticate
-          ret = oauth req
+          ret = oauth 30, req
         else
           ret = http(uri, 30, 30).request req
         end
@@ -198,30 +198,31 @@ END
     end
 
     def api_base(secure = true)
-      URI("http#{"s" if secure}://twitter.com/")
+      URI("http#{"s" if secure}://api.twitter.com/1/")
     end
 
     def api_source
       "#{@opts.api_source || "tigrb"}"
     end
 
-    def oauth(req)
-      headers = {}
-      req.each{|k,v| headers[k] = v }
+    def oauth(time, req)
+      timeout(time) do
+        headers = {}
+        req.each{|k,v| headers[k] = v }
 
-      case req
-      when Net::HTTP::Get
-        @oauth.get req.path,headers
-      when Net::HTTP::Head
-        @oauth.head req.path,headers
-      when Net::HTTP::Post
-        @oauth.post req.path,req.body,headers
-      when Net::HTTP::Put
-        @oauth.put req.path,req.body,headers
-      when Net::HTTP::Delete
-        @oauth.delete req.path,headers
+        case req
+        when Net::HTTP::Get
+          @oauth.get req.path,headers
+        when Net::HTTP::Head
+          @oauth.head req.path,headers
+        when Net::HTTP::Post
+          @oauth.post req.path,req.body,headers
+        when Net::HTTP::Put
+          @oauth.put req.path,req.body,headers
+        when Net::HTTP::Delete
+          @oauth.delete req.path,headers
+        end
       end
     end
   end
 end
-
