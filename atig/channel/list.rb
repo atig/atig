@@ -19,6 +19,10 @@ module Atig
           api.delete("#{@db.me.screen_name}/#{@name}/members", :id => nick )
           @db.lists.invalidate @name
         end
+
+        def on_who(&f)
+          @db.lists[@name].users.each(&f)
+        end
       end
 
       def initialize(context, gateway, db)

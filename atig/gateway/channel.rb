@@ -23,6 +23,10 @@ module Atig
         @handler && @handler.respond_to?(:on_invite) && @handler.on_invite(*args)
       end
 
+      def on_who(*args,&f)
+        @handler && @handler.respond_to?(:on_who) && @handler.on_who(*args,&f)
+      end
+
       def on_kick(*args)
         @handler && @handler.respond_to?(:on_kick)   && @handler.on_kick(*args)
       end
@@ -87,13 +91,7 @@ module Atig
       end
 
       def prefix(u)
-        nick = u.screen_name
-        nick = "@#{nick}" if @opts.athack
-        user = "id=%.9d" % u.id
-        host = "twitter"
-        host += "/protected" if u.protected
-
-        Net::IRC::Prefix.new("#{nick}!#{user}@#{host}")
+        @session.prefix u
       end
     end
   end

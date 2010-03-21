@@ -79,6 +79,16 @@ END
         end
       end
 
+      def prefix(u)
+        nick = u.screen_name
+        nick = "@#{nick}" if @opts.athack
+        user = "id=%.9d" % u.id
+        host = "twitter"
+        host += "/protected" if u.protected
+
+        Net::IRC::Prefix.new("#{nick}!#{user}@#{host}")
+      end
+
       protected
       def on_message(m)
         @on_message.call(m) if @on_message
@@ -133,6 +143,9 @@ Please check Twitter Status <http://status.twitter.com/> and try again later.
 END
             finish
           end
+          @prefix = prefix me
+          @user   = @prefix.user
+          @host   = @prefix.host
 
           post server_name, MODE, @nick, "+o"
 
@@ -262,6 +275,29 @@ END
         on_ctcp_action(nil, "whois #{nick}")
       end
 
+      def on_who(m)
+        channel  = m.params[0]
+
+        unless @channels.key? channel
+          post server_name, ERR_NOSUCHNICK, nick, "No such channel: #{channel}"
+          return
+        end
+        @channels[channel].on_who do|user|
+          p user
+          #     "<channel> <user> <host> <server> <nick>
+          #         ( "H" / "G" > ["*"] [ ( "@" / "+" ) ]
+          #             :<hopcount> <real name>"
+          prefix = prefix(user)
+          server = 'twitter.com'
+          mode   = case prefix.nick
+                   when @nick                     then "~"
+                   else                                "+"
+                   end
+          real = user.name
+          post server_name, RPL_WHOREPLY, @nick, channel, prefix.user, prefix.host, server, prefix.nick, "H*#{mode}", "1 #{real}"
+        end
+        post server_name, RPL_ENDOFWHO, @nick, channel
+      end
 
       def available_user_modes
         "o"

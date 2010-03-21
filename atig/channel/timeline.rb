@@ -38,6 +38,10 @@ module Atig
         @db.followings.invalidate
       end
 
+      def on_who(&f)
+        @db.followings.users.each(&f)
+      end
+
       def channel_name; "#twitter" end
     end
   end
