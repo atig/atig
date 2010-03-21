@@ -28,8 +28,12 @@ thread ``tid`` [``count``]
 
 ユーザ関係
 ------------------------------
-bio ``screen_name``
+userinfo ``screen_name`` (別名: bio)
   ``screen_name`` のユーザのプロフィールを表示します。
+version ``screen_name``
+  ``screen_name`` のクライアントの情報を表示します。最新の発言に用いたクライアント名を表示します。
+time ``screen_name``
+  ``screen_name`` のタイムゾーン情報を表示します。
 user ``screen_name`` [``count``] (別名: u)
   ``screen_name`` のユーザの最新の発言 ``count`` 件を表示します。
   ``count`` が省略された場合は20件になります。 ``count`` は
