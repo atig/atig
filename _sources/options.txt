@@ -57,3 +57,8 @@ unuify
   |len| 字以上のURLを http://u.nu によって短縮します。
 
 .. |len| replace:: 20
+
+システム関係
+------------------------------
+api_base=\ ``api_base``
+  Twitterのエントリポイントを指定します。実行中の変更には対応していません。指定しない場合は、https://api.twitter.com/1/が用いられます。
