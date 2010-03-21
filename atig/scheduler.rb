@@ -52,5 +52,9 @@ module Atig
         raise e
       end
     end
+
+    def limit
+      @api.auth_limit
+    end
   end
 end

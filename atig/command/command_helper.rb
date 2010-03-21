@@ -33,6 +33,10 @@ class FakeScheduler
   def delay(interval,opt={},&f)
     f.call @api
   end
+
+  def limit
+    @api.limit
+  end
 end
 
 class FakeDb
