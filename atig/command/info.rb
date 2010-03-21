@@ -13,7 +13,6 @@ module Atig
             f.call user
           end
         end
-
       end
 
       def status(db, api, id, &f)
