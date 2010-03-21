@@ -253,6 +253,16 @@ END
         end
       end
 
+      def on_whois(m)
+        nick = m.params[0]
+        unless nick.screen_name?
+          post server_name, ERR_NOSUCHNICK, nick, "No such nick/channel"
+          return
+        end
+        on_ctcp_action(nil, "whois #{nick}")
+      end
+
+
       def available_user_modes
         "o"
       end
