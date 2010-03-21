@@ -11,12 +11,12 @@ CTCP ACTIONの送り方はクライアントによって異なりますが、Lim
 
 発言関係
 ------------------------------
-reply ``tid`` ``comment`` (別名: mention/rp)
+reply ``tid`` ``comment`` (別名: mention, rp)
   ``tid`` の発言に対して返信します。
-retweet ``tid`` ``comment`` (別名: rt ort)
+retweet ``tid`` ``comment`` (別名: rt, ort)
   ``tid`` の発言をリツイートする。
   コメントが省略された場合は、公式リツイートになります。
-destroy ``tid`` (別名: remove/rm)
+destroy ``tid`` (別名: remove, rm)
   ``tid`` の発言を削除する。 ``tid`` の発言が自分のものでない場合はエラーになります。
 fav ``tid``
   ``tid`` の発言をお気に入りに追加します。
@@ -43,3 +43,13 @@ user ``screen_name`` [``count``] (別名: u)
 ------------------------------
 uptime
   atig.rbの連続起動時間を表示します。
+limit (別名: limits, rls)
+  残りのAPIへのアクセス可能回数を表示します。
+opt  (別名: opts, option, options)
+  設定された :doc:`options` 一覧を表示します。
+opt ``name`` (別名: opts, option, options)
+  名前 ``name`` の :doc:`options` が持つ値を表示します。
+opt ``name`` ``value`` (別名: opts, option, options)
+  名前 ``name`` の :doc:`options` が持つ値を ``value`` に更新します。
+
+
