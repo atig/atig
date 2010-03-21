@@ -22,6 +22,7 @@ module Atig
         else
           # set the value
           @opts.send "#{name}=",::Atig::Option.parse_value(value)
+          yield "#{name} => #{@opts.send name}"
         end
       end
     end
