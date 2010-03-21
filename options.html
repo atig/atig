@@ -21,7 +21,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <link rel="top" title="atig.rb v1.0a documentation" href="index.html" />
     <link rel="next" title="CTCP ACTION" href="commands.html" />
-    <link rel="prev" title="IRCコマンドとの対応" href="irc.html" /> 
+    <link rel="prev" title="コマンドラインオプション" href="commandline_options.html" /> 
   </head>
   <body>
     <div class="related">
@@ -34,7 +34,7 @@
           <a href="commands.html" title="CTCP ACTION"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="irc.html" title="IRCコマンドとの対応"
+          <a href="commandline_options.html" title="コマンドラインオプション"
              accesskey="P">previous</a> |</li>
         <li><a href="index.html">atig.rb v1.0a documentation</a> &raquo;</li> 
       </ul>
@@ -47,14 +47,15 @@
 <li><a class="reference external" href="#id2">概要</a></li>
 <li><a class="reference external" href="#id3">発言関係</a></li>
 <li><a class="reference external" href="#id4">フォロワー関係</a></li>
+<li><a class="reference external" href="#id5">発言関連</a></li>
 <li><a class="reference external" href="#url">URL短縮関係</a></li>
 </ul>
 </li>
 </ul>
 
             <h4>Previous topic</h4>
-            <p class="topless"><a href="irc.html"
-                                  title="previous chapter">IRCコマンドとの対応</a></p>
+            <p class="topless"><a href="commandline_options.html"
+                                  title="previous chapter">コマンドラインオプション</a></p>
             <h4>Next topic</h4>
             <p class="topless"><a href="commands.html"
                                   title="next chapter">CTCP ACTION</a></p>
@@ -96,6 +97,7 @@
     name: mzp tid only
 }</pre>
 </div>
+<p><a class="reference external" href="commands.html"><em>CTCP ACTION</em></a> のoptコマンドを用いると、実行中に変更できます。</p>
 </div>
 <div class="section" id="id3">
 <h2>発言関係<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
@@ -113,6 +115,14 @@
 <dd>指定すると片思い表示機能が有効になる。有効にしていると、自分が一方的
 にフォローしている人に <tt class="docutils literal"><span class="pre">+o</span></tt> がつきます。たいていのクライアントだと
 <tt class="docutils literal"><span class="pre">&#64;</span></tt> がつきます。</dd>
+</dl>
+</div>
+<div class="section" id="id5">
+<h2>発言関連<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt>footer=<tt class="docutils literal"><span class="pre">footer</span></tt></dt>
+<dd>発言の末尾に、 <tt class="docutils literal"><span class="pre">footer</span></tt> を追加します。
+ただし <tt class="docutils literal"><span class="pre">footer</span></tt> がfalseの場合は、追加しません。</dd>
 </dl>
 </div>
 <div class="section" id="url">
@@ -154,7 +164,7 @@ APIを利用して短縮すると、ユーザページに短縮したURLが記�
           <a href="commands.html" title="CTCP ACTION"
              >next</a> |</li>
         <li class="right" >
-          <a href="irc.html" title="IRCコマンドとの対応"
+          <a href="commandline_options.html" title="コマンドラインオプション"
              >previous</a> |</li>
         <li><a href="index.html">atig.rb v1.0a documentation</a> &raquo;</li> 
       </ul>
