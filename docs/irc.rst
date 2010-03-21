@@ -10,3 +10,6 @@ IRCコマンドとの対応
   ``channel`` がメインチャンネル(通常は#twitter)の場合、ユーザ ``screen_name`` をリムーブします。
 
   ``channel`` がリストチャンネルの場合、ユーザ ``screen_name`` をリストから削除します。
+
+\/whois ``screen_name``
+  ``screen_name`` の情報を表示します。ID番号、名前、自己紹介、現在地などを表示します。
