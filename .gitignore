@@ -4,3 +4,4 @@
 .omakedb.lock
 _build
 *.db
+.DS_Store
