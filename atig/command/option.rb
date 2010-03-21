@@ -16,11 +16,10 @@ module Atig
 
       def action(target, mesg, command, args)
         if args.empty?
-          (@opts.public_methods - @methods).
+          @opts.fields.
             map{|x| x.to_s }.
-            select{|x| x !~ /=\z/}.
             sort.each do|name|
-              yield "#{name} => #{@opts.send name}"
+              yield "#{name} => #{@opts[name]}"
           end
         else
           _,name,value = mesg.split ' ', 3

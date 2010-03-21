@@ -21,16 +21,16 @@ describe Atig::Command::Option, 'when have many property' do
 
   before do
     @command = init Atig::Command::Option
-    @opts.stub!(:foo1).and_return true
-    @opts.stub!(:foo2).and_return 42
-    @opts.stub!(:foo3).and_return 42.1
+    @opts.foo1 = true
+    @opts.foo2 = 42
+    @opts.foo3 = 42.1
 
     @opts.stub!(:foo1=)
     @opts.stub!(:foo2=)
     @opts.stub!(:foo3=)
   end
 
-  it "should update the value" do
+  it "should list up values" do
     xs = []
     @channel.stub!(:notify){|x| xs << x}
     call '#twitter', 'opt', %w()

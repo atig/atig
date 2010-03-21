@@ -55,7 +55,7 @@ end
 module CommandHelper
   def init(klass)
     @log    = mock 'log'
-    @opts   = mock 'opts'
+    @opts   = Atig::Option.new({})
     context = OpenStruct.new :log=>@log, :opts=>@opts
 
     @channel    = mock 'channel'
