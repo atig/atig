@@ -62,14 +62,14 @@ Atig::Gateway::Session.commands = [
                                    Atig::Command::Retweet,
                                    Atig::Command::Reply,
                                    Atig::Command::User,
-                                   Atig::Command::Bio,
                                    Atig::Command::Favorite,
                                    Atig::Command::Uptime,
                                    Atig::Command::Destroy,
                                    Atig::Command::Status,
                                    Atig::Command::Thread,
                                    Atig::Command::Time,
-                                   Atig::Command::Version
+                                   Atig::Command::Version,
+                                   Atig::Command::UserInfo,
                                   ]
 Atig::Gateway::Session.channels = [
                                    Atig::Channel::Timeline,
