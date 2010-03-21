@@ -18,7 +18,7 @@ module Atig
         end
         nick, num,*_ = args
 
-        count = 20 unless (1..200).include?(count = num)
+        count = 20 unless (1..200).include?(count = num.to_i)
         api.delay(0) do|t|
           begin
             statuses = t.get("statuses/user_timeline",
