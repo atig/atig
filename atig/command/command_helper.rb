@@ -21,6 +21,8 @@ class FakeGateway
     @notified = name
     @channel
   end
+
+  def server_name; "server-name" end
 end
 
 class FakeScheduler
