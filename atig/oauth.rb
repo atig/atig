@@ -21,9 +21,9 @@ module Atig
     end
 
     attr_reader :access
-    def initialize(nick)
+    def initialize(context, nick)
       @nick  = nick
-      @oauth = ::OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, :site => 'http://twitter.com')
+      @oauth = ::OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, :site => context.opts.api_base)
 
       if @@profiles.key? @nick
         token,secret = @@profiles[@nick]

@@ -105,7 +105,7 @@ END
         @real, @opts = Atig::Option.parse @real
         context = OpenStruct.new(:log=>@log, :opts=>@opts)
 
-        oauth = OAuth.new(@real)
+        oauth = OAuth.new(context, @real)
         unless oauth.verified? then
           channel = channel '#oauth'
           channel.join_me
@@ -127,7 +127,7 @@ END
         end
 
         log :debug, "initialize Twitter"
-        @twitter = Twitter.new   @log, oauth.access
+        @twitter = Twitter.new   context, oauth.access
         @api     = Scheduler.new context, @twitter
 
         log :debug, "initialize filter"

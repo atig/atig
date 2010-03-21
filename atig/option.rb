@@ -29,7 +29,7 @@ module Atig
       end
     end
 
-    default_value :api_base, 'api.twitter.com/1/'
+    default_value :api_base, 'https://api.twitter.com/1/'
 
     def initialize(table)
       @table = {}

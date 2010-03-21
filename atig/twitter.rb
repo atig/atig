@@ -12,10 +12,11 @@ module Atig
 
     class APIFailed < StandardError; end
 
-    def initialize(logger, oauth)
-      @log = logger
+    def initialize(context, oauth)
+      @log   = context.log
+      @opts  = context.opts
       @oauth = oauth
-      @http = Atig::Http.new @log
+      @http  = Atig::Http.new @log
 
       @ip_limit   = 52
       @auth_limit = 150
@@ -198,11 +199,7 @@ END
     end
 
     def api_base(secure = true)
-      URI("http#{"s" if secure}://api.twitter.com/1/")
-    end
-
-    def api_source
-      "#{@opts.api_source || "tigrb"}"
+      URI(@opts.api_base)
     end
 
     def oauth(time, req)
