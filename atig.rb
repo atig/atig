@@ -70,7 +70,8 @@ Atig::Gateway::Session.commands = [
                                    Atig::Command::Time,
                                    Atig::Command::Version,
                                    Atig::Command::UserInfo,
-                                   Atig::Command::Whois
+                                   Atig::Command::Whois,
+                                   Atig::Command::Option
                                   ]
 Atig::Gateway::Session.channels = [
                                    Atig::Channel::Timeline,
