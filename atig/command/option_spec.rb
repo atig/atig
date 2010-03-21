@@ -16,6 +16,33 @@ describe Atig::Command::Option do
   end
 end
 
+describe Atig::Command::Option, 'when have many property' do
+  include CommandHelper
+
+  before do
+    @command = init Atig::Command::Option
+    @opts.stub!(:foo1).and_return true
+    @opts.stub!(:foo2).and_return 42
+    @opts.stub!(:foo3).and_return 42.1
+
+    @opts.stub!(:foo1=)
+    @opts.stub!(:foo2=)
+    @opts.stub!(:foo3=)
+  end
+
+  it "should update the value" do
+    xs = []
+    @channel.stub!(:notify){|x| xs << x}
+    call '#twitter', 'opt', %w()
+    xs.should == [
+                  "foo1 => true",
+                  "foo2 => 42",
+                  "foo3 => 42.1",
+                 ]
+  end
+end
+
+
 describe Atig::Command::Option, 'when have bool property' do
   include CommandHelper
 
