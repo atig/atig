@@ -31,6 +31,7 @@ module Atig
         request.basic_auth @user, @password
         http.request(request) do |response|
           response.read_body do |chunk|
+            next if chunk.empty?
             begin
               f.call TwitterStruct.make(JSON.parse(chunk))
             rescue => e
