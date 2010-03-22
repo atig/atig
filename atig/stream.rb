@@ -31,11 +31,10 @@ module Atig
         request.basic_auth @user, @password
         http.request(request) do |response|
           response.read_body do |chunk|
-            next if chunk.empty?
+            next if chunk.strip.empty?
             begin
               f.call TwitterStruct.make(JSON.parse(chunk))
             rescue => e
-              p e
               @log.error e.inspect
             end
           end
