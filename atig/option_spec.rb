@@ -71,10 +71,10 @@ describe Atig::Option do
   end
 
   it "should list up all fields" do
-    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base a b c d).sort
+    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base stream_api_base a b c d).sort
 
     @opt.e = 1
-    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base a b c d e).sort
+    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base stream_api_base a b c d e).sort
   end
 end
 
