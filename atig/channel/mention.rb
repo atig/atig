@@ -9,11 +9,8 @@ module Atig
         super
 
         db.statuses.listen do|entry|
-          case entry.source
-          when :timeline,:me,:mention
-            if entry.status.text.include?("@#{db.me.screen_name}")
-              @channel.message(entry)
-            end
+          if entry.status.text.include?("@#{db.me.screen_name}")
+            @channel.message(entry)
           end
         end
       end

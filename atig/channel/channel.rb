@@ -10,10 +10,7 @@ module Atig
         @channel.join_me
 
         db.statuses.listen do|entry|
-          case entry.source
-          when :timeline, :me
-            @channel.topic entry if entry.user.id == db.me.id
-          end
+          @channel.topic entry if entry.user.id == db.me.id
         end
       end
     end

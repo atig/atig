@@ -33,25 +33,21 @@ module Atig
         end
 
         db.statuses.listen do|entry|
-          case entry.source
-          when :timeline, :me
+          if entry.source == :list then
+            @channels[entry.list].message entry
+          else
             lists = db.lists.find_by_screen_name(entry.user.screen_name)
             lists.each{|name|
               @channels[name].message entry
             }
-          when :list
-            @channels[entry.list].message entry
           end
         end
 
         db.statuses.listen do|entry|
-          case entry.source
-          when :timeline, :me
-            if entry.user.id == db.me.id
-              @channels.each{|_,channel|
-                channel.topic entry
-              }
-            end
+          if entry.user.id == db.me.id
+            @channels.each{|_,channel|
+              channel.topic entry
+            }
           end
         end
 
