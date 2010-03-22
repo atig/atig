@@ -19,6 +19,7 @@ describe Atig::IFilter::Retweet do
   end
 
   it "should prefix RT for Retweet" do
-    filtered("hello",'retweeted_status'=>'some').should be_text("#{@rt}hello")
+    filtered("RT: hello...",'retweeted_status'=>{ 'text' => 'hello' }).
+      should be_text("#{@rt}RT: hello")
   end
 end
