@@ -26,14 +26,20 @@ module Atig
       uri.query = query.to_query_str unless query.empty?
 
       @log.debug [uri.to_s]
+      buffer = ''
       Net::HTTP.start(uri.host, uri.port) do |http|
         request = Net::HTTP::Post.new uri.request_uri
         request.basic_auth @user, @password
         http.request(request) do |response|
           response.read_body do |chunk|
             next if chunk.strip.empty?
+            buffer << chunk
             begin
-              f.call TwitterStruct.make(JSON.parse(chunk))
+              while buffer =~ /\A.*?\r\n/ do
+                json    = $&
+                buffer  = $'
+                f.call TwitterStruct.make(JSON.parse(json))
+              end
             rescue => e
               @log.error e.inspect
             end
