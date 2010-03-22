@@ -19,7 +19,11 @@ describe Atig::IFilter::Retweet do
   end
 
   it "should prefix RT for Retweet" do
-    filtered("RT: hello...",'retweeted_status'=>{ 'text' => 'hello' }).
-      should be_text("#{@rt}RT: hello")
+    filtered("RT: hello...",
+             'retweeted_status'=>{ 'text' => 'hello',
+               'user' => {
+                 'screen_name' => 'mzp'
+               } }).
+      should be_text("#{@rt}RT @mzp: hello")
   end
 end

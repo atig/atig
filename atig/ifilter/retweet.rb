@@ -7,7 +7,8 @@ module Atig
       Prefix = "\00310♺ \017"
       def self.call(status)
         return status unless status.retweeted_status
-        status.merge :text => "#{Prefix}RT: #{status.retweeted_status.text}"
+        rt = status.retweeted_status
+        status.merge :text => "#{Prefix}RT @#{rt.user.screen_name}: #{rt.text}"
       end
     end
   end
