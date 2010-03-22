@@ -28,7 +28,7 @@ module Atig
           Thread.pass until @follows
           t.watch('statuses/filter', :follow => @follows) do |status|
             db.transaction do|d|
-              d.statuses.add :status => status, :user => status.user, :source => :timeline
+              d.statuses.add :status => status, :user => status.user, :source => :stream_follow
             end
           end
         end
