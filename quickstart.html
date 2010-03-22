@@ -45,7 +45,9 @@
             <ul>
 <li><a class="reference external" href="#">クイックスタート</a><ul>
 <li><a class="reference external" href="#id2">動作環境</a></li>
-<li><a class="reference external" href="#id3">インストール</a></li>
+<li><a class="reference external" href="#id3">必要なライブラリのインストール</a></li>
+<li><a class="reference external" href="#release">インストール(release版)</a></li>
+<li><a class="reference external" href="#trunk">インストール(trunk版)</a></li>
 <li><a class="reference external" href="#id4">投稿してみる</a></li>
 </ul>
 </li>
@@ -87,17 +89,34 @@
 <h1>クイックスタート<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id2">
 <h2>動作環境<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>以下のものが動作する環境を対象とします。</p>
 <blockquote>
 <ul class="simple">
 <li>Ruby 1.8/1.9</li>
-<li>json</li>
-<li>oauth</li>
-<li>sqlite3-ruby</li>
+<li>Sqlite3</li>
 </ul>
 </blockquote>
 </div>
 <div class="section" id="id3">
-<h2>インストール<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<h2>必要なライブラリのインストール<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<p>gemをインストールします。:</p>
+<div class="highlight-python"><pre>$ sudo gem install oauth
+$ sudo gem install sqlite3-ruby</pre>
+</div>
+<p>Ruby1.8の場合は、さらにjsonが必要です。:</p>
+<div class="highlight-python"><pre>$ sudo gem install json</pre>
+</div>
+<p>単体テストを実行するには、さらにrakeとrspecが必要です。:</p>
+<div class="highlight-python"><pre>$ sudo gem install rspec
+$ sudo gem install rake</pre>
+</div>
+</div>
+<div class="section" id="release">
+<h2>インストール(release版)<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h2>
+<p>まだリリース版は存在しません。</p>
+</div>
+<div class="section" id="trunk">
+<h2>インストール(trunk版)<a class="headerlink" href="#trunk" title="Permalink to this headline">¶</a></h2>
 </div>
 <div class="section" id="id4">
 <h2>投稿してみる<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
