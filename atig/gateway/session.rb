@@ -102,10 +102,10 @@ END
         @channels     = {}
         load_config
 
-        @real, @opts = Atig::Option.parse @real
+        @opts = Atig::Option.parse @real
         context = OpenStruct.new(:log=>@log, :opts=>@opts)
 
-        oauth = OAuth.new(context, @real)
+        oauth = OAuth.new(context, @nick)
         unless oauth.verified? then
           channel = channel '#oauth'
           channel.join_me

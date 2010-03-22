@@ -3,7 +3,7 @@
 
 describe Atig::Option do
   before do
-    _,@opt = Atig::Option.parse 'name a b=1 c=1.2 d=foo'
+    @opt = Atig::Option.parse 'a b=1 c=1.2 d=foo'
   end
 
   it "should have bool property" do
@@ -80,7 +80,7 @@ end
 
 describe Atig::Option,'with not default value' do
   before do
-    _,@opt = Atig::Option.parse 'hoge api_base=twitter.com'
+    @opt = Atig::Option.parse 'hoge api_base=twitter.com'
   end
 
   it "should be specified value" do
