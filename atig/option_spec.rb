@@ -1,5 +1,6 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
+require 'atig/option'
 
 describe Atig::Option do
   before do

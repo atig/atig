@@ -9,7 +9,7 @@ module Atig
 
       def parse(str)
         @default ||= {}
-        *opts = str.split(" ")
+        opts = str.split(" ")
         opts = opts.inject({}) do |r, i|
           key, value = i.split("=", 2)
 
