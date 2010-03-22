@@ -67,7 +67,7 @@ describe Atig::Option do
   end
 
   it "should have default value" do
-    @opt.api_base.should == 'api.twitter.com/1/'
+    @opt.api_base.should == 'https://api.twitter.com/1/'
   end
 
   it "should list up all fields" do
