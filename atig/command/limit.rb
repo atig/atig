@@ -9,7 +9,7 @@ module Atig
       def command_name; %w(rls limit limits) end
 
       def action(target, mesg, command, args)
-        yield api.limit.to_s
+        yield "#{api.remain} / #{api.limit}"
       end
     end
   end

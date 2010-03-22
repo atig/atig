@@ -34,9 +34,8 @@ class FakeScheduler
     f.call @api
   end
 
-  def limit
-    @api.limit
-  end
+  def limit; @api.limit end
+  def remain; @api.remain end
 end
 
 class FakeDb

@@ -54,7 +54,11 @@ module Atig
     end
 
     def limit
-      @api.auth_limit
+      @api.limit
+    end
+
+    def remain
+      @api.remain
     end
   end
 end

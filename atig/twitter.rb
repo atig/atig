@@ -8,7 +8,7 @@ require 'atig/http'
 module Atig
   # from tig.rb
   class Twitter
-    attr_reader :auth_limit, :ip_limit
+    attr_reader :limit, :remain
 
     class APIFailed < StandardError; end
 
@@ -18,12 +18,11 @@ module Atig
       @oauth = oauth
       @http  = Atig::Http.new @log
 
-      @ip_limit   = 52
-      @auth_limit = 150
+      @limit = @remain = 150
     end
 
     def page(path, name, authenticate = false, &block)
-      limit = 0.98 * @ip_limit # 98% of IP based rate limit
+      limit = 0.98 * @remain # 98% of IP based rate limit
       r     = []
       cursor = -1
       1.upto(limit) do |num|
@@ -76,19 +75,20 @@ END
         raise e.inspect
       end
 
-      case
-      when authenticate
+      if ret["X-RateLimit-Limit"] then
         hourly_limit = ret["X-RateLimit-Limit"].to_i
         unless hourly_limit.zero?
-          if @auth_limit != hourly_limit
-            msg = "The rate limit per hour was changed: #{@auth_limit} to #{hourly_limit}"
+          if @limit != hourly_limit
+            msg = "The rate limit per hour was changed: #{@limit} to #{hourly_limit}"
             @log.info msg
-            @auth_limit = hourly_limit
+            @limit = hourly_limit
           end
         end
-      when ret["X-RateLimit-Remaining"]
-        @ip_limit = ret["X-RateLimit-Remaining"].to_i
-        @log.debug "IP based limit: #{@ip_limit}"
+      end
+
+      if ret["X-RateLimit-Remaining"] then
+        @remain = ret["X-RateLimit-Remaining"].to_i
+        @log.debug "IP based limit: #{@remain}"
       end
 
       case ret

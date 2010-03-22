@@ -10,6 +10,7 @@ describe Atig::Command::Limit do
   before do
     @command = init Atig::Command::Limit
     @api.stub!(:limit).and_return(150)
+    @api.stub!(:remain).and_return(148)
   end
 
   it "should provide limit command" do
@@ -17,7 +18,7 @@ describe Atig::Command::Limit do
   end
 
   it "should show limit" do
-    @channel.should_receive(:notify).with("150")
+    @channel.should_receive(:notify).with("148 / 150")
     call '#twitter', 'limit', []
     @gateway.notified.should == '#twitter'
   end
