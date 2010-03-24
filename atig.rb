@@ -131,7 +131,7 @@ EOB
     end
   end
 
-  opts[:logger] = Logger.new(opts[:log], "daily")
+  opts[:logger] = Logger.new(opts[:log], "weekly")
   opts[:logger].level = opts[:debug] ? Logger::DEBUG : Logger::INFO
   Net::IRC::Server.new(opts[:host], opts[:port], Atig::Gateway::Session, opts).start
 end
