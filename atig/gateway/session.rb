@@ -237,11 +237,7 @@ END
           }
         else
           @api.delay(0)do|api|
-            if api.get("users/username_available", { :username => nick }).valid then
-              post server_name, ERR_NOSUCHNICK, nick, "No such nick: #{nick}"
-            else
-              @channels[channel].on_invite(api, nick)
-            end
+            @channels[channel].on_invite(api, nick)
           end
         end
       end
