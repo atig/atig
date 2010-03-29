@@ -47,6 +47,10 @@ module Atig
         @users.find{|u| u.screen_name == name }
       end
 
+      def include?(user)
+        @users.find{|u| u.id == user.id }
+      end
+
       private
       def diff(xs, ys, &f)
         xs.select{|x| not ys.any?{|y| f.call(x,y) } }

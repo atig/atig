@@ -1,9 +1,10 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
+require 'atig/option'
 
 describe Atig::Option do
   before do
-    _,@opt = Atig::Option.parse 'name a b=1 c=1.2 d=foo'
+    @opt = Atig::Option.parse 'a b=1 c=1.2 d=foo'
   end
 
   it "should have bool property" do
@@ -71,16 +72,16 @@ describe Atig::Option do
   end
 
   it "should list up all fields" do
-    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base a b c d).sort
+    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base stream_api_base a b c d).sort
 
     @opt.e = 1
-    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base a b c d e).sort
+    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base stream_api_base a b c d e).sort
   end
 end
 
 describe Atig::Option,'with not default value' do
   before do
-    _,@opt = Atig::Option.parse 'hoge api_base=twitter.com'
+    @opt = Atig::Option.parse 'hoge api_base=twitter.com'
   end
 
   it "should be specified value" do

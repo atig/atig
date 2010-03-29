@@ -13,8 +13,9 @@ describe Atig::Db::Followings,"when it is empty" do
 end
 
 describe Atig::Db::Followings,"when updated users" do
-  def user(name, protect, only)
-    user = stub('User')
+  def user(id, name, protect, only)
+    user = stub("User-#{name}")
+    user.stub!(:id).and_return(id)
     user.stub!(:screen_name).and_return(name)
     user.stub!(:protected).and_return(protect)
     user.stub!(:only).and_return(only)
@@ -22,9 +23,9 @@ describe Atig::Db::Followings,"when updated users" do
   end
 
   before do
-    @alice    = user 'alice'   , false, false
-    @bob      = user 'bob'     , true , false
-    @charriey = user 'charriey', false, true
+    @alice    = user 1,'alice'   , false, false
+    @bob      = user 2,'bob'     , true , false
+    @charriey = user 3,'charriey', false, true
 
     @db = Atig::Db::Followings.new
     @db.update [ @alice, @bob ]
@@ -68,7 +69,7 @@ describe Atig::Db::Followings,"when updated users" do
   end
 
   it "should call listener with :mode" do
-    bob = user 'bob', false, false
+    bob = user 5,'bob', false, false
 
     @db.update [ @alice, bob ]
     @listen[:join].should == nil
@@ -83,5 +84,12 @@ describe Atig::Db::Followings,"when updated users" do
   it "should be found by screen_name" do
     @db.find_by_screen_name('alice').should == @alice
     @db.find_by_screen_name('???').should == nil
+  end
+
+  it "should check include" do
+    alice = user @alice.id,'alice', true, true
+    @db.include?(@charriey).should be_false
+    @db.include?(@alice).should be_true
+    @db.include?(alice).should be_true
   end
 end

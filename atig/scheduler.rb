@@ -7,9 +7,10 @@ module Atig
   class Scheduler
     include Util
 
-    def initialize(context, api)
-      @log = context.log
-      @api = api
+    def initialize(context, api, stream)
+      @log    = context.log
+      @api    = api
+      @stream = stream
       @agents = []
 
       @queue = SizedQueue.new 10
@@ -35,6 +36,14 @@ module Atig
     def delay(interval, opts={}, &f)
       sleep interval
       @queue.push(lambda{ safe { f.call @api } })
+    end
+
+    def stream(&f)
+      return nil unless @stream
+      @stream_thread.kill if @stream_thread
+      @stream_thread = Thread.start {
+        safe { f.call @stream }
+      }
     end
 
     def re_try(count, &f)

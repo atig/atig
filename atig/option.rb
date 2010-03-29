@@ -9,13 +9,13 @@ module Atig
 
       def parse(str)
         @default ||= {}
-        real, *opts = str.split(" ")
+        opts = str.split(" ")
         opts = opts.inject({}) do |r, i|
           key, value = i.split("=", 2)
 
           r.update key => parse_value(value)
         end
-        [ real, self.new(@default.merge(opts))]
+        self.new(@default.merge(opts))
       end
 
       def parse_value(value)
@@ -29,7 +29,8 @@ module Atig
       end
     end
 
-    default_value :api_base, 'https://api.twitter.com/1/'
+    default_value :api_base,        'https://api.twitter.com/1/'
+    default_value :stream_api_base, 'http://stream.twitter.com/1/'
 
     def initialize(table)
       @table = {}

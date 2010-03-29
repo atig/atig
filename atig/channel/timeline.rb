@@ -19,14 +19,15 @@ module Atig
         end
 
         db.statuses.listen do|entry|
-          case entry.source
-          when :timeline, :me
+          if db.followings.include?(entry.user) or
+              entry.source == :timeline or
+              entry.source == :me then
             @channel.message entry
           end
         end
 
         db.followings.listen do|kind, users|
-          @channel.send kind,users
+          @channel.send kind, users
         end
       end
 
