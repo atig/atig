@@ -45,7 +45,6 @@ Atig::Gateway::Session.agents   = [
                                    Atig::Agent::Dm,
                                    Atig::Agent::Timeline,
                                    Atig::Agent::StreamFollow,
-                                   Atig::Agent::RetweetedToMe
                                   ]
 Atig::Gateway::Session.ifilters = [
                                    Atig::IFilter::Utf7,
