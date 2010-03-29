@@ -24,6 +24,7 @@ module Atig
     end
 
     def shorten(url)
+      return url if url =~ /bit\.ly/
       bitly = URI("http://api.bit.ly/shorten")
       if @login and @key
         bitly.path  = "/shorten"
