@@ -1,6 +1,5 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-require 'atig/util'
 require 'atig/agent/agent'
 
 module Atig
