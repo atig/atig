@@ -18,9 +18,7 @@ module Atig
 
     def daemon(&f)
       Thread.new do
-        safe do
-          loop(&f)
-        end
+        loop{ safe { f.call }}
       end
     end
   end
