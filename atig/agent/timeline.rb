@@ -1,38 +1,15 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
 require 'atig/util'
+require 'atig/agent/agent'
 
 module Atig
   module Agent
-    class Timeline
-      include Util
-
-      def initialize(context, api, db)
-        @log = context.log
-        @prev = nil
-        log :info, "initialize"
-
-        @api = api
-        @api.repeat(30) do|t|
-          q = { :count => 200 }
-
-          if @prev
-            q.update :since_id => @prev
-          else
-            q.update :count => 20
-          end
-
-          statuses = t.get('/statuses/home_timeline', q)
-
-          db.transaction do|d|
-            statuses.reverse_each do|status|
-              d.statuses.add :status => status, :user => status.user, :source => :timeline
-            end
-          end
-          @prev = statuses[0].id if statuses && statuses.size > 0
-        end
-      end
+    class Timeline < Atig::Agent::Agent
+      def initialize(context, api, db); super end
+      def interval; 30 end
+      def path; '/statuses/home_timeline' end
+      def source; :timeline end
     end
   end
 end
