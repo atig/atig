@@ -45,6 +45,7 @@ Atig::Gateway::Session.agents   = [
                                    Atig::Agent::Dm,
                                    Atig::Agent::Timeline,
                                    Atig::Agent::StreamFollow,
+                                   Atig::Agent::RetweetedToMe
                                   ]
 Atig::Gateway::Session.ifilters = [
                                    Atig::IFilter::Utf7,
@@ -81,6 +82,7 @@ Atig::Gateway::Session.channels = [
                                    Atig::Channel::Mention,
                                    Atig::Channel::Dm,
                                    Atig::Channel::List,
+                                   Atig::Channel::Retweet
                                   ]
 
 if __FILE__ == $0
