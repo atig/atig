@@ -8,20 +8,22 @@ module Atig
       def initialize(context, gateway, db)
         super
 
-        db.statuses.find_all(:limit=>50).reverse_each do|entry|
-          if entry.source == :retweeted_to_me then
-            @channel.message entry
-          end
-        end
+        db.statuses.find_all(:limit=>50).reverse_each {|entry|
+          message entry
+        }
 
-        db.statuses.listen do|entry|
-          if entry.source == :retweeted_to_me then
-            @channel.message entry
-          end
-        end
+        db.statuses.listen {|entry|
+          message entry
+        }
       end
 
       def channel_name; "#retweet" end
+
+      def message(entry)
+        if entry.status.retweeted_status then
+          @channel.message entry
+        end
+      end
     end
   end
 end
