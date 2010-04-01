@@ -62,3 +62,9 @@ unuify
 ------------------------------
 api_base=\ ``api_base``
   Twitterのエントリポイントを指定します。実行中の変更には対応していません。指定しない場合は、https://api.twitter.com/1/が用いられます。
+stream_api_base=\ ``api_base``
+  Stream APIのエントリポイントを指定します。実行中の変更には対応していません。指定しない場合は、http://stream.twitter.com/1/'が用いられます。
+stream_timeout=\ ``timeout``
+  Stream APIの接続は一定時間ごとに再接続を行ないます。その時間間隔を指定します。0を指定した場合は、再接続を行ないません。
+
+
