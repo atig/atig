@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>IRCコマンドとの対応 &mdash; atig.rb v1.0a documentation</title>
+    <title>IRCとの対応 &mdash; atig.rb v1.0a documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -41,6 +41,15 @@
     </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">IRCとの対応</a><ul>
+<li><a class="reference external" href="#nick">nickなどの扱い</a></li>
+<li><a class="reference external" href="#id1">IRCコマンドとの対応</a></li>
+</ul>
+</li>
+</ul>
+
             <h4>Previous topic</h4>
             <p class="topless"><a href="feature.html"
                                   title="previous chapter">主な機能</a></p>
@@ -74,7 +83,19 @@
           <div class="body">
             
   <div class="section" id="irc">
-<h1>IRCコマンドとの対応<a class="headerlink" href="#irc" title="Permalink to this headline">¶</a></h1>
+<h1>IRCとの対応<a class="headerlink" href="#irc" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="nick">
+<h2>nickなどの扱い<a class="headerlink" href="#nick" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>nick: OAuthのプロファイル名、ベーシック認証時のユーザ名</li>
+<li>real: クライアントオプション。詳細は <a class="reference external" href="options.html"><em>クライアントオプション</em></a> を参照してください。</li>
+<li>pass: ベーシック認証時のパスワード</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id1">
+<h2>IRCコマンドとの対応<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>/invite <tt class="docutils literal"><span class="pre">screen_name</span></tt> <tt class="docutils literal"><span class="pre">channel</span></tt></dt>
 <dd><p class="first"><tt class="docutils literal"><span class="pre">channel</span></tt> がメインチャンネル(通常は#twitter)の場合、ユーザ <tt class="docutils literal"><span class="pre">screen_name</span></tt> をフォローします。  同時にユーザ一覧の更新も行なうので、「follow <tt class="docutils literal"><span class="pre">screen_name</span></tt> 」と発言するよりも便利です。</p>
@@ -89,6 +110,7 @@
 <dt>/who <tt class="docutils literal"><span class="pre">channel</span></tt></dt>
 <dd><tt class="docutils literal"><span class="pre">channel</span></tt> の参加者の情報を表示します。ID番号、名前などを表示します。</dd>
 </dl>
+</div>
 </div>
 
 

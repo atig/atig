@@ -44,11 +44,20 @@
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference external" href="#">クイックスタート</a><ul>
-<li><a class="reference external" href="#id2">動作環境</a></li>
-<li><a class="reference external" href="#id3">必要なライブラリのインストール</a></li>
-<li><a class="reference external" href="#release">インストール(release版)</a></li>
-<li><a class="reference external" href="#trunk">インストール(trunk版)</a></li>
-<li><a class="reference external" href="#id4">投稿してみる</a></li>
+<li><a class="reference external" href="#id2">必要なソフトウェア</a></li>
+<li><a class="reference external" href="#id3">インストール</a><ul>
+<li><a class="reference external" href="#id4">リリース版</a></li>
+<li><a class="reference external" href="#trunk">trunk版</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id5">使ってみる</a><ul>
+<li><a class="reference external" href="#id6">起動</a></li>
+<li><a class="reference external" href="#id7">接続</a></li>
+<li><a class="reference external" href="#oauth">OAuth認証</a></li>
+<li><a class="reference external" href="#id8">発言してみる</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id9">さらに詳しい使い方</a></li>
 </ul>
 </li>
 </ul>
@@ -88,38 +97,85 @@
   <div class="section" id="id1">
 <h1>クイックスタート<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="id2">
-<h2>動作環境<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
-<p>以下のものが動作する環境を対象とします。</p>
+<h2>必要なソフトウェア<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<p>以下のものが必要です。</p>
 <blockquote>
 <ul class="simple">
 <li>Ruby 1.8/1.9</li>
 <li>Sqlite3</li>
+<li>適当なIRCクライアント(例: <a class="reference external" href="http://limechat.net/">LimeChat</a> )</li>
+</ul>
+</blockquote>
+<p>またRubyには次のライブラリがインストールされている必要があります。</p>
+<blockquote>
+<ul class="simple">
+<li>oauth</li>
+<li>sqlite3-ruby</li>
+<li>json(Ruby 1.8の場合, Ruby 1.9の場合は不要)</li>
+<li>rspec(単体テストを実行する場合, 開発者以外は不要)</li>
+<li>rake(単体テストを実行する場合, 開発者以外は不要)</li>
 </ul>
 </blockquote>
 </div>
 <div class="section" id="id3">
-<h2>必要なライブラリのインストール<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p>gemをインストールします。:</p>
-<div class="highlight-python"><pre>$ sudo gem install oauth
-$ sudo gem install sqlite3-ruby</pre>
-</div>
-<p>Ruby1.8の場合は、さらにjsonが必要です。:</p>
-<div class="highlight-python"><pre>$ sudo gem install json</pre>
-</div>
-<p>単体テストを実行するには、さらにrakeとrspecが必要です。:</p>
-<div class="highlight-python"><pre>$ sudo gem install rspec
-$ sudo gem install rake</pre>
-</div>
-</div>
-<div class="section" id="release">
-<h2>インストール(release版)<a class="headerlink" href="#release" title="Permalink to this headline">¶</a></h2>
+<h2>インストール<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id4">
+<h3>リリース版<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <p>まだリリース版は存在しません。</p>
 </div>
 <div class="section" id="trunk">
-<h2>インストール(trunk版)<a class="headerlink" href="#trunk" title="Permalink to this headline">¶</a></h2>
+<h3>trunk版<a class="headerlink" href="#trunk" title="Permalink to this headline">¶</a></h3>
+<p>githubからpullしてください。:</p>
+<div class="highlight-python"><pre>$ git pull http://mzp.github.com/atig</pre>
 </div>
-<div class="section" id="id4">
-<h2>投稿してみる<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+</div>
+</div>
+<div class="section" id="id5">
+<h2>使ってみる<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h3>起動<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>コマンドラインから起動します。:</p>
+<div class="highlight-python"><pre>$ cd atig
+$ ruby atig.rb -d
+I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668</pre>
+</div>
+</div>
+<div class="section" id="id7">
+<h3>接続<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<ul class="simple">
+<li>IRCクライアントで、localhost:16668に接続する。</li>
+<li>nicknameにユーザ名、realとpassは空欄でかまいません。</li>
+<li>詳しくは <a class="reference external" href="irc.html"><em>IRCとの対応</em></a> を参照してください。</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="oauth">
+<h3>OAuth認証<a class="headerlink" href="#oauth" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<ul class="simple">
+<li>初回接続時のみ、OAuthで認証させる必要があります。</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id8">
+<h3>発言してみる<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<ul class="simple">
+<li>#twitterで発言すると、Twitterに投稿されます。</li>
+<li><a class="reference external" href="commands.html"><em>CTCP ACTION</em></a> を用いると、RTやreplyが行なえます。</li>
+</ul>
+</blockquote>
+</div>
+</div>
+<div class="section" id="id9">
+<h2>さらに詳しい使い方<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>Tiarraと連携させると、発言のログを取ることができす。</li>
+<li><a class="reference external" href="http://god.rubyforge.org/">God</a> などと連携させると、atig.rbを常駐(デーモン化)させることができます。</li>
+</ul>
+</blockquote>
 </div>
 </div>
 

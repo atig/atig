@@ -1,35 +1,67 @@
 クイックスタート
 ================
 
-動作環境
+必要なソフトウェア
 ------------------------------
-以下のものが動作する環境を対象とします。
+以下のものが必要です。
 
- * Ruby 1.8/1.9
- * Sqlite3
+ - Ruby 1.8/1.9
+ - Sqlite3
+ - 適当なIRCクライアント(例: `LimeChat`_ )
 
-必要なライブラリのインストール
-------------------------------
-gemをインストールします。::
+.. _LimeChat: http://limechat.net/
 
- $ sudo gem install oauth
- $ sudo gem install sqlite3-ruby
+またRubyには次のライブラリがインストールされている必要があります。
 
-Ruby1.8の場合は、さらにjsonが必要です。::
+ - oauth
+ - sqlite3-ruby
+ - json(Ruby 1.8の場合, Ruby 1.9の場合は不要)
+ - rspec(単体テストを実行する場合, 開発者以外は不要)
+ - rake(単体テストを実行する場合, 開発者以外は不要)
 
- $ sudo gem install json
+インストール
+------------
 
-単体テストを実行するには、さらにrakeとrspecが必要です。::
-
- $ sudo gem install rspec
- $ sudo gem install rake
-
-インストール(release版)
-------------------------------
+リリース版
+~~~~~~~~~~
 まだリリース版は存在しません。
 
-インストール(trunk版)
-------------------------------
+trunk版
+~~~~~~~~~~
+githubからpullしてください。::
 
-投稿してみる
+ $ git pull http://mzp.github.com/atig
+
+使ってみる
+----------
+
+起動
+~~~~~~~~~
+コマンドラインから起動します。::
+
+ $ cd atig
+ $ ruby atig.rb -d
+ I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668
+
+接続
+~~~~~~~~~
+ - IRCクライアントで、localhost:16668に接続する。
+ - nicknameにユーザ名、realとpassは空欄でかまいません。
+ - 詳しくは :doc:`irc` を参照してください。
+
+OAuth認証
+~~~~~~~~~
+ - 初回接続時のみ、OAuthで認証させる必要があります。
+
+発言してみる
+~~~~~~~~~~~~
+ - #twitterで発言すると、Twitterに投稿されます。
+ - :doc:`commands` を用いると、RTやreplyが行なえます。
+
+さらに詳しい使い方
 --------------------
+
+ - Tiarraと連携させると、発言のログを取ることができす。
+ - `God`_ などと連携させると、atig.rbを常駐(デーモン化)させることができます。
+
+.. _God: http://god.rubyforge.org/
