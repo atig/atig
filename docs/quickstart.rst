@@ -7,9 +7,9 @@
 
  - Ruby 1.8/1.9
  - Sqlite3
- - 適当なIRCクライアント(例: `LimeChat`_)
+ - 適当なIRCクライアント(例: `LimeChat`_ )
 
-.. _LimeChat http://limechat.net/
+.. _LimeChat: http://limechat.net/
 
 またRubyには次のライブラリがインストールされている必要があります。
 
@@ -37,16 +37,26 @@ githubからpullしてください。::
 
 起動
 ~~~~~~~~~
+コマンドラインから起動します。::
+
+ $ cd atig
+ $ ruby atig.rb -d
+ I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668
 
 接続
 ~~~~~~~~~
+ - IRCクライアントで、localhost:16668に接続する。
+ - nicknameにユーザ名、realとpassは空欄でかまいません。
+ - 詳しくは :doc:`irc` を参照してください。
 
 OAuth認証
 ~~~~~~~~~
+ - 初回接続時のみ、OAuthで認証させる必要があります。
 
 発言してみる
 ~~~~~~~~~~~~
-
+ - #twitterで発言すると、Twitterに投稿されます。
+ - :doc:`commands` を用いると、RTやreplyが行なえます。
 
 さらに詳しい使い方
 --------------------
@@ -54,4 +64,4 @@ OAuth認証
  - Tiarraと連携させると、発言のログを取ることができす。
  - `God`_ などと連携させると、atig.rbを常駐(デーモン化)させることができます。
 
-.. _God http://god.rubyforge.org/
+.. _God: http://god.rubyforge.org/
