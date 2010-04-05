@@ -129,11 +129,22 @@ EOB
         opts[:name] = name
       end
 
+      on("-c","--conf [file]", "atig configuration file; default is '~/.atig/config'") do|name|
+        opts[:conf] = name
+      end
+
       parse!(ARGV)
     end
   end
 
   opts[:logger] = Logger.new(opts[:log], "weekly")
   opts[:logger].level = opts[:debug] ? Logger::DEBUG : Logger::INFO
+
+  conf = opts.fetch(:conf, File.expand_path('~/.atig/config'))
+  if  File.exist? conf then
+    opts[:logger].info "Loading #{conf}"
+    load conf
+  end
+
   Net::IRC::Server.new(opts[:host], opts[:port], Atig::Gateway::Session, opts).start
 end
