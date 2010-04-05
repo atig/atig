@@ -51,10 +51,11 @@ IRCクライアントで、localhost:16668に接続します。
  - login name: 使ってないので適当に
  - real name: :doc:`options` 。tidがおすすめです。
  - password: 空欄
+ - 詳しくは :doc:`irc` を参照してください。
 
 .. image:: _static/irc_setting.png
 
- - 詳しくは :doc:`irc` を参照してください。
+
 
 OAuth認証
 ~~~~~~~~~
