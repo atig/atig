@@ -45,13 +45,32 @@ githubからpullしてください。::
 
 接続
 ~~~~~~~~~
- - IRCクライアントで、localhost:16668に接続する。
- - nicknameにユーザ名、realとpassは空欄でかまいません。
+IRCクライアントで、localhost:16668に接続します。
+
+ - nickname: Twitterのユーザ名
+ - login name: 使ってないので適当に
+ - real name: :doc:`options` 。tidがおすすめです。
+ - password: 空欄
  - 詳しくは :doc:`irc` を参照してください。
+
+.. image:: _static/irc_setting.png
+
+
 
 OAuth認証
 ~~~~~~~~~
- - 初回接続時のみ、OAuthで認証させる必要があります。
+初回接続時のみ、OAuthで認証させる必要があります。
+接続時に#oauthにjoinされ、認証用のURLが表示されます。
+
+.. image:: _static/oauth_channel.png
+
+表示されたURLにアクセスし、atig.rbに認証を与えます。
+
+.. image:: _static/allow.png
+
+7桁の数字が表示されるので、それを#oauthに入力します。
+
+.. image:: _static/verify.png
 
 発言してみる
 ~~~~~~~~~~~~

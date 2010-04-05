@@ -142,21 +142,27 @@ I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668</pr
 </div>
 <div class="section" id="id7">
 <h3>接続<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<p>IRCクライアントで、localhost:16668に接続します。</p>
 <blockquote>
 <ul class="simple">
-<li>IRCクライアントで、localhost:16668に接続する。</li>
-<li>nicknameにユーザ名、realとpassは空欄でかまいません。</li>
+<li>nickname: Twitterのユーザ名</li>
+<li>login name: 使ってないので適当に</li>
+<li>real name: <a class="reference external" href="options.html"><em>クライアントオプション</em></a> 。tidがおすすめです。</li>
+<li>password: 空欄</li>
 <li>詳しくは <a class="reference external" href="irc.html"><em>IRCとの対応</em></a> を参照してください。</li>
 </ul>
 </blockquote>
+<img alt="_images/irc_setting.png" src="_images/irc_setting.png" />
 </div>
 <div class="section" id="oauth">
 <h3>OAuth認証<a class="headerlink" href="#oauth" title="Permalink to this headline">¶</a></h3>
-<blockquote>
-<ul class="simple">
-<li>初回接続時のみ、OAuthで認証させる必要があります。</li>
-</ul>
-</blockquote>
+<p>初回接続時のみ、OAuthで認証させる必要があります。
+接続時に#oauthにjoinされ、認証用のURLが表示されます。</p>
+<img alt="_images/oauth_channel.png" src="_images/oauth_channel.png" />
+<p>表示されたURLにアクセスし、atig.rbに認証を与えます。</p>
+<img alt="_images/allow.png" src="_images/allow.png" />
+<p>7桁の数字が表示されるので、それを#oauthに入力します。</p>
+<img alt="_images/verify.png" src="_images/verify.png" />
 </div>
 <div class="section" id="id8">
 <h3>発言してみる<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
