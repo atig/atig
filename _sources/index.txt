@@ -10,7 +10,7 @@ atig.rbはTwitterとIRCを結ぶゲートウェイです。
 スクリーンショット
 ------------------------------
 
-.. image:: _static/limechat.png
+.. image:: _static/limechat_s.png
 
 ダウンロード
 ------------------------------
