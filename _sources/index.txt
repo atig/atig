@@ -62,8 +62,7 @@ IRC用のソフトが流用できます。
    commandline_options
    options
    commands
-   tiarra
-   hacking_guide
+   config
 
 Indices and tables
 ==================

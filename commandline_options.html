@@ -41,6 +41,15 @@
     </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">コマンドラインオプション</a><ul>
+<li><a class="reference external" href="#id2">書式</a></li>
+<li><a class="reference external" href="#id3">オプション</a></li>
+</ul>
+</li>
+</ul>
+
             <h4>Previous topic</h4>
             <p class="topless"><a href="irc.html"
                                   title="previous chapter">IRCとの対応</a></p>
@@ -75,6 +84,26 @@
             
   <div class="section" id="id1">
 <h1>コマンドラインオプション<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="id2">
+<h2>書式<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="highlight-python"><pre>ruby atig.rb [opts]</pre>
+</div>
+</div>
+<div class="section" id="id3">
+<h2>オプション<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<dl class="docutils">
+<dt><cite>-p</cite>, <cite>&#8211;port</cite> <tt class="docutils literal"><span class="pre">PORT</span></tt></dt>
+<dd>起動するポート番号を指定します。デフォルトは16668です。</dd>
+<dt><cite>-h</cite>, <cite>&#8211;host</cite> <tt class="docutils literal"><span class="pre">HOST</span></tt></dt>
+<dd>起動するホスト名、またはIPアドレスを指定します。デフォルトはlocalhostです。</dd>
+<dt><cite>-l</cite>, <cite>&#8211;log</cite> <tt class="docutils literal"><span class="pre">LOG</span></tt></dt>
+<dd>ログを記録するファイル名を指定します。</dd>
+<dt><cite>&#8211;debug</cite></dt>
+<dd>デバッグモードを有効にします。</dd>
+<dt><cite>-c</cite>, <cite>&#8211;conf</cite> <tt class="docutils literal"><span class="pre">filename</span></tt></dt>
+<dd>ロードする設定ファイルを指定します。詳しくは doc:<cite>conf</cite> を参照してください。</dd>
+</dl>
+</div>
 </div>
 
 
