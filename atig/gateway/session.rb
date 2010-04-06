@@ -203,20 +203,21 @@ END
       end
 
       def on_ctcp_action(target, mesg)
-        safe do
-          command, *args = mesg.split(" ")
-          if command
-            command.downcase!
-            @ctcp_actions.each do |define, f|
-              if define === command
-                f.call(target, mesg, Regexp.last_match || command, args)
-              end
-            end
-          else
-            log :info, "[tig.rb] CTCP ACTION COMMANDS:"
-            @ctcp_actions.keys.each do |c|
-              log :info, c
-            end
+        command, *args = mesg.split(" ")
+        last_match = nil
+        commond = command.to_s.downcase
+        _, action = @ctcp_actions.find{|define, f|
+          last_match = Regexp.last_match
+          command === define
+        }
+        if action then
+          safe {
+            f.call(target, mesg, last_match || command, args)
+          }
+        else
+          self[target].notify "[atig.rb] CTCP ACTION COMMANDS:"
+          @ctcp_actions.keys.each do |c|
+            self[target].notify c
           end
         end
       end
