@@ -90,6 +90,10 @@ END
         Net::IRC::Prefix.new("#{nick}!#{user}@#{host}")
       end
 
+      def topic(entry)
+        @channels.each{|_, ch| ch.topic entry }
+      end
+
       protected
       def on_message(m)
         @on_message.call(m) if @on_message
@@ -212,7 +216,7 @@ END
         }
         if action then
           safe {
-            f.call(target, mesg, last_match || command, args)
+            action.call(target, mesg, last_match || command, args)
           }
         else
           self[target].notify "[atig.rb] CTCP ACTION COMMANDS:"
