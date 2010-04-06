@@ -93,6 +93,7 @@ if __FILE__ == $0
     :log   => nil,
     :debug => false,
     :foreground => false,
+    :conf => '~/.atig/config',
   }
 
   OptionParser.new do |parser|
@@ -120,16 +121,7 @@ EOB
         opts[:debug]   = true
       end
 
-      on("-f", "--foreground", "run foreground") do |foreground|
-        opts[:log]        = $stderr
-        opts[:foreground] = true
-      end
-
-      on("-n", "--name [user name or email address]") do |name|
-        opts[:name] = name
-      end
-
-      on("-c","--conf [file]", "atig configuration file; default is '~/.atig/config'") do|name|
+      on("-c","--conf [file=#{opts[:conf]}]", "atig configuration file; default is '~/.atig/config'") do|name|
         opts[:conf] = name
       end
 
@@ -140,7 +132,7 @@ EOB
   opts[:logger] = Logger.new(opts[:log], "weekly")
   opts[:logger].level = opts[:debug] ? Logger::DEBUG : Logger::INFO
 
-  conf = opts.fetch(:conf, File.expand_path('~/.atig/config'))
+  conf = File.expand_path opts[:conf]
   if  File.exist? conf then
     opts[:logger].info "Loading #{conf}"
     load conf

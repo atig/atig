@@ -13,6 +13,7 @@ ALLSPHINXOPTS   = -d $(BUILDDIR)/doctrees $(PAPEROPT_a4) $(SPHINXOPTS) .
 
 SRCS[] =
 	index
+	config
 	options
 	tiarra
 	commandline_options
