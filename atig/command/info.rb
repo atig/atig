@@ -30,16 +30,18 @@ module Atig
       end
 
       def find_status(db, tid_or_screen_name)
-        if x = db.statuses.find_by_tid(tid_or_screen_name) then
-          x
-        else
-          xs = db.statuses.find_by_screen_name(tid_or_screen_name, :limit=>1)
-          unless xs.empty?
+        find = lambda do|x|
+          xs = db.statuses.find_by_screen_name(x, :limit=>1)
+          unless xs.empty? then
             xs.first
           else
             nil
           end
         end
+
+        (db.statuses.find_by_tid(tid_or_screen_name) ||
+         find.call(tid_or_screen_name) ||
+         find.call(tid_or_screen_name.sub(/\A@/,'')))
       end
 
       module_function :user,:status, :find_status

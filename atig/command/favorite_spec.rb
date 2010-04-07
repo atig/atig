@@ -14,13 +14,11 @@ describe Atig::Command::Favorite do
     @res   = mock 'res'
 
     @statuses.stub!(:find_by_tid).and_return{|tid|
-      if tid == 'a' then
-        entry
-      else
-        nil
-      end
+      if tid == 'a' then entry else nil end
     }
-    @statuses.stub!(:find_by_screen_name).with('mzp',:limit=>1).and_return([entry])
+    @statuses.stub!(:find_by_screen_name).and_return{|name,opt|
+      if name == 'mzp' then [entry] else [] end
+    }
   end
 
   it "should post fav by tid" do
@@ -35,6 +33,13 @@ describe Atig::Command::Favorite do
     @channel.should_receive(:notify).with("FAV: mzp: blah blah")
 
     call "#twitter","fav",%w(mzp)
+  end
+
+  it "should post fav by screen name with at" do
+    @api.should_receive(:post).with("favorites/create/1")
+    @channel.should_receive(:notify).with("FAV: mzp: blah blah")
+
+    call "#twitter","fav",%w(@mzp)
   end
 
   it "should post unfav" do
