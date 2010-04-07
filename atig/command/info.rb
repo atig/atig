@@ -29,7 +29,20 @@ module Atig
         end
       end
 
-      module_function :user,:status
+      def find_status(db, tid_or_screen_name)
+        if x = db.statuses.find_by_tid(tid_or_screen_name) then
+          x
+        else
+          xs = db.statuses.find_by_screen_name(tid_or_screen_name, :limit=>1)
+          unless xs.empty?
+            xs.first
+          else
+            nil
+          end
+        end
+      end
+
+      module_function :user,:status, :find_status
     end
   end
 end

@@ -1,6 +1,7 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 require 'atig/command/command'
+require 'atig/command/info'
 
 module Atig
   module Command
@@ -12,7 +13,7 @@ module Atig
         method   = { 'fav' => 'create', 'unfav' => 'destroy' }[command]
 
         args.each do|tid|
-          if entry = find_by_tid(tid)
+          if entry = Info.find_status(db, tid)
             api.delay(0){|t|
               res = t.post("favorites/#{method}/#{entry.status.id}")
               yield "#{command.upcase}: #{entry.user.screen_name}: #{entry.status.text}"
