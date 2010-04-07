@@ -37,13 +37,15 @@ module Atig
           id  = opt[:status].id
           return unless db.execute(%{SELECT id FROM status WHERE status_id = ?}, id).empty?
 
-          tid = @roman.make db.get_first_value("SELECT count(*) FROM status").to_i
+          screen_name = opt[:user].screen_name
+          cid = @roman.make db.get_first_value("SELECT count(*) FROM status WHERE screen_name = ?", screen_name).to_i
+          tid = "#{screen_name}:#{cid}"
           entry = OpenStruct.new opt.merge(:id  => id, :tid => tid)
           db.execute(%{INSERT INTO status
                       VALUES(NULL, :id, :tid, :screen_name, :user_id, :created_at, :data)},
                      :id          => entry.id,
                      :tid         => entry.tid,
-                     :screen_name => opt[:user].screen_name,
+                     :screen_name => screen_name,
                      :user_id     => opt[:user].id,
                      :created_at  => Time.parse(opt[:status].created_at).to_i,
                      :data        => [Marshal.dump(entry)].pack('m'))
