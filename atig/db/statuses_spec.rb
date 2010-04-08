@@ -150,4 +150,10 @@ describe Atig::Db::Statuses do
     a.tid   .should match(/\w+/)
     a.sid   .should match(/\w+/)
   end
+
+  it "should remove by id" do
+    @db.remove_by_id 1
+    @db.find_by_id(1).should be_nil
+    @db.find_by_screen_name('alice').should == []
+  end
 end
