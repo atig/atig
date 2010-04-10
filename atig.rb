@@ -52,7 +52,8 @@ Atig::Gateway::Session.ifilters = [
                                    Atig::IFilter::ExpandUrl,
                                    Atig::IFilter::Strip.new(%w{ *tw* *Sh*}),
                                    Atig::IFilter::Retweet,
-                                   Atig::IFilter::Tid
+                                   Atig::IFilter::Tid,
+                                   Atig::IFilter::Sid
                                   ]
 Atig::Gateway::Session.ofilters = [
                                    Atig::OFilter::EscapeUrl,

@@ -21,7 +21,7 @@ module Atig
         tid, num = args
         count = 10 unless (1..20).include?(count = num.to_i)
 
-        if entry = find_by_tid(tid) then
+        if entry = Info.find_status(db, tid) then
           chain(entry,count){|x|
             gateway[target].message x, Net::IRC::Constants::NOTICE
           }

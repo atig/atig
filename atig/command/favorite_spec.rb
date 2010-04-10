@@ -13,14 +13,37 @@ describe Atig::Command::Favorite do
     entry  = entry user(1,'mzp'), target
     @res   = mock 'res'
 
-    @statuses.stub!(:find_by_tid).with('a').and_return(entry)
+    stub_status(:find_by_tid,'a' => entry)
+    stub_status(:find_by_sid,'mzp:a' => entry)
+    stub_status(:find_by_screen_name,'mzp' => [ entry ], :default=>[])
   end
 
-  it "should post fav" do
+  it "should post fav by tid" do
     @api.should_receive(:post).with("favorites/create/1")
     @channel.should_receive(:notify).with("FAV: mzp: blah blah")
 
     call "#twitter","fav",%w(a)
+  end
+
+  it "should post fav by sid" do
+    @api.should_receive(:post).with("favorites/create/1")
+    @channel.should_receive(:notify).with("FAV: mzp: blah blah")
+
+    call "#twitter","fav",%w(mzp:a)
+  end
+
+  it "should post fav by screen name" do
+    @api.should_receive(:post).with("favorites/create/1")
+    @channel.should_receive(:notify).with("FAV: mzp: blah blah")
+
+    call "#twitter","fav",%w(mzp)
+  end
+
+  it "should post fav by screen name with at" do
+    @api.should_receive(:post).with("favorites/create/1")
+    @channel.should_receive(:notify).with("FAV: mzp: blah blah")
+
+    call "#twitter","fav",%w(@mzp)
   end
 
   it "should post unfav" do

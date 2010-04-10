@@ -1,6 +1,7 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 require 'atig/command/command'
+require 'atig/command/info'
 
 module Atig
   module Command
@@ -10,12 +11,12 @@ module Atig
 
       def action(target, mesg, command, args)
         if args.empty?
-          yield "/me #{command} <ID> blah blah"
+          yield "/me #{command} <ID_or_SCREEN_NAME> blah blah"
           return
         end
 
         tid = args.first
-        if entry = find_by_tid(tid) then
+        if entry = Info.find_status(db,tid) then
           text = mesg.split(" ", 3)[2]
           name = entry.user.screen_name
 

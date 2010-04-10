@@ -29,7 +29,23 @@ module Atig
         end
       end
 
-      module_function :user,:status
+      def find_status(db, tid_or_screen_name)
+        find = lambda do|x|
+          xs = db.statuses.find_by_screen_name(x, :limit=>1)
+          unless xs.empty? then
+            xs.first
+          else
+            nil
+          end
+        end
+
+        (db.statuses.find_by_tid(tid_or_screen_name) ||
+         db.statuses.find_by_sid(tid_or_screen_name) ||
+         find.call(tid_or_screen_name) ||
+         find.call(tid_or_screen_name.sub(/\A@/,'')))
+      end
+
+      module_function :user,:status, :find_status
     end
   end
 end
