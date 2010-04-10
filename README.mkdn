@@ -31,6 +31,13 @@ DOCUMENTS
 ---------
 See `docs/`, if you cloud read Japanese.
 
+BRANCH POLICY
+-------------
+
+ * master: a branch for current release.
+ * testing: a branch for next release.
+ * other branches: feature branch
+
 LICENCE
 -------
 Ruby's
