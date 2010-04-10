@@ -24,7 +24,10 @@
 
 リリース版
 ~~~~~~~~~~
-まだリリース版は存在しません。
+`GitHub`_ からダウンロードしてください。
+
+.. _GitHub: http://github.com/mzp/atig/downloads
+
 
 trunk版
 ~~~~~~~~~~
