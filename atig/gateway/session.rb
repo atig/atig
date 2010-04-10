@@ -197,7 +197,12 @@ END
 
         return if mesg.empty?
         return on_ctcp_action(target, mesg) if mesg.sub!(/\A +/, "")
-        on_ctcp_action(target, "status #{mesg}")
+
+        if @opts.old_style_reply and mesg =~ /\A@(?>([A-Za-z0-9_]{1,15}))[^A-Za-z0-9_]/
+          on_ctcp_action(target, "reply #{$1} #{mesg}")
+        else
+          on_ctcp_action(target, "status #{mesg}")
+        end
       end
 
       def on_ctcp(target, mesg)
