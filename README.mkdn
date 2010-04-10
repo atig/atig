@@ -1,0 +1,44 @@
+Atig.rb - Another Twitter Irc Gateway
+===========================================
+
+OVERVIEW
+--------
+Atig.rb is Twitter Irc Gateway.
+
+Atig.rb is forked from cho45's tig.rb. We improve some feautures of tig.rb.
+
+PREREQUISITES
+-------------
+
+* Ruby 1.8 or 1.9
+* sqlite3-ruby
+* json(when use Ruby 1.8)
+* rspec(for unit test)
+* rake(for unit test)
+
+HOW TO USE
+----------
+
+You type:
+
+ $ cd atig
+ $ ruby atig.rb -d
+ I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668
+
+and access localhost:16668 by Irc client.
+
+DOCUMENTS
+---------
+See `docs/`, if you cloud read Japanese.
+
+LICENCE
+-------
+Ruby's
+
+AUTHOR
+------
+MIZUNO "mzp" Hiroki (mzp@happyabc.org)
+
+AVAILABILITY
+------------
+The complete atig.rb distribution can be accessed at this[http://mzp.github.com/atig/]..
