@@ -21,7 +21,8 @@ module Atig
       @limit = @remain = 150
     end
 
-    def page(path, name, authenticate = false, &block)
+    # authenticate = trueでないとSSL verified errorがでることがある
+    def page(path, name, authenticate = true, &block)
       limit = 0.98 * @remain # 98% of IP based rate limit
       r     = []
       cursor = -1
