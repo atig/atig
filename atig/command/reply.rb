@@ -11,7 +11,7 @@ module Atig
 
       def action(target, mesg, command, args)
         if args.empty?
-          yield "/me #{command} <ID> blah blah"
+          yield "/me #{command} <ID_or_SCREEN_NAME> blah blah"
           return
         end
 

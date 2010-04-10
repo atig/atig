@@ -13,12 +13,8 @@ describe Atig::Command::Favorite do
     entry  = entry user(1,'mzp'), target
     @res   = mock 'res'
 
-    @statuses.stub!(:find_by_tid).and_return{|tid|
-      if tid == 'a' then entry else nil end
-    }
-    @statuses.stub!(:find_by_screen_name).and_return{|name,opt|
-      if name == 'mzp' then [entry] else [] end
-    }
+    stub_status(:find_by_tid,'a' => entry)
+    stub_status(:find_by_screen_name,'mzp' => [ entry ], :default=>[])
   end
 
   it "should post fav by tid" do
