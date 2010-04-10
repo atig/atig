@@ -24,6 +24,7 @@ module Atig
                           id integer primary key,
                           status_id   text,
                           tid  text,
+                          sid  text,
                           screen_name text,
                           user_id     text,
                           created_at  integer,
@@ -37,13 +38,16 @@ module Atig
           id  = opt[:status].id
           return unless db.execute(%{SELECT id FROM status WHERE status_id = ?}, id).empty?
 
+          screen_name = opt[:user].screen_name
           tid = @roman.make db.get_first_value("SELECT count(*) FROM status").to_i
-          entry = OpenStruct.new opt.merge(:id  => id, :tid => tid)
+          sid = @roman.make db.get_first_value("SELECT count(*) FROM status WHERE screen_name = ?", screen_name).to_i
+          entry = OpenStruct.new opt.merge(:id  => id, :tid => tid, :sid => "#{screen_name}:#{sid}")
           db.execute(%{INSERT INTO status
-                      VALUES(NULL, :id, :tid, :screen_name, :user_id, :created_at, :data)},
+                      VALUES(NULL, :id, :tid, :sid, :screen_name, :user_id, :created_at, :data)},
                      :id          => entry.id,
                      :tid         => entry.tid,
-                     :screen_name => opt[:user].screen_name,
+                     :sid         => entry.sid,
+                     :screen_name => screen_name,
                      :user_id     => opt[:user].id,
                      :created_at  => Time.parse(opt[:status].created_at).to_i,
                      :data        => [Marshal.dump(entry)].pack('m'))
@@ -65,6 +69,10 @@ module Atig
 
       def find_by_tid(tid)
         find('tid', tid).first
+      end
+
+      def find_by_sid(tid)
+        find('sid', tid).first
       end
 
       def find_by_id(id)

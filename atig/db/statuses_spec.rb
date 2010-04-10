@@ -43,6 +43,7 @@ describe Atig::Db::Statuses do
     entry.source.should == :timeline
     entry.status.should == @d
     entry.tid.should match(/\w+/)
+    entry.sid.should match(/\w+/)
     entry.user.should   == @alice
     entry.source.should == :timeline
     entry.fuga.should == :hoge
@@ -61,6 +62,7 @@ describe Atig::Db::Statuses do
     entry.status.should == @a
     entry.user  .should == @alice
     entry.tid   .should match(/\w+/)
+    entry.sid.should match(/\w+/)
   end
 
   it "should have unique tid" do
@@ -70,6 +72,7 @@ describe Atig::Db::Statuses do
     a = @db.find_by_id(@a.id)
     d = @db.find_by_id(@d.id)
     a.tid.should_not == d.tid
+    a.sid.should_not == d.cid
   end
 
   it "should be found all" do
@@ -80,19 +83,27 @@ describe Atig::Db::Statuses do
     a.status.should == @c
     a.user  .should == @alice
     a.tid   .should match(/\w+/)
+    a.sid   .should match(/\w+/)
 
     b.status.should == @b
     b.user  .should == @bob
     b.tid   .should match(/\w+/)
+    b.sid   .should match(/\w+/)
 
     c.status.should == @a
     c.user.should   == @alice
     c.tid.should    match(/\w+/)
+    c.sid.should    match(/\w+/)
   end
 
   it "should be found by tid" do
     entry = @db.find_by_id(1)
     @db.find_by_tid(entry.tid).should == entry
+  end
+
+  it "should be found by sid" do
+    entry = @db.find_by_id(1)
+    @db.find_by_sid(entry.sid).should == entry
   end
 
   it "should be found by tid" do
@@ -105,10 +116,12 @@ describe Atig::Db::Statuses do
     a.status.should == @c
     a.user  .should == @alice
     a.tid   .should match(/\w+/)
+    a.sid   .should match(/\w+/)
 
     b.status.should == @a
     b.user.should   == @alice
     b.tid.should    match(/\w+/)
+    b.sid.should    match(/\w+/)
   end
 
   it "should be found by screen_name" do
@@ -119,10 +132,12 @@ describe Atig::Db::Statuses do
     a.status.should == @c
     a.user  .should == @alice
     a.tid   .should match(/\w+/)
+    a.sid   .should match(/\w+/)
 
     b.status.should == @a
     b.user.should   == @alice
     b.tid.should    match(/\w+/)
+    b.sid.should    match(/\w+/)
   end
 
   it "should be found by screen_name with limit" do
@@ -133,5 +148,6 @@ describe Atig::Db::Statuses do
     a.status.should == @c
     a.user  .should == @alice
     a.tid   .should match(/\w+/)
+    a.sid   .should match(/\w+/)
   end
 end

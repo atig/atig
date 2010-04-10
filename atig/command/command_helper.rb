@@ -70,4 +70,11 @@ module CommandHelper
   def call(channel, command, args)
     @gateway.action.call channel, "#{command} #{args.join(' ')}", command, args
   end
+
+  def stub_status(key, hash)
+    @statuses.stub!(key).and_return{|arg,*_|
+      hash.fetch(arg, hash[:default])
+    }
+  end
 end
+

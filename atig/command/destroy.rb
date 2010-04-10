@@ -2,6 +2,7 @@
 # -*- mode:ruby; coding:utf-8 -*-
 require 'time'
 require 'atig/command/command'
+require 'atig/command/info'
 
 module Atig
   module Command
@@ -15,7 +16,7 @@ module Atig
           return
         end
         args.each do|tid|
-          if entry = find_by_tid(tid)
+          if entry = Info.find_status(db, tid)
             if entry.user.id == db.me.id
               api.delay(0) do|t|
                 res = t.post("statuses/destroy/#{entry.status.id}")

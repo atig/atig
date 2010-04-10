@@ -43,12 +43,12 @@ module Atig
 
       def action(target, mesg, command, args)
         if args.empty?
-          yield "/me #{command} <ID> blah blah"
+          yield "/me #{command} <ID_or_SCREEN_NAME> blah blah"
           return
         end
 
         tid = args.first
-        if status = find_by_tid(tid) then
+        if status = Info.find_status(db, tid) then
           if args.size >= 2
             comment = mesg.split(" ", 3)[2] + " "
             rt_with_comment(target, comment, status)

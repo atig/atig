@@ -19,7 +19,9 @@ describe Atig::Command::Retweet do
     entry  = entry user(1,'mzp'), target
     @res   = mock 'res'
 
-    @statuses.stub!(:find_by_tid).with('a').and_return(entry)
+    stub_status(:find_by_tid,'a' => entry)
+    stub_status(:find_by_sid,'mzp:a' => entry)
+    stub_status(:find_by_screen_name,'mzp' => [ entry ], :default=>[])
   end
 
   it "should have command name" do
@@ -32,14 +34,31 @@ describe Atig::Command::Retweet do
     @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
   end
 
+  it "should post official retweet without comment by screen name" do
+    @api.should_receive(:post).with('statuses/retweet/1').and_return(@res)
+    call "#twitter", 'rt', %w(mzp)
+    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+  end
+
+  it "should post official retweet without comment by sid" do
+    @api.should_receive(:post).with('statuses/retweet/1').and_return(@res)
+    call "#twitter", 'rt', %w(mzp:a)
+    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+  end
+
   it "should post un-official retweet with comment" do
     @api.should_receive(:post).with('statuses/update',:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah").and_return(@res)
     call "#twitter", 'rt', %w(a aaa)
     @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
   end
 
-  it "should post un-official retweet with long comment" do
+  it "should post un-official retweet with comment by screen name" do
+    @api.should_receive(:post).with('statuses/update',:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah").and_return(@res)
+    call "#twitter", 'rt', %w(mzp aaa)
+    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+  end
 
+  it "should post un-official retweet with long comment" do
     @api.should_receive(:post).with('statuses/update',:status=> "#{'a' * 95} RT @mzp: b [http://twitter.com/mzp/status/1]").and_return(@res)
     call "#twitter", 'rt', ['a', 'a' * 95 ]
     @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]

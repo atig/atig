@@ -13,11 +13,35 @@ describe Atig::Command::Reply do
     entry  = entry user(1,'mzp'), target
     @res   = mock 'res'
 
-    @statuses.stub!(:find_by_tid).with('a').and_return(entry)
+    stub_status(:find_by_tid,'a' => entry)
+    stub_status(:find_by_sid,'mzp:a' => entry)
+    stub_status(:find_by_screen_name,'mzp' => [ entry ], :default => [])
   end
 
   it "should have '/me status' name" do
     @gateway.names.should == %w(mention re reply)
+  end
+
+  it "should post the status" do
+    @api.should_receive(:post).
+      with('statuses/update', {:status=>'abc @mzp', :in_reply_to_status_id=>'1'}).
+      and_return(@res)
+
+    call '#twitter', "reply", %w(a abc @mzp)
+
+    @gateway.updated.should  == [ @res, '#twitter', 'In reply to mzp: blah blah' ]
+    @gateway.filtered.should == { :status => 'abc @mzp', :in_reply_to_status_id=>'1'}
+  end
+
+  it "should post the status by sid" do
+    @api.should_receive(:post).
+      with('statuses/update', {:status=>'abc @mzp', :in_reply_to_status_id=>'1'}).
+      and_return(@res)
+
+    call '#twitter', "reply", %w(mzp:a abc @mzp)
+
+    @gateway.updated.should  == [ @res, '#twitter', 'In reply to mzp: blah blah' ]
+    @gateway.filtered.should == { :status => 'abc @mzp', :in_reply_to_status_id=>'1'}
   end
 
   it "should post the status by API" do
@@ -26,6 +50,17 @@ describe Atig::Command::Reply do
       and_return(@res)
 
     call '#twitter', "reply", %w(a abc @mzp)
+
+    @gateway.updated.should  == [ @res, '#twitter', 'In reply to mzp: blah blah' ]
+    @gateway.filtered.should == { :status => 'abc @mzp', :in_reply_to_status_id=>'1'}
+  end
+
+  it "should post the status with screen_name" do
+    @api.should_receive(:post).
+      with('statuses/update', {:status=>'abc @mzp', :in_reply_to_status_id=>'1'}).
+      and_return(@res)
+
+    call '#twitter', "reply", %w(mzp abc @mzp)
 
     @gateway.updated.should  == [ @res, '#twitter', 'In reply to mzp: blah blah' ]
     @gateway.filtered.should == { :status => 'abc @mzp', :in_reply_to_status_id=>'1'}

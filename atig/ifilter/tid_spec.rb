@@ -1,7 +1,7 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
-require 'atig/ifilter/tid'
+require 'atig/ifilter/xid'
 require 'atig/twitter_struct'
 require 'atig/spec_helper'
 
