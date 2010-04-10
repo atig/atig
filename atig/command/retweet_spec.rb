@@ -20,6 +20,7 @@ describe Atig::Command::Retweet do
     @res   = mock 'res'
 
     stub_status(:find_by_tid,'a' => entry)
+    stub_status(:find_by_sid,'mzp:a' => entry)
     stub_status(:find_by_screen_name,'mzp' => [ entry ], :default=>[])
   end
 
@@ -36,6 +37,12 @@ describe Atig::Command::Retweet do
   it "should post official retweet without comment by screen name" do
     @api.should_receive(:post).with('statuses/retweet/1').and_return(@res)
     call "#twitter", 'rt', %w(mzp)
+    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+  end
+
+  it "should post official retweet without comment by sid" do
+    @api.should_receive(:post).with('statuses/retweet/1').and_return(@res)
+    call "#twitter", 'rt', %w(mzp:a)
     @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
   end
 

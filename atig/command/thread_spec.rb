@@ -47,12 +47,23 @@ describe Atig::Command::Thread do
 
   it "should chain the tweets by screen name" do
     @statuses.should_receive(:find_by_tid).with('mzp').and_return(nil)
+    @statuses.should_receive(:find_by_sid).with('mzp').and_return(nil)
     @statuses.should_receive(:find_by_screen_name).with('mzp',:limit=>1).and_return([ @entries[1] ])
 
     call "#twitter","thread",%w(mzp)
 
     @messages.should == @entries[1..3]
   end
+
+  it "should chain the tweets by sid" do
+    @statuses.should_receive(:find_by_tid).with('mzp:a').and_return(nil)
+    @statuses.should_receive(:find_by_sid).with('mzp:a').and_return(@entries[1])
+
+    call "#twitter","thread",%w(mzp:a)
+
+    @messages.should == @entries[1..3]
+  end
+
 
 
   it "should chain the tweets with limit" do

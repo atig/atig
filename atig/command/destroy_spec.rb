@@ -14,6 +14,7 @@ describe Atig::Command::Destroy do
     @res   = mock 'res'
 
     stub_status(:find_by_tid,'a' => entry)
+    stub_status(:find_by_sid,'mzp:a' => entry)
     stub_status(:find_by_screen_name,'mzp' => [ entry ], :default=>[])
   end
 
@@ -33,6 +34,13 @@ describe Atig::Command::Destroy do
     @channel.should_receive(:notify).with("Destroyed: blah blah")
 
     call "#twitter","destory",%w(mzp)
+  end
+
+  it "should remove status by sid" do
+    @api.should_receive(:post).with("statuses/destroy/1")
+    @channel.should_receive(:notify).with("Destroyed: blah blah")
+
+    call "#twitter","destory",%w(mzp:a)
   end
 
   it "should not remove other's status" do

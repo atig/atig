@@ -40,6 +40,7 @@ module Atig
         end
 
         (db.statuses.find_by_tid(tid_or_screen_name) ||
+         db.statuses.find_by_sid(tid_or_screen_name) ||
          find.call(tid_or_screen_name) ||
          find.call(tid_or_screen_name.sub(/\A@/,'')))
       end
