@@ -39,8 +39,8 @@ module Atig
           return unless db.execute(%{SELECT id FROM status WHERE status_id = ?}, id).empty?
 
           screen_name = opt[:user].screen_name
-          tid = @roman.make db.get_first_value("SELECT count(*) FROM status", screen_name).to_i
-          sid = @roman.make db.get_first_value("SELECT count(*) FROM status", screen_name).to_i
+          tid = @roman.make db.get_first_value("SELECT count(*) FROM status").to_i
+          sid = @roman.make db.get_first_value("SELECT count(*) FROM status WHERE screen_name = ?", screen_name).to_i
           entry = OpenStruct.new opt.merge(:id  => id, :tid => tid, :sid => "#{screen_name}:#{sid}")
           db.execute(%{INSERT INTO status
                       VALUES(NULL, :id, :tid, :sid, :screen_name, :user_id, :created_at, :data)},
