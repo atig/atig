@@ -4,6 +4,7 @@
 require 'atig/db/followings'
 require 'atig/db/statuses'
 require 'atig/db/lists'
+require 'atig/db/searches'
 require 'atig/util'
 require 'thread'
 require 'set'
@@ -13,7 +14,7 @@ module Atig
   module Db
     class Db
       include Util
-      attr_reader :followings, :statuses, :dms, :lists
+      attr_reader :followings, :statuses, :dms, :lists, :searches
       attr_accessor :me
       VERSION = 2
 
@@ -25,6 +26,7 @@ module Atig
         @statuses   = Statuses.new "cache/#{@me.screen_name}/status.#{VERSION}.db"
         @dms        = Statuses.new "cache/#{@me.screen_name}/dm.#{VERSION}.db"
         @lists      = Lists.new
+        @searches   = Searches.new
 
 
         log :info, "initialize"
