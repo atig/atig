@@ -156,4 +156,14 @@ describe Atig::Db::Statuses do
     @db.find_by_id(1).should be_nil
     @db.find_by_screen_name('alice').should == []
   end
+
+  it "should have uniq tid/sid when removed" do
+    old = @db.find_by_id 3
+    @db.remove_by_id 3
+    @db.add :status => @c , :user => @alice, :source => :src
+    new = @db.find_by_id 3
+
+    old.tid.should_not == new.tid
+    old.sid.should_not == new.sid
+  end
 end
