@@ -45,12 +45,11 @@ module Atig
           screen_name = opt[:user].screen_name
           sum   = db.get_first_value("SELECT sum(count) FROM id").to_i
           count = db.get_first_value("SELECT count      FROM id WHERE screen_name = ?", screen_name).to_i
-          entry = OpenStruct.new opt.merge(:id  => id,
-                                           :tid => @roman.make(sum),
+          entry = OpenStruct.new opt.merge(:tid => @roman.make(sum),
                                            :sid => "#{screen_name}:#{@roman.make(count)}")
           db.execute(%{INSERT INTO status
                       VALUES(NULL, :id, :tid, :sid, :screen_name, :user_id, :created_at, :data)},
-                     :id          => entry.id,
+                     :id          => id,
                      :tid         => entry.tid,
                      :sid         => entry.sid,
                      :screen_name => screen_name,
@@ -87,8 +86,12 @@ module Atig
         find('sid', tid).first
       end
 
-      def find_by_id(id)
+      def find_by_status_id(id)
         find('status_id', id).first
+      end
+
+      def find_by_id(id)
+        find('id', id).first
       end
 
       def remove_by_id(id)
@@ -99,12 +102,14 @@ module Atig
 
       private
       def find(lhs,rhs, opt={},&f)
-        query  = "SELECT data FROM status WHERE #{lhs} = :rhs ORDER BY created_at DESC LIMIT :limit"
+        query  = "SELECT id,data FROM status WHERE #{lhs} = :rhs ORDER BY created_at DESC LIMIT :limit"
         params = { :rhs => rhs, :limit => opt.fetch(:limit,20) }
         res = []
         execute do|db|
-          db.execute(query,params) do|data,*_|
-            res << Marshal.load(data.unpack('m').first)
+          db.execute(query,params) do|id,data,*_|
+            e = Marshal.load(data.unpack('m').first)
+            e.id = id.to_i
+            res << e
           end
         end
         res

@@ -16,14 +16,14 @@ module Atig
       end
 
       def status(db, api, id, &f)
-        if status = db.statuses.find_by_id(id) then
+        if status = db.statuses.find_by_status_id(id) then
           f.call status
         else
           api.delay(0) do|t|
             status = t.get "statuses/show/#{id}"
             db.transaction do|d|
               d.statuses.add :status => status, :user => status.user, :source => :thread
-              f.call db.statuses.find_by_id(id)
+              f.call db.statuses.find_by_status_id(id)
             end
           end
         end

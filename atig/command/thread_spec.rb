@@ -20,7 +20,7 @@ describe Atig::Command::Thread do
     @channel.stub!(:message).and_return{|entry,_|
       @messages.unshift entry
     }
-    @statuses.stub!(:find_by_id).with(anything).and_return{|id|
+    @statuses.stub!(:find_by_status_id).with(anything).and_return{|id|
       @entries[id.to_i]
     }
   end

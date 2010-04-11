@@ -17,10 +17,10 @@ describe Atig::Db::Statuses do
     FileUtils.rm_f 'test.db'
     @db = Atig::Db::Statuses.new 'test.db'
 
-    @a = status 1, 'a', Time.utc(2010,1,5)
-    @b = status 2, 'b', Time.utc(2010,1,6)
-    @c = status 3, 'c', Time.utc(2010,1,7)
-    @d = status 4, 'd', Time.utc(2010,1,8)
+    @a = status 10, 'a', Time.utc(2010,1,5)
+    @b = status 20, 'b', Time.utc(2010,1,6)
+    @c = status 30, 'c', Time.utc(2010,1,7)
+    @d = status 40, 'd', Time.utc(2010,1,8)
 
     @alice = user 'alice'
     @bob = user 'bob'
@@ -59,6 +59,7 @@ describe Atig::Db::Statuses do
 
   it "should be found by id" do
     entry = @db.find_by_id 1
+    entry.id.should == 1
     entry.status.should == @a
     entry.user  .should == @alice
     entry.tid   .should match(/\w+/)
@@ -69,8 +70,8 @@ describe Atig::Db::Statuses do
     db = Atig::Db::Statuses.new 'test.db'
     db.add :status => @d , :user => @alice, :source => :srcA
 
-    a = @db.find_by_id(@a.id)
-    d = @db.find_by_id(@d.id)
+    a = @db.find_by_id(1)
+    d = @db.find_by_id(4)
     a.tid.should_not == d.tid
     a.sid.should_not == d.cid
   end
