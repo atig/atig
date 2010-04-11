@@ -9,23 +9,33 @@ CTCP ACTIONによって、特定の発言への返信などが行なえます。
 CTCP ACTIONの送り方はクライアントによって異なりますが、LimeChatやirssi
 では ``/me`` です。 例えば、replyコマンド送信する場合は ``/me reply a`` のようになります。
 
-``tid`` は :doc:`options` にtidを指定することで、発言の後ろに表示させることができます。
-
 発言関係
 ------------------------------
-reply ``tid`` ``comment`` (別名: mention, rp)
-  ``tid`` の発言に対して返信します。
-retweet ``tid`` ``comment`` (別名: rt, ort)
-  ``tid`` の発言をリツイートする。
+発言の指定方法について
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+以下で ``tweet`` と書かれている部分では、次の書式が利用できます。
+
+- `a`: 一致するtidを持つ発言を指します。
+- `nick:a`:  一致するsidを持つ発言を指します。
+- `nick`:  @nickの最新の発言を指します。
+- `@nick`: @nickの最新の発言を指します。
+
+コマンド
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+reply ``tweet`` ``comment`` (別名: mention, rp)
+  ``tweet`` に対して返信します。
+retweet ``tweet`` ``comment`` (別名: rt, ort)
+  ``tweet`` をリツイートします。
   コメントが省略された場合は、公式リツイートになります。
-destroy ``tid`` (別名: remove, rm)
-  ``tid`` の発言を削除する。 ``tid`` の発言が自分のものでない場合はエラーになります。
-fav ``tid``
-  ``tid`` の発言をお気に入りに追加します。
-unfav ``tid``
-  ``tid`` の発言をお気に入りから削除します。
-thread ``tid`` [``count``]
-  in_reply_toを辿って、最大 ``count`` 件の会話を表示します。
+destroy ``tweet`` (別名: remove, rm)
+  ``tweet`` を削除する。 ``tweet`` の発言が自分のものでない場合はエラーになります。
+fav ``tweet``
+  ``tweet`` をお気に入りに追加します。
+unfav ``tweet``
+  ``tweet`` をお気に入りから削除します。
+thread ``tweet`` [``count``]
+  ``tweet`` のin_reply_toを辿って、最大 ``count`` 件の会話を表示します。
   ``count`` が省略された場合は10件になります。 ``count`` は20件以上を指定しても無視されます。
 
 ユーザ関係

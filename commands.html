@@ -45,9 +45,13 @@
             <ul>
 <li><a class="reference external" href="#">CTCP ACTION</a><ul>
 <li><a class="reference external" href="#id1">概要</a></li>
-<li><a class="reference external" href="#id2">発言関係</a></li>
-<li><a class="reference external" href="#id3">ユーザ関係</a></li>
-<li><a class="reference external" href="#id4">システム関係</a></li>
+<li><a class="reference external" href="#id2">発言関係</a><ul>
+<li><a class="reference external" href="#id3">発言の指定方法について</a></li>
+<li><a class="reference external" href="#id4">コマンド</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#id5">ユーザ関係</a></li>
+<li><a class="reference external" href="#id6">システム関係</a></li>
 </ul>
 </li>
 </ul>
@@ -91,29 +95,41 @@
 <p>CTCP ACTIONによって、特定の発言への返信などが行なえます。</p>
 <p>CTCP ACTIONの送り方はクライアントによって異なりますが、LimeChatやirssi
 では <tt class="docutils literal"><span class="pre">/me</span></tt> です。 例えば、replyコマンド送信する場合は <tt class="docutils literal"><span class="pre">/me</span> <span class="pre">reply</span> <span class="pre">a</span></tt> のようになります。</p>
-<p><tt class="docutils literal"><span class="pre">tid</span></tt> は <a class="reference external" href="options.html"><em>クライアントオプション</em></a> にtidを指定することで、発言の後ろに表示させることができます。</p>
 </div>
 <div class="section" id="id2">
 <h2>発言関係<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id3">
+<h3>発言の指定方法について<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<p>以下で <tt class="docutils literal"><span class="pre">tweet</span></tt> と書かれている部分では、次の書式が利用できます。</p>
+<ul class="simple">
+<li><cite>a</cite>: 一致するtidを持つ発言を指します。</li>
+<li><cite>nick:a</cite>:  一致するsidを持つ発言を指します。</li>
+<li><cite>nick</cite>:  &#64;nickの最新の発言を指します。</li>
+<li><cite>&#64;nick</cite>: &#64;nickの最新の発言を指します。</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h3>コマンド<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
 <dl class="docutils">
-<dt>reply <tt class="docutils literal"><span class="pre">tid</span></tt> <tt class="docutils literal"><span class="pre">comment</span></tt> (別名: mention, rp)</dt>
-<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言に対して返信します。</dd>
-<dt>retweet <tt class="docutils literal"><span class="pre">tid</span></tt> <tt class="docutils literal"><span class="pre">comment</span></tt> (別名: rt, ort)</dt>
-<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言をリツイートする。
+<dt>reply <tt class="docutils literal"><span class="pre">tweet</span></tt> <tt class="docutils literal"><span class="pre">comment</span></tt> (別名: mention, rp)</dt>
+<dd><tt class="docutils literal"><span class="pre">tweet</span></tt> に対して返信します。</dd>
+<dt>retweet <tt class="docutils literal"><span class="pre">tweet</span></tt> <tt class="docutils literal"><span class="pre">comment</span></tt> (別名: rt, ort)</dt>
+<dd><tt class="docutils literal"><span class="pre">tweet</span></tt> をリツイートします。
 コメントが省略された場合は、公式リツイートになります。</dd>
-<dt>destroy <tt class="docutils literal"><span class="pre">tid</span></tt> (別名: remove, rm)</dt>
-<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言を削除する。 <tt class="docutils literal"><span class="pre">tid</span></tt> の発言が自分のものでない場合はエラーになります。</dd>
-<dt>fav <tt class="docutils literal"><span class="pre">tid</span></tt></dt>
-<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言をお気に入りに追加します。</dd>
-<dt>unfav <tt class="docutils literal"><span class="pre">tid</span></tt></dt>
-<dd><tt class="docutils literal"><span class="pre">tid</span></tt> の発言をお気に入りから削除します。</dd>
-<dt>thread <tt class="docutils literal"><span class="pre">tid</span></tt> [<tt class="docutils literal"><span class="pre">count</span></tt>]</dt>
-<dd>in_reply_toを辿って、最大 <tt class="docutils literal"><span class="pre">count</span></tt> 件の会話を表示します。
+<dt>destroy <tt class="docutils literal"><span class="pre">tweet</span></tt> (別名: remove, rm)</dt>
+<dd><tt class="docutils literal"><span class="pre">tweet</span></tt> を削除する。 <tt class="docutils literal"><span class="pre">tweet</span></tt> の発言が自分のものでない場合はエラーになります。</dd>
+<dt>fav <tt class="docutils literal"><span class="pre">tweet</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">tweet</span></tt> をお気に入りに追加します。</dd>
+<dt>unfav <tt class="docutils literal"><span class="pre">tweet</span></tt></dt>
+<dd><tt class="docutils literal"><span class="pre">tweet</span></tt> をお気に入りから削除します。</dd>
+<dt>thread <tt class="docutils literal"><span class="pre">tweet</span></tt> [<tt class="docutils literal"><span class="pre">count</span></tt>]</dt>
+<dd><tt class="docutils literal"><span class="pre">tweet</span></tt> のin_reply_toを辿って、最大 <tt class="docutils literal"><span class="pre">count</span></tt> 件の会話を表示します。
 <tt class="docutils literal"><span class="pre">count</span></tt> が省略された場合は10件になります。 <tt class="docutils literal"><span class="pre">count</span></tt> は20件以上を指定しても無視されます。</dd>
 </dl>
 </div>
-<div class="section" id="id3">
-<h2>ユーザ関係<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="id5">
+<h2>ユーザ関係<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>userinfo <tt class="docutils literal"><span class="pre">screen_name</span></tt> (別名: bio)</dt>
 <dd><tt class="docutils literal"><span class="pre">screen_name</span></tt> のユーザのプロフィールを表示します。</dd>
@@ -127,8 +143,8 @@
 200件以上を指定しても無視されます。</dd>
 </dl>
 </div>
-<div class="section" id="id4">
-<h2>システム関係<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="id6">
+<h2>システム関係<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>uptime</dt>
 <dd>atig.rbの連続起動時間を表示します。</dd>

@@ -104,16 +104,21 @@
 <h2>発言関係<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
 <dt>tid</dt>
-<dd>各発言にtidを表示する。</dd>
+<dd><p class="first">各発言にtidを表示します。tidは特定の発言へreplyする場合などに利用します。</p>
+<p class="last"><a class="reference external" href="commands.html"><em>CTCP ACTION</em></a> も参照してください。</p>
+</dd>
+<dt>sid</dt>
+<dd><p class="first">各発言にsidを表示します。sidはtidと同様に利用できます。</p>
+<p class="last">sidは <tt class="docutils literal"><span class="pre">ユーザ名</span></tt>:<tt class="docutils literal"><span class="pre">id</span></tt> という書式にです。そのため、
+ユーザ名の補完機能のあるクライアントではtidより入力が容易です。</p>
+</dd>
 </dl>
 </div>
 <div class="section" id="id4">
 <h2>フォロワー関係<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <dl class="docutils">
-<dt>athack</dt>
-<dd>???</dd>
 <dt>only</dt>
-<dd>指定すると片思い表示機能が有効になる。有効にしていると、自分が一方的
+<dd>指定すると片思い表示機能を有効にします。有効にしていると、自分が一方的
 にフォローしている人に <tt class="docutils literal"><span class="pre">+o</span></tt> がつきます。たいていのクライアントだと
 <tt class="docutils literal"><span class="pre">&#64;</span></tt> がつきます。</dd>
 </dl>
@@ -124,6 +129,8 @@
 <dt>footer=<tt class="docutils literal"><span class="pre">footer</span></tt></dt>
 <dd>発言の末尾に、 <tt class="docutils literal"><span class="pre">footer</span></tt> を追加します。
 ただし <tt class="docutils literal"><span class="pre">footer</span></tt> がfalseの場合は、追加しません。</dd>
+<dt>old_style_reply</dt>
+<dd>&#64;nickで始まる発言が、&#64;nick の最新の発言へのreplyとなるモードに切り替えます。</dd>
 </dl>
 </div>
 <div class="section" id="url">
@@ -152,10 +159,6 @@ APIを利用して短縮すると、ユーザページに短縮したURLが記�
 <dl class="docutils">
 <dt>api_base=<tt class="docutils literal"><span class="pre">api_base</span></tt></dt>
 <dd>Twitterのエントリポイントを指定します。実行中の変更には対応していません。指定しない場合は、https://api.twitter.com/1/が用いられます。</dd>
-<dt>stream_api_base=<tt class="docutils literal"><span class="pre">api_base</span></tt></dt>
-<dd>Stream APIのエントリポイントを指定します。実行中の変更には対応していません。指定しない場合は、http://stream.twitter.com/1/&#8217;が用いられます。</dd>
-<dt>stream_timeout=<tt class="docutils literal"><span class="pre">timeout</span></tt></dt>
-<dd>Stream APIの接続は一定時間ごとに再接続を行ないます。その時間間隔を指定します。0を指定した場合は、再接続を行ないません。</dd>
 </dl>
 </div>
 </div>
