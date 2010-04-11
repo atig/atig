@@ -21,7 +21,7 @@ SRCS[] =
 	quickstart
 	feature
 	irc
-	hacking_guide
+	changelog
 
 .PHONY : clean
 .DEFAULT: $(addsuffix .rst, $(SRCS))

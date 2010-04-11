@@ -63,6 +63,7 @@ IRC用のソフトが流用できます。
    options
    commands
    config
+   changelog
 
 Indices and tables
 ==================
