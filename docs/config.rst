@@ -97,6 +97,8 @@ Atig::IFilter::Retweet
   公式RTの先頭に♺ をつけます。
 Atig::IFilter::Tid
   発言の末尾に、tidをつけます。 :doc:`options` も参照してください。
+Atig::IFilter::Sid
+  発言の末尾に、sidをつけます。 :doc:`options` も参照してください。
 
 自分の発言の加工
 ------------------------------
