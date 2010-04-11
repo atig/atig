@@ -20,12 +20,11 @@ module Atig
       end
 
       def update(searches)
-        bye   = diff(@searches, searches ){|x,y| x.id == y.id }
-        join  = diff(searches , @searches){|x,y| x.id == y.id }
+        parts = diff(@searches, searches ){|x,y| x.id == y.id }
+        joins = diff(searches , @searches){|x,y| x.id == y.id }
 
-
-        notify(:part, bye)  unless bye  == []
-        notify(:join, join) unless join == []
+        parts.each{|c| notify :part, c }
+        joins.each{|c| notify :join, c }
 
         @searches = searches
       end

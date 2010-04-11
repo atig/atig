@@ -18,17 +18,19 @@ describe Atig::Db::Searches do
 
     @searches.update [ @foo, @bar ]
 
-    @obj = mock 'listener'
-    @searches.listen{|kind,*args| @obj.send(kind,*args) }
+    @called = Hash.new{|hash,key| hash[key] = [] }
+    @searches.listen{|kind, searches| @called[kind] << searches }
   end
 
   it "should notify join" do
-    @obj.should_receive(:join).with([ @baz ])
     @searches.update [ @foo, @bar, @baz ]
+    @called[:join].should == [ @baz ]
+    @called[:part].should == [ ]
   end
 
   it "should notify part" do
-    @obj.should_receive(:part).with([ @bar ])
-    @searches.update [ @foo ]
+    @searches.update [ @bar ]
+    @called[:join].should == [ ]
+    @called[:part].should == [ @foo ]
   end
 end
