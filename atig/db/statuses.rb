@@ -29,6 +29,10 @@ module Atig
                           user_id     text,
                           created_at  integer,
                           data blob);}
+            db.execute %{create table id (
+                          id integer primary key,
+                          screen_name text,
+                          count integer);}
           end
         end
       end
@@ -39,9 +43,11 @@ module Atig
           return unless db.execute(%{SELECT id FROM status WHERE status_id = ?}, id).empty?
 
           screen_name = opt[:user].screen_name
-          tid = @roman.make db.get_first_value("SELECT count(*) FROM status").to_i
-          sid = @roman.make db.get_first_value("SELECT count(*) FROM status WHERE screen_name = ?", screen_name).to_i
-          entry = OpenStruct.new opt.merge(:id  => id, :tid => tid, :sid => "#{screen_name}:#{sid}")
+          sum   = db.get_first_value("SELECT sum(count) FROM id").to_i
+          count = db.get_first_value("SELECT count      FROM id WHERE screen_name = ?", screen_name).to_i
+          entry = OpenStruct.new opt.merge(:id  => id,
+                                           :tid => @roman.make(sum),
+                                           :sid => "#{screen_name}:#{@roman.make(count)}")
           db.execute(%{INSERT INTO status
                       VALUES(NULL, :id, :tid, :sid, :screen_name, :user_id, :created_at, :data)},
                      :id          => entry.id,
@@ -51,6 +57,12 @@ module Atig
                      :user_id     => opt[:user].id,
                      :created_at  => Time.parse(opt[:status].created_at).to_i,
                      :data        => [Marshal.dump(entry)].pack('m'))
+          if count == 0 then
+            db.execute("INSERT INTO id VALUES(NULL,?,?)", screen_name, 1)
+          else
+            db.execute("UPDATE id SET count = ? WHERE screen_name = ?", count + 1, screen_name)
+          end
+
           notify entry
         end
       end
@@ -77,6 +89,12 @@ module Atig
 
       def find_by_id(id)
         find('status_id', id).first
+      end
+
+      def remove_by_id(id)
+        execute do|db|
+          db.execute "DELETE FROM status WHERE id = ?",id
+        end
       end
 
       private
