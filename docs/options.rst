@@ -39,6 +39,8 @@ only
 footer=\ ``footer``
   発言の末尾に、 ``footer`` を追加します。
   ただし ``footer`` がfalseの場合は、追加しません。
+old_style_reply
+  @nickで始まる発言が、@nick の最新の発言へのreplyとなるモードに切り替えます。
 
 URL短縮関係
 ------------------------------
