@@ -154,7 +154,6 @@ describe Atig::Db::Statuses do
   it "should remove by id" do
     @db.remove_by_id 1
     @db.find_by_id(1).should be_nil
-    @db.find_by_screen_name('alice').should == []
   end
 
   it "should have uniq tid/sid when removed" do
