@@ -4,23 +4,38 @@
 module Atig
   module Channel
     class Search
-      class Handler
-        def initialize(db, name)
-          @db   = db
-          @name = name
+      def initialize(context, gateway, db)
+        @gateway  = gateway
+        @channels = {}
+
+        db.searches.listen do|kind, s|
+          unless @channels.key? s.name then
+            @channels[s.name] = make s.name, s.query
+          end
+          @channels[s.name][:channel].send kind, []
+        end
+
+        db.statuses.listen do|entry|
+          if entry.source == :search then
+            @channels[entry.search_name].message entry
+          else
+            @channels.each do|_, ch|
+              if entry.status.text.include?(ch[:query]) then
+                ch[:channel].message entry
+              end
+            end
+          end
         end
       end
 
-      def initialize(context, gateway, db)
-        @channels = Hash.new do|hash,name|
-          channel = gateway.channel "#s:#{name}", :handler => Handler.new(db, name)
-          channel.join_me
-          hash[name] = channel
-        end
-
-        db.searches.listen do|kind, s|
-          @channels[s.name].send kind,[]
-        end
+      private
+      def make(name, query)
+        channel = @gateway.channel "#s:#{name}"
+        channel.join_me
+        {
+          :channel => channel,
+          :query   => query,
+        }
       end
     end
   end
