@@ -5,6 +5,18 @@ require 'net/irc'
 module Atig
   module Gateway
     class Channel
+      class << self
+        def delegate(*ids)
+          ids.each do|id|
+            module_eval <<END
+def on_#{id}(*args)
+  @handler && @handler.respond_to?(:on_#{id}) && @handler.on_#{id}(*args)
+end
+END
+          end
+        end
+      end
+
       include Net::IRC::Constants
 
       MAX_MODE_PARAMS = 3
@@ -19,17 +31,7 @@ module Atig
         @handler  = opts[:handler]
       end
 
-      def on_invite(*args)
-        @handler && @handler.respond_to?(:on_invite) && @handler.on_invite(*args)
-      end
-
-      def on_who(*args,&f)
-        @handler && @handler.respond_to?(:on_who) && @handler.on_who(*args,&f)
-      end
-
-      def on_kick(*args)
-        @handler && @handler.respond_to?(:on_kick)   && @handler.on_kick(*args)
-      end
+      delegate :invite, :kick, :who
 
       def join_me
         @session.post @prefix, JOIN, @name
