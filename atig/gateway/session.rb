@@ -243,15 +243,7 @@ END
           return
         end
 
-        if @db.followings.find_by_screen_name(nick) then
-          @api.delay(0){|api|
-            @channels[channel].on_invite(api, nick)
-          }
-        else
-          @api.delay(0)do|api|
-            @channels[channel].on_invite(api, nick)
-          end
-        end
+        @api.delay(0){|api| @channels[channel].on_invite(api, nick) }
       end
 
       def on_kick(m)
@@ -267,11 +259,7 @@ END
           return
         end
 
-        if @db.followings.find_by_screen_name(nick) then
-          @api.delay(0){|api| @channels[channel].on_kick(api, nick) }
-        else
-          @api.delay(0){|api| @channels[channel].on_kick(api, nick) }
-        end
+        @api.delay(0){|api| @channels[channel].on_kick(api, nick) }
       end
 
       def on_whois(m)
