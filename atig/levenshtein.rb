@@ -11,6 +11,7 @@ module Atig
         PureRuby.levenshtein(a, b)
       end
     end
+    module_function :levenshtein
 
     module PureRuby
       def levenshtein(a, b)
