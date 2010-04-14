@@ -160,6 +160,8 @@ END
           run_new @@agents  , context, @api, @db
           run_new @@channels, context, self, @db
 
+          on_ctcp_action(@channels.keys.first, "check_upadte")
+
           @db.statuses.add :user => me, :source => :me, :status => me.status
         end
       end
