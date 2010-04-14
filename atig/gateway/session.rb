@@ -272,6 +272,11 @@ END
         on_ctcp_action(nil, "whois #{nick}")
       end
 
+      def on_topic(m)
+        channel,topic = *m.params
+        on_ctcp_action(channel, "topic #{topic}")
+      end
+
       def on_who(m)
         channel  = m.params[0]
 
