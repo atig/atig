@@ -216,8 +216,9 @@ END
         last_match = nil
         commond = command.to_s.downcase
         _, action = @ctcp_actions.find{|define, f|
+          r = (define === command)
           last_match = Regexp.last_match
-          command === define
+          r
         }
         if action then
           safe {
