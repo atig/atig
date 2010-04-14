@@ -226,7 +226,7 @@ END
         else
           self[target].notify "[atig.rb] CTCP ACTION COMMANDS:"
           @ctcp_actions.keys.each do |c|
-            self[target].notify c
+            self[target].notify c.to_s
           end
         end
       end
