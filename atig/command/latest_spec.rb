@@ -47,7 +47,7 @@ describe Atig::Command::Latest do
     @channel.should_receive(:notify).with("  \002foo\017")
     @channel.should_receive(:notify).with("  \002bar\017")
     @channel.should_receive(:notify).with("  \002baz\017")
-    @channel.should_receive(:notify).with("  ... and more. check it: http://bit.ly/79d33W")
+    @channel.should_receive(:notify).with("  ... and more. check it: http://bit.ly/bgZlP4")
 
     call '#twitter', "latest", []
   end
