@@ -14,9 +14,7 @@ module Atig
       end
 
       def each(&f)
-        @lists.each do|name,users|
-          f.call name,users.users
-        end
+        @searches.each(&f)
       end
 
       def update(searches)

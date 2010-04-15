@@ -22,6 +22,10 @@ describe Atig::Db::Searches do
     @searches.listen{|kind, searches| @called[kind] << searches }
   end
 
+  it "should have enumerate" do
+    @searches.to_a.should == [ @foo, @bar]
+  end
+
   it "should notify join" do
     @searches.update [ @foo, @bar, @baz ]
     @called[:join].should == [ @baz ]
