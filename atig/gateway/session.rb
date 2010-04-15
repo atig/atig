@@ -9,6 +9,7 @@ require "time"
 require 'yaml'
 require 'atig/url_escape'
 require 'atig/twitter'
+require 'atig/search_twitter'
 require 'atig/stream'
 require 'atig/oauth'
 require 'atig/db/db'
@@ -133,8 +134,9 @@ END
 
         log :debug, "initialize Twitter"
         twitter = Twitter.new   context, oauth.access
+        search  = SearchTwitter.new context
         stream  = Stream.new context, @nick,@pass if @opts.stream
-        @api     = Scheduler.new context, twitter, stream
+        @api    = Scheduler.new context, twitter, search, stream
 
         log :debug, "initialize filter"
         @ifilters = run_new @@ifilters, context

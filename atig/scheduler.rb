@@ -7,9 +7,10 @@ module Atig
   class Scheduler
     include Util
 
-    def initialize(context, api, stream)
+    def initialize(context, api, search, stream)
       @log    = context.log
       @api    = api
+      @search = search
       @stream = stream
       @agents = []
 
@@ -21,11 +22,18 @@ module Atig
     end
 
     def repeat(interval,opts={}, &f)
-      @queue.push(lambda{ safe { f.call @api } })
+      api = case opts[:api]
+            when :search
+              @search
+            else
+              @api
+            end
+
+      @queue.push(lambda{ safe { f.call api } })
       t = daemon do
         sleep interval
         log :debug, "agent #{t.inspect} is invoked"
-        @queue.push(lambda{ safe { f.call @api } })
+        @queue.push(lambda{ safe { f.call api } })
       end
 
       log :info, "repeat agent #{t.inspect} is registered"
