@@ -13,7 +13,7 @@ module Atig
         @db  = db
         log :info, "initialize"
 
-        api.repeat(30) do|t|
+        api.repeat(3600) do|t|
           searches = t.get "saved_searches"
           @db.searches.update searches
         end
