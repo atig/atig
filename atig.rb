@@ -47,11 +47,11 @@ Atig::Gateway::Session.agents   = [
                                    Atig::Agent::StreamFollow,
                                   ]
 Atig::Gateway::Session.ifilters = [
+                                   Atig::IFilter::Retweet,
                                    Atig::IFilter::Utf7,
                                    Atig::IFilter::Sanitize,
                                    Atig::IFilter::ExpandUrl,
                                    Atig::IFilter::Strip.new(%w{ *tw* *Sh*}),
-                                   Atig::IFilter::Retweet,
                                    Atig::IFilter::Tid,
                                    Atig::IFilter::Sid
                                   ]
