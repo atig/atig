@@ -1,8 +1,5 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
-
-require "json"
-require 'atig/twitter_struct'
 require 'atig/basic_twitter'
 require 'atig/http'
 
@@ -56,10 +53,6 @@ END
       else
         @http.http(uri, 30, 30).request req
       end
-    end
-
-    def api_base(secure = true)
-      URI(@opts.api_base)
     end
 
     def oauth(time, req)
