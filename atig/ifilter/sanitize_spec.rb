@@ -10,8 +10,8 @@ describe Atig::IFilter::Sanitize do
     Atig::IFilter::Sanitize.call status(text)
   end
 
-  it "should convert &lt; &gt;" do
-    filtered("&lt; &gt;").should be_text("< >")
+  it "should convert escape html" do
+    filtered("&lt; &gt; &quot;").should be_text("< > \"")
   end
 
   it "should convert whitespace" do

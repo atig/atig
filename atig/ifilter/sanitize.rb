@@ -9,6 +9,7 @@ module Atig
       text = status.text.
           delete("\000\001").
           gsub("&gt;", ">").
+          gsub("&quot;", '"').
           gsub("&lt;", "<").
           gsub(WSP_REGEX, " ")
       status.merge :text => text
