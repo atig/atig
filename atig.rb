@@ -48,7 +48,7 @@ Atig::Gateway::Session.agents   = [
                                    Atig::Agent::Mention,
                                    Atig::Agent::Dm,
                                    Atig::Agent::Timeline,
-                                   Atig::Agent::StreamFollow,
+                                   # Atig::Agent::StreamFollow,
                                   ]
 Atig::Gateway::Session.ifilters = [
                                    Atig::IFilter::Utf7,
