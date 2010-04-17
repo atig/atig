@@ -15,6 +15,8 @@ module Atig
         @api = api
         @prev = nil
 
+        return unless context.opts.stream
+
         log :info, "initialize"
 
         @api.delay(0)do|t|
