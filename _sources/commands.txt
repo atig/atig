@@ -25,7 +25,7 @@ CTCP ACTIONの送り方はクライアントによって異なりますが、Lim
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 reply ``tweet`` ``comment`` (別名: mention, rp)
   ``tweet`` に対して返信します。
-retweet ``tweet`` ``comment`` (別名: rt, ort)
+retweet ``tweet`` [``comment``] (別名: rt, ort)
   ``tweet`` をリツイートします。
   コメントが省略された場合は、公式リツイートになります。
 destroy ``tweet`` (別名: remove, rm)
@@ -37,6 +37,11 @@ unfav ``tweet``
 thread ``tweet`` [``count``]
   ``tweet`` のin_reply_toを辿って、最大 ``count`` 件の会話を表示します。
   ``count`` が省略された場合は10件になります。 ``count`` は20件以上を指定しても無視されます。
+autofix ``comment`` (別名: topic)
+  最新の発言が ``comment`` と類似している場合はその発言を削除し、 ``comment`` を発言として投稿します。
+
+autofix! ``tweet`` (別名: topic!)
+  最新の発言を削除し、 ``comment`` を発言として投稿します。
 
 ユーザ関係
 ------------------------------
@@ -63,5 +68,4 @@ opt ``name`` (別名: opts, option, options)
   名前 ``name`` の :doc:`options` が持つ値を表示します。
 opt ``name`` ``value`` (別名: opts, option, options)
   名前 ``name`` の :doc:`options` が持つ値を ``value`` に更新します。
-
 

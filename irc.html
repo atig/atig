@@ -5,7 +5,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>IRCとの対応 &mdash; atig.rb v1.0a documentation</title>
+    <title>IRCコマンド &mdash; atig.rb v1.0a documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
@@ -43,7 +43,7 @@
         <div class="sphinxsidebarwrapper">
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
-<li><a class="reference external" href="#">IRCとの対応</a><ul>
+<li><a class="reference external" href="#">IRCコマンド</a><ul>
 <li><a class="reference external" href="#nick">nickなどの扱い</a></li>
 <li><a class="reference external" href="#id1">IRCコマンドとの対応</a></li>
 </ul>
@@ -83,7 +83,7 @@
           <div class="body">
             
   <div class="section" id="irc">
-<h1>IRCとの対応<a class="headerlink" href="#irc" title="Permalink to this headline">¶</a></h1>
+<h1>IRCコマンド<a class="headerlink" href="#irc" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="nick">
 <h2>nickなどの扱い<a class="headerlink" href="#nick" title="Permalink to this headline">¶</a></h2>
 <blockquote>
@@ -107,6 +107,9 @@
 </dd>
 <dt>/whois <tt class="docutils literal"><span class="pre">screen_name</span></tt></dt>
 <dd><tt class="docutils literal"><span class="pre">screen_name</span></tt> の情報を表示します。ID番号、名前、自己紹介、現在地などを表示します。</dd>
+<dt>/topic <tt class="docutils literal"><span class="pre">topic</span></tt></dt>
+<dd><a class="reference external" href="commands.html"><em>CTCP ACTION</em></a> の <cite>autofix</cite> へのエイリアスです。
+<tt class="docutils literal"><span class="pre">topic</span></tt> が前回の発言と類似している場合、古い発言を上書きします。</dd>
 <dt>/who <tt class="docutils literal"><span class="pre">channel</span></tt></dt>
 <dd><tt class="docutils literal"><span class="pre">channel</span></tt> の参加者の情報を表示します。ID番号、名前などを表示します。</dd>
 </dl>

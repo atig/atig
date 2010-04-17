@@ -113,7 +113,7 @@
 <dl class="docutils">
 <dt>reply <tt class="docutils literal"><span class="pre">tweet</span></tt> <tt class="docutils literal"><span class="pre">comment</span></tt> (別名: mention, rp)</dt>
 <dd><tt class="docutils literal"><span class="pre">tweet</span></tt> に対して返信します。</dd>
-<dt>retweet <tt class="docutils literal"><span class="pre">tweet</span></tt> <tt class="docutils literal"><span class="pre">comment</span></tt> (別名: rt, ort)</dt>
+<dt>retweet <tt class="docutils literal"><span class="pre">tweet</span></tt> [<tt class="docutils literal"><span class="pre">comment</span></tt>] (別名: rt, ort)</dt>
 <dd><tt class="docutils literal"><span class="pre">tweet</span></tt> をリツイートします。
 コメントが省略された場合は、公式リツイートになります。</dd>
 <dt>destroy <tt class="docutils literal"><span class="pre">tweet</span></tt> (別名: remove, rm)</dt>
@@ -125,6 +125,10 @@
 <dt>thread <tt class="docutils literal"><span class="pre">tweet</span></tt> [<tt class="docutils literal"><span class="pre">count</span></tt>]</dt>
 <dd><tt class="docutils literal"><span class="pre">tweet</span></tt> のin_reply_toを辿って、最大 <tt class="docutils literal"><span class="pre">count</span></tt> 件の会話を表示します。
 <tt class="docutils literal"><span class="pre">count</span></tt> が省略された場合は10件になります。 <tt class="docutils literal"><span class="pre">count</span></tt> は20件以上を指定しても無視されます。</dd>
+<dt>autofix <tt class="docutils literal"><span class="pre">comment</span></tt> (別名: topic)</dt>
+<dd>最新の発言が <tt class="docutils literal"><span class="pre">comment</span></tt> と類似している場合はその発言を削除し、 <tt class="docutils literal"><span class="pre">comment</span></tt> を発言として投稿します。</dd>
+<dt>autofix! <tt class="docutils literal"><span class="pre">tweet</span></tt> (別名: topic!)</dt>
+<dd>最新の発言を削除し、 <tt class="docutils literal"><span class="pre">comment</span></tt> を発言として投稿します。</dd>
 </dl>
 </div>
 </div>
