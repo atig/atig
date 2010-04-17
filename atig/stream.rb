@@ -5,10 +5,13 @@ require 'json'
 require 'uri'
 require 'logger'
 require 'atig/twitter_struct'
+require 'atig/util'
 require 'atig/url_escape'
 
 module Atig
   class Stream
+    include Util
+
     class APIFailed < StandardError; end
     def initialize(context, user, password)
       @log      = context.log
@@ -25,54 +28,34 @@ module Atig
       uri.path += ".json"
       uri.query = query.to_query_str unless query.empty?
 
-      timeout = @opts.stream_timeout || 60*60
-      if timeout != 0 then
-        loop{
-          begin
-            streaming(uri, timeout, &f)
-          rescue TimeoutError
-          end
-        }
-      else
-        streaming(uri,&f)
-      end
-    end
-
-    def read(http, request, &f)
-      buffer = ''
-      http.request(request) do |response|
-        unless response.code == '200' then
-          raise APIFailed,"#{response.code} #{response.message}"
-        end
-
-        response.read_body do |chunk|
-          next if chunk.strip.empty?
-          buffer << chunk
-          begin
-            while buffer =~ /\A.*?\r\n/ do
-              json    = $&
-              buffer  = $'
-              f.call TwitterStruct.make(JSON.parse(json))
-            end
-          rescue => e
-            @log.error e.inspect
-          end
-        end
-      end
-    end
-
-    def streaming(uri, read_time =nil,&f)
       @log.debug [uri.to_s]
+
       Net::HTTP.start(uri.host, uri.port) do |http|
         request = Net::HTTP::Post.new uri.request_uri
         request.basic_auth @user, @password
 
-        if read_time then
-          timeout( read_time ){
-            read(http, request,&f)
-          }
-        else
-          read(http, request,&f)
+        http.request(request) do |response|
+          unless response.code == '200' then
+            raise APIFailed,"#{response.code} #{response.message}"
+          end
+
+          begin
+            buffer = ''
+            response.read_body do |chunk|
+              buffer << chunk.to_s
+              @log.debug buffer.inspect
+
+              if buffer =~ /\A(.*)\n/ then
+                text = $1
+                unless text.strip.empty?
+                  f.call TwitterStruct.make(JSON.parse(text))
+                end
+                buffer = ''
+              end
+            end
+          rescue => e
+            raise APIFailed,e.to_s
+          end
         end
       end
     end
