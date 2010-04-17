@@ -216,8 +216,9 @@ END
         last_match = nil
         commond = command.to_s.downcase
         _, action = @ctcp_actions.find{|define, f|
+          r = (define === command)
           last_match = Regexp.last_match
-          command === define
+          r
         }
         if action then
           safe {
@@ -269,6 +270,11 @@ END
           return
         end
         on_ctcp_action(nil, "whois #{nick}")
+      end
+
+      def on_topic(m)
+        channel,topic = *m.params
+        on_ctcp_action(channel, "topic #{topic}")
       end
 
       def on_who(m)

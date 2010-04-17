@@ -16,8 +16,9 @@ def user(id, name)
   user
 end
 
-def entry(user,status,name='entry')
+def entry(user,status,name='entry',id=0)
   entry = stub name
+  entry.stub!('id').and_return(id)
   entry.stub!('user').and_return(user)
   entry.stub!('status').and_return(status)
   entry

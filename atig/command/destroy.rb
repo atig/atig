@@ -21,6 +21,16 @@ module Atig
               api.delay(0) do|t|
                 res = t.post("statuses/destroy/#{entry.status.id}")
                 yield "Destroyed: #{entry.status.text}"
+
+                db.transaction do|d|
+                  xs = d.statuses.find_by_screen_name d.me.screen_name,:limit=>1
+                  d.statuses.remove_by_id entry.id
+                  ys = d.statuses.find_by_screen_name d.me.screen_name,:limit=>1
+
+                  unless xs.map{|x| x.id} == ys.map{|y| y.id} then
+                    gateway.topic ys.first
+                  end
+                end
               end
             else
               yield "The status you specified by the ID tid is not yours."

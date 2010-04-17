@@ -15,7 +15,7 @@ module Atig
       include Util
       attr_reader :followings, :statuses, :dms, :lists
       attr_accessor :me
-      VERSION = 2
+      VERSION = 3
 
       def initialize(context, opt={})
         @log        = context.log
