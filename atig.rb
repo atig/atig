@@ -5,6 +5,7 @@ require 'logger'
 
 $KCODE = "u" unless defined? ::Encoding # json use this
 Dir.chdir(File.dirname(__FILE__))
+
 case
 when File.directory?("lib")
   $LOAD_PATH << "lib"
