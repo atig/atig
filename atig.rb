@@ -76,6 +76,7 @@ Atig::Gateway::Session.commands = [
                                    Atig::Command::Whois,
                                    Atig::Command::Option,
                                    Atig::Command::Location,
+                                   Atig::Command::Name,
                                    Atig::Command::Limit,
                                    Atig::Command::Autofix,
                                   ]
