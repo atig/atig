@@ -2,11 +2,13 @@
 require 'rubygems'
 require 'pp'
 require 'logger'
-require 'memory_profiler'
-MemoryProfiler.start
 
 $KCODE = "u" unless defined? ::Encoding # json use this
 Dir.chdir(File.dirname(__FILE__))
+
+require 'memory_profiler'
+MemoryProfiler.start
+
 case
 when File.directory?("lib")
   $LOAD_PATH << "lib"
