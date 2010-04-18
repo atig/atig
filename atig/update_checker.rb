@@ -5,8 +5,8 @@ module Atig
   module UpdateChecker
     def commits
       uri = URI("http://github.com/api/v1/json/mzp/atig/commits/master")
-      @log.debug uri.inspect
-      res = @http.http(uri).request(@http.req(:get, uri))
+      http = Atig::Http.new
+      res = http.http(uri).request http.req(:get, uri)
       JSON.parse(res.body)['commits']
     end
 
@@ -18,11 +18,11 @@ module Atig
     end
 
     def local_repos?(rev)
-      system("git rev-parse --verify #{rev} > /dev/null 2>&1")
+      system("git show #{rev} > /dev/null 2>&1")
     end
 
     def git?
-      system('which git')
+      system('which git > /dev/null 2>&1')
     end
 
     def latest

@@ -17,7 +17,7 @@ module Atig
       end
     end
 
-    def initialize(logger)
+    def initialize(logger=nil)
       @log = logger
       @cert_store = OpenSSL::X509::Store.new
       @cert_store.set_default_paths
@@ -55,7 +55,7 @@ module Atig
       end
       http
     rescue => e
-      log :error, e
+      log(:error, e) if @log
     end
 
     def req(method, uri, header = {}, credentials = nil)
@@ -89,7 +89,7 @@ module Atig
       req.basic_auth(*credentials) if credentials
       req
     rescue => e
-      log :error,e
+      log(:error, e) if @log
     end
   end
 end
