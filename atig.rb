@@ -76,8 +76,7 @@ Atig::Gateway::Session.commands = [
                                    Atig::Command::UserInfo,
                                    Atig::Command::Whois,
                                    Atig::Command::Option,
-                                   Atig::Command::Limit
-                                   Atig::Command::Latest
+                                   Atig::Command::Limit,
                                   ]
 Atig::Gateway::Session.channels = [
                                    Atig::Channel::Timeline,
