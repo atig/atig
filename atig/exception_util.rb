@@ -21,5 +21,7 @@ module Atig
         loop{ safe { f.call }}
       end
     end
+
+    module_function :safe,:daemon
   end
 end
