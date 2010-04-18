@@ -44,4 +44,11 @@ describe Atig::UpdateChecker,'when use git version' do
     Atig::UpdateChecker.latest.should == [ 'foo', 'bar', 'baz' ]
   end
 
+  it "should notify all changes" do
+    Atig::UpdateChecker.stub!(:local_repos?).and_return false
+    Atig::UpdateChecker.stub!(:server_version).and_return rev('z')
+
+    Atig::UpdateChecker.latest.should == [ 'foo', 'bar', 'baz', 'xyzzy', 'fuga' ]
+  end
+
 end

@@ -37,7 +37,11 @@ module Atig
           []
         else
           current  = cs.map {|i| i['id'] }.index(server_version)
-          cs[0...current].map {|i| i['message'] }
+          if current then
+            cs[0...current]
+          else
+            cs
+          end.map {|i| i['message'] }
         end
       end
     rescue Errno::ECONNREFUSED, Timeout::Error => e
