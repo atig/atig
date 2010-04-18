@@ -6,6 +6,9 @@ require 'logger'
 $KCODE = "u" unless defined? ::Encoding # json use this
 Dir.chdir(File.dirname(__FILE__))
 
+require 'memory_profiler'
+MemoryProfiler.start
+
 case
 when File.directory?("lib")
   $LOAD_PATH << "lib"
@@ -45,7 +48,7 @@ Atig::Gateway::Session.agents   = [
                                    Atig::Agent::Mention,
                                    Atig::Agent::Dm,
                                    Atig::Agent::Timeline,
-                                   Atig::Agent::StreamFollow,
+                                   # Atig::Agent::StreamFollow,
                                   ]
 Atig::Gateway::Session.ifilters = [
                                    Atig::IFilter::Utf7,
