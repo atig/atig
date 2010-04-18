@@ -27,7 +27,7 @@ class MemoryProfiler
       curr_strings = []
       delta = Hash.new(0)
 
-      file = File.open('log/memory_profiler.#{Time.now.to_i}.log','a')
+      file = File.open("log/memory_profiler.#{Time.now.to_i}.log",'w')
 
       loop do
         begin
