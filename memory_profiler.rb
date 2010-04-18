@@ -27,7 +27,7 @@ class MemoryProfiler
       curr_strings = []
       delta = Hash.new(0)
 
-      file = File.open('log/memory_profiler.log','w')
+      file = File.open('log/memory_profiler.#{Time.now.to_i}.log','a')
 
       loop do
         begin
@@ -57,7 +57,7 @@ class MemoryProfiler
             delta[k] = curr[k]-prev[k]
           end
 
-          file.puts "Top 20"
+          file.puts "Top 20: #{Time.now}"
           delta.sort_by { |k,v| -v.abs }[0..19].sort_by { |k,v| -v}.each do |k,v|
             file.printf "%+5d: %s (%d)\n", v, k.name, curr[k] unless v == 0
           end

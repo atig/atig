@@ -6,9 +6,6 @@ require 'logger'
 $KCODE = "u" unless defined? ::Encoding # json use this
 Dir.chdir(File.dirname(__FILE__))
 
-require 'memory_profiler'
-MemoryProfiler.start
-
 case
 when File.directory?("lib")
   $LOAD_PATH << "lib"
@@ -124,6 +121,13 @@ EOB
       on("--debug", "Enable debug mode") do |debug|
         opts[:log]   ||= $stderr
         opts[:debug]   = true
+      end
+
+      on("--memprof", "Enable memory profiler") do|_|
+        require 'memory_profiler'
+        require 'fileutils'
+        FileUtils.mkdir_p "log"
+        MemoryProfiler.start(:string_debug => true)
       end
 
       on("-c","--conf [file=#{opts[:conf]}]", "atig configuration file; default is '~/.atig/config'") do|name|
