@@ -4,7 +4,8 @@ require 'atig/db/followings'
 
 describe Atig::Db::Followings,"when it is empty" do
   before do
-    @db = Atig::Db::Followings.new
+    FileUtils.rm_f 'following.test.db'
+    @db = Atig::Db::Followings.new('following.test.db')
   end
 
   it "should be emtpy" do
@@ -14,12 +15,7 @@ end
 
 describe Atig::Db::Followings,"when updated users" do
   def user(id, name, protect, only)
-    user = stub("User-#{name}")
-    user.stub!(:id).and_return(id)
-    user.stub!(:screen_name).and_return(name)
-    user.stub!(:protected).and_return(protect)
-    user.stub!(:only).and_return(only)
-    user
+    OpenStruct.new(:id => id, :screen_name=>name, :protected=>protect, :only=>only)
   end
 
   before do
@@ -27,7 +23,8 @@ describe Atig::Db::Followings,"when updated users" do
     @bob      = user 2,'bob'     , true , false
     @charriey = user 3,'charriey', false, true
 
-    @db = Atig::Db::Followings.new
+    FileUtils.rm_f 'following.test.db'
+    @db = Atig::Db::Followings.new('following.test.db')
     @db.update [ @alice, @bob ]
 
     @listen = {}
