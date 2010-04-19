@@ -3,6 +3,7 @@
 require 'atig/db/listenable'
 require 'sqlite3'
 require 'atig/db/roman'
+require 'atig/db/sql'
 require 'base64'
 
 class OpenStruct
@@ -15,11 +16,11 @@ module Atig
       include Listenable
 
       def initialize(name)
-        @db_name = name
+        @db = Sql.new name
         @roman = Roman.new
 
         unless File.exist? name then
-          execute do|db|
+          @db.execute do|db|
             db.execute %{create table status (
                           id integer primary key,
                           status_id   text,
@@ -34,7 +35,7 @@ module Atig
       end
 
       def add(opt)
-        execute do|db|
+        @db.execute do|db|
           id  = opt[:status].id
           return unless db.execute(%{SELECT id FROM status WHERE status_id = ?}, id).empty?
 
@@ -84,20 +85,10 @@ module Atig
         query  = "SELECT data FROM status WHERE #{lhs} = :rhs ORDER BY created_at DESC LIMIT :limit"
         params = { :rhs => rhs, :limit => opt.fetch(:limit,20) }
         res = []
-        execute do|db|
+        @db.execute do|db|
           db.execute(query,params) do|data,*_|
             res << Marshal.load(data.unpack('m').first)
           end
-        end
-        res
-      end
-
-      def execute(&f)
-        db = SQLite3::Database.new @db_name
-        begin
-          res = f.call db
-        ensure
-          db.close
         end
         res
       end
