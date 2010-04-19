@@ -51,7 +51,7 @@ module Atig
                      :screen_name => screen_name,
                      :user_id     => opt[:user].id,
                      :created_at  => Time.parse(opt[:status].created_at).to_i,
-                     :data        => [Marshal.dump(entry)].pack('m'))
+                     :data        => @db.dump(entry))
           notify entry
         end
       end
@@ -87,7 +87,7 @@ module Atig
         res = []
         @db.execute do|db|
           db.execute(query,params) do|data,*_|
-            res << Marshal.load(data.unpack('m').first)
+            res << @db.load(data)
           end
         end
         res

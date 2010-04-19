@@ -10,6 +10,14 @@ module Atig
         @name = name
       end
 
+      def dump(obj)
+        [Marshal.dump(obj)].pack('m')
+      end
+
+      def load(text)
+        Marshal.load(text.unpack('m').first)
+      end
+
       def execute(&f)
         db = SQLite3::Database.new @name
         begin
