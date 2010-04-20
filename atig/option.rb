@@ -41,7 +41,7 @@ module Atig
       end
 
       # Ruby 1.8だとidというフィールドが作れないので作っておく
-      new_ostruct_member :id
+      new_ostruct_member :id, true
     end
 
     def marshal_dump; @table end
@@ -57,8 +57,8 @@ module Atig
       @table[name.to_sym] = value
     end
 
-    def new_ostruct_member(name)
-      if not self.respond_to?(name)
+    def new_ostruct_member(name, force=false)
+      if force or (not self.respond_to?(name))
         class << self; self; end.class_eval do
           define_method(name) { @table[name] }
           define_method(:"#{name}=") { |x| @table[name] = x }
