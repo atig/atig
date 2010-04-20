@@ -4,19 +4,16 @@
 require 'atig/db/lists'
 
 describe Atig::Db::Lists do
-  def user(name, protect, only)
-    user = stub("user-#{name}")
-    user.stub!(:screen_name).and_return(name)
-    user.stub!(:protected).and_return(protect)
-    user.stub!(:only).and_return(only)
-    user
+  def user(id, name, protect, only)
+    OpenStruct.new(:id => id, :screen_name=>name, :protected=>protect, :only=>only)
   end
 
   before do
-    @lists = Atig::Db::Lists.new
-    @alice    = user 'alice'   , false, false
-    @bob      = user 'bob'     , true , false
-    @charriey = user 'charriey', false, true
+    FileUtils.rm_rf "test-a.db"
+    @lists = Atig::Db::Lists.new "test-%s.db"
+    @alice    = user 1,'alice'   , false, false
+    @bob      = user 2,'bob'     , true , false
+    @charriey = user 3,'charriey', false, true
 
     @args = {}
     @lists.listen{|kind,*args| @args[kind] = args }
@@ -98,7 +95,7 @@ describe Atig::Db::Lists do
 
   it "should call listener when change user mode" do
     @lists.update("a" => [ @alice, @bob ])
-    bob = user 'bob', false, false
+    bob = user @bob.id, 'bob', false, false
     @lists.update("a" => [ @alice, bob ])
 
     @args[:mode].should == [ "a", [ bob ]]
