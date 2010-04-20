@@ -4,9 +4,13 @@
 require 'spec'
 require 'atig/levenshtein'
 
-[Atig::Levenshtein,
- Atig::Levenshtein::Inline,
- Atig::Levenshtein::PureRuby].each do |m|
+target = [Atig::Levenshtein, Atig::Levenshtein::PureRuby]
+
+if Atig::Levenshtein::Inline::USABLE then
+  target << Atig::Levenshtein::Inline
+end
+
+target.each do |m|
   describe m do
     it "should return correct levenshtein distance" do
       [
