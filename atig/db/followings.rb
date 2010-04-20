@@ -8,7 +8,6 @@ module Atig
   module Db
     class Followings
       include Listenable
-      attr_reader :users
 
       def initialize(name)
         @db = Sql.new name
@@ -42,6 +41,14 @@ module Atig
 
       def on_invalidated(&f)
         @on_invalidated = f
+      end
+
+      def users
+        @db.execute{|db|
+          db.execute("SELECT data FROM users").map{|data|
+            @db.load data[0]
+          }
+        }
       end
 
       def update(users)

@@ -15,7 +15,11 @@ module Atig
       end
 
       def load(text)
-        Marshal.load(text.unpack('m').first)
+        if text == nil then
+          nil
+        else
+          Marshal.load(text.unpack('m').first)
+        end
       end
 
       def execute(&f)
