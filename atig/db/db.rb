@@ -20,12 +20,11 @@ module Atig
       def initialize(context, opt={})
         @log        = context.log
         @me         = opt[:me]
-        @followings = Followings.new
         FileUtils.mkdir_p "cache/#{@me.screen_name}/"
+        @followings = Followings.new "cache/#{@me.screen_name}/following.#{VERSION}.db"
         @statuses   = Statuses.new "cache/#{@me.screen_name}/status.#{VERSION}.db"
         @dms        = Statuses.new "cache/#{@me.screen_name}/dm.#{VERSION}.db"
-        @lists      = Lists.new
-
+        @lists      = Lists.new "cache/#{@me.screen_name}/lists.%s.#{VERSION}.db"
 
         log :info, "initialize"
 
