@@ -66,8 +66,6 @@ module Atig
         end
       end
       def update(users)
-        names = users.map{|u| u.screen_name.inspect }.join(",")
-        bye = join = []
         @db.execute do|db|
           may_notify :join, users.select{|u|
             not exists?(db,
@@ -75,6 +73,7 @@ module Atig
                         u.screen_name)
           }
 
+          names = users.map{|u| u.screen_name.inspect }.join(",")
           may_notify :part, db.execute(%{SELECT screen_name,data FROM users
                                          WHERE screen_name NOT IN (#{names})}).map{|_,data|
             @db.load(data)
@@ -85,9 +84,7 @@ module Atig
                     "screen_name = ? AND (protected != ? OR only != ?)",
                     u.screen_name, u.protected, u.only)
           }
-        end
 
-        @db.execute do|db|
           users.each do|user|
             id = db.get_first_value('SELECT id FROM users WHERE user_id = ? LIMIT 1', user.id)
             if id then
