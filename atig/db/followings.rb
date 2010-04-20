@@ -33,7 +33,12 @@ module Atig
           db.get_first_value('SELECT COUNT(*) FROM users').to_i
         end
       end
-      def empty?; @users.empty? end
+
+      def empty?
+        @db.execute do|db|
+          db.get_first_value('SELECT * FROM users LIMIT 1') == nil
+        end
+      end
 
       def invalidate
         @on_invalidated.call
@@ -51,18 +56,35 @@ module Atig
         }
       end
 
+      def exists?(db, templ, *args)
+        db.get_first_value("SELECT * FROM users WHERE #{templ} LIMIT 1",*args) != nil
+      end
+
+      def may_notify(mode, xs)
+        unless xs.empty? then
+          notify mode, xs
+        end
+      end
       def update(users)
         names = users.map{|u| u.screen_name.inspect }.join(",")
         bye = join = []
         @db.execute do|db|
-          # join
-          db.execute("SELECT screen_name,data FROM users WHERE screen_name NOT IN (#{names})").each do|_,_|
-          end
+          may_notify :join, users.select{|u|
+            not exists?(db,
+                        "screen_name = ?",
+                        u.screen_name)
+          }
 
-          # part
-          db.execute("SELECT screen_name,data FROM users WHERE screen_name NOT IN (#{names})").each do|_,data|
-            notify :part, @db.load(data)
-          end
+          may_notify :part, db.execute(%{SELECT screen_name,data FROM users
+                                         WHERE screen_name NOT IN (#{names})}).map{|_,data|
+            @db.load(data)
+          }
+
+          may_notify :mode, users.select{|u|
+            exists?(db,
+                    "screen_name = ? AND (protected != ? OR only != ?)",
+                    u.screen_name, u.protected, u.only)
+          }
         end
 
         @db.execute do|db|
@@ -86,21 +108,6 @@ module Atig
             end
           end
         end
-
-        # bye   = diff(@users,users ){|x,y| x.screen_name == y.screen_name }
-        # join  = diff(users ,@users){|x,y| x.screen_name == y.screen_name }
-        # mode  = users.select{|user|
-        #   @users.any?{|u|
-        #     user.screen_name == u.screen_name &&
-        #     (user.protected != u.protected || user.only != u.only)
-        #   }
-        # }
-
-        #        notify(:part, bye)  unless bye  == []
-        #        notify(:join, join) unless join == []
-        #        notify(:mode, mode) unless mode == []
-
-        #        @users = users
       end
 
       def find_by_screen_name(name)
@@ -111,7 +118,7 @@ module Atig
 
       def include?(user)
         @db.execute do|db|
-          db.get_first_value('SELECT data FROM users WHERE user_id = ? LIMIT 1', user.id) != nil
+          exists? db,'user_id = ?', user.id
         end
       end
     end
