@@ -46,7 +46,7 @@ Atig::Gateway::Session.agents   = [
                                    Atig::Agent::Mention,
                                    Atig::Agent::Dm,
                                    Atig::Agent::Timeline,
-                                   # Atig::Agent::StreamFollow,
+                                   Atig::Agent::StreamFollow,
                                   ]
 Atig::Gateway::Session.ifilters = [
                                    Atig::IFilter::Retweet,
@@ -81,7 +81,6 @@ Atig::Gateway::Session.commands = [
                                    Atig::Command::Name,
                                    Atig::Command::Autofix,
                                    Atig::Command::Limit,
-                                   Atig::Command::Latest
                                   ]
 Atig::Gateway::Session.channels = [
                                    Atig::Channel::Timeline,

@@ -2,11 +2,17 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
 require 'atig/channel/channel'
+require 'atig/util'
+require 'atig/update_checker'
+
 module Atig
   module Channel
     class Timeline < Atig::Channel::Channel
+      include Util
+
       def initialize(context, gateway, db)
         super
+        @log = context.log
 
         @channel.notify "Client options: #{context.opts.marshal_dump.inspect}"
 
@@ -16,6 +22,20 @@ module Atig
           when :timeline, :me
             @channel.message entry
           end
+        end
+
+        # 最新版のチェック
+        daemon do
+          log :info,"check update"
+          messages = UpdateChecker.latest
+          unless messages.empty?
+            @channel.notify "\002New version is available.\017 run 'git pull'."
+            messages[0, 3].each do |m|
+              @channel.notify "  \002#{m[/.+/]}\017"
+            end
+            @channel.notify("  ... and more. check it: http://mzp.github.com/atig/") if messages.size > 3
+          end
+          sleep (3*60*60)
         end
 
         db.statuses.listen do|entry|
