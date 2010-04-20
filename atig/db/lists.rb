@@ -8,7 +8,8 @@ module Atig
     class Lists
       include Listenable
 
-      def initialize
+      def initialize(name)
+        @name    = name
         @lists   = {}
         @on_invalidated = lambda{|*_| }
         @members = nil
@@ -20,9 +21,10 @@ module Atig
         }
 
         (lists.keys  - @lists.keys).each do|name|
-          users = lists[name]
-          list = Followings.new
-          list.listen{|kind,args| notify kind,name,args }
+          list = Followings.new(@name % name)
+          list.listen{|kind,users|
+            notify kind,name,users
+          }
           @lists[name] = list
           notify :new, name
         end

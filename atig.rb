@@ -46,7 +46,7 @@ Atig::Gateway::Session.agents   = [
                                    Atig::Agent::Mention,
                                    Atig::Agent::Dm,
                                    Atig::Agent::Timeline,
-                                   Atig::Agent::StreamFollow,
+                                   # Atig::Agent::StreamFollow,
                                   ]
 Atig::Gateway::Session.ifilters = [
                                    Atig::IFilter::Retweet,
@@ -126,6 +126,13 @@ EOB
       on("--debug", "Enable debug mode") do |debug|
         opts[:log]   ||= $stderr
         opts[:debug]   = true
+      end
+
+      on("--memprof", "Enable memory profiler") do|_|
+        require 'memory_profiler'
+        require 'fileutils'
+        FileUtils.mkdir_p "log"
+        MemoryProfiler.start(:string_debug => true)
       end
 
       on("-c","--conf [file=#{opts[:conf]}]", "atig configuration file; default is '~/.atig/config'") do|name|
