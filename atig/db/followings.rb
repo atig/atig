@@ -48,7 +48,7 @@ module Atig
       end
 
       def include?(user)
-        @users.find{|u| u.id == user.id }
+        @users.any?{|u| u.id == user.id }
       end
 
       private
