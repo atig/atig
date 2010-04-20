@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# -*- coding: utf-8 -*-
 require 'rubygems'
 require 'pp'
 require 'logger'
@@ -78,8 +79,9 @@ Atig::Gateway::Session.commands = [
                                    Atig::Command::Option,
                                    Atig::Command::Location,
                                    Atig::Command::Name,
-                                   Atig::Command::Limit,
                                    Atig::Command::Autofix,
+                                   Atig::Command::Limit,
+                                   Atig::Command::Latest
                                   ]
 Atig::Gateway::Session.channels = [
                                    Atig::Channel::Timeline,
