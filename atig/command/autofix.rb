@@ -15,8 +15,8 @@ module Atig
       def command_name; /(?:autofix|topic|overwwrite)!?/ end
 
       def distance(s1, s2)
-        c1 = s1.split //
-        c2 = s2.split //
+        c1 = s1.split(//)
+        c2 = s2.split(//)
         distance = Atig::Levenshtein.levenshtein c1, c2
         distance.to_f / [ c1.size, c2.size ].max
       end

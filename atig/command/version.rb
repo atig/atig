@@ -44,7 +44,7 @@ module Atig
         version = source.gsub(/<[^>]*>/, "").strip
         version << " <#{$1}>" if source =~ / href="([^"]+)/
         Net::IRC.ctcp_encode version
-       end
+      end
     end
   end
 end

@@ -115,7 +115,7 @@ END
           @log.info "waiting for rate limit reset"
           s = ret["X-RateLimit-Reset"].to_i - Time.now.to_i
           if s > 0
-            sleep (s > 60 * 10) ? 60 * 10 : s # 10 分に一回はとってくるように
+            sleep [s, 60 * 10].min # 10 分に一回はとってくるように
           end
         end
         raise APIFailed, "#{ret.code}: #{ret.message}"

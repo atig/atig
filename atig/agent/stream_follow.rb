@@ -1,8 +1,5 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
-#! /opt/local/bin/ruby -w
-# -*- mode:ruby; coding:utf-8 -*-
 require 'atig/util'
 
 module Atig

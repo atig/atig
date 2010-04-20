@@ -39,7 +39,10 @@ END
         class_writer :commands, :agents, :ifilters, :ofilters, :channels
       end
 
-      def initialize(*args); super end
+      def initialize(*args)
+        super
+        @on_message = nil
+      end
 
       def post(*args)
         super
@@ -116,9 +119,9 @@ END
           channel.join_me
           channel.notify "Please approve me at #{oauth.url}"
           callcc{|cc|
-            @on_message = lambda{|m|
-              if m.command.downcase == 'privmsg' then
-                _, mesg = *m.params
+            @on_message = lambda{|x|
+              if x.command.downcase == 'privmsg' then
+                _, mesg = *x.params
                 if oauth.verify(mesg.strip)
                   channel.part_me "Verified"
                   save_config

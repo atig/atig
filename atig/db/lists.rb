@@ -11,6 +11,7 @@ module Atig
       def initialize
         @lists   = {}
         @on_invalidated = lambda{|*_| }
+        @members = nil
       end
 
       def update(lists)
@@ -21,7 +22,7 @@ module Atig
         (lists.keys  - @lists.keys).each do|name|
           users = lists[name]
           list = Followings.new
-          list.listen{|kind,users| notify kind,name,users }
+          list.listen{|kind,args| notify kind,name,args }
           @lists[name] = list
           notify :new, name
         end

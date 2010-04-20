@@ -11,8 +11,8 @@ module Atig
         @api     = api
         @db      = db
 	@gateway.ctcp_action(*command_name) do |target, mesg, command, args|
-          action(target, mesg, command, args){|mesg|
-            gateway[target].notify mesg
+          action(target, mesg, command, args){|m|
+            gateway[target].notify m
           }
 	end
       end
