@@ -65,6 +65,7 @@ module Atig
           notify mode, xs
         end
       end
+
       def update(users)
         @db.execute do|db|
           may_notify :join, users.select{|u|

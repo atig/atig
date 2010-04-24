@@ -55,6 +55,7 @@ module Atig
           case kind
           when :new
             @channels[name].join_me
+            @channels[name].join db.lists[name].users
           when :del
             @channels[name].part_me "No longer follow the list #{name}"
           when :join

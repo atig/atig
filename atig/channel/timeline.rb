@@ -46,6 +46,8 @@ module Atig
           end
         end
 
+        @channel.send :join, db.followings.users
+
         db.followings.listen do|kind, users|
           @channel.send kind, users
         end
