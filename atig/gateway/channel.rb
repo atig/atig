@@ -44,6 +44,7 @@ END
       end
 
       def message(entry, command = PRIVMSG)
+        GC.start
         user        = entry.user
         screen_name = user.screen_name
         prefix      = prefix user
