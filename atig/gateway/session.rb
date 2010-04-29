@@ -99,6 +99,7 @@ END
 
       protected
       def on_message(m)
+        GC.start
         @on_message.call(m) if @on_message
       end
 
