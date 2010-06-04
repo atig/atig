@@ -21,6 +21,9 @@ module Atig
                           protected bool,
                           only bool,
                           data blob);}
+            db.execute %{
+              create index users_screen on users (screen_name);
+            }
           end
         end
 

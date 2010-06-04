@@ -30,10 +30,24 @@ module Atig
                           user_id     text,
                           created_at  integer,
                           data blob);}
+
             db.execute %{create table id (
                           id integer primary key,
                           screen_name text,
                           count integer);}
+
+            # thx to @L_star
+            # http://d.hatena.ne.jp/mzp/20100407#c
+            db.execute_batch %{
+              create index status_createdat on status(created_at);
+              create index status_sid on status(sid);
+              create index status_statusid on status(status_id);
+              create index status_tid on status(tid);
+              create index status_userid on status(user_id);
+
+              create index status_id on status(id);
+              create index id_id on id(id);
+            }
           end
         end
       end
