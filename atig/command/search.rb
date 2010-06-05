@@ -22,22 +22,24 @@ module Atig
            args.shift
         end
 
-        res = api.search.get('search', opts)
+        statuses = api.search.get('search', opts).results
 
-        if res['results'].empty?
+        if statuses.empty?
           yield "\"#{q}\": not found. options=#{opts.inspect} (#{res['completed_in']} sec.)"
           return
         end
 
-        res['results'].reverse.each do |tw|
-          # TODO: 検索結果にも tid/sid を振りたい
-          entry = TwitterStruct.make('user'   => {
-                                       'id' => tw.from_user_id  ,
-                                       'screen_name' => tw.from_user
-                                     },
-                                     'status' => { 'text' =>
-                                       Net::IRC.ctcp_encode("#{tw['text']} (#{tw['created_at']})") })
-          gateway[target].message entry, Net::IRC::Constants::NOTICE
+        db.transaction do|d|
+          statuses.reverse_each do|status|
+            user = TwitterStruct.make('id'          => status.from_user_id,
+                                      'screen_name' => status.from_user)
+            d.statuses.add :status => status, :user => user, :source => :user
+          end
+
+          statuses.reverse_each do|status|
+            entry = db.statuses.find_by_status_id(status.id)
+            gateway[target].message entry, Net::IRC::Constants::NOTICE
+          end
         end
       end
     end
