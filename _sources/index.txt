@@ -65,6 +65,29 @@ IRC用のソフトが流用できます。
    config
    changelog
 
+バグ、疑問点、不満点を見つけたときは
+------------------------------------
+
+こんな場合は、mzpまで気軽にご連絡ください。
+できる範囲でサポートします。
+
+ - atig.rbの挙動がおかしい
+ - 設定の仕方がよく分からない
+ - 欲しい機能がなかった
+ - atig.rbに足りないクールな機能を実装したぜ
+
+連絡方法は以下のものがあります。それ以外の方法でもmzpまでに届けばかまいません。
+
+ - Githubの `Issues`_ に登録する。
+ - `@mzp`_ 宛につぶやく。
+ - `Blog`_ の適当なページにコメントをつける
+ - Githubでforkして、pull requestを送る
+
+.. _Issues: http://github.com/mzp/atig/issues
+.. _@mzp: http://twitter.com/mzp/
+.. _Blog: http://d.hatena.ne.jp/mzp/
+
+
 Indices and tables
 ==================
 
