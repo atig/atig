@@ -4,7 +4,6 @@
 require 'atig/db/followings'
 require 'atig/db/statuses'
 require 'atig/db/lists'
-require 'atig/db/searches'
 require 'atig/util'
 require 'thread'
 require 'set'
@@ -14,7 +13,7 @@ module Atig
   module Db
     class Db
       include Util
-      attr_reader :followings, :statuses, :dms, :lists, :searches
+      attr_reader :followings, :statuses, :dms, :lists
       attr_accessor :me
       VERSION = 4
 

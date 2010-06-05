@@ -42,8 +42,6 @@ require 'atig/gateway/session'
 Atig::Gateway::Session.agents   = [
                                    Atig::Agent::List,
                                    Atig::Agent::Following,
-                                   Atig::Agent::Search,
-                                   Atig::Agent::Query,
                                    Atig::Agent::ListStatus,
                                    Atig::Agent::Mention,
                                    Atig::Agent::Dm,
@@ -90,8 +88,7 @@ Atig::Gateway::Session.channels = [
                                    Atig::Channel::Mention,
                                    Atig::Channel::Dm,
                                    Atig::Channel::List,
-                                   Atig::Channel::Retweet,
-                                   Atig::Channel::Search
+                                   Atig::Channel::Retweet
                                   ]
 
 if __FILE__ == $0
