@@ -33,8 +33,15 @@ module Atig
         }.to_query_str(";")
         req = @http.req(:get, bitly, {}, [@login, @key])
         res = @http.http(bitly, 5, 10).request(req)
+
         res = JSON.parse(res.body)
-        res["results"][url]['shortUrl']
+
+        if res['statusCode'] == "ERROR" then
+          @log.error res['errorMessage']
+          url
+        else
+          res["results"][url]['shortUrl']
+        end
       else
         bitly.path = "/api"
         bitly.query = { :url => url }.to_query_str
@@ -44,7 +51,7 @@ module Atig
       end
     rescue Errno::ETIMEDOUT, JSON::ParserError, IOError, Timeout::Error, Errno::ECONNRESET => e
       @log.error e
-      text
+      url
     end
   end
 end
