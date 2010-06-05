@@ -7,9 +7,12 @@ module Atig
   class Scheduler
     include Util
 
-    def initialize(context, api, stream)
+    attr_reader :search
+
+    def initialize(context, api, search, stream)
       @log    = context.log
       @api    = api
+      @search = search
       @stream = stream
       @agents = []
 

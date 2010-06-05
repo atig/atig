@@ -88,7 +88,7 @@ Atig::Gateway::Session.channels = [
                                    Atig::Channel::Mention,
                                    Atig::Channel::Dm,
                                    Atig::Channel::List,
-                                   Atig::Channel::Retweet
+                                   Atig::Channel::Retweet,
                                   ]
 
 if __FILE__ == $0

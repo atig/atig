@@ -15,15 +15,14 @@ module Atig
         end
 
         q = mesg.sub(/^#{command}\s+/, '')
-        opts = {}
+        opts = { :q => q }
         while /^:(?:(lang)=(\w+))/ =~ args.first
            opts[$1] = $2
            q.sub!(/^#{args.first}\W+/, "")
            args.shift
         end
 
-        s = Atig::Search.new
-        res = s.search(q, opts)
+        res = api.search.get('search', opts)
 
         if res['results'].empty?
           yield "\"#{q}\": not found. options=#{opts.inspect} (#{res['completed_in']} sec.)"
@@ -32,13 +31,13 @@ module Atig
 
         res['results'].reverse.each do |tw|
           # TODO: 検索結果にも tid/sid を振りたい
-          # TODO: Info.user() する度に各ユーザーの statuses/home_timeline にアクセスして API Limt がヤバい
-          Info.user(db, api, tw['from_user']) do |user|
-            entry = TwitterStruct.make('user'   => user,
-                                       'status' => { 'text' =>
-                                         Net::IRC.ctcp_encode("#{tw['text']} (#{tw['created_at']})") })
-            gateway[target].message entry, Net::IRC::Constants::NOTICE
-          end
+          entry = TwitterStruct.make('user'   => {
+                                       'id' => tw.from_user_id  ,
+                                       'screen_name' => tw.from_user
+                                     },
+                                     'status' => { 'text' =>
+                                       Net::IRC.ctcp_encode("#{tw['text']} (#{tw['created_at']})") })
+          gateway[target].message entry, Net::IRC::Constants::NOTICE
         end
       end
     end
