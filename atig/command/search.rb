@@ -3,6 +3,8 @@
 require 'atig/command/command'
 require 'atig/search'
 
+# originally developped by xeres
+# http://blog.xeres.jp/2010/06/04/atig_rb-tweet-search/
 module Atig
   module Command
     class Search < Atig::Command::Command
@@ -38,6 +40,8 @@ module Atig
 
           statuses.reverse_each do|status|
             entry = db.statuses.find_by_status_id(status.id)
+            entry.status = entry.status.merge('text' =>
+                                              "#{entry.status.text} (#{entry.status.created_at})")
             gateway[target].message entry, Net::IRC::Constants::NOTICE
           end
         end
