@@ -40,13 +40,19 @@
             <h3><a href="index.html">Table Of Contents</a></h3>
             <ul>
 <li><a class="reference external" href="#">更新履歴</a><ul>
-<li><a class="reference external" href="#v0-2-1-2010-04-17">v0.2.1(2010-04-17)</a><ul>
+<li><a class="reference external" href="#v0-3-0-2010-06-12">v0.3.0(2010-06-12)</a><ul>
 <li><a class="reference external" href="#id2">機能追加</a></li>
+<li><a class="reference external" href="#id3">機能修正</a></li>
+<li><a class="reference external" href="#id4">バグ修正</a></li>
+</ul>
+</li>
+<li><a class="reference external" href="#v0-2-1-2010-04-17">v0.2.1(2010-04-17)</a><ul>
+<li><a class="reference external" href="#id5">機能追加</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#v0-2-2010-04-11">v0.2(2010-04-11)</a><ul>
-<li><a class="reference external" href="#id3">機能追加</a></li>
-<li><a class="reference external" href="#id4">バグ修正</a></li>
+<li><a class="reference external" href="#id6">機能追加</a></li>
+<li><a class="reference external" href="#id7">バグ修正</a></li>
 </ul>
 </li>
 <li><a class="reference external" href="#v0-1">v0.1</a></li>
@@ -85,11 +91,36 @@
             
   <div class="section" id="id1">
 <h1>更新履歴<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-3-0-2010-06-12">
+<h2>v0.3.0(2010-06-12)<a class="headerlink" href="#v0-3-0-2010-06-12" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.3.0">http://github.com/mzp/atig/tree/v0.3.0</a></p>
+<div class="section" id="id2">
+<h3>機能追加<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<ul class="simple">
+<li><a class="reference external" href="commands.html"><em>CTCP ACTION</em></a>: <cite>search</cite> を追加しました。(thx. <a class="reference external" href="http://blog.xeres.jp/2010/06/04/atig_rb-tweet-search/">xeres</a> )</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id3">
+<h3>機能修正<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<ul class="simple">
+<li>キャッシュとして用いているSQLiteのDBにインデックスを貼るようにしました。(thx. <a class="reference external" href="http://d.hatena.ne.jp/mzp/20100407#c">L_star</a> )</li>
+<li>定期的にGCを起動し、メモリ消費量を抑えるようにしました。</li>
+<li>誤ったBit.lyのAPIキーを指定した際のエラーメッセージを分かりやすくしました。( <a class="reference external" href="http://github.com/mzp/atig/issues/closed#issue/1">Issues 1</a> )</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id4">
+<h3>バグ修正<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+</div>
+</div>
 <div class="section" id="v0-2-1-2010-04-17">
 <h2>v0.2.1(2010-04-17)<a class="headerlink" href="#v0-2-1-2010-04-17" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.2.1">http://github.com/mzp/atig/tree/v0.2.1</a></p>
-<div class="section" id="id2">
-<h3>機能追加<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>機能追加<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <ul class="simple">
 <li><a class="reference external" href="commands.html"><em>CTCP ACTION</em></a>: <cite>autofix</cite>, <cite>location</cite> を追加しました。</li>
@@ -102,8 +133,8 @@
 <div class="section" id="v0-2-2010-04-11">
 <h2>v0.2(2010-04-11)<a class="headerlink" href="#v0-2-2010-04-11" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.2">http://github.com/mzp/atig/tree/v0.2</a></p>
-<div class="section" id="id3">
-<h3>機能追加<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id6">
+<h3>機能追加<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <ul class="simple">
 <li><a class="reference external" href="options.html"><em>クライアントオプション</em></a>: <cite>sid</cite> を追加した。</li>
@@ -113,8 +144,8 @@
 </ul>
 </blockquote>
 </div>
-<div class="section" id="id4">
-<h3>バグ修正<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h3>バグ修正<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <ul class="simple">
 <li>followingの取得時にSSL Verified Errorが発生する不具合を修正</li>
