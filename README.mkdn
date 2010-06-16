@@ -29,7 +29,7 @@ and access localhost:16668 by Irc client.
 
 DOCUMENTS
 ---------
-See `docs/`, if you cloud read Japanese.
+See `docs/`, if you could read Japanese.
 
 BRANCH POLICY
 -------------
