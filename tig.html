@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>tig.rbとの違い &mdash; atig.rb v1.0a documentation</title>
+    <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    '#',
+        VERSION:     '1.0a',
+        COLLAPSE_MODINDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="top" title="atig.rb v1.0a documentation" href="index.html" /> 
+  </head>
+  <body>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li><a href="index.html">atig.rb v1.0a documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+      <div class="sphinxsidebar">
+        <div class="sphinxsidebarwrapper">
+            <h3><a href="index.html">Table Of Contents</a></h3>
+            <ul>
+<li><a class="reference external" href="#">tig.rbとの違い</a><ul>
+<li><a class="reference external" href="#id1">機能の違い</a></li>
+<li><a class="reference external" href="#id2">その他の違い</a></li>
+</ul>
+</li>
+</ul>
+
+            <h3>This Page</h3>
+            <ul class="this-page-menu">
+              <li><a href="_sources/tig.txt"
+                     rel="nofollow">Show Source</a></li>
+            </ul>
+          <div id="searchbox" style="display: none">
+            <h3>Quick search</h3>
+              <form class="search" action="search.html" method="get">
+                <input type="text" name="q" size="18" />
+                <input type="submit" value="Go" />
+                <input type="hidden" name="check_keywords" value="yes" />
+                <input type="hidden" name="area" value="default" />
+              </form>
+              <p class="searchtip" style="font-size: 90%">
+              Enter search terms or a module, class or function name.
+              </p>
+          </div>
+          <script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body">
+            
+  <div class="section" id="tig-rb">
+<h1>tig.rbとの違い<a class="headerlink" href="#tig-rb" title="Permalink to this headline">¶</a></h1>
+<p>atig.rbはatig.rbから派生したプロジェクトです。</p>
+<p>そのため基本的な機能は同様ですが、いくつかの細かい点が異なります。</p>
+<div class="section" id="id1">
+<h2>機能の違い<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>認証にxAuthではなくOAuthを使う。</li>
+<li>ツイートを指定するのにtidだけでなくsidが使える。 sidは <a class="reference external" href="options.html"><em>クライアントオプション</em></a> の <cite>sid</cite> を参照してください。</li>
+<li>一部の <a class="reference external" href="commands.html"><em>CTCP ACTION</em></a> の名前が異なる。例: tig.rbだと <cite>list</cite> 、atig.rbでは <cite>user</cite>。</li>
+<li>自分への言及を表示する <cite>#mention</cite> チャンネルや、リツイートを表示する <cite>#retweet</cite> チャンネルがある。 <a class="reference external" href="config.html"><em>設定</em></a> の「チェンネルの変更」で変更できます。</li>
+<li>自分への言及が <cite>#twitter</cite> チャンネルに表示されません。</li>
+</ul>
+</blockquote>
+</div>
+<div class="section" id="id2">
+<h2>その他の違い<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<ul class="simple">
+<li>クラス単位でファイルを分割しているので、コードをいじりやすいはずです。</li>
+<li><a class="reference external" href="commands.html"><em>CTCP ACTION</em></a> は本体のコードを触らずに拡張可能(たぶん)</li>
+</ul>
+</blockquote>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li><a href="index.html">atig.rb v1.0a documentation</a> &raquo;</li> 
+      </ul>
+    </div>
+    <div class="footer">
+      &copy; Copyright 2010, mzp.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+    </div>
+  </body>
+</html>
