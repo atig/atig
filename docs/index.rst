@@ -63,6 +63,7 @@ IRC用のソフトが流用できます。
    options
    commands
    config
+   tig
    changelog
 
 バグ、疑問点、不満点を見つけたときは
