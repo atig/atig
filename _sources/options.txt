@@ -52,11 +52,11 @@ bitlify=\ ``size``
   ``size``\ 字以上のURLを http://bit.ly\ によって短縮します。
 bitlify
   |len|\ 字以上のURLを http://bit.ly\ によって短縮します。
-bitlify=\ ``api_key``:\ ``password``:\ ``size``
+bitlify=\ ``api_key``:\ ``api_key``:\ ``size``
   ``size``\ 字以上のURLを http://bit.ly のAPIによって短縮します。
   APIを利用して短縮すると、ユーザページに短縮したURLが記録されたりします。
   詳しくは、 http://bit.ly のSign up for bit.lyを読んでください。
-bitlify=\ ``api_key``:\ ``password``
+bitlify=\ ``api_key``:\ ``api_key``
   |len|\ 字以上のURLを http://bit.ly のAPIによって短縮します。
 unuify= \ ``size``
   ``size`` 字以上のURLを http://u.nu によって短縮します。
