@@ -23,7 +23,7 @@ CTCP ACTIONの送り方はクライアントによって異なりますが、Lim
 
 コマンド
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-reply ``tweet`` ``comment`` (別名: mention, rp)
+reply ``tweet`` ``comment`` (別名: mention, re)
   ``tweet`` に対して返信します。
 retweet ``tweet`` [``comment``] (別名: rt, ort)
   ``tweet`` をリツイートします。
