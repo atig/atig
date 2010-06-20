@@ -7,7 +7,7 @@ module Atig
   module Command
     class Reply < Atig::Command::Command
       def initialize(*args); super end
-      def command_name; %w(mention re reply) end
+      def command_name; %w(mention re reply rp) end
 
       def action(target, mesg, command, args)
         if args.empty?
