@@ -19,7 +19,7 @@ describe Atig::Command::Reply do
   end
 
   it "should have '/me status' name" do
-    @gateway.names.should == %w(mention re reply)
+    @gateway.names.should == %w(mention re reply rp)
   end
 
   it "should post the status" do
