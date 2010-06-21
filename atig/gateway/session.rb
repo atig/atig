@@ -127,6 +127,7 @@ END
                 if oauth.verify(mesg.strip)
                   channel.part_me "Verified"
                   save_config
+                  @on_message = nil
                   cc.call
                 end
               end
