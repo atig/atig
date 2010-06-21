@@ -184,16 +184,18 @@ END
         (@thread_group.list - [Thread.current]).each {|t| t.kill }
       end
 
+      CONFIG_FILE = File.expand_path("~/.atig/oauth")
       def save_config
-        FileUtils.mkdir_p File.expand_path("~/.atig/")
-        File.open(File.expand_path("~/.atig/oauth"),"w") {|io|
+        FileUtils.mkdir_p File.dirname(CONFIG_FILE)
+        File.open(CONFIG_FILE, "w") {|io|
           YAML.dump(OAuth.dump,io)
         }
+        FileUtils.chmod 0600, CONFIG_FILE
       end
 
       def load_config
-        FileUtils.mkdir_p File.expand_path("~/.atig/")
-        OAuth.load(YAML.load_file(File.expand_path("~/.atig/oauth"))) rescue nil
+        FileUtils.mkdir_p File.dirname(CONFIG_FILE)
+        OAuth.load(YAML.load_file(CONFIG_FILE)) rescue nil
       end
 
       def on_privmsg(m)
