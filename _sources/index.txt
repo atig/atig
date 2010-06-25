@@ -15,9 +15,19 @@ atig.rbはTwitterとIRCを結ぶゲートウェイです。
 ダウンロード
 ------------------------------
 
+ - 安定板: `atigrb-3.0.0.tgz`_. ( `過去のバージョン`_ )
  - 開発版 `Github Repository`_.
 
+.. _atigrb-3.0.0.tgz: http://github.com/mzp/atig/tarball/v0.3.0
+.. _過去のバージョン: http://github.com/mzp/atig/downloads
 .. _GitHub Repository: http://github.com/mzp/atig
+
+既知のバグ
+------------------------------
+
+ - sqlite3-ruby 1.3.0に対応していません。(`Issue 2`_ )
+
+.. _Issue 2: http://github.com/mzp/atig/issues#issue/2
 
 特徴
 ------------------------------
