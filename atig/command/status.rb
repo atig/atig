@@ -20,7 +20,7 @@ module Atig
         text = mesg.split(" ", 2)[1]
         previous,*_ = db.statuses.find_by_user( db.me, :limit => 1)
         if previous and
-            ((Time.now - Time.parse(previous.status.created_at)).to_i < 60*60*24 rescue true) and
+            ((::Time.now - ::Time.parse(previous.status.created_at)).to_i < 60*60*24 rescue true) and
             text.strip == previous.status.text.strip
           yield "You can't submit the same status twice in a row."
           return
