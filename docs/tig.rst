@@ -12,7 +12,7 @@ atig.rbは `tig.rb`_ から派生したプロジェクトです。
  - 認証にxAuthではなくOAuthを使う。
  - ツイートを指定するのにtidだけでなくsidが使える。 sidは :doc:`options` の `sid` を参照してください。
  - 一部の :doc:`commands` の名前が異なる。例: tig.rbだと `list` 、atig.rbでは `user`\ 。
- - 自分への言及を表示する `#mention` チャンネルや、リツイートを表示する `#retweet` チャンネルがある。 :doc:`config` の「チェンネルの変更」で変更できます。
+ - 自分への言及を表示する `#mention` チャンネルや、リツイートを表示する `#retweet` チャンネルがある。 :doc:`config` の「チャンネルの変更」で変更できます。
  - 自分への言及が `#twitter` チャンネルに表示されません。
 
 その他の違い
