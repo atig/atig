@@ -78,10 +78,13 @@ module Atig
           }
 
           names = users.map{|u| u.screen_name.inspect }.join(",")
+          parts =
           may_notify :part, db.execute(%{SELECT screen_name,data FROM users
                                          WHERE screen_name NOT IN (#{names})}).map{|_,data|
             @db.load(data)
           }
+          db.execute(%{DELETE FROM users
+                       WHERE screen_name NOT IN (#{names})})
 
           may_notify :mode, users.select{|u|
             exists?(db,
