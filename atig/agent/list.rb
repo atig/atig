@@ -16,29 +16,37 @@ module Atig
         @db.lists.on_invalidated{|name|
           log :info, "invalidated #{name}"
           api.delay(0){|t|
-            @db.lists[name].update t.page("#{@db.me.screen_name}/#{name}/members", :users, true)
+            if name == :all then
+              full_update t
+            else
+              @db.lists[name].update t.page("#{@db.me.screen_name}/#{name}/members", :users, true)
+            end
           }
         }
         api.repeat(3600) do|t|
-          lists = t.page("#{@db.me.screen_name}/lists", :lists, true)
-          users = {}
-          lists.map do|list|
-            name = if list.user.screen_name == @db.me.screen_name then
-                     "#{list.slug}"
-                   else
-                     "#{list.user.screen_name}^#{list.slug}"
-                   end
-            begin
-              users[name] =
-                t.page("#{@db.me.screen_name}/#{list.slug}/members", :users, true)
-            rescue APIFailed => e
-              log :error, e.inspect
-              users[name] =
-                @db.lists.find_by_list_name(list.slug)
-            end
-          end
-          @db.lists.update users
+          self.full_update t
         end
+      end
+
+      def full_update(t)
+        lists = t.page("#{@db.me.screen_name}/lists", :lists, true)
+        users = {}
+        lists.map do|list|
+          name = if list.user.screen_name == @db.me.screen_name then
+                   "#{list.slug}"
+                 else
+                   "#{list.user.screen_name}^#{list.slug}"
+                 end
+          begin
+            users[name] =
+              t.page("#{@db.me.screen_name}/#{list.slug}/members", :users, true)
+          rescue APIFailed => e
+            log :error, e.inspect
+            users[name] =
+              @db.lists.find_by_list_name(list.slug)
+          end
+        end
+        @db.lists.update users
       end
     end
   end
