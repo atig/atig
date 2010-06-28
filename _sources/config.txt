@@ -122,7 +122,7 @@ Atig::OFilter::Geo
 Atig::OFilter::Footer
   フッターを付加します。 :doc:`options` も参照してください。
 
-チェンネルの変更
+チャンネルの変更
 ------------------------------
 `Atig::Gateway::Session.channels` を変更すると、作成するチャンネルを変更できます。::
 
