@@ -4,8 +4,6 @@ require 'rubygems'
 require 'pp'
 require 'logger'
 
-gem 'sqlite3-ruby','1.2.5'
-
 $KCODE = "u" unless defined? ::Encoding # json use this
 Dir.chdir(File.dirname(__FILE__))
 
