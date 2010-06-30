@@ -29,7 +29,9 @@ module Atig
       end
 
       def full_update(t)
-        lists = t.page("#{@db.me.screen_name}/lists", :lists, true)
+        lists =
+          t.page("#{@db.me.screen_name}/lists", :lists, true) +
+          t.page("#{@db.me.screen_name}/lists/subscriptions", :lists, true)
         users = {}
         lists.map do|list|
           name = if list.user.screen_name == @db.me.screen_name then
@@ -39,7 +41,7 @@ module Atig
                  end
           begin
             users[name] =
-              t.page("#{@db.me.screen_name}/#{list.slug}/members", :users, true)
+              t.page("#{list.user.screen_name}/#{list.slug}/members", :users, true)
           rescue APIFailed => e
             log :error, e.inspect
             users[name] =
