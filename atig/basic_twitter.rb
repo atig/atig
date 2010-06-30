@@ -8,7 +8,7 @@ require 'atig/http'
 module Atig
   # from tig.rb
   class BasicTwitter
-    attr_reader :limit, :remain
+    attr_reader :limit, :remain, :reset
 
     class APIFailed < StandardError; end
 
@@ -52,6 +52,11 @@ module Atig
       if ret["X-RateLimit-Remaining"] then
         @remain = ret["X-RateLimit-Remaining"].to_i
         @log.debug "IP based limit: #{@remain}"
+      end
+
+      if ret["X-RateLimit-Reset"] then
+        @reset = ret["X-RateLimit-Reset"].to_i
+        @log.debug "RateLimit Reset: #{@reset}"
       end
 
       case ret

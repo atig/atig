@@ -9,7 +9,7 @@ module Atig
       def command_name; %w(rls limit limits) end
 
       def action(target, mesg, command, args)
-        yield "#{api.remain} / #{api.limit}"
+        yield "#{api.remain} / #{api.limit} (reset at #{::Time.at(api.reset).strftime('%Y-%m-%d %H:%M:%S')})"
       end
     end
   end
