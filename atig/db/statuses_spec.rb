@@ -166,4 +166,13 @@ describe Atig::Db::Statuses do
     old.tid.should_not == new.tid
     old.sid.should_not == new.sid
   end
+
+  it "should cleanup" do
+    Atig::Db::Statuses::Size.times do|i|
+      s = status i+100, 'a', Time.utc(2010,1,5)+i+1
+      @db.add :status => s , :user => @alice  , :source => :srcB
+    end
+    @db.cleanup
+    @db.find_by_status_id(@a.id).should == nil
+  end
 end

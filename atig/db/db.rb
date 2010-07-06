@@ -52,6 +52,13 @@ module Atig
         log :debug, "transaction is registered"
         @queue.push f
       end
+
+      def cleanup
+        transaction do
+          @statuses.cleanup
+          @dms.cleanup
+        end
+      end
     end
   end
 end
