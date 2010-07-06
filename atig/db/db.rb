@@ -8,6 +8,7 @@ require 'atig/util'
 require 'thread'
 require 'set'
 require 'fileutils'
+require 'tmpdir'
 
 module Atig
   module Db
@@ -15,16 +16,17 @@ module Atig
       include Util
       attr_reader :followings, :statuses, :dms, :lists
       attr_accessor :me
+      Path = ::Dir.tmpdir
       VERSION = 4
 
       def initialize(context, opt={})
         @log        = context.log
         @me         = opt[:me]
-        FileUtils.mkdir_p "cache/#{@me.screen_name}/"
-        @followings = Followings.new "cache/#{@me.screen_name}/following.#{VERSION}.db"
-        @statuses   = Statuses.new "cache/#{@me.screen_name}/status.#{VERSION}.db"
-        @dms        = Statuses.new "cache/#{@me.screen_name}/dm.#{VERSION}.db"
-        @lists      = Lists.new "cache/#{@me.screen_name}/lists.%s.#{VERSION}.db"
+
+        @followings = Followings.new dir('following')
+        @statuses   = Statuses.new   dir('status')
+        @dms        = Statuses.new   dir('dm')
+        @lists      = Lists.new      dir('lists.%s')
 
         log :info, "initialize"
 
@@ -37,6 +39,13 @@ module Atig
 
           log :debug, "transaction is finished"
         end
+      end
+
+      def dir(id)
+        dir = File.expand_path "atig/#{@me.screen_name}/", Path
+        log :debug, "db(#{id}) = #{dir}"
+        FileUtils.mkdir_p dir
+        File.expand_path "#{id}.#{VERSION}.db", dir
       end
 
       def transaction(&f)
