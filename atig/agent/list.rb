@@ -23,15 +23,16 @@ module Atig
             end
           }
         }
-        api.repeat(3600) do|t|
+        api.repeat( interval ) do|t|
           self.full_update t
         end
       end
 
       def full_update(t)
-        lists =
-          t.page("#{@db.me.screen_name}/lists", :lists, true) +
-          t.page("#{@db.me.screen_name}/lists/subscriptions", :lists, true)
+        lists = entry_points.map{|entry|
+          t.page(entry, :lists, true)
+        }.flatten
+
         users = {}
         lists.map do|list|
           name = if list.user.screen_name == @db.me.screen_name then
