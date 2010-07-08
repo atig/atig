@@ -25,8 +25,8 @@ module Atig
 
           sources = t.get( path, q)
 
-          db.transaction do|d|
-            sources.reverse_each do|s|
+          sources.reverse_each do|s|
+            db.transaction do|d|
               d.statuses.add :source => source, :status => s, :user => s.user
             end
           end

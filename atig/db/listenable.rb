@@ -5,6 +5,7 @@ require 'forwardable'
 module Atig
   module Db
     module Listenable
+      SingleThread = false
       def listen(&f)
         @listeners ||= []
         @listeners.push f
@@ -13,7 +14,13 @@ module Atig
       private
       def notify(*args)
         @listeners ||= []
-        @listeners.each{|f| f.call(*args) }
+        @listeners.each{|f|
+          if SingleThread then
+            f.call(*args)
+          else
+            Thread.start { f.call(*args) }
+          end
+        }
       end
     end
   end
