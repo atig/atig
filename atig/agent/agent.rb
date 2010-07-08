@@ -31,7 +31,6 @@ module Atig
             end
           end
           @prev = sources.first.id if sources && !sources.empty?
-          db.cleanup
         end
       end
     end
