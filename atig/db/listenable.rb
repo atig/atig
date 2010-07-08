@@ -14,17 +14,9 @@ module Atig
       private
       def notify(*args)
         @listeners ||= []
-        if SingleThread then
-          @listeners.each{|f|
-            f.call(*args)
-          }
-        else
-          Thread.start {
-            @listeners.each{|f|
-              f.call(*args)
-            }
-          }
-        end
+        @listeners.each{|f|
+          f.call(*args)
+        }
       end
     end
   end

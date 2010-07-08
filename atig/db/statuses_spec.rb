@@ -3,8 +3,6 @@
 require 'fileutils'
 require 'atig/db/statuses'
 
-Atig::Db::Listenable::SingleThread = true
-
 describe Atig::Db::Statuses do
   def status(id, text, time)
     OpenStruct.new(:id => id, :text => text, :created_at => time.strftime("%a %b %d %H:%M:%S +0000 %Y"))
