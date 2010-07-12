@@ -64,6 +64,7 @@ module Atig
       end
 
       def on_who(&f)
+        return unless f
         @db.followings.users.each(&f)
       end
 

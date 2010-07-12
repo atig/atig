@@ -21,6 +21,7 @@ module Atig
         end
 
         def on_who(&f)
+          return unless f
           @db.lists[@name].users.each(&f)
         end
       end
