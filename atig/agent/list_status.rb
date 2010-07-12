@@ -20,7 +20,9 @@ class Atig::Agent::ListStatus
         log :debug, "retrieve #{name} statuses"
         q = {}
         q.update(:since_id => @prev[name]) if @prev.key?(name)
-        statuses = t.get("#{db.me.screen_name}/lists/#{name}/statuses",q)
+
+        screen_name,slug = parse name
+        statuses = t.get("#{screen_name}/lists/#{slug}/statuses",q)
         db.transaction do|d|
           statuses.reverse_each do|status|
             d.statuses.add(:status => status,
@@ -30,6 +32,14 @@ class Atig::Agent::ListStatus
           end
         end
         @prev[name] = statuses[0].id if statuses && statuses.size > 0
+      end
+    end
+
+    def parse(name)
+      if name.include? '^' then
+        name.split("^",2)
+      else
+        [@db.me.screen_name, name]
       end
     end
   end
