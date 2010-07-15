@@ -39,10 +39,11 @@ class FakeScheduler
 end
 
 class FakeDb
-  attr_reader :statuses, :followings, :me
-  def initialize(statuses, followings, me)
+  attr_reader :statuses, :followings,:lists, :me
+  def initialize(statuses, followings,lists, me)
     @statuses = statuses
     @followings = followings
+    @lists = lists
     @me = me
   end
 
@@ -62,8 +63,13 @@ module CommandHelper
     @api        = mock 'api'
     @statuses   = mock 'status DB'
     @followings = mock 'following DB'
+    @lists      = {
+      "A" =>  mock('list A'),
+      "B" =>  mock('list B')
+    }
+
     @me         = user 1,'me'
-    @db         = FakeDb.new @statuses, @followings, @me
+    @db         = FakeDb.new @statuses, @followings, @lists, @me
     @command = klass.new context, @gateway, FakeScheduler.new(@api), @db
   end
 

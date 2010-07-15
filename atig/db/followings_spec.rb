@@ -65,6 +65,13 @@ describe Atig::Db::Followings,"when updated users" do
     @listen[:mode].should == nil
   end
 
+  it "should not found removed user[BUG]" do
+    @db.include?(@bob).should == true
+    @db.update [ @alice ]
+    # now, @bob is not member
+    @db.include?(@bob).should == false
+  end
+
   it "should call listener with :mode" do
     bob = user 5,'bob', false, false
 

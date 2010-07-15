@@ -11,11 +11,15 @@ module Atig
         end
 
         def on_invite(api, nick)
+          return if @name.include? '^'
+
           api.post("#{@db.me.screen_name}/#{@name}/members", :id => nick )
           @db.lists.invalidate @name
         end
 
         def on_kick(api, nick)
+          return if @name.include? '^'
+
           api.delete("#{@db.me.screen_name}/#{@name}/members", :id => nick )
           @db.lists.invalidate @name
         end
@@ -70,3 +74,4 @@ module Atig
     end
   end
 end
+
