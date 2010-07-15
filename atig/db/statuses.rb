@@ -14,6 +14,7 @@ module Atig
   module Db
     class Statuses
       include Listenable
+      Size = 400
 
       def initialize(name)
         @db = Sql.new name
@@ -111,6 +112,18 @@ module Atig
       def remove_by_id(id)
         @db.execute do|db|
           db.execute "DELETE FROM status WHERE id = ?",id
+        end
+      end
+
+      def cleanup
+        @db.execute do|db|
+          db.execute("SELECT screen_name FROM status GROUP BY screen_name").each do|name,_|
+            created_at = db.execute("SELECT created_at FROM status WHERE screen_name = ? ORDER BY created_at LIMIT 1 OFFSET ?",name,Size-1)
+            unless created_at.empty?
+              db.execute "DELETE FROM status WHERE screen_name = ? AND created_at <= ?",name,created_at.first
+            end
+          end
+          db.execute "VACUUM status"
         end
       end
 
