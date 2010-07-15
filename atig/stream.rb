@@ -42,6 +42,7 @@ module Atig
           begin
             buffer = ''
             response.read_body do |chunk|
+              next if chunk.chomp.empty?
               buffer << chunk.to_s
               @log.debug buffer.inspect
 

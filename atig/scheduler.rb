@@ -44,8 +44,8 @@ module Atig
     def stream(&f)
       return nil unless @stream
       @stream_thread.kill if @stream_thread
-      @stream_thread = Thread.start {
-        safe { f.call @stream }
+      @stream_thread = daemon {
+        f.call @stream
       }
     end
 

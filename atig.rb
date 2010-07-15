@@ -41,15 +41,16 @@ require 'atig/gateway/session'
 
 Atig::Gateway::Session.agents   = [
                                    Atig::Agent::OwnList,
-#                                   Atig::Agent::OtherList,
+                                   Atig::Agent::OtherList,
                                    Atig::Agent::Following,
                                    Atig::Agent::ListStatus,
                                    Atig::Agent::Mention,
                                    Atig::Agent::Dm,
                                    Atig::Agent::Timeline,
-                                   Atig::Agent::StreamFollow,
                                    Atig::Agent::Cleanup,
+                                   Atig::Agent::UserStream,
                                   ]
+
 Atig::Gateway::Session.ifilters = [
                                    Atig::IFilter::Retweet,
                                    Atig::IFilter::Utf7,

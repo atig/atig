@@ -32,12 +32,12 @@ module Atig
 
         @queue = SizedQueue.new 10
         daemon do
-          f = @queue.pop
-          log :debug, "transaction is poped"
+          f,src = @queue.pop
+          log :debug, "transaction is poped at #{src}"
 
           f.call self
 
-          log :debug, "transaction is finished"
+          log :debug, "transaction is finished at #{src}"
         end
       end
 
@@ -50,7 +50,7 @@ module Atig
 
       def transaction(&f)
         log :debug, "transaction is registered"
-        @queue.push f
+        @queue.push [ f, caller.first ]
       end
 
       def cleanup
