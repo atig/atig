@@ -29,16 +29,6 @@ module Atig
         @lists      = Lists.new      dir('lists.%s')
 
         log :info, "initialize"
-
-        @queue = SizedQueue.new 10
-        daemon do
-          f,src = @queue.pop
-          log :debug, "transaction is poped at #{src}"
-
-          f.call self
-
-          log :debug, "transaction is finished at #{src}"
-        end
       end
 
       def dir(id)
@@ -49,8 +39,15 @@ module Atig
       end
 
       def transaction(&f)
-        log :debug, "transaction is registered"
-        @queue.push [ f, caller.first ]
+        @followings.transaction do|_|
+          @statuses.transaction do|_|
+            @dms.transaction do|_|
+              @lists.transaction do|_|
+                f.call self
+              end
+            end
+          end
+        end
       end
 
       def cleanup

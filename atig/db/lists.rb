@@ -2,11 +2,12 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
 require 'atig/db/listenable'
-
+require 'atig/db/transaction'
 module Atig
   module Db
     class Lists
       include Listenable
+      include Transaction
 
       def initialize(name)
         @name    = name

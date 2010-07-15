@@ -1,6 +1,7 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 require 'atig/db/listenable'
+require 'atig/db/transaction'
 require 'sqlite3'
 require 'atig/db/roman'
 require 'atig/db/sql'
@@ -14,6 +15,8 @@ module Atig
   module Db
     class Statuses
       include Listenable
+      include Transaction
+
       Size = 400
 
       def initialize(name)
