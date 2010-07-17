@@ -21,9 +21,9 @@ module Atig
         else
           api.delay(0) do|t|
             status = t.get "statuses/show/#{id}"
-            db.transaction do|d|
-              d.statuses.add :status => status, :user => status.user, :source => :thread
-              f.call db.statuses.find_by_status_id(id)
+            db.statuses.transaction do|d|
+              d.add :status => status, :user => status.user, :source => :thread
+              f.call d.find_by_status_id(id)
             end
           end
         end

@@ -25,11 +25,12 @@ module Atig
 
           sources = t.get( path, q)
 
-          db.transaction do|d|
-            sources.reverse_each do|s|
-              d.statuses.add :source => source, :status => s, :user => s.user
+          sources.reverse_each do|s|
+            db.statuses.transaction do|d|
+              d.add :source => source, :status => s, :user => s.user
             end
           end
+
           @prev = sources.first.id if sources && !sources.empty?
         end
       end

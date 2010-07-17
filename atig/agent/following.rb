@@ -37,9 +37,9 @@ module Atig
           end
         end
 
-        @db.transaction{|d|
-          d.followings.update friends
-        }
+        @db.followings.transaction do|d|
+          d.update friends
+        end
       end
     end
   end

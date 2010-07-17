@@ -52,6 +52,16 @@ class FakeDb
   end
 end
 
+class FakeDbEntry
+  def initialize(name)
+    @name = name
+  end
+
+  def transaction(&f)
+    f.call self
+  end
+end
+
 module CommandHelper
   def init(klass)
     @log    = mock 'log'
@@ -61,11 +71,11 @@ module CommandHelper
     @channel    = mock 'channel'
     @gateway    = FakeGateway.new @channel
     @api        = mock 'api'
-    @statuses   = mock 'status DB'
-    @followings = mock 'following DB'
+    @statuses   = FakeDbEntry.new 'status DB'
+    @followings = FakeDbEntry.new 'followings DB'
     @lists      = {
-      "A" =>  mock('list A'),
-      "B" =>  mock('list B')
+      "A" =>  FakeDbEntry.new('list A'),
+      "B" =>  FakeDbEntry.new('list B')
     }
 
     @me         = user 1,'me'

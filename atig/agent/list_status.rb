@@ -23,12 +23,12 @@ class Atig::Agent::ListStatus
 
         screen_name,slug = parse name
         statuses = t.get("#{screen_name}/lists/#{slug}/statuses",q)
-        db.transaction do|d|
-          statuses.reverse_each do|status|
-            d.statuses.add(:status => status,
-                           :user => status.user,
-                           :source => :list,
-                           :list => name)
+        statuses.reverse_each do|status|
+          db.statuses.transaction do|d|
+            d.add(:status => status,
+                  :user => status.user,
+                  :source => :list,
+                  :list => name)
           end
         end
         @prev[name] = statuses[0].id if statuses && statuses.size > 0

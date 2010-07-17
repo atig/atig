@@ -22,10 +22,10 @@ module Atig
                 res = t.post("statuses/destroy/#{entry.status.id}")
                 yield "Destroyed: #{entry.status.text}"
 
-                db.transaction do|d|
-                  xs = d.statuses.find_by_screen_name d.me.screen_name,:limit=>1
-                  d.statuses.remove_by_id entry.id
-                  ys = d.statuses.find_by_screen_name d.me.screen_name,:limit=>1
+                db.statuses.transaction do|d|
+                  xs = d.find_by_screen_name db.me.screen_name,:limit=>1
+                  d.remove_by_id entry.id
+                  ys = d.find_by_screen_name db.me.screen_name,:limit=>1
 
                   unless xs.map{|x| x.id} == ys.map{|y| y.id} then
                     gateway.topic ys.first

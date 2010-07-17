@@ -26,8 +26,8 @@ module Atig
           api.delay(0) do|t|
             begin
               user = t.get("users/show", { :screen_name => nick})
-              db.transaction do|d|
-                d.statuses.add :user => user, :status => user.status, :source => :version
+              db.statuses.transaction do|d|
+                d.add :user => user, :status => user.status, :source => :version
                 entry = TwitterStruct.make('user'   => user,
                                            'status' => { 'text' =>
                                              format(user.status.source) })

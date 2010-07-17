@@ -31,19 +31,19 @@ module Atig
           return
         end
 
-        db.transaction do|d|
-          statuses.reverse_each do|status|
+        statuses.reverse_each do|status|
+          db.statuses.transaction do|d|
             user = TwitterStruct.make('id'          => status.from_user_id,
                                       'screen_name' => status.from_user)
-            d.statuses.add :status => status, :user => user, :source => :user
+            d.add :status => status, :user => user, :source => :user
           end
+        end
 
-          statuses.reverse_each do|status|
-            entry = db.statuses.find_by_status_id(status.id)
-            entry.status = entry.status.merge('text' =>
-                                              "#{entry.status.text} (#{entry.status.created_at})")
-            gateway[target].message entry, Net::IRC::Constants::NOTICE
-          end
+        statuses.reverse_each do|status|
+          entry = db.statuses.find_by_status_id(status.id)
+          entry.status = entry.status.merge('text' =>
+                                            "#{entry.status.text} (#{entry.status.created_at})")
+          gateway[target].message entry, Net::IRC::Constants::NOTICE
         end
       end
     end

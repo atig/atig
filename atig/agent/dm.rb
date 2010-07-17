@@ -24,9 +24,9 @@ module Atig
           dms = t.get("direct_messages", q)
           log :debug, "You have #{dms.size} dm."
 
-          db.transaction do|d|
-            dms.reverse_each do|dm|
-              d.dms.add :status => dm, :user => dm.sender
+          dms.reverse_each do|dm|
+            db.dms.transaction do|d|
+              d.add :status => dm, :user => dm.sender
             end
           end
         end

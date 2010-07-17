@@ -48,8 +48,8 @@ module Atig
             ret = t.post("statuses/update", q)
             gateway.update_status ret, target
             t.post("statuses/destroy/#{prev.status.id}")
-            db.transaction{|d|
-              d.statuses.remove_by_id prev.id
+            db.statuses.transaction{|d|
+              d.remove_by_id prev.id
             }
           end
         end

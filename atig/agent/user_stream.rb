@@ -20,8 +20,8 @@ module Atig
           t.watch('user') do |status|
 #            @log.debug status.inspect
             if status and status.user
-              db.transaction do|d|
-                d.statuses.add :status => status, :user => status.user, :source => :user_stream
+              db.statuses.transaction do|d|
+                d.add :status => status, :user => status.user, :source => :user_stream
               end
             end
           end
