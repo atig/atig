@@ -50,7 +50,7 @@ module Atig
         @channel.send :join, db.followings.users
 
         db.followings.listen do|kind, users|
-          @channel.send kind, users
+          @channel.send(kind, users) if @channel.respond_to?(kind)
         end
       end
 
