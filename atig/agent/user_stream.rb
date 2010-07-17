@@ -18,7 +18,7 @@ module Atig
 
         @api.stream do|t|
           t.watch('user') do |status|
-            @log.debug status.inspect
+#            @log.debug status.inspect
             if status and status.user
               db.transaction do|d|
                 d.statuses.add :status => status, :user => status.user, :source => :user_stream

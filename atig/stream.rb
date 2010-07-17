@@ -44,7 +44,6 @@ module Atig
             response.read_body do |chunk|
               next if chunk.chomp.empty?
               buffer << chunk.to_s
-              @log.debug buffer.inspect
 
               if buffer =~ /\A(.*)\n/ then
                 text = $1
