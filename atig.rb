@@ -40,8 +40,7 @@ end
 require 'atig/gateway/session'
 
 Atig::Gateway::Session.agents   = [
-                                   Atig::Agent::OwnList,
-                                   Atig::Agent::OtherList,
+                                   Atig::Agent::FullList,
                                    Atig::Agent::Following,
                                    Atig::Agent::ListStatus,
                                    Atig::Agent::Mention,
