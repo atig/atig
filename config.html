@@ -5,13 +5,13 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>設定 &mdash; atig.rb v1.0a documentation</title>
+    <title>設定 &mdash; atig.rb v0.3.1 documentation</title>
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
         URL_ROOT:    '#',
-        VERSION:     '1.0a',
+        VERSION:     '0.3.1',
         COLLAPSE_MODINDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -19,7 +19,7 @@
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="atig.rb v1.0a documentation" href="index.html" />
+    <link rel="top" title="atig.rb v0.3.1 documentation" href="index.html" />
     <link rel="next" title="tig.rbとの違い" href="tig.html" />
     <link rel="prev" title="CTCP ACTION" href="commands.html" /> 
   </head>
@@ -36,7 +36,7 @@
         <li class="right" >
           <a href="commands.html" title="CTCP ACTION"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">atig.rb v1.0a documentation</a> &raquo;</li> 
+        <li><a href="index.html">atig.rb v0.3.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -100,7 +100,7 @@
 </div>
 <div class="section" id="id3">
 <h2>利用可能なコマンドの変更<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
-<p><cite>Atig::Gateway::Session.commands</cite> を変更すれば、利用可能なコマンドを変更できます:</p>
+<p><cite>Atig::Gateway::Session.commands</cite> を変更すれば、利用可能な <a class="reference external" href="commands.html"><em>CTCP ACTION</em></a> を変更できます:</p>
 <div class="highlight-python"><pre>Atig::Gateway::Session.commands = [
                                    Atig::Command::Retweet,
                                    Atig::Command::Reply,
@@ -137,6 +137,14 @@
 <dd><tt class="docutils literal"><span class="pre">/me</span> <span class="pre">opt</span> <span class="pre">...</span></tt> を提供するクラス</dd>
 <dt>Atig::Command::Limit</dt>
 <dd><tt class="docutils literal"><span class="pre">/me</span> <span class="pre">limit</span></tt> を提供するクラス</dd>
+<dt>Atig::Command::Search</dt>
+<dd><tt class="docutils literal"><span class="pre">/me</span> <span class="pre">search</span></tt> を提供するクラス</dd>
+<dt>Atig::Command::Refresh</dt>
+<dd><dl class="first last docutils">
+<dt><tt class="docutils literal"><span class="pre">/me</span> <span class="pre">refresh</span></tt> を提供するクラス</dt>
+<dd>Atig::Command::Spam,</dd>
+</dl>
+</dd>
 </dl>
 </div>
 <div class="section" id="api">
@@ -150,8 +158,10 @@
 </div>
 <p>標準で次のAgentが用意されています。</p>
 <dl class="docutils">
-<dt>Atig::Agent::List</dt>
-<dd>各リストのfollowingを取得します。</dd>
+<dt>Atig::Agent::OwnList</dt>
+<dd>自分のリストのfollowingを取得します。FullListと同時に指定できません。</dd>
+<dt>Atig::Agent::FullList</dt>
+<dd>自分のリストと自分がフォローしているリストのfollowingを取得します。OwnListと同時に指定できません。</dd>
 <dt>Atig::Agent::Following</dt>
 <dd>自分のfollowingを取得します。</dd>
 <dt>Atig::Agent::ListStatus</dt>
@@ -162,6 +172,8 @@
 <dd>自分へのダイレクトメッセージを取得します。</dd>
 <dt>Atig::Agent::Timeline</dt>
 <dd>自分のタイムラインを取得します。</dd>
+<dt>Atig::Agent::Cleanup</dt>
+<dd>定期的にキャッシュのうち、古い内容を削除します。</dd>
 </dl>
 </div>
 <div class="section" id="id4">
@@ -261,7 +273,7 @@ Atig::OFilter::Footer,</blockquote>
         <li class="right" >
           <a href="commands.html" title="CTCP ACTION"
              >previous</a> |</li>
-        <li><a href="index.html">atig.rb v1.0a documentation</a> &raquo;</li> 
+        <li><a href="index.html">atig.rb v0.3.1 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">

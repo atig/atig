@@ -58,6 +58,8 @@ user ``screen_name`` [``count``] (別名: u)
   ``screen_name`` のユーザの最新の発言 ``count`` 件を表示します。
   ``count`` が省略された場合は20件になります。 ``count`` は
   200件以上を指定しても無視されます。
+spam ``screen_name``
+  ``screen_name`` のユーザをスパムアカウントとして通報します。
 
 プロフィール関連
 ------------------------------
@@ -78,4 +80,5 @@ opt ``name`` (別名: opts, option, options)
   名前 ``name`` の :doc:`options` が持つ値を表示します。
 opt ``name`` ``value`` (別名: opts, option, options)
   名前 ``name`` の :doc:`options` が持つ値を ``value`` に更新します。
-
+refresh
+  フォローしているユーザ一覧を再読み込みさせます。
