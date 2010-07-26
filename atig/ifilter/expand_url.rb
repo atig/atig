@@ -3,6 +3,7 @@
 
 require 'atig/util'
 require 'atig/http'
+require 'atig/sized_hash'
 
 module Atig
   module IFilter
@@ -12,6 +13,7 @@ module Atig
         @log  = context.log
         @opts = context.opts
         @http = Atig::Http.new @log
+        @cache = Atig::SizedHash.new 100
       end
 
       def call(status)
@@ -32,7 +34,12 @@ module Atig
                  end
 
         status.merge :text => status.text.gsub(target) {|url|
-          resolve_http_redirect(URI(url)).to_s || url
+          x = @cache[url]
+          if x then
+            x
+          else
+            @cache[url] = resolve_http_redirect(URI(url)).to_s || url
+          end
         }
       end
 
