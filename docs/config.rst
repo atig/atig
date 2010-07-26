@@ -9,7 +9,7 @@
 
 利用可能なコマンドの変更
 ------------------------------
-`Atig::Gateway::Session.commands` を変更すれば、利用可能なコマンドを変更できます::
+`Atig::Gateway::Session.commands` を変更すれば、利用可能な :doc:`commands` を変更できます::
 
   Atig::Gateway::Session.commands = [
                                      Atig::Command::Retweet,
@@ -47,6 +47,11 @@ Atig::Command::Option
   ``/me opt ...`` を提供するクラス
 Atig::Command::Limit
   ``/me limit`` を提供するクラス
+Atig::Command::Search
+  ``/me search`` を提供するクラス
+Atig::Command::Refresh
+  ``/me refresh`` を提供するクラス
+                                   Atig::Command::Spam,
 
 取得するAPIの変更
 ------------------------------
@@ -60,8 +65,10 @@ Atig::Command::Limit
 
 標準で次のAgentが用意されています。
 
-Atig::Agent::List
-  各リストのfollowingを取得します。
+Atig::Agent::OwnList
+  自分のリストのfollowingを取得します。FullListと同時に指定できません。
+Atig::Agent::FullList
+  自分のリストと自分がフォローしているリストのfollowingを取得します。OwnListと同時に指定できません。
 Atig::Agent::Following
   自分のfollowingを取得します。
 Atig::Agent::ListStatus
@@ -72,6 +79,8 @@ Atig::Agent::Dm
   自分へのダイレクトメッセージを取得します。
 Atig::Agent::Timeline
   自分のタイムラインを取得します。
+Atig::Agent::Cleanup
+  定期的にキャッシュのうち、古い内容を削除します。
 
 取得した発言の加工方法の変更
 ------------------------------
