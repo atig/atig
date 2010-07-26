@@ -23,7 +23,7 @@ module Atig
 				(?: bit\.ly | (?: tin | rub) yurl\.com | j\.mp
 				  | is\.gd | cli\.gs | tr\.im | u\.nu | airme\.us
 				  | ff\.im | twurl.nl | bkite\.com | tumblr\.com
-				  | pic\.gd | sn\.im | digg\.com )
+				  | pic\.gd | sn\.im | digg\.com | goo\.gl)
 				/ [0-9a-z=-]+ |
 				blip\.fm/~ (?> [0-9a-z]+) (?! /) |
 				flic\.kr/[a-z0-9/]+
