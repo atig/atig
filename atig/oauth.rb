@@ -3,7 +3,6 @@
 require 'oauth'
 require 'oauth-patch'
 
-
 module Atig
   class OAuth
     CONSUMER_KEY = 'TO9wbD379qmFSJp6pFs5w'
@@ -25,7 +24,10 @@ module Atig
       uri = URI(context.opts.api_base)
       site = "#{uri.scheme}://#{uri.host}"
       @nick  = nick
-      @oauth = ::OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, :site => site)
+      @oauth = ::OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, {
+                                       :site => site,
+                                       :proxy => ENV["HTTP_PROXY"] || ENV["http_proxy"]
+                                     })
 
       if @@profiles.key? @nick
         token,secret = @@profiles[@nick]
