@@ -28,7 +28,7 @@ describe Atig::Command::Status do
 
   it "should not post same post" do
     e = entry user(1,'mzp'), status('blah blah')
-    @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return(e)
+    @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return([ e ] )
     @channel.should_receive(:notify).with("You can't submit the same status twice in a row.")
 
     call '#twitter', "status", %w(blah blah)
