@@ -10,6 +10,7 @@ require 'fileutils'
 require 'spec/rake/spectask'
 
 Spec::Rake::SpecTask.new do |t|
+  t.libs = t.libs + ["."]
   t.spec_opts = ['--color']
   t.spec_files = FileList['atig/**/*_spec.rb']
 end
