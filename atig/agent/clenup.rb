@@ -13,7 +13,8 @@ module Atig
           db.transaction do|t|
             t.cleanup
           end
-          sleep 60*60
+          # once a day
+          sleep 60*60*24
         end
       end
     end
