@@ -53,6 +53,7 @@ Atig::Gateway::Session.agents   = [
 
 Atig::Gateway::Session.ifilters = [
                                    Atig::IFilter::Retweet,
+                                   Atig::IFilter::RetweetTime,
                                    Atig::IFilter::Utf7,
                                    Atig::IFilter::Sanitize,
                                    Atig::IFilter::ExpandUrl,
