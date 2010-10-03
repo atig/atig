@@ -21,6 +21,7 @@ module Atig
                    %r{
 			http:// (?:
 				(?: bit\.ly | (?: tin | rub) yurl\.com | j\.mp | t\.co
+                                  | htn.to
 				  | is\.gd | cli\.gs | tr\.im | u\.nu | airme\.us
 				  | ff\.im | twurl.nl | bkite\.com | tumblr\.com
 				  | pic\.gd | sn\.im | digg\.com | goo\.gl)
