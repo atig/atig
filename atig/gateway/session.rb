@@ -201,13 +201,18 @@ END
 
       def on_privmsg(m)
         target, mesg = *m.params
-
         m.ctcps.each {|ctcp| on_ctcp(target, ctcp) } if m.ctcp?
+        p target
 
-        return if mesg.empty?
-        return on_ctcp_action(target, mesg) if mesg.sub!(/\A +/, "")
-
-        if @opts.old_style_reply and mesg =~ /\A@(?>([A-Za-z0-9_]{1,15}))[^A-Za-z0-9_]/
+        case
+        when mesg.empty?
+          return
+        when mesg.sub!(/\A +/, "")
+          on_ctcp_action(target, mesg)
+        when not(target[0] == ?#)
+          channel target
+          on_ctcp_action(target, "dm #{target} #{mesg}")
+        when (@opts.old_style_reply and mesg =~ /\A@(?>([A-Za-z0-9_]{1,15}))[^A-Za-z0-9_]/)
           on_ctcp_action(target, "reply #{$1} #{mesg}")
         else
           on_ctcp_action(target, "status #{mesg}")

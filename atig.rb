@@ -87,6 +87,7 @@ Atig::Gateway::Session.commands = [
                                    Atig::Command::Search,
                                    Atig::Command::Refresh,
                                    Atig::Command::Spam,
+                                   Atig::Command::Dm,
                                   ]
 Atig::Gateway::Session.channels = [
                                    Atig::Channel::Timeline,
