@@ -104,6 +104,8 @@ Atig::IFilter::Strip.new([``footer1``, ``footer2``, ...])
   指定したフッタを除去します。
 Atig::IFilter::Retweet
   公式RTの先頭に♺ をつけます。
+Atig::IFilter::RetweetTime
+  公式RTの末尾に元発言の日時を表示します。
 Atig::IFilter::Tid
   発言の末尾に、tidをつけます。 :doc:`options` も参照してください。
 Atig::IFilter::Sid

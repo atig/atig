@@ -1,6 +1,23 @@
 更新履歴
 ==============
 
+v0.3.2(2010-10-10)
+------------------------------
+http://github.com/mzp/atig/tree/v0.3.2
+
+機能追加
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ - :doc:`config`: `Atig::IFilter::RetweetTime` を追加しました
+
+機能修正
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ - DBのデータ削除の周期を減らしました
+ - DMチャンネルでのDMの送信に対応しました
+ - :doc:`commands`: `limit` にリセットされる日付を表示するようにした (thx. `hirose31`_ )
+ - :doc:`config`: 自動展開するURLにhtn.to, goo.glを追加
+
+.. _hirose31: http://twitter.com/hirose31
+
 v0.3.1(2010-07-26)
 ------------------------------
 http://github.com/mzp/atig/tree/v0.3.1
@@ -9,7 +26,7 @@ http://github.com/mzp/atig/tree/v0.3.1
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  - :doc:`commands`: `refresh` を追加しました
  - :doc:`commands`: `spam` を追加しました
- - :doc:`agent` : 他人のリストをフォローできるようになりました。
+ - :doc:`agent` : 他人のリストをフォローできるようになりました
 
 機能修正
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
