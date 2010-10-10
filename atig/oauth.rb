@@ -19,20 +19,26 @@ module Atig
       end
     end
 
-    attr_reader :access
+    attr_reader :access, :stream_access
     def initialize(context, nick)
-      uri = URI(context.opts.api_base)
-      site = "#{uri.scheme}://#{uri.host}"
-      @nick  = nick
-      @oauth = ::OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, {
-                                       :site => site,
-                                       :proxy => ENV["HTTP_PROXY"] || ENV["http_proxy"]
-                                     })
+      @nick   = nick
+      @api    = consumer context.opts.api_base
+      @stream = consumer context.opts.stream_api_base
 
       if @@profiles.key? @nick
-        token,secret = @@profiles[@nick]
-        @access = ::OAuth::AccessToken.new(@oauth, token, secret)
+        token,secret   = @@profiles[@nick]
+        @access        = ::OAuth::AccessToken.new(@api, token, secret)
+        @stream_access = ::OAuth::AccessToken.new(@stream, token, secret)
       end
+    end
+
+    def consumer(url)
+      uri = URI(url)
+      site = "#{uri.scheme}://#{uri.host}"
+      ::OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, {
+                              :site => site,
+                              :proxy => ENV["HTTP_PROXY"] || ENV["http_proxy"]
+                            })
     end
 
     def verified?
@@ -40,7 +46,7 @@ module Atig
     end
 
     def url
-      @request = @oauth.get_request_token
+      @request = @api.get_request_token
       @request.authorize_url
     end
 
