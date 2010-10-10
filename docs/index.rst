@@ -18,7 +18,7 @@ atig.rbはTwitterとIRCを結ぶゲートウェイです。
  - 安定板: `atigrb-0.3.2.tgz`_. ( `過去のバージョン`_ )
  - 開発版: `Github Repository`_.
 
-.. _atigrb-0.3.1.tgz: http://github.com/mzp/atig/tarball/v0.3.2
+.. _atigrb-0.3.2.tgz: http://github.com/mzp/atig/tarball/v0.3.2
 .. _過去のバージョン: http://github.com/mzp/atig/downloads
 .. _GitHub Repository: http://github.com/mzp/atig
 
