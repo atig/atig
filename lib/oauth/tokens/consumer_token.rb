@@ -21,8 +21,8 @@ module OAuth
     #   @token.request(:get,  '/people')
     #   @token.request(:post, '/people', @person.to_xml, { 'Content-Type' => 'application/xml' })
     #
-    def request(http_method, path, *arguments)
-      @response = consumer.request(http_method, path, self, {}, *arguments)
+    def request(http_method, path, *arguments,&f)
+      @response = consumer.request(http_method, path, self, {}, *arguments,&f)
     end
 
     # Sign a request generated elsewhere using Net:HTTP::Post.new or friends

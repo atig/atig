@@ -3,12 +3,12 @@ module OAuth
   class AccessToken < ConsumerToken
     # The less intrusive way. Otherwise, if we are to do it correctly inside consumer,
     # we need to restructure and touch more methods: request(), sign!(), etc.
-    def request(http_method, path, *arguments)
+    def request(http_method, path, *arguments,&f)
       request_uri = URI.parse(path)
       site_uri = consumer.uri
       is_service_uri_different = (request_uri.absolute? && request_uri != site_uri)
       consumer.uri(request_uri) if is_service_uri_different
-      @response = super(http_method, path, *arguments)
+      @response = super(http_method, path, *arguments,&f)
       # NOTE: reset for wholesomeness? meaning that we admit only AccessToken service calls may use different URIs?
       # so reset in case consumer is still used for other token-management tasks subsequently?
       consumer.uri(site_uri) if is_service_uri_different
@@ -20,8 +20,8 @@ module OAuth
     #   @response = @token.get('/people')
     #   @response = @token.get('/people', { 'Accept'=>'application/xml' })
     #
-    def get(path, headers = {})
-      request(:get, path, headers)
+    def get(path, headers = {},&f)
+      request(:get, path, headers,&f)
     end
 
     # Make a regular HEAD request using AccessToken
