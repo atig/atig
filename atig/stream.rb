@@ -13,11 +13,10 @@ module Atig
     include Util
 
     class APIFailed < StandardError; end
-    def initialize(context, user, password)
-      @log      = context.log
-      @opts     = context.opts
-      @user     = user
-      @password = password
+    def initialize(context, oauth)
+      @log   = context.log
+      @opts  = context.opts
+      @oauth = oauth
     end
 
     def watch(path, query={}, &f)
@@ -30,21 +29,16 @@ module Atig
 
       @log.debug [uri.to_s]
 
-      Net::HTTP.start(uri.host, uri.port) do |http|
-        request = Net::HTTP::Post.new uri.request_uri
-        request.basic_auth @user, @password
-
-        http.request(request) do |response|
+      begin
+        @oauth.get(uri.path) do|response|
           unless response.code == '200' then
             raise APIFailed,"#{response.code} #{response.message}"
           end
-
           begin
             buffer = ''
             response.read_body do |chunk|
               next if chunk.chomp.empty?
               buffer << chunk.to_s
-
               if buffer =~ /\A(.*)\n/ then
                 text = $1
                 unless text.strip.empty?
@@ -57,6 +51,8 @@ module Atig
             raise APIFailed,e.to_s
           end
         end
+      rescue => e
+        raise APIFailed,e.to_s
       end
     end
 

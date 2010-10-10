@@ -140,7 +140,7 @@ END
         log :debug, "initialize Twitter"
         twitter = Twitter.new   context, oauth.access
         search  = SearchTwitter.new context
-        stream  = Stream.new context, @nick,@pass if @opts.stream
+        stream  = Stream.new context, oauth.stream_access if @opts.stream
         @api    = Scheduler.new context, twitter, search, stream
 
         log :debug, "initialize filter"
@@ -202,7 +202,6 @@ END
       def on_privmsg(m)
         target, mesg = *m.params
         m.ctcps.each {|ctcp| on_ctcp(target, ctcp) } if m.ctcp?
-        p target
 
         case
         when mesg.empty?
