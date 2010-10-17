@@ -1,8 +1,10 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 
-def be_text(text)
-  simple_matcher("be text") { |given| given.text.should == text }
+Spec::Matchers.define :be_text do |text|
+  match do |status|
+    status.text.should == text
+  end
 end
 
 def status(text,opt={})
