@@ -6,10 +6,6 @@ require 'atig/levenshtein'
 
 target = [Atig::Levenshtein, Atig::Levenshtein::PureRuby]
 
-if Atig::Levenshtein::Inline::USABLE then
-  target << Atig::Levenshtein::Inline
-end
-
 target.each do |m|
   describe m do
     it "should return correct levenshtein distance" do
