@@ -8,7 +8,7 @@ describe Atig::Command::Limit do
   include CommandHelper
 
   before do
-    @reset = Time.new(2010,9,25,8,24,12)
+    @reset = ::Time.utc(2010,9,25,8,24,12)
     @command = init Atig::Command::Limit
     @api.stub!(:limit).and_return(150)
     @api.stub!(:remain).and_return(148)

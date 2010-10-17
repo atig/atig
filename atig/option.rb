@@ -13,7 +13,7 @@ module Atig
         opts = opts.inject({}) do |r, i|
           key, value = i.split("=", 2)
 
-          r.update key => parse_value(value)
+          r.update key.to_sym => parse_value(value)
         end
         self.new(@default.merge(opts))
       end
