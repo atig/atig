@@ -25,7 +25,7 @@ atig.rbはTwitterとIRCを結ぶゲートウェイです。
 既知のバグ
 ------------------------------
 
- - sqlite3-ruby 1.3.0に対応していません。(`Issue 2`_ )
+ - sqlite3-ruby 1.3.0/1.3.1に対応していません。(`Issue 2`_ )
 
 .. _Issue 2: http://github.com/mzp/atig/issues#issue/2
 
