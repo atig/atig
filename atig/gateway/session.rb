@@ -202,7 +202,6 @@ END
       def on_privmsg(m)
         target, mesg = *m.params
         m.ctcps.each {|ctcp| on_ctcp(target, ctcp) } if m.ctcp?
-        p target
 
         case
         when mesg.empty?
@@ -299,7 +298,6 @@ END
           return
         end
         @channels[channel].on_who do|user|
-          p user
           #     "<channel> <user> <host> <server> <nick>
           #         ( "H" / "G" > ["*"] [ ( "@" / "+" ) ]
           #             :<hopcount> <real name>"
