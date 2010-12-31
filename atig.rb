@@ -1,13 +1,17 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
 require 'rubygems'
+require 'bundler'
+
+Bundler.setup
+Bundler.require :default
 require 'pp'
 require 'logger'
 
 $KCODE = "u" unless defined? ::Encoding # json use this
 Dir.chdir(File.dirname(__FILE__))
 
-  $LOAD_PATH << "."
+$LOAD_PATH << "."
 case
 when File.directory?("lib")
   $LOAD_PATH << "lib"

@@ -1,5 +1,10 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
+require 'rubygems'
+require 'bundler'
+
+Bundler.setup
+Bundler.require :default, :test
 
 Spec::Matchers.define :be_text do |text|
   match do |status|
