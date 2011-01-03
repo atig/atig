@@ -1,9 +1,8 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
+require File.expand_path( '../spec_helper', File.dirname(__FILE__) )
 require 'atig/ifilter/retweet_time'
 require 'atig/twitter_struct'
-require 'atig/spec_helper'
 
 describe Atig::IFilter::RetweetTime do
   def filtered(text, opt={})

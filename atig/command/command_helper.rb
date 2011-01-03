@@ -94,4 +94,3 @@ module CommandHelper
     }
   end
 end
-

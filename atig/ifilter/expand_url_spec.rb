@@ -1,9 +1,8 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
+require File.expand_path( '../spec_helper', File.dirname(__FILE__) )
 require 'atig/ifilter/expand_url'
 require 'atig/twitter_struct'
-require 'atig/spec_helper'
 
 class Atig::IFilter::ExpandUrl
   def resolve_http_redirect(uri); "[#{uri}]" end

@@ -1,7 +1,6 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
-require 'spec'
+require File.expand_path( 'spec_helper', File.dirname(__FILE__) )
 require 'atig/levenshtein'
 
 target = [Atig::Levenshtein, Atig::Levenshtein::PureRuby]

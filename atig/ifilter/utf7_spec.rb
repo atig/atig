@@ -1,9 +1,8 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
+require File.expand_path( '../spec_helper', File.dirname(__FILE__) )
 require 'atig/ifilter/utf7'
 require 'atig/twitter_struct'
-require 'atig/spec_helper'
 
 describe Atig::IFilter::Utf7 do
   def filtered(text)

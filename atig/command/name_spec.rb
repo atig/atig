@@ -1,7 +1,6 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-
-require 'atig/spec_helper'
+require File.expand_path( '../spec_helper', File.dirname(__FILE__) )
 require 'atig/command/name'
 require 'atig/command/command_helper'
 

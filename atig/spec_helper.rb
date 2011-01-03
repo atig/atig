@@ -6,7 +6,9 @@ require 'bundler'
 Bundler.setup
 Bundler.require :default, :test
 
-Spec::Matchers.define :be_text do |text|
+$:.insert( 1, File.expand_path( '..', File.dirname(__FILE__) ) )
+
+RSpec::Matchers.define :be_text do |text|
   match do |status|
     status.text.should == text
   end

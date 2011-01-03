@@ -1,5 +1,6 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
+require File.expand_path( 'spec_helper', File.dirname(__FILE__) )
 require 'atig/update_checker'
 
 describe Atig::UpdateChecker,'when use git version' do
