@@ -9,8 +9,10 @@ module Atig
       include Util
 
       def initialize(context, api, db)
+        @log = context.log
         daemon do
           db.transaction do|t|
+            log :info, "cleanup"
             t.cleanup
           end
           # once a day
