@@ -120,7 +120,7 @@ module Atig
 
       def cleanup
         @db.execute do|db|
-          created_at = db.execute("SELECT created_at FROM status ORDER BY created_at LIMIT 1 OFFSET ?", Size-1)
+          created_at = db.execute("SELECT created_at FROM status ORDER BY created_at DESC LIMIT 1 OFFSET ?", Size-1)
           unless created_at.empty? then
             db.execute "DELETE FROM status WHERE created_at < ?", created_at.first
           end
