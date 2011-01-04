@@ -55,6 +55,8 @@ module Atig
           else
             rt_with_no_comment(target, status)
           end
+        else
+          yield "No such ID : #{tid}"
         end
       end
     end
