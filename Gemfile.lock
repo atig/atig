@@ -23,4 +23,4 @@ DEPENDENCIES
   oauth
   rake
   rspec
-  sqlite3-ruby
+  sqlite3-ruby (~> 1.2.5)
