@@ -219,6 +219,9 @@ END
       end
 
       def on_ctcp(target, mesg)
+        if mesg.respond_to? :encoding!
+          mesg.encoding! "UTF-8"
+        end
         type, mesg = mesg.split(" ", 2)
         method = "on_ctcp_#{type.downcase}".to_sym
         send(method, target, mesg) if respond_to? method, true
