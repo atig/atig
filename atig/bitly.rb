@@ -25,13 +25,13 @@ module Atig
 
     def shorten(url)
       return url if url =~ /bit\.ly/
-      bitly = URI("http://api.bit.ly/shorten")
+      bitly = URI("http://api.bit.ly/v3/shorten")
       if @login and @key
         bitly.path  = "/shorten"
         bitly.query = {
-          :version => "2.0.1", :format => "json", :longUrl => url,
+          :format => "json", :longUrl => url, :login => @login, :apiKey => @key,
         }.to_query_str(";")
-        req = @http.req(:get, bitly, {}, [@login, @key])
+        req = @http.req(:get, bitly, {})
         res = @http.http(bitly, 5, 10).request(req)
 
         res = JSON.parse(res.body)
@@ -43,11 +43,7 @@ module Atig
           res["results"][url]['shortUrl']
         end
       else
-        bitly.path = "/api"
-        bitly.query = { :url => url }.to_query_str
-        req = @http.req(:get, bitly)
-        res = @http.http(bitly, 5, 5).request(req)
-        res.body
+        url
       end
     rescue Errno::ETIMEDOUT, JSON::ParserError, IOError, Timeout::Error, Errno::ECONNRESET => e
       @log.error e
