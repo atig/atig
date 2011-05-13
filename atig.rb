@@ -22,24 +22,8 @@ end
 require 'atig/twitter'
 require 'atig/scheduler'
 
-Dir['atig/agent/*.rb'].each do|file|
-  load file
-end
-
-Dir['atig/ifilter/*.rb'].each do|file|
-  require file unless file =~ /_spec.rb\Z/
-end
-
-Dir['atig/ofilter/*.rb'].each do|file|
-  require file unless file =~ /_spec.rb\Z/
-end
-
-Dir['atig/command/*.rb'].each do|file|
-  require file unless file =~ /(?:_spec\.rb|_helper\.rb)\Z/
-end
-
-Dir['atig/channel/*.rb'].each do|file|
-  require file
+%w(agent ifilter ofilter command channel).each do |dir|
+  Dir["atig/#{dir}/*.rb"].each {|file| load file}
 end
 
 require 'atig/gateway/session'
