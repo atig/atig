@@ -3,6 +3,7 @@ GEM
   specs:
     diff-lcs (1.1.2)
     json (1.5.1)
+    net-irc (0.0.9)
     oauth (0.4.4)
     rake (0.8.7)
     rspec (2.5.0)
@@ -20,6 +21,7 @@ PLATFORMS
 
 DEPENDENCIES
   json
+  net-irc
   oauth
   rake
   rspec
