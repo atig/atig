@@ -59,7 +59,7 @@ module Atig
     end
 
     def req(method, uri, header = {}, credentials = nil)
-      accepts = ["*/*;q=0.1"]
+      accepts = ["*/*"]
       types   = { "json" => "application/json", "txt" => "text/plain" }
       ext     = uri.path[/[^.]+\z/]
       accepts.unshift types[ext] if types.key?(ext)
