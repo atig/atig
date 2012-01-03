@@ -1,31 +1,29 @@
 #!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
+$KCODE = "u" unless defined? ::Encoding # json use this
+
 require 'rubygems'
 require 'bundler'
 
 Bundler.setup
 Bundler.require :default
+
+# monkey hack
+module Net::IRC
+  module_function :low_quote, :low_dequote
+end
+
 require 'pp'
 require 'logger'
 
-$KCODE = "u" unless defined? ::Encoding # json use this
 Dir.chdir(File.dirname(__FILE__))
-
 $LOAD_PATH << "."
-case
-when File.directory?("lib")
-  $LOAD_PATH << "lib"
-when File.directory?(File.expand_path("lib", ".."))
-  $LOAD_PATH << File.expand_path("lib", "..")
-end
 
 require 'atig/twitter'
 require 'atig/scheduler'
-
 %w(agent ifilter ofilter command channel).each do |dir|
   Dir["atig/#{dir}/*.rb"].each {|file| load file}
 end
-
 require 'atig/gateway/session'
 
 Atig::Gateway::Session.agents   = [
