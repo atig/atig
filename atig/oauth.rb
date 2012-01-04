@@ -22,7 +22,7 @@ module Atig
     attr_reader :access
     def initialize(context, nick)
       uri = URI(context.opts.api_base)
-      site = "#{uri.scheme}://#{uri.host}"
+      site = "://#{uri.host}"
 
       @nick  = nick
       @oauth = ::OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, {
