@@ -8,6 +8,8 @@ Bundler.require :default, :test
 
 $:.insert( 1, File.expand_path( '..', File.dirname(__FILE__) ) )
 
+require 'atig/monkey'
+
 RSpec::Matchers.define :be_text do |text|
   match do |status|
     status.text.should == text

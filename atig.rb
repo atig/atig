@@ -8,17 +8,13 @@ require 'bundler'
 Bundler.setup
 Bundler.require :default
 
-# monkey hack
-module Net::IRC
-  module_function :low_quote, :low_dequote
-end
-
 require 'pp'
 require 'logger'
 
 Dir.chdir(File.dirname(__FILE__))
 $LOAD_PATH << "."
 
+require 'atig/monkey'
 require 'atig/twitter'
 require 'atig/scheduler'
 %w(agent ifilter ofilter command channel).each do |dir|

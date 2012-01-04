@@ -3,7 +3,6 @@
 
 require 'fileutils'
 require 'atig/util'
-require "net/irc"
 require "ostruct"
 require "time"
 require 'yaml'

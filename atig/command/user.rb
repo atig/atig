@@ -1,9 +1,8 @@
 #! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
-require 'net/irc'
+
 require 'time'
 require 'atig/command/command'
-
 
 module Atig
   module Command
