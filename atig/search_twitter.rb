@@ -1,4 +1,3 @@
-#! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 require 'atig/basic_twitter'
 require 'atig/http'

@@ -1,4 +1,3 @@
-#! /opt/local/bin/ruby -w
 # -*- mode:ruby; coding:utf-8 -*-
 # http://subtech.g.hatena.ne.jp/cho45/20091008/1254934083
 
