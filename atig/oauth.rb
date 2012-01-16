@@ -28,7 +28,6 @@ module Atig
                                        :site => site,
                                        :proxy => ENV["HTTP_PROXY"] || ENV["http_proxy"]
                                      })
-      p @oauth
 
       if @@profiles.key? @nick
         token,secret = @@profiles[@nick]
