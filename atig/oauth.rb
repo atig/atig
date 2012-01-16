@@ -1,6 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
-require 'oauth'
-require 'oauth-patch'
+require 'atig/oauth-patch'
 
 module Atig
   class OAuth
