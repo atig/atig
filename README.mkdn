@@ -5,7 +5,7 @@ OVERVIEW
 --------
 Atig.rb is Twitter Irc Gateway.
 
-Atig.rb is forked from cho45's tig.rb. We improve some feautures of tig.rb.
+Atig.rb is forked from cho45's tig.rb. We improve some features of tig.rb.
 
 PREREQUISITES
 -------------
