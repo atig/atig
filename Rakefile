@@ -4,6 +4,7 @@ require 'rake'
 require 'rake/clean'
 require 'rake/packagetask'
 require 'rspec/core/rake_task'
+require "bundler/gem_tasks"
 
 RSpec::Core::RakeTask.new do |t|
   t.rspec_opts = ['--color']
