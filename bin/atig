@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+# stolen from termtter
 self_file =
   if File.symlink?(__FILE__)
     require 'pathname'
