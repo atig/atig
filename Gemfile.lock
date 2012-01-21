@@ -1,3 +1,13 @@
+PATH
+  remote: .
+  specs:
+    atig (0.0.1)
+      json
+      net-irc
+      oauth
+      rake
+      sqlite3-ruby (~> 1.2.5)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -20,9 +30,5 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  json
-  net-irc
-  oauth
-  rake
+  atig!
   rspec
-  sqlite3-ruby (~> 1.2.5)
