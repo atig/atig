@@ -70,6 +70,10 @@ module Atig
         end
       end
 
+      def bool(b)
+        if b then 1 else 0 end
+      end
+
       def update(users)
         @db.execute do|db|
           may_notify :join, users.select{|u|
@@ -90,7 +94,7 @@ module Atig
           may_notify :mode, users.select{|u|
             exists?(db,
                     "screen_name = ? AND (protected != ? OR only != ?)",
-                    u.screen_name, u.protected, u.only)
+                    u.screen_name, bool(u.protected), bool(u.only))
           }
 
           users.each do|user|
@@ -98,8 +102,8 @@ module Atig
             if id then
               db.execute("UPDATE users SET screen_name = ?, protected = ?, only = ?, data = ? WHERE id = ?",
                          user.screen_name,
-                         user.protected,
-                         user.only,
+                         bool(user.protected),
+                         bool(user.only),
                          @db.dump(user),
                          id)
             else
@@ -107,8 +111,8 @@ module Atig
                           VALUES(NULL, :screen_name, :user_id, :protected, :only, :data)",
                          :screen_name => user.screen_name,
                          :user_id     => user.id,
-                         :protected   => user.protected,
-                         :only        => user.only,
+                         :protected   => bool(user.protected),
+                         :only        => bool(user.only),
                          :data        => @db.dump(user))
             end
           end
