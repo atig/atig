@@ -9,6 +9,7 @@ require 'json'
 
 require 'atig/version'
 require 'atig/monkey'
+require 'atig/optparse'
 require 'atig/twitter'
 require 'atig/scheduler'
 require 'atig/agent'
