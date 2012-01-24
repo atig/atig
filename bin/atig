@@ -11,5 +11,4 @@ self_file =
 $:.unshift(File.dirname(self_file) + "/../lib")
 
 require 'atig'
-opts = Atig::OptParser.parse!(ARGV)
-Net::IRC::Server.new(opts[:host], opts[:port], Atig::Gateway::Session, opts).start
+Atig::Client.run
