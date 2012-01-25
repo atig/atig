@@ -14,7 +14,6 @@ CLOBBER.include(
 )
 
 RSpec::Core::RakeTask.new do |t|
-  t.rspec_opts = ['--color']
   t.pattern = 'spec/**/*_spec.rb'
 end
 
