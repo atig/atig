@@ -9,6 +9,10 @@ CLEAN.include(
   "**/*.db"
 )
 
+CLOBBER.include(
+  "pkg"
+)
+
 RSpec::Core::RakeTask.new do |t|
   t.rspec_opts = ['--color']
   t.pattern = 'spec/**/*_spec.rb'
