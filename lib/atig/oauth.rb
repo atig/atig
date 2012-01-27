@@ -1,4 +1,6 @@
 # -*- mode:ruby; coding:utf-8 -*-
+require 'rubygems'
+require 'oauth'
 require 'atig/oauth-patch'
 
 module Atig

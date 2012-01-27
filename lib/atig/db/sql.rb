@@ -1,5 +1,6 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
+require 'rubygems'
 require 'sqlite3'
 
 module Atig
