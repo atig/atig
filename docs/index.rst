@@ -15,19 +15,12 @@ atig.rbはTwitterとIRCを結ぶゲートウェイです。
 ダウンロード
 ------------------------------
 
- - 安定板: `atigrb-0.3.2.tgz`_. ( `過去のバージョン`_ )
+ - 安定板: `atigrb-0.3.4.tgz`_. ( `過去のバージョン`_ )
  - 開発版: `Github Repository`_.
 
-.. _atigrb-0.3.2.tgz: http://github.com/mzp/atig/tarball/v0.3.2
+.. _atigrb-0.3.4.tgz: http://github.com/mzp/atig/tarball/v0.3.4
 .. _過去のバージョン: http://github.com/mzp/atig/downloads
 .. _GitHub Repository: http://github.com/mzp/atig
-
-既知のバグ
-------------------------------
-
- - sqlite3-ruby 1.3.0/1.3.1に対応していません。(`Issue 2`_ )
-
-.. _Issue 2: http://github.com/mzp/atig/issues#issue/2
 
 特徴
 ------------------------------
@@ -82,10 +75,10 @@ IRC用のソフトが流用できます。
 こんな場合は、mzpまで気軽にご連絡ください。
 できる範囲でサポートします。
 
- - atig.rbの挙動がおかしい
+ - atig の挙動がおかしい
  - 設定の仕方がよく分からない
  - 欲しい機能がなかった
- - atig.rbに足りないクールな機能を実装したぜ
+ - atig に足りないクールな機能を実装したぜ
 
 連絡方法は以下のものがあります。それ以外の方法でもmzpまでに届けばかまいません。
 
