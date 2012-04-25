@@ -1,3 +1,4 @@
+require 'atig/agent/own_list'
 require 'atig/agent/full_list'
 require 'atig/agent/following'
 require 'atig/agent/list_status'
