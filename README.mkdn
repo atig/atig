@@ -21,9 +21,9 @@ HOW TO USE
 
 You type:
 
- $ cd atig
- $ ruby atig.rb -d
- I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668
+    $ cd atig
+    $ bin/atig -d
+    I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668
 
 and access localhost:16668 by Irc client.
 
