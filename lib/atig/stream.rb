@@ -12,11 +12,13 @@ module Atig
   class Stream
     include Util
 
+    attr_reader :channel
+
     class APIFailed < StandardError; end
-    def initialize(context, consumer, access)
+    def initialize(context, channel, access)
       @log      = context.log
       @opts     = context.opts
-      @consumer = consumer
+      @channel  = channel
       @access   = access
     end
 
@@ -33,7 +35,7 @@ module Atig
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       request = Net::HTTP::Get.new(uri.request_uri)
-      request.oauth!(http, @consumer, @access)
+      request.oauth!(http, @access.consumer, @access)
       http.request(request) do |response|
         unless response.code == '200' then
           raise APIFailed,"#{response.code} #{response.message}"
