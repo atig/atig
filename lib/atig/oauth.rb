@@ -20,6 +20,7 @@ module Atig
     end
 
     attr_reader :access
+    attr_reader :oauth
     def initialize(context, nick)
       uri = URI(context.opts.api_base)
       site = "http://#{uri.host}"

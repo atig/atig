@@ -13,11 +13,11 @@ module Atig
     include Util
 
     class APIFailed < StandardError; end
-    def initialize(context, user, password)
+    def initialize(context, consumer, access)
       @log      = context.log
       @opts     = context.opts
-      @user     = user
-      @password = password
+      @consumer = consumer
+      @access   = access
     end
 
     def watch(path, query={}, &f)
@@ -30,32 +30,31 @@ module Atig
 
       @log.debug [uri.to_s]
 
-      Net::HTTP.start(uri.host, uri.port) do |http|
-        request = Net::HTTP::Post.new uri.request_uri
-        request.basic_auth @user, @password
+      http = Net::HTTP.new(uri.host, uri.port)
+      http.use_ssl = true
+      request = Net::HTTP::Get.new(uri.request_uri)
+      request.oauth!(http, @consumer, @access)
+      http.request(request) do |response|
+        unless response.code == '200' then
+          raise APIFailed,"#{response.code} #{response.message}"
+        end
 
-        http.request(request) do |response|
-          unless response.code == '200' then
-            raise APIFailed,"#{response.code} #{response.message}"
-          end
+        begin
+          buffer = ''
+          response.read_body do |chunk|
+            next if chunk.chomp.empty?
+            buffer << chunk.to_s
 
-          begin
-            buffer = ''
-            response.read_body do |chunk|
-              next if chunk.chomp.empty?
-              buffer << chunk.to_s
-
-              if buffer =~ /\A(.*)\n/ then
-                text = $1
-                unless text.strip.empty?
-                  f.call TwitterStruct.make(JSON.parse(text))
-                end
-                buffer = ''
+            if buffer =~ /\A(.*)\n/ then
+              text = $1
+              unless text.strip.empty?
+                f.call TwitterStruct.make(JSON.parse(text))
               end
+              buffer = ''
             end
-          rescue => e
-            raise APIFailed,e.to_s
           end
+        rescue => e
+          raise APIFailed,e.to_s
         end
       end
     end
