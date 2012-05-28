@@ -7,6 +7,7 @@ module Atig
       include Util
 
       def initialize(context, api, db)
+        return if context.opts.stream
         @log = context.log
         @api = api
         @prev = nil
