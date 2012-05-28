@@ -18,6 +18,7 @@ module Atig
         @api.stream do|t|
           t.watch('user') do |status|
 #            @log.debug status.inspect
+            next if status.retweeted_status and db.noretweets.include?(status.user.id)
             if status and status.user
               db.statuses.transaction do|d|
                 d.add :status => status, :user => status.user, :source => :user_stream
