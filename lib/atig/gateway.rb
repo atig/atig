@@ -9,6 +9,7 @@ Atig::Gateway::Session.agents   = [
                                    Atig::Agent::Timeline,
                                    Atig::Agent::Cleanup,
                                    Atig::Agent::UserStream,
+                                   Atig::Agent::Noretweets,
                                   ]
 
 Atig::Gateway::Session.ifilters = [
