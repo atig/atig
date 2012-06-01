@@ -19,12 +19,16 @@ module Atig
           t.watch('user') do |status|
 #            @log.debug status.inspect
             next if status.retweeted_status and db.noretweets.include?(status.user.id)
-            if status and status.user
+            if status.direct_message
+              dm = status.direct_message
+              db.dms.transaction do|d|
+                d.add :status => dm, :user => dm.sender
+              end
+            elsif status and status.user
               db.statuses.transaction do|d|
                 d.add :status => status, :user => status.user, :source => :user_stream
               end
-            end
-            if status and status.event
+            elsif status and status.event
               case status.event
               when 'list_member_added'
                 t.channel.notify "list member \00311added\017 : @#{status.target.screen_name} into #{status.target_object.full_name} [ http://twitter.com#{status.target_object.uri} ]"
