@@ -9,7 +9,7 @@ describe Atig::UpdateChecker,'when use git version' do
   end
 
   def commit(c, mesg)
-    {'id' => rev(c), 'message' => mesg}
+    {'sha' => rev(c), 'commit' => {'message' => mesg}}
   end
 
   before do

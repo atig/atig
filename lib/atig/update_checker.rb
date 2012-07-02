@@ -3,7 +3,7 @@
 module Atig
   module UpdateChecker
     def commits
-      uri = URI("http://github.com/api/v1/json/mzp/atig/commits/master")
+      uri = URI("https://api.github.com/repos/mzp/atig/commits")
       http = Atig::Http.new
       res = http.http(uri).request http.req(:get, uri)
       JSON.parse(res.body)['commits']
@@ -29,18 +29,18 @@ module Atig
         []
       else
         cs      = commits
-        latest  = cs.first['id'][/^[0-9a-z]{40}$/]
+        latest  = cs.first['sha'][/^[0-9a-z]{40}$/]
         raise "github API changed?" unless latest
 
         if local_repos?(latest) then
           []
         else
-          current  = cs.map {|i| i['id'] }.index(server_version)
+          current  = cs.map {|i| i['sha'] }.index(server_version)
           if current then
             cs[0...current]
           else
             cs
-          end.map {|i| i['message'] }
+          end.map {|i| i['commit']['message'] }
         end
       end
     rescue Errno::ECONNREFUSED, Timeout::Error => e
