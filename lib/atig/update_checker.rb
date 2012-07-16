@@ -6,7 +6,7 @@ module Atig
       uri = URI("https://api.github.com/repos/mzp/atig/commits")
       http = Atig::Http.new
       res = http.http(uri).request http.req(:get, uri)
-      JSON.parse(res.body)['commits']
+      JSON.parse(res.body)
     end
 
     def server_version
