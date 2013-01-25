@@ -22,7 +22,8 @@ module Atig
         text = "#{comment.strip} RT #{screen_name}: #{entry.status.text}"
 
         chars = text.each_char.to_a
-        if chars.size > 140 then
+        chars_length = text.encode("UTF-16BE", :invalid => :replace, :undef => :replace, :replace => '?').encode("UTF-8")
+        if chars_length.each_char.to_a.size > 140 then
           url = @bitly.shorten "http://twitter.com/#{entry.user.screen_name}/status/#{entry.status.id}"
           text = chars[0,140-url.size-1].join('') + ' ' + url
         end

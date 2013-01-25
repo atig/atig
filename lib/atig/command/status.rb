@@ -25,8 +25,8 @@ module Atig
           return
         end
         q = gateway.output_message(:status => text)
-
-        if q[:status].each_char.to_a.size > 140 then
+        q_length = q[:status].encode("UTF-16BE", :invalid => :replace, :undef => :replace, :replace => '?').encode("UTF-8")
+        if q_length.each_char.to_a.size > 140 then
           yield "You can't submit the status over 140 chars"
           return
         end
