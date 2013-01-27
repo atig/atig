@@ -96,7 +96,6 @@ END
         @channels.each{|_, ch| ch.topic entry }
       end
 
-      protected
       def on_message(m)
         GC.start
         @on_message.call(m) if @on_message
@@ -175,32 +174,8 @@ END
         end
       end
 
-      def run_new(klasses,*args)
-        (klasses || []).map do|klass|
-          if klass.respond_to?(:new)
-            klass.new(*args)
-          else
-            klass
-          end
-        end
-      end
-
       def on_disconnected
         (@thread_group.list - [Thread.current]).each {|t| t.kill }
-      end
-
-      CONFIG_FILE = File.expand_path("~/.atig/oauth")
-      def save_config
-        FileUtils.mkdir_p File.dirname(CONFIG_FILE)
-        File.open(CONFIG_FILE, "w") {|io|
-          YAML.dump(OAuth.dump,io)
-        }
-        FileUtils.chmod 0600, CONFIG_FILE
-      end
-
-      def load_config
-        FileUtils.mkdir_p File.dirname(CONFIG_FILE)
-        OAuth.load(YAML.load_file(CONFIG_FILE)) rescue nil
       end
 
       def on_privmsg(m)
@@ -318,6 +293,32 @@ END
           post server_name, RPL_WHOREPLY, @nick, channel, prefix.user, prefix.host, server, prefix.nick, "H*#{mode}", "1 #{real}"
         end
         post server_name, RPL_ENDOFWHO, @nick, channel
+      end
+
+      protected
+
+      def run_new(klasses,*args)
+        (klasses || []).map do|klass|
+          if klass.respond_to?(:new)
+            klass.new(*args)
+          else
+            klass
+          end
+        end
+      end
+
+      CONFIG_FILE = File.expand_path("~/.atig/oauth")
+      def save_config
+        FileUtils.mkdir_p File.dirname(CONFIG_FILE)
+        File.open(CONFIG_FILE, "w") {|io|
+          YAML.dump(OAuth.dump,io)
+        }
+        FileUtils.chmod 0600, CONFIG_FILE
+      end
+
+      def load_config
+        FileUtils.mkdir_p File.dirname(CONFIG_FILE)
+        OAuth.load(YAML.load_file(CONFIG_FILE)) rescue nil
       end
 
       def available_user_modes
