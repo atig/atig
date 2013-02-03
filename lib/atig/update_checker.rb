@@ -20,6 +20,10 @@ module Atig
       system("git show #{rev} > /dev/null 2>&1")
     end
 
+    def git_repos?
+      File.exists? File.expand_path('../../../.git', __FILE__)
+    end
+
     def git?
       system('which git > /dev/null 2>&1')
     end
@@ -47,7 +51,6 @@ module Atig
       []
     end
 
-    module_function :latest, :commits, :server_version, :local_repos?, :git?
+    module_function :latest, :commits, :server_version, :local_repos?, :git?, :git_repos?
   end
 end
-

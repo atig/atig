@@ -23,7 +23,7 @@ module Atig
           end
         end
 
-        # 最新版のチェック
+        # git clone した状態から動かしていたら常に最新版のチェック
         daemon do
           log :info,"check update"
           messages = UpdateChecker.latest
@@ -35,7 +35,7 @@ module Atig
             @channel.notify("  ... and more. check it: http://mzp.github.com/atig/") if messages.size > 3
           end
           sleep (3*60*60)
-        end
+        end if UpdateChecker.git_repos?
 
         db.statuses.listen do|entry|
           if db.followings.include?(entry.user) or
