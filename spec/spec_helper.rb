@@ -5,9 +5,9 @@ require 'bundler'
 Bundler.setup
 Bundler.require :default, :test
 
-$:.unshift(File.expand_path( '../lib', File.dirname(__FILE__) ) )
 
 require 'atig/monkey'
+require 'command_helper'
 
 RSpec::Matchers.define :be_text do |text|
   match do |status|

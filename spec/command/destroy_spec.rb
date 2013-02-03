@@ -2,7 +2,6 @@
 
 require File.expand_path( '../../spec_helper', __FILE__ )
 require 'atig/command/destroy'
-require 'atig/command/command_helper'
 
 describe Atig::Command::Destroy,"when status is not removed" do
   include CommandHelper

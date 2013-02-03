@@ -2,7 +2,6 @@
 
 require File.expand_path( '../../spec_helper', __FILE__ )
 require 'atig/command/time'
-require 'atig/command/command_helper'
 
 describe Atig::Command::Time do
   include CommandHelper

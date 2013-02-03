@@ -2,7 +2,6 @@
 
 require File.expand_path( '../../spec_helper', __FILE__)
 require 'atig/command/user_info'
-require 'atig/command/command_helper'
 
 describe Atig::Command::UserInfo do
   include CommandHelper

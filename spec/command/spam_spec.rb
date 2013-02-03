@@ -1,7 +1,6 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
 require File.expand_path( '../../spec_helper', __FILE__ )
-require 'atig/command/command_helper'
 require 'atig/command/spam'
 
 describe Atig::Command::Spam do

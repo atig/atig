@@ -2,7 +2,6 @@
 
 require File.expand_path( '../../spec_helper', __FILE__ )
 require 'atig/command/whois'
-require 'atig/command/command_helper'
 require 'atig/command/info'
 
 include Net::IRC::Constants

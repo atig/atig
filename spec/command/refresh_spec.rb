@@ -2,7 +2,6 @@
 
 require File.expand_path( '../../spec_helper', __FILE__ )
 require 'atig/command/refresh'
-require 'atig/command/command_helper'
 require 'atig/command/info'
 
 describe Atig::Command::Refresh do

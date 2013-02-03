@@ -2,7 +2,6 @@
 
 require File.expand_path( '../spec_helper', File.dirname(__FILE__))
 require 'atig/command/option'
-require 'atig/command/command_helper'
 
 describe Atig::Command::Option do
   include CommandHelper
