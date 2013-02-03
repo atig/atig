@@ -125,8 +125,6 @@ http://github.com/mzp/atig/tree/v0.3.0
 バグ修正
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-
-
 v0.2.1(2010-04-17)
 ------------------------------
 http://github.com/mzp/atig/tree/v0.2.1
@@ -137,9 +135,9 @@ http://github.com/mzp/atig/tree/v0.2.1
  - :doc:`irc`: `/topic` が `/me autofix` のエイリアスになりました。
  - 最新の発言を削除した場合、トピック(topic)をひとつ前に戻すようにした
 
-v0.2(2010-04-11)
+v0.2.0(2010-04-11)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.2
+http://github.com/mzp/atig/tree/v0.2.0
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,10 +150,9 @@ http://github.com/mzp/atig/tree/v0.2
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
  - followingの取得時にSSL Verified Errorが発生する不具合を修正
 
-v0.1
+v0.1.0(2010-04-11)
 ------------------------------
 
-http://github.com/mzp/atig/tree/v0.1
+http://github.com/mzp/atig/tree/v0.1.0
 
 - 最初のリリース
-
