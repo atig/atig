@@ -31,6 +31,10 @@ describe Atig::Db::Statuses do
     @db.add :status => @c , :user => @alice, :source => :srcC
   end
 
+  after(:all) do
+    FileUtils.rm_f 'test.db'
+  end
+
   it "should be re-openable" do
     Atig::Db::Statuses.new 'test.db'
   end

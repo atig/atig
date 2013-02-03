@@ -19,6 +19,12 @@ describe Atig::Db::Lists do
     @lists.listen{|kind,*args| @args[kind] = args }
   end
 
+  after(:all) do
+    %w(test-a.db test-b.db).each do |file|
+      FileUtils.rm_f file
+    end
+  end
+
   it "should have list" do
     @lists.update("a" => [ @alice, @bob ],
                   "b" => [ @alice, @bob , @charriey ])
@@ -101,4 +107,3 @@ describe Atig::Db::Lists do
     @args[:mode].should == [ "a", [ bob ]]
   end
 end
-

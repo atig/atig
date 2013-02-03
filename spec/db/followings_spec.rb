@@ -9,6 +9,10 @@ describe Atig::Db::Followings,"when it is empty" do
     @db = Atig::Db::Followings.new('following.test.db')
   end
 
+  after(:all) do
+    FileUtils.rm_f 'following.test.db'
+  end
+
   it "should be emtpy" do
     @db.empty?.should be_true
   end
