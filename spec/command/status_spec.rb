@@ -25,6 +25,19 @@ describe Atig::Command::Status do
     @gateway.filtered.should == { :status => 'blah blah' }
   end
 
+  if RUBY_VERSION >= '1.9'
+    it "should post with japanese language" do
+      res = status("あ"*140)
+      @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return(nil)
+      @api.should_receive(:post).with('statuses/update', {:status=>"あ"*140}).and_return(res)
+
+      call '#twitter', "status", ["あ" * 140]
+
+      @gateway.updated.should  == [ res, '#twitter' ]
+      @gateway.filtered.should == { :status => "あ" * 140 }
+    end
+  end
+
   it "should not post same post" do
     e = entry user(1,'mzp'), status('blah blah')
     @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return([ e ] )
