@@ -24,10 +24,13 @@
 
 リリース版
 ~~~~~~~~~~
-`GitHub`_ からダウンロードしてください。
+Rubygemsを使用してインストールしてください。::
+
+ $ gem install atig
+
+または `GitHub`_ からダウンロードしてください。
 
 .. _GitHub: http://github.com/mzp/atig/downloads
-
 
 trunk版
 ~~~~~~~~~~
@@ -42,8 +45,12 @@ githubからpullしてください。::
 ~~~~~~~~~
 コマンドラインから起動します。::
 
+ $ atig -d
+
+githubからダウンロードした場合::
+
  $ cd atig
- $ ruby atig.rb -d
+ $ bin/atig -d
  I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668
 
 接続

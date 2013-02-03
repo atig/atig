@@ -1,25 +1,31 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>クイックスタート &mdash; atig.rb v0.3.2 documentation</title>
+    <title>クイックスタート &mdash; atig.rb 0.3.8 documentation</title>
+    
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     '0.3.2',
-        COLLAPSE_MODINDEX: false,
+        URL_ROOT:    '',
+        VERSION:     '0.3.8',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="atig.rb v0.3.2 documentation" href="index.html" />
+    <link rel="top" title="atig.rb 0.3.8 documentation" href="index.html" />
     <link rel="next" title="atig.rbの特徴" href="feature.html" />
     <link rel="prev" title="atig.rb : Another Twitter Irc Gateway" href="index.html" /> 
   </head>
@@ -36,56 +42,56 @@
         <li class="right" >
           <a href="index.html" title="atig.rb : Another Twitter Irc Gateway"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">atig.rb v0.3.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">atig.rb 0.3.8 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="index.html">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">クイックスタート</a><ul>
-<li><a class="reference external" href="#id2">必要なソフトウェア</a></li>
-<li><a class="reference external" href="#id3">インストール</a><ul>
-<li><a class="reference external" href="#id4">リリース版</a></li>
-<li><a class="reference external" href="#trunk">trunk版</a></li>
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">クイックスタート</a><ul>
+<li><a class="reference internal" href="#id2">必要なソフトウェア</a></li>
+<li><a class="reference internal" href="#id3">インストール</a><ul>
+<li><a class="reference internal" href="#id4">リリース版</a></li>
+<li><a class="reference internal" href="#trunk">trunk版</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#id5">使ってみる</a><ul>
-<li><a class="reference external" href="#id6">起動</a></li>
-<li><a class="reference external" href="#id7">接続</a></li>
-<li><a class="reference external" href="#oauth">OAuth認証</a></li>
-<li><a class="reference external" href="#id8">発言してみる</a></li>
+<li><a class="reference internal" href="#id5">使ってみる</a><ul>
+<li><a class="reference internal" href="#id6">起動</a></li>
+<li><a class="reference internal" href="#id7">接続</a></li>
+<li><a class="reference internal" href="#oauth">OAuth認証</a></li>
+<li><a class="reference internal" href="#id8">発言してみる</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#id9">さらに詳しい使い方</a></li>
+<li><a class="reference internal" href="#id9">さらに詳しい使い方</a></li>
 </ul>
 </li>
 </ul>
 
-            <h4>Previous topic</h4>
-            <p class="topless"><a href="index.html"
-                                  title="previous chapter">atig.rb : Another Twitter Irc Gateway</a></p>
-            <h4>Next topic</h4>
-            <p class="topless"><a href="feature.html"
-                                  title="next chapter">atig.rbの特徴</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="_sources/quickstart.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="index.html"
+                        title="previous chapter">atig.rb : Another Twitter Irc Gateway</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="feature.html"
+                        title="next chapter">atig.rbの特徴</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/quickstart.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -100,28 +106,31 @@
 <h2>必要なソフトウェア<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <p>以下のものが必要です。</p>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>Ruby 1.8/1.9</li>
 <li>Sqlite3</li>
 <li>適当なIRCクライアント(例: <a class="reference external" href="http://limechat.net/">LimeChat</a> )</li>
 </ul>
-</blockquote>
+</div></blockquote>
 <p>またRubyには次のライブラリがインストールされている必要があります。</p>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>oauth</li>
 <li>sqlite3-ruby</li>
 <li>json(Ruby 1.8の場合, Ruby 1.9の場合は不要)</li>
 <li>rspec(単体テストを実行する場合, 開発者以外は不要)</li>
 <li>rake(単体テストを実行する場合, 開発者以外は不要)</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </div>
 <div class="section" id="id3">
 <h2>インストール<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="id4">
 <h3>リリース版<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
-<p><a class="reference external" href="http://github.com/mzp/atig/downloads">GitHub</a> からダウンロードしてください。</p>
+<p>Rubygemsを使用してインストールしてください。:</p>
+<div class="highlight-python"><pre>$ gem install atig</pre>
+</div>
+<p>または <a class="reference external" href="http://github.com/mzp/atig/downloads">GitHub</a> からダウンロードしてください。</p>
 </div>
 <div class="section" id="trunk">
 <h3>trunk版<a class="headerlink" href="#trunk" title="Permalink to this headline">¶</a></h3>
@@ -135,8 +144,11 @@
 <div class="section" id="id6">
 <h3>起動<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
 <p>コマンドラインから起動します。:</p>
+<div class="highlight-python"><pre>$ atig -d</pre>
+</div>
+<p>githubからダウンロードした場合:</p>
 <div class="highlight-python"><pre>$ cd atig
-$ ruby atig.rb -d
+$ bin/atig -d
 I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668</pre>
 </div>
 </div>
@@ -144,14 +156,14 @@ I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668</pr
 <h3>接続<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
 <p>IRCクライアントで、localhost:16668に接続します。</p>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>nickname: Twitterのユーザ名</li>
 <li>login name: 使ってないので適当に</li>
-<li>real name: <a class="reference external" href="options.html"><em>クライアントオプション</em></a> 。tidがおすすめです。</li>
+<li>real name: <a class="reference internal" href="options.html"><em>クライアントオプション</em></a> 。tidがおすすめです。</li>
 <li>password: 空欄</li>
-<li>詳しくは <a class="reference external" href="irc.html"><em>IRCコマンド</em></a> を参照してください。</li>
+<li>詳しくは <a class="reference internal" href="irc.html"><em>IRCコマンド</em></a> を参照してください。</li>
 </ul>
-</blockquote>
+</div></blockquote>
 <img alt="_images/irc_setting.png" src="_images/irc_setting.png" />
 </div>
 <div class="section" id="oauth">
@@ -167,21 +179,21 @@ I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668</pr
 <div class="section" id="id8">
 <h3>発言してみる<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>#twitterで発言すると、Twitterに投稿されます。</li>
-<li><a class="reference external" href="commands.html"><em>CTCP ACTION</em></a> を用いると、RTやreplyが行なえます。</li>
+<li><a class="reference internal" href="commands.html"><em>CTCP ACTION</em></a> を用いると、RTやreplyが行なえます。</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="id9">
 <h2>さらに詳しい使い方<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>Tiarraと連携させると、発言のログを取ることができす。</li>
 <li><a class="reference external" href="http://god.rubyforge.org/">God</a> などと連携させると、atig.rbを常駐(デーモン化)させることができます。</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </div>
 </div>
 
@@ -203,12 +215,12 @@ I, [2010-04-05T07:22:07.861527 #62002]  INFO -- : Host: localhost Port:16668</pr
         <li class="right" >
           <a href="index.html" title="atig.rb : Another Twitter Irc Gateway"
              >previous</a> |</li>
-        <li><a href="index.html">atig.rb v0.3.2 documentation</a> &raquo;</li> 
+        <li><a href="index.html">atig.rb 0.3.8 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2010, mzp.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+        &copy; Copyright 2010, mzp.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

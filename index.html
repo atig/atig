@@ -1,25 +1,31 @@
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>atig.rb : Another Twitter Irc Gateway &mdash; atig.rb v0.3.2 documentation</title>
+    <title>atig.rb : Another Twitter Irc Gateway &mdash; atig.rb 0.3.8 documentation</title>
+    
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '#',
-        VERSION:     '0.3.2',
-        COLLAPSE_MODINDEX: false,
+        URL_ROOT:    '',
+        VERSION:     '0.3.8',
+        COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
       };
     </script>
     <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="atig.rb v0.3.2 documentation" href="#" />
+    <link rel="top" title="atig.rb 0.3.8 documentation" href="#" />
     <link rel="next" title="クイックスタート" href="quickstart.html" /> 
   </head>
   <body>
@@ -32,54 +38,53 @@
         <li class="right" >
           <a href="quickstart.html" title="クイックスタート"
              accesskey="N">next</a> |</li>
-        <li><a href="#">atig.rb v0.3.2 documentation</a> &raquo;</li> 
+        <li><a href="#">atig.rb 0.3.8 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
         <div class="sphinxsidebarwrapper">
-            <h3><a href="#">Table Of Contents</a></h3>
-            <ul>
-<li><a class="reference external" href="#">atig.rb : Another Twitter Irc Gateway</a><ul>
-<li><a class="reference external" href="#id1">スクリーンショット</a></li>
-<li><a class="reference external" href="#id2">ダウンロード</a></li>
-<li><a class="reference external" href="#id4">既知のバグ</a></li>
-<li><a class="reference external" href="#id5">特徴</a><ul>
-<li><a class="reference external" href="#irc">必要なのはIRCクライアントだけ</a></li>
-<li><a class="reference external" href="#lists">Listsにも対応してます</a></li>
-<li><a class="reference external" href="#os">大抵のOSで動きます</a></li>
-<li><a class="reference external" href="#id6">IRC用のソフトが流用できます。</a></li>
+  <h3><a href="#">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">atig.rb : Another Twitter Irc Gateway</a><ul>
+<li><a class="reference internal" href="#id1">スクリーンショット</a></li>
+<li><a class="reference internal" href="#id2">ダウンロード</a></li>
+<li><a class="reference internal" href="#id4">特徴</a><ul>
+<li><a class="reference internal" href="#irc">必要なのはIRCクライアントだけ</a></li>
+<li><a class="reference internal" href="#lists">Listsにも対応してます</a></li>
+<li><a class="reference internal" href="#os">大抵のOSで動きます</a></li>
+<li><a class="reference internal" href="#id5">IRC用のソフトが流用できます。</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#id7">その他のドキュメント</a><ul>
+<li><a class="reference internal" href="#id6">その他のドキュメント</a><ul>
 </ul>
 </li>
-<li><a class="reference external" href="#id8">バグ、疑問点、不満点を見つけたときは</a></li>
+<li><a class="reference internal" href="#id7">バグ、疑問点、不満点を見つけたときは</a></li>
 </ul>
 </li>
-<li><a class="reference external" href="#indices-and-tables">Indices and tables</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
 </ul>
 
-            <h4>Next topic</h4>
-            <p class="topless"><a href="quickstart.html"
-                                  title="next chapter">クイックスタート</a></p>
-            <h3>This Page</h3>
-            <ul class="this-page-menu">
-              <li><a href="_sources/index.txt"
-                     rel="nofollow">Show Source</a></li>
-            </ul>
-          <div id="searchbox" style="display: none">
-            <h3>Quick search</h3>
-              <form class="search" action="search.html" method="get">
-                <input type="text" name="q" size="18" />
-                <input type="submit" value="Go" />
-                <input type="hidden" name="check_keywords" value="yes" />
-                <input type="hidden" name="area" value="default" />
-              </form>
-              <p class="searchtip" style="font-size: 90%">
-              Enter search terms or a module, class or function name.
-              </p>
-          </div>
-          <script type="text/javascript">$('#searchbox').show(0);</script>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="quickstart.html"
+                        title="next chapter">クイックスタート</a></p>
+  <h3>This Page</h3>
+  <ul class="this-page-menu">
+    <li><a href="_sources/index.txt"
+           rel="nofollow">Show Source</a></li>
+  </ul>
+<div id="searchbox" style="display: none">
+  <h3>Quick search</h3>
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    <p class="searchtip" style="font-size: 90%">
+    Enter search terms or a module, class or function name.
+    </p>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
         </div>
       </div>
 
@@ -98,153 +103,149 @@
 <div class="section" id="id2">
 <h2>ダウンロード<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
 <blockquote>
-<ul class="simple">
-<li>安定板: <a class="reference external" href="http://github.com/mzp/atig/tarball/v0.3.2">atigrb-0.3.2.tgz</a>. ( <a class="reference external" href="http://github.com/mzp/atig/downloads">過去のバージョン</a> )</li>
+<div><ul class="simple">
+<li>安定板: <a class="reference external" href="http://github.com/mzp/atig/tarball/v0.3.8">atigrb-0.3.8.tgz</a>. ( <a class="reference external" href="http://github.com/mzp/atig/downloads">過去のバージョン</a> )</li>
 <li>開発版: <a class="reference external" href="http://github.com/mzp/atig">Github Repository</a>.</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </div>
 <div class="section" id="id4">
-<h2>既知のバグ<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
-<blockquote>
-<ul class="simple">
-<li>sqlite3-ruby 1.3.0/1.3.1に対応していません。(<a class="reference external" href="http://github.com/mzp/atig/issues#issue/2">Issue 2</a> )</li>
-</ul>
-</blockquote>
-</div>
-<div class="section" id="id5">
-<h2>特徴<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<h2>特徴<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="irc">
 <h3>必要なのはIRCクライアントだけ<a class="headerlink" href="#irc" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>IRCクライアントさえあれば、どこからでもTwitterできます。</li>
 <li>CUI中毒やEmacs中毒の方でも安心してお使いいただけます。</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </div>
 <div class="section" id="lists">
 <h3>Listsにも対応してます<a class="headerlink" href="#lists" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>Listsはチャンネルになります。</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </div>
 <div class="section" id="os">
 <h3>大抵のOSで動きます<a class="headerlink" href="#os" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>Rubyで書いてあるので大抵のOSで動作します。</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </div>
-<div class="section" id="id6">
-<h3>IRC用のソフトが流用できます。<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id5">
+<h3>IRC用のソフトが流用できます。<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>既存のIRC用のソフトを流用することができます。</li>
 <li>例えば、IRCプロキシであるTiarraと連携させることで、24時間Twitterのログがとることが可能です。</li>
 </ul>
-</blockquote>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>その他のドキュメント<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">クイックスタート</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id2">必要なソフトウェア</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id3">インストール</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id5">使ってみる</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#id9">さらに詳しい使い方</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feature.html">atig.rbの特徴</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feature.html#id1">主な機能</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature.html#id2">動作環境</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feature.html#id3">スクリーンショット</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="irc.html">IRCコマンド</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="irc.html#nick">nickなどの扱い</a></li>
+<li class="toctree-l2"><a class="reference internal" href="irc.html#id1">IRCコマンドとの対応</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="commandline_options.html">コマンドラインオプション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="commandline_options.html#id2">書式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commandline_options.html#id3">オプション</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="options.html">クライアントオプション</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="options.html#id2">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options.html#id3">発言関係</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options.html#id4">フォロワー関係</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options.html#id5">発言関連</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options.html#url">URL短縮関係</a></li>
+<li class="toctree-l2"><a class="reference internal" href="options.html#id6">システム関係</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">CTCP ACTION</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#id1">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#id2">発言関係</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#id5">ユーザ関係</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#id6">プロフィール関連</a></li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#id7">システム関係</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">設定</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id2">概要</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id3">利用可能なコマンドの変更</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#api">取得するAPIの変更</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id4">取得した発言の加工方法の変更</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id5">自分の発言の加工</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#id6">チャンネルの変更</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tig.html">tig.rbとの違い</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="tig.html#id2">機能の違い</a></li>
+<li class="toctree-l2"><a class="reference internal" href="tig.html#id3">その他の違い</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">更新履歴</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-3-8-2013-02-03">v0.3.8(2013-02-03)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-3-7-2013-01-27">v0.3.7(2013-01-27)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-3-5-2012-05-07">v0.3.5(2012-05-07)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-3-1-2010-07-26">v0.3.1(2010-07-26)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-3-0-2010-06-12">v0.3.0(2010-06-12)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-2-1-2010-04-17">v0.2.1(2010-04-17)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-2-0-2010-04-11">v0.2.0(2010-04-11)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#v0-1-0-2010-04-11">v0.1.0(2010-04-11)</a></li>
+</ul>
+</li>
+</ul>
 </div>
 </div>
 <div class="section" id="id7">
-<h2>その他のドキュメント<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
-<ul>
-<li class="toctree-l1"><a class="reference external" href="quickstart.html">クイックスタート</a><ul>
-<li class="toctree-l2"><a class="reference external" href="quickstart.html#id2">必要なソフトウェア</a></li>
-<li class="toctree-l2"><a class="reference external" href="quickstart.html#id3">インストール</a></li>
-<li class="toctree-l2"><a class="reference external" href="quickstart.html#id5">使ってみる</a></li>
-<li class="toctree-l2"><a class="reference external" href="quickstart.html#id9">さらに詳しい使い方</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="feature.html">atig.rbの特徴</a><ul>
-<li class="toctree-l2"><a class="reference external" href="feature.html#id1">主な機能</a></li>
-<li class="toctree-l2"><a class="reference external" href="feature.html#id2">動作環境</a></li>
-<li class="toctree-l2"><a class="reference external" href="feature.html#id3">スクリーンショット</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="irc.html">IRCコマンド</a><ul>
-<li class="toctree-l2"><a class="reference external" href="irc.html#nick">nickなどの扱い</a></li>
-<li class="toctree-l2"><a class="reference external" href="irc.html#id1">IRCコマンドとの対応</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="commandline_options.html">コマンドラインオプション</a><ul>
-<li class="toctree-l2"><a class="reference external" href="commandline_options.html#id2">書式</a></li>
-<li class="toctree-l2"><a class="reference external" href="commandline_options.html#id3">オプション</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="options.html">クライアントオプション</a><ul>
-<li class="toctree-l2"><a class="reference external" href="options.html#id2">概要</a></li>
-<li class="toctree-l2"><a class="reference external" href="options.html#id3">発言関係</a></li>
-<li class="toctree-l2"><a class="reference external" href="options.html#id4">フォロワー関係</a></li>
-<li class="toctree-l2"><a class="reference external" href="options.html#id5">発言関連</a></li>
-<li class="toctree-l2"><a class="reference external" href="options.html#url">URL短縮関係</a></li>
-<li class="toctree-l2"><a class="reference external" href="options.html#id6">システム関係</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="commands.html">CTCP ACTION</a><ul>
-<li class="toctree-l2"><a class="reference external" href="commands.html#id1">概要</a></li>
-<li class="toctree-l2"><a class="reference external" href="commands.html#id2">発言関係</a></li>
-<li class="toctree-l2"><a class="reference external" href="commands.html#id5">ユーザ関係</a></li>
-<li class="toctree-l2"><a class="reference external" href="commands.html#id6">プロフィール関連</a></li>
-<li class="toctree-l2"><a class="reference external" href="commands.html#id7">システム関係</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="config.html">設定</a><ul>
-<li class="toctree-l2"><a class="reference external" href="config.html#id2">概要</a></li>
-<li class="toctree-l2"><a class="reference external" href="config.html#id3">利用可能なコマンドの変更</a></li>
-<li class="toctree-l2"><a class="reference external" href="config.html#api">取得するAPIの変更</a></li>
-<li class="toctree-l2"><a class="reference external" href="config.html#id4">取得した発言の加工方法の変更</a></li>
-<li class="toctree-l2"><a class="reference external" href="config.html#id5">自分の発言の加工</a></li>
-<li class="toctree-l2"><a class="reference external" href="config.html#id6">チャンネルの変更</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="tig.html">tig.rbとの違い</a><ul>
-<li class="toctree-l2"><a class="reference external" href="tig.html#id2">機能の違い</a></li>
-<li class="toctree-l2"><a class="reference external" href="tig.html#id3">その他の違い</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference external" href="changelog.html">更新履歴</a><ul>
-<li class="toctree-l2"><a class="reference external" href="changelog.html#v0-3-2-2010-10-10">v0.3.2(2010-10-10)</a></li>
-<li class="toctree-l2"><a class="reference external" href="changelog.html#v0-3-1-2010-07-26">v0.3.1(2010-07-26)</a></li>
-<li class="toctree-l2"><a class="reference external" href="changelog.html#v0-3-0-2010-06-12">v0.3.0(2010-06-12)</a></li>
-<li class="toctree-l2"><a class="reference external" href="changelog.html#v0-2-1-2010-04-17">v0.2.1(2010-04-17)</a></li>
-<li class="toctree-l2"><a class="reference external" href="changelog.html#v0-2-2010-04-11">v0.2(2010-04-11)</a></li>
-<li class="toctree-l2"><a class="reference external" href="changelog.html#v0-1">v0.1</a></li>
-</ul>
-</li>
-</ul>
-</div>
-<div class="section" id="id8">
-<h2>バグ、疑問点、不満点を見つけたときは<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h2>
+<h2>バグ、疑問点、不満点を見つけたときは<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
 <p>こんな場合は、mzpまで気軽にご連絡ください。
 できる範囲でサポートします。</p>
 <blockquote>
-<ul class="simple">
-<li>atig.rbの挙動がおかしい</li>
+<div><ul class="simple">
+<li>atig の挙動がおかしい</li>
 <li>設定の仕方がよく分からない</li>
 <li>欲しい機能がなかった</li>
-<li>atig.rbに足りないクールな機能を実装したぜ</li>
+<li>atig に足りないクールな機能を実装したぜ</li>
 </ul>
-</blockquote>
+</div></blockquote>
 <p>連絡方法は以下のものがあります。それ以外の方法でもmzpまでに届けばかまいません。</p>
 <blockquote>
-<ul class="simple">
+<div><ul class="simple">
 <li>Githubの <a class="reference external" href="http://github.com/mzp/atig/issues">Issues</a> に登録する。</li>
 <li><a class="reference external" href="http://twitter.com/mzp/">&#64;mzp</a> 宛につぶやく。</li>
 <li><a class="reference external" href="http://d.hatena.ne.jp/mzp/">Blog</a> の適当なページにコメントをつける</li>
 <li>Githubでforkして、pull requestを送る</li>
 </ul>
-</blockquote>
+</div></blockquote>
 </div>
 </div>
 <div class="section" id="indices-and-tables">
 <h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
-<li><a class="reference external" href="genindex.html"><em>Index</em></a></li>
-<li><a class="reference external" href="search.html"><em>Search Page</em></a></li>
+<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
+<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
 </ul>
 </div>
 
@@ -263,12 +264,12 @@
         <li class="right" >
           <a href="quickstart.html" title="クイックスタート"
              >next</a> |</li>
-        <li><a href="#">atig.rb v0.3.2 documentation</a> &raquo;</li> 
+        <li><a href="#">atig.rb 0.3.8 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-      &copy; Copyright 2010, mzp.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 0.6.5.
+        &copy; Copyright 2010, mzp.
+      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
     </div>
   </body>
 </html>

@@ -48,20 +48,20 @@ URL短縮関係
 発言中の長いURLを自動で短縮します。どの短縮URLサービスを用いて短縮する
 か、どの程度の長さのURLを短縮するか、などが設定できます。
 
-bitlify=\ ``size``
-  ``size``\ 字以上のURLを http://bit.ly\ によって短縮します。
 bitlify
   |len|\ 字以上のURLを http://bit.ly\ によって短縮します。
-bitlify=\ ``api_key``:\ ``api_key``:\ ``size``
+bitlify=\ ``size``
+  ``size``\ 字以上のURLを http://bit.ly\ によって短縮します。
+bitlify=\ ``username``:\ ``api_key``
+  |len|\ 字以上のURLを http://bit.ly のAPIによって短縮します。
+bitlify=\ ``username``:\ ``api_key``:\ ``size``
   ``size``\ 字以上のURLを http://bit.ly のAPIによって短縮します。
   APIを利用して短縮すると、ユーザページに短縮したURLが記録されたりします。
   詳しくは、 http://bit.ly のSign up for bit.lyを読んでください。
-bitlify=\ ``api_key``:\ ``api_key``
-  |len|\ 字以上のURLを http://bit.ly のAPIによって短縮します。
-unuify= \ ``size``
-  ``size`` 字以上のURLを http://u.nu によって短縮します。
 unuify
   |len| 字以上のURLを http://u.nu によって短縮します。
+unuify= \ ``size``
+  ``size`` 字以上のURLを http://u.nu によって短縮します。
 
 .. |len| replace:: 20
 
