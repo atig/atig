@@ -38,6 +38,10 @@ describe Atig::Db::Followings,"when updated users" do
     end
   end
 
+  after(:all) do
+    FileUtils.rm_f 'following.test.db'
+  end
+
   it "should return size" do
     @db.size.should == 2
   end
