@@ -41,6 +41,7 @@ END
     http_methods :get, :post, :put, :delete
 
     protected
+
     def request(uri, opts)
       authenticate = opts.fetch(:authenticate, true)
       method       = opts.fetch(:method, :get)
@@ -60,6 +61,9 @@ END
       timeout(time) do
         headers = {}
         req.each{|k,v| headers[k] = v }
+
+        # workaround: ruby-2.0.0 can't inflate when use accept-encoding.
+        headers.delete "accept-encoding" if headers["accept-encoding"]
 
         case req
         when Net::HTTP::Get
