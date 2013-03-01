@@ -17,7 +17,7 @@ module Atig
       end
 
       def update(api)
-        @db.noretweets.clear.concat( api.get("friendships/no_retweet_ids") )
+        @db.noretweets.clear.concat( api.get("friendships/no_retweets/ids") )
       end
     end
   end
