@@ -30,7 +30,7 @@ module Atig
         log :info, "initialize"
       end
 
-      def dir(id, tmpdir)
+      def dir(id)
         dir = File.expand_path "atig/#{@me.screen_name}/", @tmpdir
         log :debug, "db(#{id}) = #{dir}"
         FileUtils.mkdir_p dir
