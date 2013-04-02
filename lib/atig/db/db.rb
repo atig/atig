@@ -7,7 +7,6 @@ require 'atig/util'
 require 'thread'
 require 'set'
 require 'fileutils'
-require 'tmpdir'
 
 module Atig
   module Db
@@ -15,12 +14,12 @@ module Atig
       include Util
       attr_reader :followings, :statuses, :dms, :lists, :noretweets
       attr_accessor :me
-      Path = ::Dir.tmpdir
       VERSION = 4
 
       def initialize(context, opt={})
         @log        = context.log
         @me         = opt[:me]
+        @tmpdir     = opt[:tmpdir]
 
         @followings = Followings.new dir('following')
         @statuses   = Statuses.new   dir('status')
@@ -31,8 +30,8 @@ module Atig
         log :info, "initialize"
       end
 
-      def dir(id)
-        dir = File.expand_path "atig/#{@me.screen_name}/", Path
+      def dir(id, tmpdir)
+        dir = File.expand_path "atig/#{@me.screen_name}/", @tmpdir
         log :debug, "db(#{id}) = #{dir}"
         FileUtils.mkdir_p dir
         File.expand_path "#{id}.#{VERSION}.db", dir

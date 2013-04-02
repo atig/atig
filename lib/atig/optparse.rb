@@ -1,4 +1,5 @@
 require "optparse"
+require 'tmpdir'
 
 module Atig
   module OptParser
@@ -10,6 +11,7 @@ module Atig
           :log   => nil,
           :debug => false,
           :foreground => false,
+          :tmpdir => ::Dir.tmpdir,
           :conf => '~/.atig/config',
         }
 
@@ -36,6 +38,10 @@ EOB
             on("--debug", "Enable debug mode") do |debug|
               opts[:log]   ||= $stderr
               opts[:debug]   = true
+            end
+
+            on("--tmpdir", "temporary directory path") do |tmp|
+              opts[:tmpdir] = tmp
             end
 
             on("--memprof", "Enable memory profiler") do|_|
