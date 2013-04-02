@@ -40,6 +40,7 @@ END
 
       def initialize(*args)
         super
+        @tmpdir = @opts.tmpdir
         @on_message = nil
       end
 
@@ -165,7 +166,7 @@ END
 
           post server_name, MODE, @nick, "+o"
 
-          @db = Atig::Db::Db.new context, :me=>me, :size=> 100
+          @db = Atig::Db::Db.new context, :me=>me, :size=> 100, :tmpdir => @tmpdir
           run_new @@commands, context, self, @api, @db
           run_new @@agents  , context, @api, @db
           run_new @@channels, context, self, @db

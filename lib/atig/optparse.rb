@@ -40,7 +40,7 @@ EOB
               opts[:debug]   = true
             end
 
-            on("--tmpdir", "temporary directory path") do |tmp|
+            on("--tmpdir path", "temporary directory path") do |tmp|
               opts[:tmpdir] = tmp
             end
 
