@@ -20,7 +20,7 @@ class Atig::Agent::ListStatus
         q = {}
         q.update(:since_id => @prev[name]) if @prev.key?(name)
 
-        screen_name,slug = parse name
+        screen_name, slug = parse name
         statuses = t.get("#{screen_name}/lists/#{slug}/statuses",q)
         statuses.reverse_each do|status|
           db.statuses.transaction do|d|

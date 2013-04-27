@@ -29,11 +29,11 @@ module Atig
 
       def full_update(t)
         lists = entry_points.map{|entry|
-          t.page(entry, :lists, true)
-        }.flatten
+          t.get(entry)
+        }.flatten.compact
 
         users = {}
-        lists.map do|list|
+        lists.map do |list|
           name = if list.user.screen_name == @db.me.screen_name then
                    "#{list.slug}"
                  else
