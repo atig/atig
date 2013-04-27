@@ -1,5 +1,5 @@
-#!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
+
 require 'atig/basic_twitter'
 require 'atig/http'
 
