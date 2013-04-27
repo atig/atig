@@ -41,8 +41,8 @@ module Atig
                  end
           begin
             users[name] =
-              t.page("#{list.user.screen_name}/#{list.slug}/members", :users, true)
-          rescue APIFailed => e
+              t.page("lists/members", :users, {:owner_screen_name => list.user.screen_name, :slug => list.slug})
+          rescue => e
             log :error, e.inspect
             users[name] =
               @db.lists.find_by_list_name(list.slug)
