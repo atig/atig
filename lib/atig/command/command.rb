@@ -9,11 +9,11 @@ module Atig
         @gateway = gateway
         @api     = api
         @db      = db
-	@gateway.ctcp_action(*command_name) do |target, mesg, command, args|
+        @gateway.ctcp_action(*command_name) do |target, mesg, command, args|
           action(target, mesg, command, args){|m|
             gateway[target].notify m
           }
-	end
+        end
       end
 
       def find_by_tid(tid)

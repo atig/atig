@@ -14,7 +14,7 @@ module Atig
         args.each do|tid|
           if entry = Info.find_status(db, tid)
             api.delay(0){|t|
-              res = t.post("favorites/#{method}/#{entry.status.id}")
+              res = t.post("favorites/#{method}", {:id => entry.status.id})
               yield "#{command.upcase}: #{entry.user.screen_name}: #{entry.status.text}"
             }
           else

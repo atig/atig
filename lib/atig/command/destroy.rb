@@ -1,5 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
-require 'time'
+
 require 'atig/command/command'
 require 'atig/command/info'
 
