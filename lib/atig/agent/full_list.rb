@@ -7,8 +7,8 @@ module Atig
   module Agent
     class FullList < List
       def entry_points
-        [ "#{@db.me.screen_name}/lists",
-          "#{@db.me.screen_name}/lists/subscriptions"
+        [
+          "lists/list",
         ]
       end
 

@@ -73,4 +73,3 @@ module Atig
     end
   end
 end
-
