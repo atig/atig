@@ -18,35 +18,35 @@ describe Atig::Command::Favorite do
   end
 
   it "should post fav by tid" do
-    @api.should_receive(:post).with("favorites/create/1")
+    @api.should_receive(:post).with("favorites/create", {:id => "1"})
     @channel.should_receive(:notify).with("FAV: mzp: blah blah")
 
     call "#twitter","fav",%w(a)
   end
 
   it "should post fav by sid" do
-    @api.should_receive(:post).with("favorites/create/1")
+    @api.should_receive(:post).with("favorites/create", {:id => "1"})
     @channel.should_receive(:notify).with("FAV: mzp: blah blah")
 
     call "#twitter","fav",%w(mzp:a)
   end
 
   it "should post fav by screen name" do
-    @api.should_receive(:post).with("favorites/create/1")
+    @api.should_receive(:post).with("favorites/create", {:id => "1"})
     @channel.should_receive(:notify).with("FAV: mzp: blah blah")
 
     call "#twitter","fav",%w(mzp)
   end
 
   it "should post fav by screen name with at" do
-    @api.should_receive(:post).with("favorites/create/1")
+    @api.should_receive(:post).with("favorites/create", {:id => "1"})
     @channel.should_receive(:notify).with("FAV: mzp: blah blah")
 
     call "#twitter","fav",%w(@mzp)
   end
 
   it "should post unfav" do
-    @api.should_receive(:post).with("favorites/destroy/1")
+    @api.should_receive(:post).with("favorites/destroy", {:id => "1"})
     @channel.should_receive(:notify).with("UNFAV: mzp: blah blah")
 
     call "#twitter","unfav",%w(a)

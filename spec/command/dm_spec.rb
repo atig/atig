@@ -15,7 +15,7 @@ describe Atig::Command::Dm do
 
   it "should post the status by API" do
     @api.should_receive(:post).with('direct_messages/new',
-                                    {:user=>'mzp', :text=> 'blah blah'})
+                                    {:screen_name => 'mzp', :text => 'blah blah'})
     @channel.should_receive(:notify).with("Sent message to mzp: blah blah")
     call '#twitter', "dm", %w(mzp blah blah)
   end
