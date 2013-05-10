@@ -1,4 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
+
 require 'atig/command/command'
 require 'atig/levenshtein'
 

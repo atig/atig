@@ -12,16 +12,16 @@ module Atig
         @db  = db
         log :info, "initialize"
 
-        @db.lists.on_invalidated{|name|
+        @db.lists.on_invalidated do |name|
           log :info, "invalidated #{name}"
-          api.delay(0){|t|
+          api.delay(0) do |t|
             if name == :all then
               full_update t
             else
-              @db.lists[name].update t.page("#{@db.me.screen_name}/#{name}/members", :users, true)
+              @db.lists[name].update t.page("lists/members", :users, {:owner_screen_name => @db.me.screen_name, :slug => name})
             end
-          }
-        }
+          end
+        end
         api.repeat( interval ) do|t|
           self.full_update t
         end
@@ -29,11 +29,11 @@ module Atig
 
       def full_update(t)
         lists = entry_points.map{|entry|
-          t.page(entry, :lists, true)
-        }.flatten
+          t.get(entry)
+        }.flatten.compact
 
         users = {}
-        lists.map do|list|
+        lists.map do |list|
           name = if list.user.screen_name == @db.me.screen_name then
                    "#{list.slug}"
                  else
@@ -41,8 +41,8 @@ module Atig
                  end
           begin
             users[name] =
-              t.page("#{list.user.screen_name}/#{list.slug}/members", :users, true)
-          rescue APIFailed => e
+              t.page("lists/members", :users, {:owner_screen_name => list.user.screen_name, :slug => list.slug})
+          rescue => e
             log :error, e.inspect
             users[name] =
               @db.lists.find_by_list_name(list.slug)

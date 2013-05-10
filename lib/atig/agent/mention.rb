@@ -9,7 +9,7 @@ module Atig
         super
       end
       def interval; 180 end
-      def path; '/statuses/mentions' end
+      def path; '/statuses/mentions_timeline' end
       def source; :mention end
     end
   end

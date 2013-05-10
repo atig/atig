@@ -20,7 +20,7 @@ module Atig
         text = mesg.split(" ", 3)[2]
         api.delay(0) do|t|
           t.post("direct_messages/new",{
-                   :user => user,
+                   :screen_name => user,
                    :text => text
                  })
           yield "Sent message to #{user}: #{text}"

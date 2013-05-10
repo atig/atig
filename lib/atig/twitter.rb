@@ -1,5 +1,5 @@
-#!/usr/bin/env ruby
 # -*- coding: utf-8 -*-
+
 require 'atig/basic_twitter'
 require 'atig/http'
 
@@ -12,16 +12,14 @@ module Atig
       @http  = Atig::Http.new @log
     end
 
-    # authenticate = trueでないとSSL verified errorがでることがある
-    def page(path, name, authenticate = true, &block)
+    def page(path, name, opts = {}, &block)
       limit = 0.98 * @remain # 98% of IP based rate limit
       r     = []
       cursor = -1
       1.upto(limit) do |num|
-        # next_cursor にアクセスするとNot found が返ってくることがあるので，その時はbreak
-        ret = api(path, { :cursor => cursor }, { :authenticate => authenticate }) rescue break
-        arr = ret[name.to_s]
-        r.concat arr
+        options = {:cursor => cursor}.merge(opts)
+        ret = api(path, options, { :authenticate => true })
+        r.concat ret[name]
         cursor = ret[:next_cursor]
         break if cursor.zero?
       end
