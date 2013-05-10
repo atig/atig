@@ -5,7 +5,6 @@ require 'bundler'
 Bundler.setup
 Bundler.require :default, :test
 
-
 require 'atig/monkey'
 require 'command_helper'
 
@@ -15,7 +14,7 @@ RSpec::Matchers.define :be_text do |text|
   end
 end
 
-def status(text,opt={})
+def status(text, opt = {})
   Atig::TwitterStruct.make(opt.merge('text' => text))
 end
 
@@ -26,10 +25,13 @@ def user(id, name)
   user
 end
 
-def entry(user,status,name='entry',id=0)
+def entry(user, status, name = 'entry', id = 0)
   entry = stub name
   entry.stub!('id').and_return(id)
   entry.stub!('user').and_return(user)
   entry.stub!('status').and_return(status)
   entry
 end
+
+require 'coveralls'
+Coveralls.wear!
