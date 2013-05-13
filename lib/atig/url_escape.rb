@@ -48,7 +48,7 @@ module URI::Escape
     alias :encode :escape
   end
 
-  def encode_component str, unsafe = /[^-_.!~*'()a-zA-Z0-9 ]/
+  def encode_component(str, unsafe = ::OAuth::RESERVED_CHARACTERS)
     _orig_escape(str, unsafe).tr(" ", "+")
   end
 
