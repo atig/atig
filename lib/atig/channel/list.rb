@@ -12,14 +12,14 @@ module Atig
         def on_invite(api, nick)
           return if @name.include? '^'
 
-          api.post("#{@db.me.screen_name}/#{@name}/members", :id => nick )
+          api.post("lists/members/create", :screen_name => nick, :owner_screen_name => @db.me.screen_name, :slug => @name )
           @db.lists.invalidate @name
         end
 
         def on_kick(api, nick)
           return if @name.include? '^'
 
-          api.delete("#{@db.me.screen_name}/#{@name}/members", :id => nick )
+          api.post("lists/members/destroy", :screen_name => nick, :owner_screen_name => @db.me.screen_name, :slug => @name )
           @db.lists.invalidate @name
         end
 
