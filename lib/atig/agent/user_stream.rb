@@ -16,7 +16,9 @@ module Atig
         log :info, "initialize"
 
         @api.stream do|t|
-          t.watch('user') do |status|
+          options = context.opts.allreplies ? {:replies => :all} : {}
+
+          t.watch('user', options) do |status|
 #            @log.debug status.inspect
             next if status.retweeted_status and db.noretweets.include?(status.user.id)
             if status.direct_message
