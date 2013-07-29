@@ -10,6 +10,7 @@ module Atig
           gsub("&gt;", ">").
           gsub("&quot;", '"').
           gsub("&lt;", "<").
+          gsub("&amp;", "&").
           gsub(WSP_REGEX, " ")
       status.merge :text => text
     }
