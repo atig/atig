@@ -12,7 +12,7 @@ describe Atig::Command::Destroy,"when status is not removed" do
 
   it "should specified other's status" do
     entry  = entry user(2,'other'), status('blah blah', 'id'=>'1')
-    @statuses.stub!(:find_by_tid).with('b').and_return(entry)
+    @statuses.stub(:find_by_tid).with('b').and_return(entry)
 
     @channel.should_receive(:notify).with("The status you specified by the ID tid is not yours.")
     call "#twitter","destory",%w(b)

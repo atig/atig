@@ -9,9 +9,9 @@ describe Atig::Command::Version do
   before do
     @command = init Atig::Command::Version
     @status  = stub "status"
-    @status.stub!(:source).and_return('<a href="http://echofon.com/" rel="nofollow">Echofon</a>')
+    @status.stub(:source).and_return('<a href="http://echofon.com/" rel="nofollow">Echofon</a>')
     @user    = stub "user"
-    @user.stub!(:status).and_return(@status)
+    @user.stub(:status).and_return(@status)
   end
 
   it "should provide version command" do
@@ -34,7 +34,7 @@ describe Atig::Command::Version do
 
   it "should show the source of web" do
     status  = stub "status"
-    status.stub!(:source).and_return('web')
+    status.stub(:source).and_return('web')
     @statuses.
       should_receive(:find_by_screen_name).
       with('mzp',:limit => 1).
@@ -49,7 +49,7 @@ describe Atig::Command::Version do
   end
 
   it "should show the source via API" do
-    @statuses.stub!(:find_by_screen_name).and_return(@status)
+    @statuses.stub(:find_by_screen_name).and_return(@status)
     @statuses.should_receive(:find_by_screen_name).with('mzp',:limit => 1).and_return(nil)
     @statuses.should_receive(:add).with(:status => @status, :user => @user, :source=>:version)
     @api.should_receive(:get).with('users/show',:screen_name=>'mzp').and_return(@user)

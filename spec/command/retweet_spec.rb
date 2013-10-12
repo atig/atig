@@ -7,10 +7,10 @@ describe Atig::Command::Retweet do
   include CommandHelper
   before do
     bitly =  mock("Bitly")
-    bitly.stub!(:shorten).and_return{|s|
+    bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
-    Atig::Bitly.stub!(:no_login).and_return(bitly)
+    Atig::Bitly.stub(:no_login).and_return(bitly)
 
     @command = init Atig::Command::Retweet
 

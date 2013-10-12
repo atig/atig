@@ -10,8 +10,8 @@ describe Atig::Command::UserInfo do
     @command = init Atig::Command::UserInfo
     @status  = stub "status"
     @user    = stub "user"
-    @user.stub!(:description).and_return('hogehoge')
-    @user.stub!(:status).and_return(@status)
+    @user.stub(:description).and_return('hogehoge')
+    @user.stub(:status).and_return(@status)
   end
 
   it "should show the source via DB" do

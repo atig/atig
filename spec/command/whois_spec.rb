@@ -17,19 +17,19 @@ describe Atig::Command::Whois do
   before do
     @command = init Atig::Command::Whois
     @status  = stub 'status'
-    @status.stub!(:created_at).and_return(time(::Time.at(42)))
+    @status.stub(:created_at).and_return(time(::Time.at(42)))
     @user    = stub "user"
-    @user.stub!(:name)       .and_return('name')
-    @user.stub!(:id)         .and_return('10')
-    @user.stub!(:screen_name).and_return('screen_name')
-    @user.stub!(:description).and_return('blah blah')
-    @user.stub!(:protected)  .and_return(false)
-    @user.stub!(:location)   .and_return('Tokyo, Japan')
-    @user.stub!(:created_at) .and_return(time(::Time.at(0)))
-    @user.stub!(:status)     .and_return(@status)
+    @user.stub(:name)       .and_return('name')
+    @user.stub(:id)         .and_return('10')
+    @user.stub(:screen_name).and_return('screen_name')
+    @user.stub(:description).and_return('blah blah')
+    @user.stub(:protected)  .and_return(false)
+    @user.stub(:location)   .and_return('Tokyo, Japan')
+    @user.stub(:created_at) .and_return(time(::Time.at(0)))
+    @user.stub(:status)     .and_return(@status)
 
-    ::Time.stub!(:now).and_return(::Time.at(50))
-    @followings.stub!(:find_by_screen_name).with('mzp').and_return(@user)
+    ::Time.stub(:now).and_return(::Time.at(50))
+    @followings.stub(:find_by_screen_name).with('mzp').and_return(@user)
   end
 
   it "should proide whois command" do
@@ -56,7 +56,7 @@ describe Atig::Command::Whois do
   end
 
   it "should append /protect if the user is protected" do
-    @user.stub!(:protected).and_return(true)
+    @user.stub(:protected).and_return(true)
     commands = []
     @gateway.should_receive(:post){|_,command,_,_,*params|
       commands << command

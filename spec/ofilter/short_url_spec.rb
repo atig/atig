@@ -8,7 +8,7 @@ describe Atig::OFilter::ShortUrl,"when no-login bitly" do
   before do
     logger = mock('Logger')
     bitly =  mock("Bitly")
-    bitly.stub!(:shorten).and_return{|s|
+    bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
     Atig::Bitly.should_receive(:no_login).with(logger).and_return(bitly)
@@ -26,7 +26,7 @@ describe Atig::OFilter::ShortUrl,"when no-login bitly with size" do
   before do
     logger = mock('Logger')
     bitly =  mock("Bitly")
-    bitly.stub!(:shorten).and_return{|s|
+    bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
     Atig::Bitly.should_receive(:no_login).with(logger).and_return(bitly)
@@ -44,7 +44,7 @@ describe Atig::OFilter::ShortUrl,"when login bitly" do
   before do
     logger = mock('Logger')
     bitly =  mock("Bitly")
-    bitly.stub!(:shorten).and_return{|s|
+    bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
     Atig::Bitly.should_receive(:login).with(logger,"username","api_key").and_return(bitly)
@@ -62,7 +62,7 @@ describe Atig::OFilter::ShortUrl,"when login bitly with size" do
   before do
     logger = mock('Logger')
     bitly =  mock("Bitly")
-    bitly.stub!(:shorten).and_return{|s|
+    bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
     Atig::Bitly.should_receive(:login).with(logger,"username","api_key").and_return(bitly)
@@ -80,7 +80,7 @@ describe Atig::OFilter::ShortUrl,"when unu bitly" do
   before do
     logger = mock('Logger')
     unu =  mock("Unu")
-    unu.stub!(:shorten).and_return{|s|
+    unu.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
     Atig::Unu.should_receive(:new).with(logger).and_return(unu)
@@ -98,7 +98,7 @@ describe Atig::OFilter::ShortUrl,"when no-login unu with size" do
   before do
     logger = mock('Logger')
     unu =  mock("Unu")
-    unu.stub!(:shorten).and_return{|s|
+    unu.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
     Atig::Unu.should_receive(:new).with(logger).and_return(unu)

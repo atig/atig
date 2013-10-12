@@ -8,8 +8,8 @@ describe Atig::Command::Time do
 
   def user(offset, tz)
     u = mock "user-#{offset}"
-    u.stub!(:utc_offset).and_return(offset)
-    u.stub!(:time_zone).and_return(tz)
+    u.stub(:utc_offset).and_return(offset)
+    u.stub(:time_zone).and_return(tz)
     u
   end
 

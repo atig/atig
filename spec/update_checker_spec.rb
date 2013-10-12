@@ -13,8 +13,8 @@ describe Atig::UpdateChecker,'when use git version' do
   end
 
   before do
-    Atig::UpdateChecker.stub!(:git?).and_return(true)
-    Atig::UpdateChecker.stub!(:commits).
+    Atig::UpdateChecker.stub(:git?).and_return(true)
+    Atig::UpdateChecker.stub(:commits).
       and_return [
                   commit('a', 'foo'),
                   commit('b', 'bar'),
@@ -25,29 +25,29 @@ describe Atig::UpdateChecker,'when use git version' do
   end
 
   it "should not do anything when use HEAD version" do
-    Atig::UpdateChecker.stub!(:local_repos?).and_return true
-    Atig::UpdateChecker.stub!(:server_version).and_return rev('a')
+    Atig::UpdateChecker.stub(:local_repos?).and_return true
+    Atig::UpdateChecker.stub(:server_version).and_return rev('a')
 
     Atig::UpdateChecker.latest.should == []
   end
 
   it "should notify when not use HEAD version" do
-    Atig::UpdateChecker.stub!(:local_repos?).and_return false
-    Atig::UpdateChecker.stub!(:server_version).and_return rev('b')
+    Atig::UpdateChecker.stub(:local_repos?).and_return false
+    Atig::UpdateChecker.stub(:server_version).and_return rev('b')
 
     Atig::UpdateChecker.latest.should == [ 'foo' ]
   end
 
   it "should notify many changes" do
-    Atig::UpdateChecker.stub!(:local_repos?).and_return false
-    Atig::UpdateChecker.stub!(:server_version).and_return rev('d')
+    Atig::UpdateChecker.stub(:local_repos?).and_return false
+    Atig::UpdateChecker.stub(:server_version).and_return rev('d')
 
     Atig::UpdateChecker.latest.should == [ 'foo', 'bar', 'baz' ]
   end
 
   it "should notify all changes" do
-    Atig::UpdateChecker.stub!(:local_repos?).and_return false
-    Atig::UpdateChecker.stub!(:server_version).and_return rev('z')
+    Atig::UpdateChecker.stub(:local_repos?).and_return false
+    Atig::UpdateChecker.stub(:server_version).and_return rev('z')
 
     Atig::UpdateChecker.latest.should == [ 'foo', 'bar', 'baz', 'xyzzy', 'fuga' ]
   end

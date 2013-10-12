@@ -7,7 +7,7 @@ require 'ostruct'
 describe Atig::Db::SizedUniqArray do
   def item(id)
     item = stub "Item-#{id}"
-    item.stub!(:id).and_return id
+    item.stub(:id).and_return id
     item
   end
 

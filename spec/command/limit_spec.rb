@@ -9,9 +9,9 @@ describe Atig::Command::Limit do
   before do
     @reset = ::Time.utc(2010,9,25,8,24,12)
     @command = init Atig::Command::Limit
-    @api.stub!(:limit).and_return(150)
-    @api.stub!(:remain).and_return(148)
-    @api.stub!(:reset).and_return(@reset)
+    @api.stub(:limit).and_return(150)
+    @api.stub(:remain).and_return(148)
+    @api.stub(:reset).and_return(@reset)
   end
 
   it "should provide limit command" do

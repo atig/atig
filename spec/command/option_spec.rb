@@ -24,14 +24,14 @@ describe Atig::Command::Option, 'when have many property' do
     @opts.foo2 = 42
     @opts.foo3 = 42.1
 
-    @opts.stub!(:foo1=)
-    @opts.stub!(:foo2=)
-    @opts.stub!(:foo3=)
+    @opts.stub(:foo1=)
+    @opts.stub(:foo2=)
+    @opts.stub(:foo3=)
   end
 
   it "should list up values" do
     xs = []
-    @channel.stub!(:notify){|x| xs << x}
+    @channel.stub(:notify){|x| xs << x}
     call '#twitter', 'opt', %w()
     xs.should == [
                   "foo1 => true",
@@ -47,9 +47,9 @@ describe Atig::Command::Option, 'when have bool property' do
 
   before do
     @command = init Atig::Command::Option
-    @opts.stub!(:foo).and_return true
-    @opts.stub!(:foo=){|v| @value = v }
-    @channel.stub!(:notify)
+    @opts.stub(:foo).and_return true
+    @opts.stub(:foo=){|v| @value = v }
+    @channel.stub(:notify)
   end
 
   it "should show the value" do
@@ -68,9 +68,9 @@ describe Atig::Command::Option, 'when have int property' do
 
   before do
     @command = init Atig::Command::Option
-    @opts.stub!(:foo).and_return 42
-    @opts.stub!(:foo=){|v| @value = v }
-    @channel.stub!(:notify)
+    @opts.stub(:foo).and_return 42
+    @opts.stub(:foo=){|v| @value = v }
+    @channel.stub(:notify)
   end
 
   it "should show the value" do
@@ -89,9 +89,9 @@ describe Atig::Command::Option, 'when have float property' do
 
   before do
     @command = init Atig::Command::Option
-    @opts.stub!(:foo).and_return 1.23
-    @opts.stub!(:foo=){|v| @value = v }
-    @channel.stub!(:notify)
+    @opts.stub(:foo).and_return 1.23
+    @opts.stub(:foo=){|v| @value = v }
+    @channel.stub(:notify)
   end
 
   it "should show the value" do
@@ -110,9 +110,9 @@ describe Atig::Command::Option, 'when have string property' do
 
   before do
     @command = init Atig::Command::Option
-    @opts.stub!(:foo).and_return "bar"
-    @opts.stub!(:foo=){|v| @value = v }
-    @channel.stub!(:notify)
+    @opts.stub(:foo).and_return "bar"
+    @opts.stub(:foo=){|v| @value = v }
+    @channel.stub(:notify)
   end
 
   it "should show the value" do
