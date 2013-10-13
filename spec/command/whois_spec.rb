@@ -16,9 +16,9 @@ describe Atig::Command::Whois do
 
   before do
     @command = init Atig::Command::Whois
-    @status  = stub 'status'
+    @status  = double 'status'
     @status.stub(:created_at).and_return(time(::Time.at(42)))
-    @user    = stub "user"
+    @user    = double "user"
     @user.stub(:name)       .and_return('name')
     @user.stub(:id)         .and_return('10')
     @user.stub(:screen_name).and_return('screen_name')

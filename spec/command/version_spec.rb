@@ -8,9 +8,9 @@ describe Atig::Command::Version do
 
   before do
     @command = init Atig::Command::Version
-    @status  = stub "status"
+    @status  = double "status"
     @status.stub(:source).and_return('<a href="http://echofon.com/" rel="nofollow">Echofon</a>')
-    @user    = stub "user"
+    @user    = double "user"
     @user.stub(:status).and_return(@status)
   end
 
@@ -33,7 +33,7 @@ describe Atig::Command::Version do
   end
 
   it "should show the source of web" do
-    status  = stub "status"
+    status  = double "status"
     status.stub(:source).and_return('web')
     @statuses.
       should_receive(:find_by_screen_name).

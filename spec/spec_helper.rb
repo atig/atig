@@ -19,14 +19,14 @@ def status(text, opt = {})
 end
 
 def user(id, name)
-  user = stub("User-#{name}")
+  user = double("User-#{name}")
   user.stub(:id).and_return(id)
   user.stub(:screen_name).and_return(name)
   user
 end
 
 def entry(user, status, name = 'entry', id = 0)
-  entry = stub name
+  entry = double name
   entry.stub('id').and_return(id)
   entry.stub('user').and_return(user)
   entry.stub('status').and_return(status)

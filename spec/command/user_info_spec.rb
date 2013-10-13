@@ -8,8 +8,8 @@ describe Atig::Command::UserInfo do
 
   before do
     @command = init Atig::Command::UserInfo
-    @status  = stub "status"
-    @user    = stub "user"
+    @status  = double "status"
+    @user    = double "user"
     @user.stub(:description).and_return('hogehoge')
     @user.stub(:status).and_return(@status)
   end
