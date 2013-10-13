@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    atig (0.4.1)
+    atig (0.4.2)
       json
       net-irc
       oauth
