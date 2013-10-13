@@ -36,11 +36,16 @@ only
 
 発言関連
 ------------------------------
+stream
+  `UserStream`_ を有効にします。
+  実行中の変更には対応していません。
 footer=\ ``footer``
   発言の末尾に、 ``footer`` を追加します。
   ただし ``footer`` がfalseの場合は、追加しません。
 old_style_reply
   @nickで始まる発言が、@nick の最新の発言へのreplyとなるモードに切り替えます。
+
+.. _UserStream: https://dev.twitter.com/docs/streaming-apis/streams/user
 
 URL短縮関係
 ------------------------------
