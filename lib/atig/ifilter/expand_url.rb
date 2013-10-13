@@ -16,31 +16,41 @@ module Atig
       end
 
       def call(status)
-        target = if @opts.untiny_whole_urls then
-                   URI.regexp(%w[http https])
-                 else
-                   %r{
-			http:// (?:
-				(?: bit\.ly | (?: tin | rub) yurl\.com | j\.mp | t\.co
-                                  | htn.to
-				  | is\.gd | cli\.gs | tr\.im | u\.nu | airme\.us
-				  | ff\.im | twurl.nl | bkite\.com | tumblr\.com
-				  | pic\.gd | sn\.im | digg\.com | goo\.gl)
-				/ [0-9a-z=-]+ |
-				blip\.fm/~ (?> [0-9a-z]+) (?! /) |
-				flic\.kr/[a-z0-9/]+
-			)
-		   }ix
-                 end
-
+        target = short_url_regexp
+        entities = status.entities
         status.merge :text => status.text.gsub(target) {|url|
-          x = @cache[url]
-          if x then
-            x
-          else
-            @cache[url] = resolve_http_redirect(URI(url)).to_s || url
+          unless entities.nil? or (entities = entities.urls).empty?
+            @cache[url] ||= search_url_from_entities(url, entities)
           end
+          @cache[url] ||= resolve_http_redirect(URI(url)).to_s || url
         }
+      end
+
+      private
+
+      def short_url_regexp
+        return URI.regexp(%w[http https]) if @opts.untiny_whole_urls
+        %r{
+          https?:// (?:
+                    (?: bit\.ly | (?: tin | rub) yurl\.com | j\.mp | t\.co
+                      | htn.to
+                      | is\.gd | cli\.gs | tr\.im | u\.nu | airme\.us
+                      | ff\.im | twurl.nl | bkite\.com | tumblr\.com
+                      | pic\.gd | sn\.im | digg\.com | goo\.gl)
+                    / [0-9a-z=-]+ |
+                    blip\.fm/~ (?> [0-9a-z]+) (?! /) |
+                    flic\.kr/[a-z0-9/]+
+          )
+        }ix
+      end
+
+      def search_url_from_entities(url, entities)
+        expanded_url = nil
+        entities.reject! do |entity|
+          entity.url == url &&
+            (expanded_url = entity.expanded_url)
+        end
+        expanded_url
       end
 
       def resolve_http_redirect(uri, limit = 3)
