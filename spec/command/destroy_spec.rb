@@ -27,7 +27,7 @@ describe Atig::Command::Destroy,"when remove recently tweet" do
 
     target = status 'blah blah', 'id'=>'1'
     entry  = entry @me, target,'entry',1
-    @res   = mock 'res'
+    @res   = double 'res'
 
     stub_status(:find_by_tid,'a' => entry)
     stub_status(:find_by_sid,'mzp:a' => entry)
@@ -71,7 +71,7 @@ describe Atig::Command::Destroy,"when remove old tweet" do
 
     target = status 'blah blah', 'id'=>'1'
     entry  = entry @me, target,'entry',1
-    @res   = mock 'res'
+    @res   = double 'res'
 
     stub_status(:find_by_tid,'a' => entry)
     stub_status(:find_by_sid,'mzp:a' => entry)

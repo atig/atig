@@ -6,7 +6,7 @@ require 'atig/command/retweet'
 describe Atig::Command::Retweet do
   include CommandHelper
   before do
-    bitly =  mock("Bitly")
+    bitly =  double("Bitly")
     bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
@@ -16,7 +16,7 @@ describe Atig::Command::Retweet do
 
     target = status 'blah blah blah blah blah blah blah blah', 'id'=>'1'
     entry  = entry user(1,'mzp'), target
-    @res   = mock 'res'
+    @res   = double 'res'
 
     stub_status(:find_by_tid,'a' => entry)
     stub_status(:find_by_sid,'mzp:a' => entry)

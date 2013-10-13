@@ -10,7 +10,7 @@ describe Atig::Command::Favorite do
 
     target = status 'blah blah', 'id'=>'1'
     entry  = entry user(1,'mzp'), target
-    @res   = mock 'res'
+    @res   = double 'res'
 
     stub_status(:find_by_tid,'a' => entry)
     stub_status(:find_by_sid,'mzp:a' => entry)

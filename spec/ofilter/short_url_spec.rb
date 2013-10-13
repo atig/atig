@@ -6,8 +6,8 @@ require 'ostruct'
 
 describe Atig::OFilter::ShortUrl,"when no-login bitly" do
   before do
-    logger = mock('Logger')
-    bitly =  mock("Bitly")
+    logger = double('Logger')
+    bitly =  double("Bitly")
     bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
@@ -24,8 +24,8 @@ end
 
 describe Atig::OFilter::ShortUrl,"when no-login bitly with size" do
   before do
-    logger = mock('Logger')
-    bitly =  mock("Bitly")
+    logger = double('Logger')
+    bitly =  double("Bitly")
     bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
@@ -42,8 +42,8 @@ end
 
 describe Atig::OFilter::ShortUrl,"when login bitly" do
   before do
-    logger = mock('Logger')
-    bitly =  mock("Bitly")
+    logger = double('Logger')
+    bitly =  double("Bitly")
     bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
@@ -60,8 +60,8 @@ end
 
 describe Atig::OFilter::ShortUrl,"when login bitly with size" do
   before do
-    logger = mock('Logger')
-    bitly =  mock("Bitly")
+    logger = double('Logger')
+    bitly =  double("Bitly")
     bitly.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
@@ -78,8 +78,8 @@ end
 
 describe Atig::OFilter::ShortUrl,"when unu bitly" do
   before do
-    logger = mock('Logger')
-    unu =  mock("Unu")
+    logger = double('Logger')
+    unu =  double("Unu")
     unu.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
@@ -96,8 +96,8 @@ end
 
 describe Atig::OFilter::ShortUrl,"when no-login unu with size" do
   before do
-    logger = mock('Logger')
-    unu =  mock("Unu")
+    logger = double('Logger')
+    unu =  double("Unu")
     unu.stub(:shorten).and_return{|s|
       "[#{s}]"
     }
@@ -114,7 +114,7 @@ end
 
 describe Atig::OFilter::ShortUrl,"when nop" do
   before do
-    logger = mock('Logger')
+    logger = double('Logger')
 
     @ofilter = Atig::OFilter::ShortUrl.new(OpenStruct.new(:log=>logger, :opts=>OpenStruct.new()))
   end

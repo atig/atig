@@ -6,7 +6,7 @@ require 'atig/twitter_struct'
 
 describe Atig::IFilter::Tid, "when disable tid" do
   def filtered(text)
-    ifilter = Atig::IFilter::Tid.new(OpenStruct.new(:log=>mock('log'),
+    ifilter = Atig::IFilter::Tid.new(OpenStruct.new(:log=>double('log'),
                                                     :opts=>OpenStruct.new))
     ifilter.call status(text,'tid'=>1)
   end
@@ -18,7 +18,7 @@ end
 
 describe Atig::IFilter::Tid, "when enable tid" do
   def filtered(text)
-    ifilter = Atig::IFilter::Tid.new(OpenStruct.new(:log=>mock('log'),
+    ifilter = Atig::IFilter::Tid.new(OpenStruct.new(:log=>double('log'),
                                                     :opts=>OpenStruct.new(:tid=>true)))
     ifilter.call status(text,'tid'=>1)
   end

@@ -9,7 +9,7 @@ end
 
 describe Atig::OFilter::EscapeUrl do
   before do
-    @logger = mock('Logger')
+    @logger = double('Logger')
     @logger.should_receive(:info).at_most(:once)
     @logger.should_receive(:error).at_most(:once)
     @logger.should_receive(:debug).at_most(:once)
@@ -32,7 +32,7 @@ end
 if defined? ::Punycode then
   describe Atig::OFilter::EscapeUrl,"when punycode is enabled" do
     before do
-      @logger = mock('Logger')
+      @logger = double('Logger')
       @logger.should_receive(:info).at_most(:once)
       @logger.should_receive(:error).at_most(:once)
       @logger.should_receive(:debug).at_most(:once)

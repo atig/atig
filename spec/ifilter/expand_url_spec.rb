@@ -10,7 +10,7 @@ end
 
 describe Atig::IFilter::ExpandUrl, "when disable whole url" do
   def filtered(text)
-    ifilter = Atig::IFilter::ExpandUrl.new OpenStruct.new(:log=>mock('log'),:opts=>OpenStruct.new)
+    ifilter = Atig::IFilter::ExpandUrl.new OpenStruct.new(:log=>double('log'),:opts=>OpenStruct.new)
     ifilter.call status(text)
   end
 
@@ -26,7 +26,7 @@ end
 describe Atig::IFilter::ExpandUrl, "when enable whole url" do
   def filtered(text)
     context = OpenStruct.new(
-                             :log  => mock('log'),
+                             :log  => double('log'),
                              :opts => OpenStruct.new(:untiny_whole_urls=>true))
     ifilter = Atig::IFilter::ExpandUrl.new(context)
     ifilter.call status(text)
@@ -45,7 +45,7 @@ end
 describe Atig::IFilter::ExpandUrl, "when has urls entities" do
   def filtered(text, opts)
     context = OpenStruct.new(
-                             :log => mock('log'),
+                             :log => double('log'),
                              :opts => OpenStruct.new)
     ifilter = Atig::IFilter::ExpandUrl.new(context)
     ifilter.call status(text, opts)

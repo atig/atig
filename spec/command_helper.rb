@@ -64,13 +64,13 @@ end
 
 module CommandHelper
   def init(klass)
-    @log    = mock 'log'
+    @log    = double 'log'
     @opts   = Atig::Option.new({})
     context = OpenStruct.new :log=>@log, :opts=>@opts
 
-    @channel    = mock 'channel'
+    @channel    = double 'channel'
     @gateway    = FakeGateway.new @channel
-    @api        = mock 'api'
+    @api        = double 'api'
     @statuses   = FakeDbEntry.new 'status DB'
     @followings = FakeDbEntry.new 'followings DB'
     @lists      = {

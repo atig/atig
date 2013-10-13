@@ -6,7 +6,7 @@ require 'atig/command/thread'
 describe Atig::Command::Thread do
   include CommandHelper
   before do
-    u = mock 'user'
+    u = double 'user'
     @entries = [
                 entry(u, status(''),'entry-0'),
                 entry(u, status('','in_reply_to_status_id'=>2),'entry-1'),
