@@ -42,3 +42,24 @@ describe Atig::IFilter::ExpandUrl, "when enable whole url" do
   end
 end
 
+describe Atig::IFilter::ExpandUrl, "when has urls entities" do
+  def filtered(text, opts)
+    context = OpenStruct.new(
+                             :log => mock('log'),
+                             :opts => OpenStruct.new)
+    ifilter = Atig::IFilter::ExpandUrl.new(context)
+    ifilter.call status(text, opts)
+  end
+
+  it "should expand t.co" do
+    opts = {
+      "entities" => {
+        "urls" => [{
+          "url" => "http://t.co/1Vyoux4kB8",
+          "expanded_url" => "http://example.com/"
+        }]
+      }
+    }
+    filtered("http://t.co/1Vyoux4kB8", opts).should be_text("http://example.com/")
+  end
+end
