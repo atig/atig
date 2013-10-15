@@ -16,11 +16,20 @@ describe Atig::IFilter::ExpandUrl, "when disable whole url" do
 
   it "should expand bit.ly" do
     filtered("This is http://bit.ly/hoge").should be_text("This is [http://bit.ly/hoge]")
+    filtered("This is http://bitly.com/hoge").should be_text("This is [http://bitly.com/hoge]")
   end
 
   it "should expand htn.to" do
     filtered("This is http://htn.to/TZdkXg").should be_text("This is [http://htn.to/TZdkXg]")
     filtered("This is http://htnnto/TZdkXg").should be_text("This is http://htnnto/TZdkXg")
+  end
+
+  it "should expand tmblr.co" do
+    filtered("This is http://tmblr.co/Z0rNbyxhxUK5").should be_text("This is [http://tmblr.co/Z0rNbyxhxUK5]")
+  end
+
+  it "should expand nico.ms" do
+    filtered("This is http://nico.ms/sm11870888").should be_text("This is [http://nico.ms/sm11870888]")
   end
 
   it "should through other url" do
