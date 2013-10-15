@@ -32,11 +32,19 @@ module Atig
         return URI.regexp(%w[http https]) if @opts.untiny_whole_urls
         %r{
           https?:// (?:
-                    (?: bit\.ly | (?: tin | rub) yurl\.com | j\.mp | t\.co
-                      | htn.to
-                      | is\.gd | cli\.gs | tr\.im | u\.nu | airme\.us
-                      | ff\.im | twurl.nl | bkite\.com | tumblr\.com
-                      | pic\.gd | sn\.im | digg\.com | goo\.gl)
+                    (?: t (?: mblr )? \.co
+                      | (?: bitly | bkite | digg | tumblr | (?: tin | rub ) yurl ) \.com
+                      | (?: is | pic ) \.gd
+                      | goo\.gl
+                      | cli\.gs
+                      | (?: ff | sn | tr ) \.im
+                      | bit\.ly
+                      | j\.mp
+                      | nico\.ms
+                      | airme\.us
+                      | twurl\.nl
+                      | u\.nu
+                      | htn\.to)
                     / [0-9a-z=-]+ |
                     blip\.fm/~ (?> [0-9a-z]+) (?! /) |
                     flic\.kr/[a-z0-9/]+
