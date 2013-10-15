@@ -18,6 +18,11 @@ describe Atig::IFilter::ExpandUrl, "when disable whole url" do
     filtered("This is http://bit.ly/hoge").should be_text("This is [http://bit.ly/hoge]")
   end
 
+  it "should expand htn.to" do
+    filtered("This is http://htn.to/TZdkXg").should be_text("This is [http://htn.to/TZdkXg]")
+    filtered("This is http://htnnto/TZdkXg").should be_text("This is http://htnnto/TZdkXg")
+  end
+
   it "should through other url" do
     filtered("http://example.com").should be_text("http://example.com")
   end
