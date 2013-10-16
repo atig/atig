@@ -76,4 +76,16 @@ describe Atig::IFilter::ExpandUrl, "when has urls entities" do
     }
     filtered("http://t.co/1Vyoux4kB8", opts).should be_text("http://example.com/")
   end
+
+  it "should expand recursive shorten URL" do
+    opts = {
+      "entities" => {
+        "urls" => [{
+          "url" => "http://t.co/h8sqL5ZMuz",
+          "expanded_url" => "http://bit.ly/1LM4fW"
+        }]
+      }
+    }
+    filtered("http://t.co/h8sqL5ZMuz", opts).should be_text("[http://bit.ly/1LM4fW]")
+  end
 end
