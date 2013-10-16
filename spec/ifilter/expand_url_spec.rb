@@ -71,9 +71,14 @@ describe Atig::IFilter::ExpandUrl, "when has urls entities" do
         "urls" => [{
           "url" => "http://t.co/1Vyoux4kB8",
           "expanded_url" => "http://example.com/"
+        }, {
+          "url" => "http://t.co/V1441ye6g2",
+          "expanded_url" => "http://example.org/"
         }]
       }
     }
     filtered("http://t.co/1Vyoux4kB8", opts).should be_text("http://example.com/")
+    filtered("http://t.co/1Vyoux4kB8 http://t.co/V1441ye6g2", opts).should
+      be_text("http://example.com/ http://expmaple.org/")
   end
 end
