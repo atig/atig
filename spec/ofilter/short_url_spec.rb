@@ -76,42 +76,6 @@ describe Atig::OFilter::ShortUrl,"when login bitly with size" do
   end
 end
 
-describe Atig::OFilter::ShortUrl,"when unu bitly" do
-  before do
-    logger = double('Logger')
-    unu =  double("Unu")
-    unu.stub(:shorten).and_return{|s|
-      "[#{s}]"
-    }
-    Atig::Unu.should_receive(:new).with(logger).and_return(unu)
-    @ofilter = Atig::OFilter::ShortUrl.new(OpenStruct.new(:log=>logger, :opts=>OpenStruct.new('unuify'=>true)))
-  end
-
-  it "should shorten url by unu" do
-    @ofilter.call({:status => "this is http://example.com/a http://example.com/b"}).should == {
-      :status => "this is [http://example.com/a] [http://example.com/b]"
-    }
-  end
-end
-
-describe Atig::OFilter::ShortUrl,"when no-login unu with size" do
-  before do
-    logger = double('Logger')
-    unu =  double("Unu")
-    unu.stub(:shorten).and_return{|s|
-      "[#{s}]"
-    }
-    Atig::Unu.should_receive(:new).with(logger).and_return(unu)
-    @ofilter = Atig::OFilter::ShortUrl.new(OpenStruct.new(:log=>logger, :opts=>OpenStruct.new('unuify'=>13)))
-  end
-
-  it "should only shorten large url" do
-    @ofilter.call({:status => "this is http://example.com/a http://a.com"}).should == {
-      :status => "this is [http://example.com/a] http://a.com"
-    }
-  end
-end
-
 describe Atig::OFilter::ShortUrl,"when nop" do
   before do
     logger = double('Logger')
