@@ -21,6 +21,7 @@ module Atig
         status.merge :text => status.text.gsub(target) {|url|
           unless entities.nil? or entities.empty?
             @cache[url] ||= search_url_from_entities(url, entities)
+            url = @cache[url] if @cache[url] =~ target
           end
           @cache[url] ||= resolve_http_redirect(URI(url)).to_s || url
         }
