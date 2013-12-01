@@ -44,7 +44,6 @@ module Atig
                       | nico\.ms
                       | airme\.us
                       | twurl\.nl
-                      | u\.nu
                       | htn\.to)
                     / [0-9a-z=-]+ |
                     blip\.fm/~ (?> [0-9a-z]+) (?! /) |

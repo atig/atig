@@ -1,6 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
-require 'atig/unu'
 require 'atig/bitly'
 
 module Atig
@@ -28,9 +27,6 @@ module Atig
                   when @opts.bitlify
                     @len = (@opts.bitlify.to_s || MIN_LEN).to_i
                     Bitly.no_login @log
-                  when @opts.unuify
-                    @len = (@opts.unuify.to_s || MIN_LEN).to_i
-                    Unu.new @log
                   else
                     return mesg
                   end
