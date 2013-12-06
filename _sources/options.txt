@@ -36,11 +36,16 @@ only
 
 発言関連
 ------------------------------
+stream
+  `UserStream`_ を有効にします。
+  実行中の変更には対応していません。
 footer=\ ``footer``
   発言の末尾に、 ``footer`` を追加します。
   ただし ``footer`` がfalseの場合は、追加しません。
 old_style_reply
   @nickで始まる発言が、@nick の最新の発言へのreplyとなるモードに切り替えます。
+
+.. _UserStream: https://dev.twitter.com/docs/streaming-apis/streams/user
 
 URL短縮関係
 ------------------------------
@@ -58,10 +63,6 @@ bitlify=\ ``username``:\ ``api_key``:\ ``size``
   ``size``\ 字以上のURLを http://bit.ly のAPIによって短縮します。
   APIを利用して短縮すると、ユーザページに短縮したURLが記録されたりします。
   詳しくは、 http://bit.ly のSign up for bit.lyを読んでください。
-unuify
-  |len| 字以上のURLを http://u.nu によって短縮します。
-unuify= \ ``size``
-  ``size`` 字以上のURLを http://u.nu によって短縮します。
 
 .. |len| replace:: 20
 

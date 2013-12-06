@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
@@ -8,15 +6,15 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>更新履歴 &mdash; atig.rb 0.3.8 documentation</title>
+    <title>更新履歴 &mdash; atig.rb 0.4.3 documentation</title>
     
     <link rel="stylesheet" href="_static/sphinxdoc.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
     <script type="text/javascript">
       var DOCUMENTATION_OPTIONS = {
-        URL_ROOT:    '',
-        VERSION:     '0.3.8',
+        URL_ROOT:    './',
+        VERSION:     '0.4.3',
         COLLAPSE_INDEX: false,
         FILE_SUFFIX: '.html',
         HAS_SOURCE:  true
@@ -25,7 +23,7 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
-    <link rel="top" title="atig.rb 0.3.8 documentation" href="index.html" />
+    <link rel="top" title="atig.rb 0.4.3 documentation" href="index.html" />
     <link rel="prev" title="tig.rbとの違い" href="tig.html" /> 
   </head>
   <body>
@@ -38,7 +36,7 @@
         <li class="right" >
           <a href="tig.html" title="tig.rbとの違い"
              accesskey="P">previous</a> |</li>
-        <li><a href="index.html">atig.rb 0.3.8 documentation</a> &raquo;</li> 
+        <li><a href="index.html">atig.rb 0.4.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
       <div class="sphinxsidebar">
@@ -46,45 +44,66 @@
   <h3><a href="index.html">Table Of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">更新履歴</a><ul>
+<li><a class="reference internal" href="#v0-4-1-2013-08-02">v0.4.1(2013-08-02)</a><ul>
+<li><a class="reference internal" href="#id2">不具合修正</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#v0-4-0-2013-06-12">v0.4.0(2013-06-12)</a><ul>
+<li><a class="reference internal" href="#id3">機能変更</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#v0-3-12-2013-04-02">v0.3.12(2013-04-02)</a><ul>
+<li><a class="reference internal" href="#id4">機能追加</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#v0-3-11-2013-04-02">v0.3.11(2013-04-02)</a><ul>
+<li><a class="reference internal" href="#id5">機能追加</a></li>
+<li><a class="reference internal" href="#id6">機能追加</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#v0-3-9-2013-03-01">v0.3.9(2013-03-01)</a><ul>
+<li><a class="reference internal" href="#id7">バグ修正</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#v0-3-8-2013-02-03">v0.3.8(2013-02-03)</a><ul>
-<li><a class="reference internal" href="#id2">機能変更</a></li>
+<li><a class="reference internal" href="#id8">機能変更</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-3-7-2013-01-27">v0.3.7(2013-01-27)</a><ul>
-<li><a class="reference internal" href="#id3">機能追加</a></li>
-<li><a class="reference internal" href="#id4">バグ修正</a></li>
-<li><a class="reference internal" href="#id5">機能変更</a></li>
+<li><a class="reference internal" href="#id9">機能追加</a></li>
+<li><a class="reference internal" href="#id10">バグ修正</a></li>
+<li><a class="reference internal" href="#id11">機能変更</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-3-5-2012-05-07">v0.3.5(2012-05-07)</a><ul>
-<li><a class="reference internal" href="#id6">バグ修正</a></li>
-<li><a class="reference internal" href="#id7">バグ修正</a></li>
-<li><a class="reference internal" href="#id8">機能追加</a></li>
-<li><a class="reference internal" href="#id9">機能修正</a></li>
-<li><a class="reference internal" href="#id10">バグ修正</a></li>
-<li><a class="reference internal" href="#id11">機能追加</a></li>
-<li><a class="reference internal" href="#id12">機能修正</a></li>
+<li><a class="reference internal" href="#id12">バグ修正</a></li>
+<li><a class="reference internal" href="#id13">バグ修正</a></li>
+<li><a class="reference internal" href="#id14">機能追加</a></li>
+<li><a class="reference internal" href="#id15">機能修正</a></li>
+<li><a class="reference internal" href="#id16">バグ修正</a></li>
+<li><a class="reference internal" href="#id17">機能追加</a></li>
+<li><a class="reference internal" href="#id18">機能修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-3-1-2010-07-26">v0.3.1(2010-07-26)</a><ul>
-<li><a class="reference internal" href="#id13">機能追加</a></li>
-<li><a class="reference internal" href="#id14">機能修正</a></li>
-<li><a class="reference internal" href="#id15">バグ修正</a></li>
+<li><a class="reference internal" href="#id19">機能追加</a></li>
+<li><a class="reference internal" href="#id20">機能修正</a></li>
+<li><a class="reference internal" href="#id21">バグ修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-3-0-2010-06-12">v0.3.0(2010-06-12)</a><ul>
-<li><a class="reference internal" href="#id16">機能追加</a></li>
-<li><a class="reference internal" href="#id17">機能修正</a></li>
-<li><a class="reference internal" href="#id18">バグ修正</a></li>
+<li><a class="reference internal" href="#id22">機能追加</a></li>
+<li><a class="reference internal" href="#id23">機能修正</a></li>
+<li><a class="reference internal" href="#id24">バグ修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-2-1-2010-04-17">v0.2.1(2010-04-17)</a><ul>
-<li><a class="reference internal" href="#id19">機能追加</a></li>
+<li><a class="reference internal" href="#id25">機能追加</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-2-0-2010-04-11">v0.2.0(2010-04-11)</a><ul>
-<li><a class="reference internal" href="#id20">機能追加</a></li>
-<li><a class="reference internal" href="#id21">バグ修正</a></li>
+<li><a class="reference internal" href="#id26">機能追加</a></li>
+<li><a class="reference internal" href="#id27">バグ修正</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#v0-1-0-2010-04-11">v0.1.0(2010-04-11)</a></li>
@@ -123,11 +142,82 @@
             
   <div class="section" id="id1">
 <h1>更新履歴<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="v0-4-1-2013-08-02">
+<h2>v0.4.1(2013-08-02)<a class="headerlink" href="#v0-4-1-2013-08-02" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.4.1">http://github.com/mzp/atig/tree/v0.4.1</a></p>
+<div class="section" id="id2">
+<h3>不具合修正<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>&#8216;&amp;&#8217; が置換されない問題を修正しました</li>
+<li>reply が取得できない不具合を修正しました</li>
+<li>list の追加・削除 API が 1.0 のままだった問題を修正しました</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="v0-4-0-2013-06-12">
+<h2>v0.4.0(2013-06-12)<a class="headerlink" href="#v0-4-0-2013-06-12" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.4.0">http://github.com/mzp/atig/tree/v0.4.0</a></p>
+<div class="section" id="id3">
+<h3>機能変更<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Twitter API 1.1に対応しました</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="v0-3-12-2013-04-02">
+<h2>v0.3.12(2013-04-02)<a class="headerlink" href="#v0-3-12-2013-04-02" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.3.12">http://github.com/mzp/atig/tree/v0.3.12</a></p>
+<div class="section" id="id4">
+<h3>機能追加<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>v0.3.10-11 で &#8211;tmpdir オプションが動作していない不具合を直しました</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="v0-3-11-2013-04-02">
+<h2>v0.3.11(2013-04-02)<a class="headerlink" href="#v0-3-11-2013-04-02" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.3.11">http://github.com/mzp/atig/tree/v0.3.11</a></p>
+<div class="section" id="id5">
+<h3>機能追加<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>v0.3.10 で起動できない不具合を直しました</li>
+</ul>
+<p>v0.3.10(2013-04-02)</p>
+</div></blockquote>
+</div>
+<div class="section" id="id6">
+<h3>機能追加<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>一時ファイルの作成先を指定することができる &#8211;tmpdir オプションを追加しました</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="v0-3-9-2013-03-01">
+<h2>v0.3.9(2013-03-01)<a class="headerlink" href="#v0-3-9-2013-03-01" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.3.9">http://github.com/mzp/atig/tree/v0.3.9</a></p>
+<div class="section" id="id7">
+<h3>バグ修正<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li>Ruby 2.0 以降で動かした場合に Twitter のレスポンスを取得出来ない不具合を修正しました</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
 <div class="section" id="v0-3-8-2013-02-03">
 <h2>v0.3.8(2013-02-03)<a class="headerlink" href="#v0-3-8-2013-02-03" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.3.8">http://github.com/mzp/atig/tree/v0.3.8</a></p>
-<div class="section" id="id2">
-<h3>機能変更<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id8">
+<h3>機能変更<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>atig を rubygems からインストールしている場合はバージョンアップのチェックを行わないようにしました</li>
@@ -138,16 +228,16 @@
 <div class="section" id="v0-3-7-2013-01-27">
 <h2>v0.3.7(2013-01-27)<a class="headerlink" href="#v0-3-7-2013-01-27" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.3.7">http://github.com/mzp/atig/tree/v0.3.7</a></p>
-<div class="section" id="id3">
-<h3>機能追加<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id9">
+<h3>機能追加<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Twitter の Userstream に対応しました</li>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id4">
-<h3>バグ修正<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h3>バグ修正<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Ruby 2.0.0(r38955) で動かない問題を直しました</li>
@@ -156,8 +246,8 @@
 <p>v0.3.6(2012-05-14)</p>
 </div></blockquote>
 </div>
-<div class="section" id="id5">
-<h3>機能変更<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h3>機能変更<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Ruby 2.0.0 以降で iconv ライブラリが削除されることに伴う UTF7 サポートの終了</li>
@@ -168,8 +258,8 @@
 <div class="section" id="v0-3-5-2012-05-07">
 <h2>v0.3.5(2012-05-07)<a class="headerlink" href="#v0-3-5-2012-05-07" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.3.5">http://github.com/mzp/atig/tree/v0.3.5</a></p>
-<div class="section" id="id6">
-<h3>バグ修正<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id12">
+<h3>バグ修正<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>ユーザーが作成したリストが表示されない問題を修正しました</li>
@@ -177,8 +267,8 @@
 <p>v0.3.4(2012-01-30)</p>
 </div></blockquote>
 </div>
-<div class="section" id="id7">
-<h3>バグ修正<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id13">
+<h3>バグ修正<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Ruby 1.8 で動かない問題を修正しました</li>
@@ -186,16 +276,16 @@
 <p>v0.3.3(2012-01-24)</p>
 </div></blockquote>
 </div>
-<div class="section" id="id8">
-<h3>機能追加<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id14">
+<h3>機能追加<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>gem コマンドでインストールできるようにしました</li>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id9">
-<h3>機能修正<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id15">
+<h3>機能修正<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>Ruby 1.9 に対応しました</li>
@@ -206,8 +296,8 @@
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id10">
-<h3>バグ修正<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id16">
+<h3>バグ修正<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>非公式RTが実行できない不具合を修正</li>
@@ -215,16 +305,16 @@
 <p>v0.3.2(2010-10-10)</p>
 </div></blockquote>
 </div>
-<div class="section" id="id11">
-<h3>機能追加<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id17">
+<h3>機能追加<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li><a class="reference internal" href="config.html"><em>設定</em></a>: <cite>Atig::IFilter::RetweetTime</cite> を追加しました</li>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id12">
-<h3>機能修正<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id18">
+<h3>機能修正<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>DBのデータ削除の周期を減らしました</li>
@@ -238,8 +328,8 @@
 <div class="section" id="v0-3-1-2010-07-26">
 <h2>v0.3.1(2010-07-26)<a class="headerlink" href="#v0-3-1-2010-07-26" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.3.1">http://github.com/mzp/atig/tree/v0.3.1</a></p>
-<div class="section" id="id13">
-<h3>機能追加<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id19">
+<h3>機能追加<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li><a class="reference internal" href="commands.html"><em>CTCP ACTION</em></a>: <cite>refresh</cite> を追加しました</li>
@@ -248,8 +338,8 @@
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id14">
-<h3>機能修正<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id20">
+<h3>機能修正<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>キャッシュを/tmp/atigに置くように変更しました。</li>
@@ -257,8 +347,8 @@
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id15">
-<h3>バグ修正<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id21">
+<h3>バグ修正<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>アンフォローしたユーザがキャッシュ中に残るバグを修正</li>
@@ -269,16 +359,16 @@
 <div class="section" id="v0-3-0-2010-06-12">
 <h2>v0.3.0(2010-06-12)<a class="headerlink" href="#v0-3-0-2010-06-12" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.3.0">http://github.com/mzp/atig/tree/v0.3.0</a></p>
-<div class="section" id="id16">
-<h3>機能追加<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id22">
+<h3>機能追加<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li><a class="reference internal" href="commands.html"><em>CTCP ACTION</em></a>: <cite>search</cite> を追加しました。(thx. <a class="reference external" href="http://blog.xeres.jp/2010/06/04/atig_rb-tweet-search/">xeres</a> )</li>
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id17">
-<h3>機能修正<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id23">
+<h3>機能修正<a class="headerlink" href="#id23" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>キャッシュとして用いているSQLiteのDBにインデックスを貼るようにしました。(thx. <a class="reference external" href="http://d.hatena.ne.jp/mzp/20100407#c">L_star</a> )</li>
@@ -287,15 +377,15 @@
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id18">
-<h3>バグ修正<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id24">
+<h3>バグ修正<a class="headerlink" href="#id24" title="Permalink to this headline">¶</a></h3>
 </div>
 </div>
 <div class="section" id="v0-2-1-2010-04-17">
 <h2>v0.2.1(2010-04-17)<a class="headerlink" href="#v0-2-1-2010-04-17" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.2.1">http://github.com/mzp/atig/tree/v0.2.1</a></p>
-<div class="section" id="id19">
-<h3>機能追加<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id25">
+<h3>機能追加<a class="headerlink" href="#id25" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li><a class="reference internal" href="commands.html"><em>CTCP ACTION</em></a>: <cite>autofix</cite>, <cite>location</cite> を追加しました。</li>
@@ -308,8 +398,8 @@
 <div class="section" id="v0-2-0-2010-04-11">
 <h2>v0.2.0(2010-04-11)<a class="headerlink" href="#v0-2-0-2010-04-11" title="Permalink to this headline">¶</a></h2>
 <p><a class="reference external" href="http://github.com/mzp/atig/tree/v0.2.0">http://github.com/mzp/atig/tree/v0.2.0</a></p>
-<div class="section" id="id20">
-<h3>機能追加<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id26">
+<h3>機能追加<a class="headerlink" href="#id26" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li><a class="reference internal" href="options.html"><em>クライアントオプション</em></a>: <cite>sid</cite> を追加した。</li>
@@ -319,8 +409,8 @@
 </ul>
 </div></blockquote>
 </div>
-<div class="section" id="id21">
-<h3>バグ修正<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id27">
+<h3>バグ修正<a class="headerlink" href="#id27" title="Permalink to this headline">¶</a></h3>
 <blockquote>
 <div><ul class="simple">
 <li>followingの取得時にSSL Verified Errorが発生する不具合を修正</li>
@@ -352,12 +442,12 @@
         <li class="right" >
           <a href="tig.html" title="tig.rbとの違い"
              >previous</a> |</li>
-        <li><a href="index.html">atig.rb 0.3.8 documentation</a> &raquo;</li> 
+        <li><a href="index.html">atig.rb 0.4.3 documentation</a> &raquo;</li> 
       </ul>
     </div>
     <div class="footer">
-        &copy; Copyright 2010, mzp.
-      Created using <a href="http://sphinx.pocoo.org/">Sphinx</a> 1.1.3.
+        &copy; Copyright 2010-2013, mzp.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.2b3.
     </div>
   </body>
 </html>
