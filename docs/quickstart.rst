@@ -36,7 +36,7 @@ trunk版
 ~~~~~~~~~~
 githubからpullしてください。::
 
- $ git pull http://mzp.github.com/atig
+ $ git clone https://github.com/mzp/atig.git
 
 使ってみる
 ----------
