@@ -2,8 +2,8 @@
 require File.expand_path('../lib/atig/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["SHIBATA Hiroshi"]
-  gem.email         = ["shibata.hiroshi@gmail.com"]
+  gem.authors       = ["MIZUNO Hiroki", "SHIBATA Hiroshi", ]
+  gem.email         = ["mzp@ocaml.jp", "shibata.hiroshi@gmail.com"]
   gem.description   = %q{Atig.rb is Twitter Irc Gateway.}
   gem.summary       = %q{Atig.rb is forked from cho45's tig.rb. We improve some features of tig.rb.}
   gem.homepage      = "https://github.com/mzp/atig"
