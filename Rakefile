@@ -9,7 +9,8 @@ CLEAN.include(
 )
 
 CLOBBER.include(
-  "pkg"
+  "pkg",
+  "coverage"
 )
 
 RSpec::Core::RakeTask.new do |t|
