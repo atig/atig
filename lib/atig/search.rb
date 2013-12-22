@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'json'
 require 'atig/http'
 require 'atig/url_escape'

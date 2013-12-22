@@ -1,6 +1,4 @@
 # -*- coding: utf-8 -*-
-$KCODE = "u" unless defined? ::Encoding # json use this
-
 require 'atig/version'
 require 'atig/monkey'
 require 'atig/optparse'

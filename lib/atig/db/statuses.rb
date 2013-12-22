@@ -1,7 +1,6 @@
 # -*- mode:ruby; coding:utf-8 -*-
 require 'atig/db/listenable'
 require 'atig/db/transaction'
-require 'rubygems'
 require 'sqlite3'
 require 'atig/db/roman'
 require 'atig/db/sql'
