@@ -22,15 +22,15 @@ module Atig
 
       def update(api)
         if @db.followings.empty?
-          friends = api.page("friends/list", :users, {:user_id => @db.me.id})
+          friends = api.page("friends/list", :users, {:user_id => @db.me.id, :count => 100})
         else
           @db.me = api.post("account/update_profile")
           return if @db.me.friends_count == @db.followings.size
-          friends = api.page("friends/list", :users, {:user_id => @db.me.id})
+          friends = api.page("friends/list", :users, {:user_id => @db.me.id, :count => 100})
         end
 
         if @opts.only
-          followers = api.page("friends/ids", :ids, {:user_id => @db.me.id})
+          followers = api.page("friends/ids", :ids, {:user_id => @db.me.id, :count => 2500})
           friends.each do|friend|
             friend[:only] = !followers.include?(friend.id)
           end
