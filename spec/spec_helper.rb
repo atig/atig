@@ -1,9 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
-require 'bundler'
-
-Bundler.setup
-Bundler.require :default, :test
-
+require 'bundler/setup'
 require 'atig/monkey'
 require 'command_helper'
 
