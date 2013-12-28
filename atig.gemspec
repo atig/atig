@@ -14,7 +14,8 @@ Gem::Specification.new do |gem|
   gem.name          = "atig"
   gem.require_paths = ["lib"]
   gem.version       = Atig::VERSION
-  gem.required_ruby_version = ">= 1.9.3"
+
+  gem.required_ruby_version = Gem::Requirement.new(">= 1.9.3")
 
   gem.add_dependency 'sqlite3', ['>= 1.3.2']
   gem.add_dependency 'net-irc', ['>= 0']
