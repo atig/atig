@@ -1,5 +1,4 @@
 # -*- mode:ruby -*-
-require 'rubygems'
 require 'rake'
 require 'rake/clean'
 require 'rspec/core/rake_task'
@@ -10,7 +9,8 @@ CLEAN.include(
 )
 
 CLOBBER.include(
-  "pkg"
+  "pkg",
+  "coverage"
 )
 
 RSpec::Core::RakeTask.new do |t|
