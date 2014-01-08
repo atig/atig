@@ -1,9 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
 require 'atig/command/command'
-begin
-  require 'jcode'
-rescue LoadError
-end
 require 'twitter-text'
 
 module Atig
@@ -11,7 +7,6 @@ module Atig
     class Status < Atig::Command::Command
       include ::Twitter::Validation
 
-      def initialize(*args); super end
       def command_name; %w(status) end
 
       def action(target, mesg, command, args)

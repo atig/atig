@@ -24,17 +24,15 @@ describe Atig::Command::Status do
     @gateway.filtered.should == { :status => 'blah blah' }
   end
 
-  if RUBY_VERSION >= '1.9'
-    it "should post with japanese language" do
-      res = status("あ"*140)
-      @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return(nil)
-      @api.should_receive(:post).with('statuses/update', {:status=>"あ"*140}).and_return(res)
+  it "should post with japanese language" do
+    res = status("あ"*140)
+    @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return(nil)
+    @api.should_receive(:post).with('statuses/update', {:status=>"あ"*140}).and_return(res)
 
-      call '#twitter', "status", ["あ" * 140]
+    call '#twitter', "status", ["あ" * 140]
 
-      @gateway.updated.should  == [ res, '#twitter' ]
-      @gateway.filtered.should == { :status => "あ" * 140 }
-    end
+    @gateway.updated.should  == [ res, '#twitter' ]
+    @gateway.filtered.should == { :status => "あ" * 140 }
   end
 
   it "should post the status even if has long URL" do
