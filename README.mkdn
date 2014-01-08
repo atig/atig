@@ -10,9 +10,8 @@ Atig.rb is forked from cho45's tig.rb. We improve some features of tig.rb.
 PREREQUISITES
 -------------
 
-* Ruby 1.8 or 1.9
+* Ruby 1.9.3 or later
 * sqlite3-ruby
-* json(when use Ruby 1.8)
 * rspec(for unit test)
 * rake(for unit test)
 
