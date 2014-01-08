@@ -4,10 +4,13 @@ begin
   require 'jcode'
 rescue LoadError
 end
+require 'twitter-text'
 
 module Atig
   module Command
     class Status < Atig::Command::Command
+      include ::Twitter::Validation
+
       def initialize(*args); super end
       def command_name; %w(status) end
 
@@ -26,8 +29,12 @@ module Atig
         end
         q = gateway.output_message(:status => text)
 
-        if q[:status].each_char.to_a.size > 140 then
+        case tweet_invalid? q[:status]
+        when :too_long
           yield "You can't submit the status over 140 chars"
+          return
+        when :invalid_characters
+          yield "You can't submit the status invalid chars"
           return
         end
 
