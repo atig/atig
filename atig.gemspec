@@ -20,6 +20,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'sqlite3', ['>= 1.3.2']
   gem.add_dependency 'net-irc', ['>= 0']
   gem.add_dependency 'oauth', ['>= 0']
+  gem.add_dependency 'twitter-text', ['~> 1.7.0']
 
   gem.add_development_dependency 'bundler'
   gem.add_development_dependency 'rspec'
