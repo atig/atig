@@ -48,11 +48,8 @@ module Atig
              end
       http.open_timeout = open_timeout if open_timeout # nil by default
       http.read_timeout = read_timeout if read_timeout # 60 by default
-      if uri.is_a? URI::HTTPS
-        http.use_ssl     = true
-        http.cert_store = @cert_store
-        http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      end
+      http.use_ssl      = true
+      http.cert_store   = @cert_store
       http
     rescue => e
       log(:error, e) if @log

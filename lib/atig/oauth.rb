@@ -23,7 +23,7 @@ module Atig
 
     def initialize(context, nick)
       uri = URI(context.opts.api_base)
-      site = "http://#{uri.host}"
+      site = "https://#{uri.host}"
 
       @nick  = nick
       @oauth = ::OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, {

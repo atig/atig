@@ -31,7 +31,7 @@ module Atig
 
     default_value :api_base,        'https://api.twitter.com/1.1/'
     default_value :stream_api_base, 'https://userstream.twitter.com/2/'
-    default_value :search_api_base, 'http://search.twitter.com/'
+    default_value :search_api_base, 'https://search.twitter.com/'
 
     def initialize(table)
       @table = {}
