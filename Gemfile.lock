@@ -17,9 +17,9 @@ GEM
       term-ansicolor
       thor
     diff-lcs (1.2.5)
-    docile (1.1.1)
+    docile (1.1.2)
     mime-types (2.0)
-    multi_json (1.8.2)
+    multi_json (1.8.4)
     net-irc (0.0.9)
     oauth (0.4.7)
     rest-client (1.6.7)
