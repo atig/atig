@@ -16,6 +16,7 @@ module Atig
         }
 
         OptionParser.new do |parser|
+          parser.version = Atig::VERSION
           parser.instance_eval do
             self.banner = <<EOB.gsub(/^\t+/, "")
 usage: #{$0} [opts]
