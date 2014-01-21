@@ -23,6 +23,7 @@ Gem::Specification.new do |gem|
   gem.add_dependency 'twitter-text', ['~> 1.7.0']
 
   gem.add_development_dependency 'bundler'
+  gem.add_development_dependency 'rake'
   gem.add_development_dependency 'rspec'
   gem.add_development_dependency 'coveralls'
 end
