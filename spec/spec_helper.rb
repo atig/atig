@@ -3,6 +3,8 @@ require 'bundler/setup'
 require 'atig/monkey'
 require 'command_helper'
 
+ENV['TZ'] = 'UTC'
+
 RSpec::Matchers.define :be_text do |text|
   match do |status|
     status.text.should == text

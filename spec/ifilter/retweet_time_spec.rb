@@ -20,6 +20,6 @@ describe Atig::IFilter::RetweetTime do
                'user' => {
                  'screen_name' => 'mzp'
                } }).
-      should be_text("#{@rt}RT @mzp: hello \x0310[2010-09-25 23:33]\x0F")
+      should be_text("#{@rt}RT @mzp: hello \x0310[2010-09-25 14:33]\x0F")
   end
 end
