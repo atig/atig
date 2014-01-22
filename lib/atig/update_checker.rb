@@ -3,7 +3,7 @@
 module Atig
   module UpdateChecker
     def commits
-      uri = URI("https://api.github.com/repos/mzp/atig/commits")
+      uri = URI("https://api.github.com/repos/atig/atig/commits")
       http = Atig::Http.new
       res = http.http(uri).request http.req(:get, uri)
       JSON.parse(res.body)
