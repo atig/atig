@@ -88,7 +88,7 @@ IRC用のソフトが流用できます。
  - Githubでforkして、pull requestを送る
 
 .. _Issues: https://github.com/atig/atig/issues
-.. _@mzp: http://twitter.com/mzp/
+.. _@mzp: https://twitter.com/mzp/
 .. _Blog: http://d.hatena.ne.jp/mzp/
 
 

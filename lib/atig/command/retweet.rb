@@ -23,7 +23,7 @@ module Atig
 
         chars = text.each_char.to_a
         if chars.size > 140 then
-          url = @bitly.shorten "http://twitter.com/#{entry.user.screen_name}/status/#{entry.status.id}"
+          url = @bitly.shorten "https://twitter.com/#{entry.user.screen_name}/status/#{entry.status.id}"
           text = chars[0,140-url.size-1].join('') + ' ' + url
         end
         q = gateway.output_message(:status => text)

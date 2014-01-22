@@ -165,7 +165,7 @@ https://github.com/atig/atig/tree/v0.3.2
  - :doc:`commands`: `limit` にリセットされる日付を表示するようにした (thx. `hirose31`_ )
  - :doc:`config`: 自動展開するURLにhtn.to, goo.glを追加
 
-.. _hirose31: http://twitter.com/hirose31
+.. _hirose31: https://twitter.com/hirose31
 
 v0.3.1(2010-07-26)
 ------------------------------

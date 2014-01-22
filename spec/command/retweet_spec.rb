@@ -58,8 +58,8 @@ describe Atig::Command::Retweet do
   end
 
   it "should post un-official retweet with long comment" do
-    @api.should_receive(:post).with('statuses/update',:status=> "#{'a' * 95} RT @mzp: b [http://twitter.com/mzp/status/1]").and_return(@res)
-    call "#twitter", 'rt', ['a', 'a' * 95 ]
+    @api.should_receive(:post).with('statuses/update',:status=> "#{'a' * 94} RT @mzp: b [https://twitter.com/mzp/status/1]").and_return(@res)
+    call "#twitter", 'rt', ['a', 'a' * 94 ]
     @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
   end
 end
