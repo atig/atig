@@ -30,7 +30,7 @@ Rubygemsを使用してインストールしてください。::
 
 または `GitHub`_ からダウンロードしてください。
 
-.. _GitHub: http://github.com/atig/atig/downloads
+.. _GitHub: https://github.com/atig/atig/downloads
 
 trunk版
 ~~~~~~~~~~

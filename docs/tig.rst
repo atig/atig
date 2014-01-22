@@ -2,7 +2,7 @@ tig.rbとの違い
 ==================================
 atig.rbは `tig.rb`_ から派生したプロジェクトです。
 
-.. _tig.rb: http://github.com/cho45/net-irc
+.. _tig.rb: https://github.com/cho45/net-irc
 
 そのため基本的な機能は同様ですが、いくつかの細かい点が異なります。
 
