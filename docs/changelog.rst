@@ -3,7 +3,7 @@
 
 v0.4.5(2013-01-15)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.4.5
+http://github.com/atig/atig/tree/v0.4.5
 
 機能変更
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -12,7 +12,7 @@ http://github.com/mzp/atig/tree/v0.4.5
 
 v0.4.4(2013-12-29)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.4.4
+http://github.com/atig/atig/tree/v0.4.4
 
 機能変更
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -21,7 +21,7 @@ http://github.com/mzp/atig/tree/v0.4.4
 
 v0.4.3(2013-10-18)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.4.3
+http://github.com/atig/atig/tree/v0.4.3
 
 不具合修正
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -29,7 +29,7 @@ http://github.com/mzp/atig/tree/v0.4.3
 
 v0.4.2(2013-10-13)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.4.2
+http://github.com/atig/atig/tree/v0.4.2
 
 機能変更
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -37,7 +37,7 @@ http://github.com/mzp/atig/tree/v0.4.2
 
 v0.4.1(2013-08-02)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.4.1
+http://github.com/atig/atig/tree/v0.4.1
 
 不具合修正
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -47,7 +47,7 @@ http://github.com/mzp/atig/tree/v0.4.1
 
 v0.4.0(2013-06-12)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.4.0
+http://github.com/atig/atig/tree/v0.4.0
 
 機能変更
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -55,7 +55,7 @@ http://github.com/mzp/atig/tree/v0.4.0
 
 v0.3.12(2013-04-02)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.12
+http://github.com/atig/atig/tree/v0.3.12
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -63,7 +63,7 @@ http://github.com/mzp/atig/tree/v0.3.12
 
 v0.3.11(2013-04-02)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.11
+http://github.com/atig/atig/tree/v0.3.11
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -71,7 +71,7 @@ http://github.com/mzp/atig/tree/v0.3.11
 
  v0.3.10(2013-04-02)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.10
+http://github.com/atig/atig/tree/v0.3.10
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -79,7 +79,7 @@ http://github.com/mzp/atig/tree/v0.3.10
 
 v0.3.9(2013-03-01)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.9
+http://github.com/atig/atig/tree/v0.3.9
 
 バグ修正
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -87,7 +87,7 @@ http://github.com/mzp/atig/tree/v0.3.9
 
 v0.3.8(2013-02-03)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.8
+http://github.com/atig/atig/tree/v0.3.8
 
 機能変更
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -95,7 +95,7 @@ http://github.com/mzp/atig/tree/v0.3.8
 
 v0.3.7(2013-01-27)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.7
+http://github.com/atig/atig/tree/v0.3.7
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -108,7 +108,7 @@ http://github.com/mzp/atig/tree/v0.3.7
 
  v0.3.6(2012-05-14)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.6
+http://github.com/atig/atig/tree/v0.3.6
 
 機能変更
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -116,7 +116,7 @@ http://github.com/mzp/atig/tree/v0.3.6
 
 v0.3.5(2012-05-07)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.5
+http://github.com/atig/atig/tree/v0.3.5
 
 バグ修正
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -124,7 +124,7 @@ http://github.com/mzp/atig/tree/v0.3.5
 
  v0.3.4(2012-01-30)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.4
+http://github.com/atig/atig/tree/v0.3.4
 
 バグ修正
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -132,7 +132,7 @@ http://github.com/mzp/atig/tree/v0.3.4
 
  v0.3.3(2012-01-24)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.3
+http://github.com/atig/atig/tree/v0.3.3
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -152,7 +152,7 @@ http://github.com/mzp/atig/tree/v0.3.3
 
  v0.3.2(2010-10-10)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.2
+http://github.com/atig/atig/tree/v0.3.2
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -169,7 +169,7 @@ http://github.com/mzp/atig/tree/v0.3.2
 
 v0.3.1(2010-07-26)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.1
+http://github.com/atig/atig/tree/v0.3.1
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -189,7 +189,7 @@ http://github.com/mzp/atig/tree/v0.3.1
 
 v0.3.0(2010-06-12)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.3.0
+http://github.com/atig/atig/tree/v0.3.0
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -204,14 +204,14 @@ http://github.com/mzp/atig/tree/v0.3.0
  - 誤ったBit.lyのAPIキーを指定した際のエラーメッセージを分かりやすくしました。( `Issues 1`_ )
 
 .. _L_Star: http://d.hatena.ne.jp/mzp/20100407#c
-.. _Issues 1: http://github.com/mzp/atig/issues/closed#issue/1
+.. _Issues 1: http://github.com/atig/atig/issues/closed#issue/1
 
 バグ修正
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 v0.2.1(2010-04-17)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.2.1
+http://github.com/atig/atig/tree/v0.2.1
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -221,7 +221,7 @@ http://github.com/mzp/atig/tree/v0.2.1
 
 v0.2.0(2010-04-11)
 ------------------------------
-http://github.com/mzp/atig/tree/v0.2.0
+http://github.com/atig/atig/tree/v0.2.0
 
 機能追加
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -237,6 +237,6 @@ http://github.com/mzp/atig/tree/v0.2.0
 v0.1.0(2010-04-11)
 ------------------------------
 
-http://github.com/mzp/atig/tree/v0.1.0
+http://github.com/atig/atig/tree/v0.1.0
 
 - 最初のリリース

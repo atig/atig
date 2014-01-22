@@ -18,9 +18,9 @@ atig.rbはTwitterとIRCを結ぶゲートウェイです。
  - 安定板: `atigrb-0.4.3.tgz`_. ( `過去のバージョン`_ )
  - 開発版: `Github Repository`_.
 
-.. _atigrb-0.4.3.tgz: http://github.com/mzp/atig/tarball/v0.4.3
-.. _過去のバージョン: http://github.com/mzp/atig/tags
-.. _GitHub Repository: http://github.com/mzp/atig
+.. _atigrb-0.4.3.tgz: http://github.com/atig/atig/tarball/v0.4.3
+.. _過去のバージョン: http://github.com/atig/atig/tags
+.. _GitHub Repository: http://github.com/atig/atig
 
 特徴
 ------------------------------
@@ -87,7 +87,7 @@ IRC用のソフトが流用できます。
  - `Blog`_ の適当なページにコメントをつける
  - Githubでforkして、pull requestを送る
 
-.. _Issues: http://github.com/mzp/atig/issues
+.. _Issues: http://github.com/atig/atig/issues
 .. _@mzp: http://twitter.com/mzp/
 .. _Blog: http://d.hatena.ne.jp/mzp/
 

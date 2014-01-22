@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["mzp@ocaml.jp", "shibata.hiroshi@gmail.com"]
   gem.description   = %q{Atig.rb is Twitter Irc Gateway.}
   gem.summary       = %q{Atig.rb is forked from cho45's tig.rb. We improve some features of tig.rb.}
-  gem.homepage      = "https://github.com/mzp/atig"
+  gem.homepage      = "https://github.com/atig/atig"
 
   gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   gem.files         = `git ls-files`.split("\n")

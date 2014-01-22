@@ -30,13 +30,13 @@ Rubygemsを使用してインストールしてください。::
 
 または `GitHub`_ からダウンロードしてください。
 
-.. _GitHub: http://github.com/mzp/atig/downloads
+.. _GitHub: http://github.com/atig/atig/downloads
 
 trunk版
 ~~~~~~~~~~
 githubからpullしてください。::
 
- $ git clone https://github.com/mzp/atig.git
+ $ git clone https://github.com/atig/atig.git
 
 使ってみる
 ----------
