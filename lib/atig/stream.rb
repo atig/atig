@@ -33,7 +33,7 @@ module Atig
 
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
-      request = Net::HTTP::Get.new(uri.request_uri)
+      request = Net::HTTP::Get.new(uri.request_uri, {"Accept-Encoding" => "identity"})
       request.oauth!(http, @access.consumer, @access)
       http.request(request) do |response|
         unless response.code == '200' then
