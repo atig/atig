@@ -8,17 +8,17 @@ describe Atig::OFilter::ShortUrl,"when no-login bitly" do
   before do
     logger = double('Logger')
     bitly =  double("Bitly")
-    bitly.stub(:shorten).and_return{|s|
+    allow(bitly).to receive(:shorten){|s|
       "[#{s}]"
     }
-    Atig::Bitly.should_receive(:no_login).with(logger).and_return(bitly)
+    expect(Atig::Bitly).to receive(:no_login).with(logger).and_return(bitly)
     @ofilter = Atig::OFilter::ShortUrl.new(OpenStruct.new(:log=>logger, :opts=>OpenStruct.new('bitlify'=>true)))
   end
 
   it "should shorten url by bitly" do
-    @ofilter.call({:status => "this is http://example.com/a http://example.com/b"}).should == {
+    expect(@ofilter.call({:status => "this is http://example.com/a http://example.com/b"})).to eq({
       :status => "this is [http://example.com/a] [http://example.com/b]"
-    }
+    })
   end
 end
 
@@ -26,17 +26,17 @@ describe Atig::OFilter::ShortUrl,"when no-login bitly with size" do
   before do
     logger = double('Logger')
     bitly =  double("Bitly")
-    bitly.stub(:shorten).and_return{|s|
+    allow(bitly).to receive(:shorten){|s|
       "[#{s}]"
     }
-    Atig::Bitly.should_receive(:no_login).with(logger).and_return(bitly)
+    expect(Atig::Bitly).to receive(:no_login).with(logger).and_return(bitly)
     @ofilter = Atig::OFilter::ShortUrl.new(OpenStruct.new(:log=>logger, :opts=>OpenStruct.new('bitlify'=>13)))
   end
 
   it "should only shorten large url" do
-    @ofilter.call({:status => "this is http://example.com/a http://a.com"}).should == {
+    expect(@ofilter.call({:status => "this is http://example.com/a http://a.com"})).to eq({
       :status => "this is [http://example.com/a] http://a.com"
-    }
+    })
   end
 end
 
@@ -44,17 +44,17 @@ describe Atig::OFilter::ShortUrl,"when login bitly" do
   before do
     logger = double('Logger')
     bitly =  double("Bitly")
-    bitly.stub(:shorten).and_return{|s|
+    allow(bitly).to receive(:shorten){|s|
       "[#{s}]"
     }
-    Atig::Bitly.should_receive(:login).with(logger,"username","api_key").and_return(bitly)
+    expect(Atig::Bitly).to receive(:login).with(logger,"username","api_key").and_return(bitly)
     @ofilter = Atig::OFilter::ShortUrl.new(OpenStruct.new(:log=>logger, :opts=>OpenStruct.new('bitlify'=>'username:api_key')))
   end
 
   it "should only shorten large url" do
-    @ofilter.call({:status => "this is http://example.com/a http://example.com/b"}).should == {
+    expect(@ofilter.call({:status => "this is http://example.com/a http://example.com/b"})).to eq({
       :status => "this is [http://example.com/a] [http://example.com/b]"
-    }
+    })
   end
 end
 
@@ -62,17 +62,17 @@ describe Atig::OFilter::ShortUrl,"when login bitly with size" do
   before do
     logger = double('Logger')
     bitly =  double("Bitly")
-    bitly.stub(:shorten).and_return{|s|
+    allow(bitly).to receive(:shorten){|s|
       "[#{s}]"
     }
-    Atig::Bitly.should_receive(:login).with(logger,"username","api_key").and_return(bitly)
+    expect(Atig::Bitly).to receive(:login).with(logger,"username","api_key").and_return(bitly)
     @ofilter = Atig::OFilter::ShortUrl.new(OpenStruct.new(:log=>logger, :opts=>OpenStruct.new('bitlify'=>'username:api_key:13')))
   end
 
   it "should only shorten large url" do
-    @ofilter.call({:status => "this is http://example.com/a http://a.com"}).should == {
+    expect(@ofilter.call({:status => "this is http://example.com/a http://a.com"})).to eq({
       :status => "this is [http://example.com/a] http://a.com"
-    }
+    })
   end
 end
 
@@ -84,8 +84,8 @@ describe Atig::OFilter::ShortUrl,"when nop" do
   end
 
   it "should only not do anything" do
-    @ofilter.call({:status => "this is http://example.com/a http://a.com"}).should == {
+    expect(@ofilter.call({:status => "this is http://example.com/a http://a.com"})).to eq({
       :status => "this is http://example.com/a http://a.com"
-    }
+    })
   end
 end

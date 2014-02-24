@@ -14,7 +14,7 @@ describe Atig::Db::Followings,"when it is empty" do
   end
 
   it "should be emtpy" do
-    @db.empty?.should be_true
+    expect(@db.empty?).to be_truthy
   end
 end
 
@@ -43,7 +43,7 @@ describe Atig::Db::Followings,"when updated users" do
   end
 
   it "should return size" do
-    @db.size.should == 2
+    expect(@db.size).to eq(2)
   end
 
   it "should be invalidated" do
@@ -53,56 +53,56 @@ describe Atig::Db::Followings,"when updated users" do
     end
     @db.invalidate
 
-    called.should be_true
+    expect(called).to be_truthy
   end
 
   it "should not empty" do
-    @db.empty?.should be_false
+    expect(@db.empty?).to be_falsey
   end
 
   it "should call listener with :join" do
     @db.update [ @alice, @bob, @charriey ]
-    @listen[:join].should == [ @charriey ]
-    @listen[:part].should == nil
-    @listen[:mode].should == nil
+    expect(@listen[:join]).to eq([ @charriey ])
+    expect(@listen[:part]).to eq(nil)
+    expect(@listen[:mode]).to eq(nil)
   end
 
   it "should call listener with :part" do
     @db.update [ @alice ]
-    @listen[:join].should == nil
-    @listen[:part].should == [ @bob ]
-    @listen[:mode].should == nil
+    expect(@listen[:join]).to eq(nil)
+    expect(@listen[:part]).to eq([ @bob ])
+    expect(@listen[:mode]).to eq(nil)
   end
 
   it "should not found removed user[BUG]" do
-    @db.include?(@bob).should == true
+    expect(@db.include?(@bob)).to eq(true)
     @db.update [ @alice ]
     # now, @bob is not member
-    @db.include?(@bob).should == false
+    expect(@db.include?(@bob)).to eq(false)
   end
 
   it "should call listener with :mode" do
     bob = user 5,'bob', false, false
 
     @db.update [ @alice, bob ]
-    @listen[:join].should == nil
-    @listen[:part].should == nil
-    @listen[:mode].should == [ bob ]
+    expect(@listen[:join]).to eq(nil)
+    expect(@listen[:part]).to eq(nil)
+    expect(@listen[:mode]).to eq([ bob ])
   end
 
   it "should have users" do
-    @db.users.should == [ @alice, @bob ]
+    expect(@db.users).to eq([ @alice, @bob ])
   end
 
   it "should be found by screen_name" do
-    @db.find_by_screen_name('alice').should == @alice
-    @db.find_by_screen_name('???').should == nil
+    expect(@db.find_by_screen_name('alice')).to eq(@alice)
+    expect(@db.find_by_screen_name('???')).to eq(nil)
   end
 
   it "should check include" do
     alice = user @alice.id,'alice', true, true
-    @db.include?(@charriey).should be_false
-    @db.include?(@alice).should be_true
-    @db.include?(alice).should be_true
+    expect(@db.include?(@charriey)).to be_falsey
+    expect(@db.include?(@alice)).to be_truthy
+    expect(@db.include?(alice)).to be_truthy
   end
 end

@@ -11,22 +11,22 @@ describe Atig::OFilter::Footer do
   end
 
   it "should pass through" do
-    @filter.call(:status => 'hi').should == {
+    expect(@filter.call(:status => 'hi')).to eq({
       :status => "hi"
-    }
+    })
   end
 
   it "should append footer" do
     @opts.footer = '*tw*'
-    @filter.call(:status => 'hi').should == {
+    expect(@filter.call(:status => 'hi')).to eq({
       :status => "hi *tw*"
-    }
+    })
   end
 
   it "should not append footer" do
     @opts.footer = false
-    @filter.call(:status => 'hi').should == {
+    expect(@filter.call(:status => 'hi')).to eq({
       :status => "hi"
-    }
+    })
   end
 end

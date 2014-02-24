@@ -9,9 +9,9 @@ describe Atig::Db::Roman do
   end
 
   it "should make readble tid" do
-    @roman.make(0).should == 'a'
-    @roman.make(1).should == 'i'
-    @roman.make(2).should == 'u'
+    expect(@roman.make(0)).to eq('a')
+    expect(@roman.make(1)).to eq('i')
+    expect(@roman.make(2)).to eq('u')
   end
 end
 

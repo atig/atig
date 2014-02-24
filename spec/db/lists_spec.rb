@@ -29,15 +29,15 @@ describe Atig::Db::Lists do
     @lists.update("a" => [ @alice, @bob ],
                   "b" => [ @alice, @bob , @charriey ])
 
-    @lists.find_by_screen_name('alice').sort.should == ["a", "b"]
-    @lists.find_by_screen_name('charriey').should == ["b"]
+    expect(@lists.find_by_screen_name('alice').sort).to eq(["a", "b"])
+    expect(@lists.find_by_screen_name('charriey')).to eq(["b"])
   end
 
   it "should have lists" do
     @lists.update("a" => [ @alice, @bob ],
                   "b" => [ @alice, @bob , @charriey ])
 
-    @lists.find_by_list_name('a').should == [ @alice, @bob ]
+    expect(@lists.find_by_list_name('a')).to eq([ @alice, @bob ])
   end
 
   it "should have each" do
@@ -51,52 +51,52 @@ describe Atig::Db::Lists do
     @lists.each do|name,users|
       hash[name] = users
     end
-    hash.should == data
+    expect(hash).to eq(data)
   end
 
   it "should call listener when new list" do
     @lists.update("a" => [ @alice, @bob ])
 
-    @args.keys.should include(:new, :join)
-    @args[:new].should == [ "a" ]
-    @args[:join].should == [ "a", [ @alice, @bob ] ]
+    expect(@args.keys).to include(:new, :join)
+    expect(@args[:new]).to eq([ "a" ])
+    expect(@args[:join]).to eq([ "a", [ @alice, @bob ] ])
   end
 
   it "should call listener when partcial update" do
     @lists.update("a" => [ @alice ])
     @lists["a"].update([ @alice, @bob, @charriey ])
-    @args[:join].should == ["a", [ @bob, @charriey ]]
+    expect(@args[:join]).to eq(["a", [ @bob, @charriey ]])
   end
 
   it "should call on_invalidated" do
     called = false
     @lists.on_invalidated do|name|
-      name.should == "a"
+      expect(name).to eq("a")
       called = true
     end
     @lists.invalidate("a")
 
-    called.should be_true
+    expect(called).to be_truthy
   end
 
   it "should call listener when delete list" do
     @lists.update("a" => [ @alice, @bob ])
     @lists.update({})
-    @args.keys.should include(:new, :join, :del)
-    @args[:del].should == ["a"]
+    expect(@args.keys).to include(:new, :join, :del)
+    expect(@args[:del]).to eq(["a"])
   end
 
   it "should call listener when join user" do
     @lists.update("a" => [ @alice ])
     @lists.update("a" => [ @alice, @bob, @charriey ])
 
-    @args[:join].should == ["a", [ @bob, @charriey ]]
+    expect(@args[:join]).to eq(["a", [ @bob, @charriey ]])
   end
 
   it "should call listener when exit user" do
     @lists.update("a" => [ @alice, @bob, @charriey ])
     @lists.update("a" => [ @alice ])
-    @args[:part].should == ["a", [ @bob, @charriey ]]
+    expect(@args[:part]).to eq(["a", [ @bob, @charriey ]])
   end
 
   it "should call listener when change user mode" do
@@ -104,6 +104,6 @@ describe Atig::Db::Lists do
     bob = user @bob.id, 'bob', false, false
     @lists.update("a" => [ @alice, bob ])
 
-    @args[:mode].should == [ "a", [ bob ]]
+    expect(@args[:mode]).to eq([ "a", [ bob ]])
   end
 end

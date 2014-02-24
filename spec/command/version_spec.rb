@@ -9,56 +9,53 @@ describe Atig::Command::Version do
   before do
     @command = init Atig::Command::Version
     @status  = double "status"
-    @status.stub(:source).and_return('<a href="http://echofon.com/" rel="nofollow">Echofon</a>')
+    allow(@status).to receive(:source).and_return('<a href="http://echofon.com/" rel="nofollow">Echofon</a>')
     @user    = double "user"
-    @user.stub(:status).and_return(@status)
+    allow(@user).to receive(:status).and_return(@status)
   end
 
   it "should provide version command" do
-    @gateway.names.should == ['version']
+    expect(@gateway.names).to eq(['version'])
   end
 
   it "should show the source via DB" do
-    @statuses.
-      should_receive(:find_by_screen_name).
+    expect(@statuses).
+      to receive(:find_by_screen_name).
       with('mzp',:limit => 1).
       and_return([ entry(@user,@status) ])
-    @channel.
-      should_receive(:message).
-      with(anything, Net::IRC::Constants::NOTICE).
-      and_return{|s,_|
-        s.status.text.should == "\x01Echofon <http://echofon.com/>\x01"
+    expect(@channel).
+      to receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE){|s,_|
+        expect(s.status.text).to eq("\x01Echofon <http://echofon.com/>\x01")
       }
     call '#twitter','version',%w(mzp)
   end
 
   it "should show the source of web" do
     status  = double "status"
-    status.stub(:source).and_return('web')
-    @statuses.
-      should_receive(:find_by_screen_name).
+    allow(status).to receive(:source).and_return('web')
+    expect(@statuses).
+      to receive(:find_by_screen_name).
       with('mzp',:limit => 1).
       and_return([ entry(@user,status) ])
-    @channel.
-      should_receive(:message).
-      with(anything, Net::IRC::Constants::NOTICE).
-      and_return{|s,_|
-        s.status.text.should == "\x01web\x01"
+    expect(@channel).
+      to receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE){|s,_|
+        expect(s.status.text).to eq("\x01web\x01")
       }
     call '#twitter','version',%w(mzp)
   end
 
   it "should show the source via API" do
-    @statuses.stub(:find_by_screen_name).and_return(@status)
-    @statuses.should_receive(:find_by_screen_name).with('mzp',:limit => 1).and_return(nil)
-    @statuses.should_receive(:add).with(:status => @status, :user => @user, :source=>:version)
-    @api.should_receive(:get).with('users/show',:screen_name=>'mzp').and_return(@user)
+    allow(@statuses).to receive(:find_by_screen_name).and_return(@status)
+    expect(@statuses).to receive(:find_by_screen_name).with('mzp',:limit => 1).and_return(nil)
+    expect(@statuses).to receive(:add).with(:status => @status, :user => @user, :source=>:version)
+    expect(@api).to receive(:get).with('users/show',:screen_name=>'mzp').and_return(@user)
 
-    @channel.
-      should_receive(:message).
-      with(anything, Net::IRC::Constants::NOTICE).
-      and_return{|s,_|
-        s.status.text.should == "\x01Echofon <http://echofon.com/>\x01"
+    expect(@channel).
+      to receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE){|s,_|
+        expect(s.status.text).to eq("\x01Echofon <http://echofon.com/>\x01")
       }
 
     call '#twitter','version',%w(mzp)

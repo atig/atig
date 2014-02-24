@@ -16,8 +16,8 @@ target.each do |m|
        ["", "foo", 3],
        ["あああ", "ああい", 1],
       ].each do |a, b, expected|
-        m.levenshtein(a.split(//), b.split(//)).should == expected
-        m.levenshtein(b.split(//), a.split(//)).should == expected
+        expect(m.levenshtein(a.split(//), b.split(//))).to eq(expected)
+        expect(m.levenshtein(b.split(//), a.split(//))).to eq(expected)
       end
     end
   end

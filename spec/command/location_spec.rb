@@ -11,14 +11,14 @@ describe Atig::Command::Location do
   end
 
   it "should update location" do
-    @api.should_receive(:post).with('account/update_profile',:location=>'some place')
-    @channel.should_receive(:notify).with("You are in some place now.")
+    expect(@api).to receive(:post).with('account/update_profile',:location=>'some place')
+    expect(@channel).to receive(:notify).with("You are in some place now.")
     call '#twitter','location',%w(some place)
   end
 
   it "should reset location" do
-    @api.should_receive(:post).with('account/update_profile',:location=>'')
-    @channel.should_receive(:notify).with("You are nowhere now.")
+    expect(@api).to receive(:post).with('account/update_profile',:location=>'')
+    expect(@channel).to receive(:notify).with("You are nowhere now.")
     call '#twitter','location',%w()
   end
 end

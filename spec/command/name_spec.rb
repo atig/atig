@@ -11,8 +11,8 @@ describe Atig::Command::Name do
   end
 
   it "should update name" do
-    @api.should_receive(:post).with('account/update_profile',:name=>'mzp')
-    @channel.should_receive(:notify).with("You are named mzp.")
+    expect(@api).to receive(:post).with('account/update_profile',:name=>'mzp')
+    expect(@channel).to receive(:notify).with("You are named mzp.")
     call '#twitter', 'name', %w(mzp)
   end
 end

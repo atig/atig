@@ -7,7 +7,7 @@ ENV['TZ'] = 'UTC'
 
 RSpec::Matchers.define :be_text do |text|
   match do |status|
-    status.text.should == text
+    expect(status.text).to eq(text)
   end
 end
 
@@ -17,16 +17,16 @@ end
 
 def user(id, name)
   user = double("User-#{name}")
-  user.stub(:id).and_return(id)
-  user.stub(:screen_name).and_return(name)
+  allow(user).to receive(:id).and_return(id)
+  allow(user).to receive(:screen_name).and_return(name)
   user
 end
 
 def entry(user, status, name = 'entry', id = 0)
   entry = double name
-  entry.stub('id').and_return(id)
-  entry.stub('user').and_return(user)
-  entry.stub('status').and_return(status)
+  allow(entry).to receive('id').and_return(id)
+  allow(entry).to receive('user').and_return(user)
+  allow(entry).to receive('status').and_return(status)
   entry
 end
 

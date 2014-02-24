@@ -10,9 +10,9 @@ end
 describe Atig::OFilter::EscapeUrl do
   before do
     @logger = double('Logger')
-    @logger.should_receive(:info).at_most(:once)
-    @logger.should_receive(:error).at_most(:once)
-    @logger.should_receive(:debug).at_most(:once)
+    expect(@logger).to receive(:info).at_most(:once)
+    expect(@logger).to receive(:error).at_most(:once)
+    expect(@logger).to receive(:debug).at_most(:once)
   end
 
   def filtered(text,opt={})
@@ -21,11 +21,11 @@ describe Atig::OFilter::EscapeUrl do
   end
 
   it "through normal url" do
-    filtered("http://example.com").should == { :status => "http://example.com"}
+    expect(filtered("http://example.com")).to eq({ :status => "http://example.com"})
   end
 
   it "escape only url" do
-    filtered("あああ http://example.com/あああ").should == { :status => "あああ http://example.com/%E3%81%82%E3%81%82%E3%81%82" }
+    expect(filtered("あああ http://example.com/あああ")).to eq({ :status => "あああ http://example.com/%E3%81%82%E3%81%82%E3%81%82" })
   end
 end
 
@@ -33,9 +33,9 @@ if defined? ::Punycode then
   describe Atig::OFilter::EscapeUrl,"when punycode is enabled" do
     before do
       @logger = double('Logger')
-      @logger.should_receive(:info).at_most(:once)
-      @logger.should_receive(:error).at_most(:once)
-      @logger.should_receive(:debug).at_most(:once)
+      expect(@logger).to receive(:info).at_most(:once)
+      expect(@logger).to receive(:error).at_most(:once)
+      expect(@logger).to receive(:debug).at_most(:once)
     end
 
     def filtered(text,opt={})
@@ -44,7 +44,7 @@ if defined? ::Punycode then
     end
 
     it "escape international URL" do
-      filtered("http://あああ.com").should == {:status => "http://xn--l8jaa.com" }
+      expect(filtered("http://あああ.com")).to eq({:status => "http://xn--l8jaa.com" })
     end
   end
 end

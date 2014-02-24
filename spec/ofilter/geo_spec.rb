@@ -11,9 +11,9 @@ describe Atig::OFilter::Geo,"when disabled" do
   end
 
   it "should through" do
-    filtered("hi").should == {
+    expect(filtered("hi")).to eq({
       :status => "hi"
-    }
+    })
   end
 end
 
@@ -24,10 +24,10 @@ describe Atig::OFilter::Geo,"when enabled" do
   end
 
   it "add lat & long" do
-    filtered("hi",:ll=>"42.1,43.1").should == {
+    expect(filtered("hi",:ll=>"42.1,43.1")).to eq({
       :status => "hi",
       :lat  => 42.1,
       :long => 43.1
-    }
+    })
   end
 end

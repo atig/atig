@@ -45,13 +45,13 @@ describe Atig::Db::Statuses do
 
     @db.add :status => @d, :user => @alice, :source => :timeline, :fuga => :hoge
 
-    entry.source.should == :timeline
-    entry.status.should == @d
-    entry.tid.should match(/\w+/)
-    entry.sid.should match(/\w+/)
-    entry.user.should   == @alice
-    entry.source.should == :timeline
-    entry.fuga.should == :hoge
+    expect(entry.source).to eq(:timeline)
+    expect(entry.status).to eq(@d)
+    expect(entry.tid).to match(/\w+/)
+    expect(entry.sid).to match(/\w+/)
+    expect(entry.user).to   eq(@alice)
+    expect(entry.source).to eq(:timeline)
+    expect(entry.fuga).to eq(:hoge)
   end
 
   it "should not contain duplicate" do
@@ -59,16 +59,16 @@ describe Atig::Db::Statuses do
     @db.listen{|*_| called = true }
 
     @db.add :status => @c, :user => @bob, :source => :timeline
-    called.should be_false
+    expect(called).to be_falsey
   end
 
   it "should be found by id" do
     entry = @db.find_by_id 1
-    entry.id.should == 1
-    entry.status.should == @a
-    entry.user  .should == @alice
-    entry.tid   .should match(/\w+/)
-    entry.sid.should match(/\w+/)
+    expect(entry.id).to eq(1)
+    expect(entry.status).to eq(@a)
+    expect(entry.user)  .to eq(@alice)
+    expect(entry.tid)   .to match(/\w+/)
+    expect(entry.sid).to match(/\w+/)
   end
 
   it "should have unique tid" do
@@ -77,89 +77,89 @@ describe Atig::Db::Statuses do
 
     a = @db.find_by_id(1)
     d = @db.find_by_id(4)
-    a.tid.should_not == d.tid
-    a.sid.should_not == d.cid
+    expect(a.tid).not_to eq(d.tid)
+    expect(a.sid).not_to eq(d.cid)
   end
 
   it "should be found all" do
     db = @db.find_all
-    db.size.should == 3
+    expect(db.size).to eq(3)
     a,b,c = db
 
-    a.status.should == @c
-    a.user  .should == @alice
-    a.tid   .should match(/\w+/)
-    a.sid   .should match(/\w+/)
+    expect(a.status).to eq(@c)
+    expect(a.user)  .to eq(@alice)
+    expect(a.tid)   .to match(/\w+/)
+    expect(a.sid)   .to match(/\w+/)
 
-    b.status.should == @b
-    b.user  .should == @bob
-    b.tid   .should match(/\w+/)
-    b.sid   .should match(/\w+/)
+    expect(b.status).to eq(@b)
+    expect(b.user)  .to eq(@bob)
+    expect(b.tid)   .to match(/\w+/)
+    expect(b.sid)   .to match(/\w+/)
 
-    c.status.should == @a
-    c.user.should   == @alice
-    c.tid.should    match(/\w+/)
-    c.sid.should    match(/\w+/)
+    expect(c.status).to eq(@a)
+    expect(c.user).to   eq(@alice)
+    expect(c.tid).to    match(/\w+/)
+    expect(c.sid).to    match(/\w+/)
   end
 
   it "should be found by tid" do
     entry = @db.find_by_id(1)
-    @db.find_by_tid(entry.tid).should == entry
+    expect(@db.find_by_tid(entry.tid)).to eq(entry)
   end
 
   it "should be found by sid" do
     entry = @db.find_by_id(1)
-    @db.find_by_sid(entry.sid).should == entry
+    expect(@db.find_by_sid(entry.sid)).to eq(entry)
   end
 
   it "should be found by tid" do
-    @db.find_by_tid('__').should be_nil
+    expect(@db.find_by_tid('__')).to be_nil
   end
 
   it "should be found by user" do
     a,b = *@db.find_by_user(@alice)
 
-    a.status.should == @c
-    a.user  .should == @alice
-    a.tid   .should match(/\w+/)
-    a.sid   .should match(/\w+/)
+    expect(a.status).to eq(@c)
+    expect(a.user)  .to eq(@alice)
+    expect(a.tid)   .to match(/\w+/)
+    expect(a.sid)   .to match(/\w+/)
 
-    b.status.should == @a
-    b.user.should   == @alice
-    b.tid.should    match(/\w+/)
-    b.sid.should    match(/\w+/)
+    expect(b.status).to eq(@a)
+    expect(b.user).to   eq(@alice)
+    expect(b.tid).to    match(/\w+/)
+    expect(b.sid).to    match(/\w+/)
   end
 
   it "should be found by screen_name" do
     db = @db.find_by_screen_name('alice')
-    db.size.should == 2
+    expect(db.size).to eq(2)
     a,b = db
 
-    a.status.should == @c
-    a.user  .should == @alice
-    a.tid   .should match(/\w+/)
-    a.sid   .should match(/\w+/)
+    expect(a.status).to eq(@c)
+    expect(a.user)  .to eq(@alice)
+    expect(a.tid)   .to match(/\w+/)
+    expect(a.sid)   .to match(/\w+/)
 
-    b.status.should == @a
-    b.user.should   == @alice
-    b.tid.should    match(/\w+/)
-    b.sid.should    match(/\w+/)
+    expect(b.status).to eq(@a)
+    expect(b.user).to   eq(@alice)
+    expect(b.tid).to    match(/\w+/)
+    expect(b.sid).to    match(/\w+/)
   end
 
   it "should be found by screen_name with limit" do
     xs = @db.find_by_screen_name('alice', :limit => 1)
-    xs.size.should == 1
+    expect(xs.size).to eq(1)
 
     a,_ = xs
-    a.status.should == @c
-    a.user  .should == @alice
-    a.tid   .should match(/\w+/)
-    a.sid   .should match(/\w+/)
+    expect(a.status).to eq(@c)
+    expect(a.user)  .to eq(@alice)
+    expect(a.tid)   .to match(/\w+/)
+    expect(a.sid)   .to match(/\w+/)
   end
 
   it "should remove by id" do
     @db.remove_by_id 1
-    @db.find_by_id(1).should be_nil
+    expect(@db.find_by_id(1)).to be_nil
   end
 
   it "should have uniq tid/sid when removed" do
@@ -168,8 +168,8 @@ describe Atig::Db::Statuses do
     @db.add :status => @c , :user => @alice, :source => :src
     new = @db.find_by_id 3
 
-    old.tid.should_not == new.tid
-    old.sid.should_not == new.sid
+    expect(old.tid).not_to eq(new.tid)
+    expect(old.sid).not_to eq(new.sid)
   end
 
   it "should cleanup" do
@@ -179,6 +179,6 @@ describe Atig::Db::Statuses do
       @db.add :status => s , :user => @alice  , :source => :srcB
     end
     @db.cleanup
-    @db.find_by_status_id(@a.id).should == nil
+    expect(@db.find_by_status_id(@a.id)).to eq(nil)
   end
 end
