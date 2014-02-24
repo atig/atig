@@ -12,7 +12,7 @@ describe Atig::IFilter::Sid, "when disable tid" do
   end
 
   it "should through text" do
-    filtered("hello").should be_text("hello")
+    expect(filtered("hello")).to be_text("hello")
   end
 end
 
@@ -24,6 +24,6 @@ describe Atig::IFilter::Sid, "when enable tid" do
   end
 
   it "should append sid" do
-    filtered("hello").should be_text("hello \x0310[1]\x0F")
+    expect(filtered("hello")).to be_text("hello \x0310[1]\x0F")
   end
 end

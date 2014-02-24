@@ -15,25 +15,25 @@ describe Atig::IFilter::ExpandUrl, "when disable whole url" do
   end
 
   it "should expand bit.ly" do
-    filtered("This is http://bit.ly/hoge").should be_text("This is [http://bit.ly/hoge]")
-    filtered("This is http://bitly.com/hoge").should be_text("This is [http://bitly.com/hoge]")
+    expect(filtered("This is http://bit.ly/hoge")).to be_text("This is [http://bit.ly/hoge]")
+    expect(filtered("This is http://bitly.com/hoge")).to be_text("This is [http://bitly.com/hoge]")
   end
 
   it "should expand htn.to" do
-    filtered("This is http://htn.to/TZdkXg").should be_text("This is [http://htn.to/TZdkXg]")
-    filtered("This is http://htnnto/TZdkXg").should be_text("This is http://htnnto/TZdkXg")
+    expect(filtered("This is http://htn.to/TZdkXg")).to be_text("This is [http://htn.to/TZdkXg]")
+    expect(filtered("This is http://htnnto/TZdkXg")).to be_text("This is http://htnnto/TZdkXg")
   end
 
   it "should expand tmblr.co" do
-    filtered("This is http://tmblr.co/Z0rNbyxhxUK5").should be_text("This is [http://tmblr.co/Z0rNbyxhxUK5]")
+    expect(filtered("This is http://tmblr.co/Z0rNbyxhxUK5")).to be_text("This is [http://tmblr.co/Z0rNbyxhxUK5]")
   end
 
   it "should expand nico.ms" do
-    filtered("This is http://nico.ms/sm11870888").should be_text("This is [http://nico.ms/sm11870888]")
+    expect(filtered("This is http://nico.ms/sm11870888")).to be_text("This is [http://nico.ms/sm11870888]")
   end
 
   it "should through other url" do
-    filtered("http://example.com").should be_text("http://example.com")
+    expect(filtered("http://example.com")).to be_text("http://example.com")
   end
 end
 
@@ -47,12 +47,12 @@ describe Atig::IFilter::ExpandUrl, "when enable whole url" do
   end
 
   it "should expand bit.ly" do
-    filtered("This is http://bit.ly/hoge").should be_text("This is [http://bit.ly/hoge]")
+    expect(filtered("This is http://bit.ly/hoge")).to be_text("This is [http://bit.ly/hoge]")
   end
 
   it "should expand other url" do
-    filtered("http://example.com").should be_text("[http://example.com]")
-    filtered("https://example.com").should be_text("[https://example.com]")
+    expect(filtered("http://example.com")).to be_text("[http://example.com]")
+    expect(filtered("https://example.com")).to be_text("[https://example.com]")
   end
 end
 
@@ -77,9 +77,8 @@ describe Atig::IFilter::ExpandUrl, "when has urls entities" do
         }]
       }
     }
-    filtered("http://t.co/1Vyoux4kB8", opts).should be_text("http://example.com/")
-    filtered("http://t.co/1Vyoux4kB8 http://t.co/V1441ye6g2", opts).should
-      be_text("http://example.com/ http://expmaple.org/")
+    expect(filtered("http://t.co/1Vyoux4kB8", opts)).to be_text("http://example.com/")
+    expect(filtered("http://t.co/1Vyoux4kB8 http://t.co/V1441ye6g2", opts)).to be_text("http://example.com/ http://example.org/")
   end
 
   it "should expand recursive shorten URL" do
@@ -91,6 +90,6 @@ describe Atig::IFilter::ExpandUrl, "when has urls entities" do
         }]
       }
     }
-    filtered("http://t.co/h8sqL5ZMuz", opts).should be_text("[http://bit.ly/1LM4fW]")
+    expect(filtered("http://t.co/h8sqL5ZMuz", opts)).to be_text("[http://bit.ly/1LM4fW]")
   end
 end

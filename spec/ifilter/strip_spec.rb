@@ -10,14 +10,14 @@ describe Atig::IFilter::Strip do
   end
 
   it "should strip *tw*" do
-    @ifilter.call(status("hoge *tw*")).should be_text("hoge")
+    expect(@ifilter.call(status("hoge *tw*"))).to be_text("hoge")
   end
 
   it "should strip _" do
-    @ifilter.call(status("hoge _")).should be_text("hoge")
+    expect(@ifilter.call(status("hoge _"))).to be_text("hoge")
   end
 
   it "should strip white-space" do
-    @ifilter.call(status("  hoge  ")).should be_text("hoge")
+    expect(@ifilter.call(status("  hoge  "))).to be_text("hoge")
   end
 end

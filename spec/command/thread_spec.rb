@@ -16,75 +16,75 @@ describe Atig::Command::Thread do
                ]
     @command = init Atig::Command::Thread
     @messages = []
-    @channel.stub(:message).and_return{|entry,_|
+    allow(@channel).to receive(:message){|entry,_|
       @messages.unshift entry
     }
-    @statuses.stub(:find_by_status_id).with(anything).and_return{|id|
+    allow(@statuses).to receive(:find_by_status_id).with(anything){|id|
       @entries[id.to_i]
     }
   end
 
   it "should provide thread command" do
-    @gateway.names.should == %w( thread )
+    expect(@gateway.names).to eq(%w( thread ))
   end
 
   it "should show the tweet" do
-    @statuses.should_receive(:find_by_tid).with('a').and_return(@entries[0])
+    expect(@statuses).to receive(:find_by_tid).with('a').and_return(@entries[0])
 
     call "#twitter","thread",%w(a)
 
-    @messages.should == [ @entries[0] ]
+    expect(@messages).to eq([ @entries[0] ])
   end
 
   it "should chain the tweets" do
-    @statuses.should_receive(:find_by_tid).with('a').and_return(@entries[1])
+    expect(@statuses).to receive(:find_by_tid).with('a').and_return(@entries[1])
 
     call "#twitter","thread",%w(a)
 
-    @messages.should == @entries[1..3]
+    expect(@messages).to eq(@entries[1..3])
   end
 
   it "should chain the tweets by screen name" do
-    @statuses.should_receive(:find_by_tid).with('mzp').and_return(nil)
-    @statuses.should_receive(:find_by_sid).with('mzp').and_return(nil)
-    @statuses.should_receive(:find_by_screen_name).with('mzp',:limit=>1).and_return([ @entries[1] ])
+    expect(@statuses).to receive(:find_by_tid).with('mzp').and_return(nil)
+    expect(@statuses).to receive(:find_by_sid).with('mzp').and_return(nil)
+    expect(@statuses).to receive(:find_by_screen_name).with('mzp',:limit=>1).and_return([ @entries[1] ])
 
     call "#twitter","thread",%w(mzp)
 
-    @messages.should == @entries[1..3]
+    expect(@messages).to eq(@entries[1..3])
   end
 
   it "should chain the tweets by sid" do
-    @statuses.should_receive(:find_by_tid).with('mzp:a').and_return(nil)
-    @statuses.should_receive(:find_by_sid).with('mzp:a').and_return(@entries[1])
+    expect(@statuses).to receive(:find_by_tid).with('mzp:a').and_return(nil)
+    expect(@statuses).to receive(:find_by_sid).with('mzp:a').and_return(@entries[1])
 
     call "#twitter","thread",%w(mzp:a)
 
-    @messages.should == @entries[1..3]
+    expect(@messages).to eq(@entries[1..3])
   end
 
 
 
   it "should chain the tweets with limit" do
-    @statuses.should_receive(:find_by_tid).with('a').and_return(@entries[1])
+    expect(@statuses).to receive(:find_by_tid).with('a').and_return(@entries[1])
 
     call "#twitter","thread",%w(a 2)
 
-    @messages.should == @entries[1..2]
+    expect(@messages).to eq(@entries[1..2])
   end
 
   it "should get new tweets" do
-    @statuses.should_receive(:find_by_tid).with('a').and_return(@entries[4])
+    expect(@statuses).to receive(:find_by_tid).with('a').and_return(@entries[4])
     user   = user 1, 'mzp'
     status = status '','user'=>user
     entry  = entry user,status,'new-entry'
-    @statuses.should_receive(:add).with(:status => status, :user => user, :source=>:thread).and_return{
+    expect(@statuses).to receive(:add).with(:status => status, :user => user, :source=>:thread){
       @entries << entry
     }
-    @api.should_receive(:get).with('statuses/show/5').and_return(status)
+    expect(@api).to receive(:get).with('statuses/show/5').and_return(status)
 
     call "#twitter","thread",%w(a)
 
-    @messages.should == [@entries[4], entry]
+    expect(@messages).to eq([@entries[4], entry])
   end
 end

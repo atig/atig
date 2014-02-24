@@ -10,30 +10,28 @@ describe Atig::Command::UserInfo do
     @command = init Atig::Command::UserInfo
     @status  = double "status"
     @user    = double "user"
-    @user.stub(:description).and_return('hogehoge')
-    @user.stub(:status).and_return(@status)
+    allow(@user).to receive(:description).and_return('hogehoge')
+    allow(@user).to receive(:status).and_return(@status)
   end
 
   it "should show the source via DB" do
-    @followings.should_receive(:find_by_screen_name).with('mzp').and_return(@user)
-    @channel.
-      should_receive(:message).
-      with(anything, Net::IRC::Constants::NOTICE).
-      and_return{|s,_|
-        s.status.text.should == "\x01hogehoge\x01"
+    expect(@followings).to receive(:find_by_screen_name).with('mzp').and_return(@user)
+    expect(@channel).
+      to receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE){|s,_|
+        expect(s.status.text).to eq("\x01hogehoge\x01")
       }
     call '#twitter','userinfo',%w(mzp)
   end
 
   it "should show the source via API" do
-    @followings.should_receive(:find_by_screen_name).with('mzp').and_return(nil)
-    @api.should_receive(:get).with('users/show',:screen_name=>'mzp').and_return(@user)
+    expect(@followings).to receive(:find_by_screen_name).with('mzp').and_return(nil)
+    expect(@api).to receive(:get).with('users/show',:screen_name=>'mzp').and_return(@user)
 
-    @channel.
-      should_receive(:message).
-      with(anything, Net::IRC::Constants::NOTICE).
-      and_return{|s,_|
-        s.status.text.should == "\x01hogehoge\x01"
+    expect(@channel).
+      to receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE){|s,_|
+        expect(s.status.text).to eq("\x01hogehoge\x01")
       }
 
     call '#twitter','userinfo',%w(mzp)

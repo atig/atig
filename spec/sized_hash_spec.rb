@@ -10,7 +10,7 @@ describe Atig::SizedHash do
 
   it "はkeyとvalueでアクセスできる" do
     @hash[:foo] = :bar
-    @hash[:foo].should == :bar
+    expect(@hash[:foo]).to eq(:bar)
   end
 
   it "はサイズが取得できる" do
@@ -29,17 +29,17 @@ describe Atig::SizedHash do
   it "は古いのが消える" do
     ('a'..'c').each{|c| @hash[c] = 42 }
 
-    @hash.key?('a').should be_true
+    expect(@hash.key?('a')).to be_truthy
 
     @hash['d'] = 42
-    @hash.key?('a').should be_false
+    expect(@hash.key?('a')).to be_falsey
   end
 
   it "は使うたびに寿命が伸びる" do
     ('a'..'c').each{|c| @hash[c] = 42 }
     @hash['a']
     @hash['d'] = 42
-    @hash.key?('a').should be_true
-    @hash.key?('b').should be_false
+    expect(@hash.key?('a')).to be_truthy
+    expect(@hash.key?('b')).to be_falsey
   end
 end

@@ -8,8 +8,8 @@ describe Atig::Command::Time do
 
   def user(offset, tz)
     u = double "user-#{offset}"
-    u.stub(:utc_offset).and_return(offset)
-    u.stub(:time_zone).and_return(tz)
+    allow(u).to receive(:utc_offset).and_return(offset)
+    allow(u).to receive(:time_zone).and_return(tz)
     u
   end
 
@@ -19,33 +19,31 @@ describe Atig::Command::Time do
   end
 
   it "should provide time command" do
-    @gateway.names.should == ['time']
+    expect(@gateway.names).to eq(['time'])
   end
 
   it "should show offset time on DB" do
-    ::Time.should_receive(:now).and_return(Time.at(0))
-    @followings.should_receive(:find_by_screen_name).with('mzp').and_return(@user)
-    @channel.
-      should_receive(:message).
-      with(anything, Net::IRC::Constants::NOTICE).
-      and_return{|s,_|
-        s.status.text.should == "\x01TIME :1970-01-01T01:01:01+01:01 (Tokyo)\x01"
+    expect(::Time).to receive(:now).and_return(Time.at(0))
+    expect(@followings).to receive(:find_by_screen_name).with('mzp').and_return(@user)
+    expect(@channel).
+      to receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE){|s,_|
+        expect(s.status.text).to eq("\x01TIME :1970-01-01T01:01:01+01:01 (Tokyo)\x01")
       }
     call '#twitter', 'time', ['mzp']
-    @gateway.notified.should == '#twitter'
+    expect(@gateway.notified).to eq('#twitter')
   end
 
   it "should show offset time via API" do
-    ::Time.should_receive(:now).and_return(Time.at(0))
-    @followings.should_receive(:find_by_screen_name).with('mzp').and_return(nil)
-    @api.should_receive(:get).with('users/show', :screen_name=>'mzp').and_return(@user)
-    @channel.
-      should_receive(:message).
-      with(anything, Net::IRC::Constants::NOTICE).
-      and_return{|s,_|
-        s.status.text.should == "\x01TIME :1970-01-01T01:01:01+01:01 (Tokyo)\x01"
+    expect(::Time).to receive(:now).and_return(Time.at(0))
+    expect(@followings).to receive(:find_by_screen_name).with('mzp').and_return(nil)
+    expect(@api).to receive(:get).with('users/show', :screen_name=>'mzp').and_return(@user)
+    expect(@channel).
+      to receive(:message).
+      with(anything, Net::IRC::Constants::NOTICE){|s,_|
+        expect(s.status.text).to eq("\x01TIME :1970-01-01T01:01:01+01:01 (Tokyo)\x01")
       }
     call '#twitter', 'time', ['mzp']
-    @gateway.notified.should == '#twitter'
+    expect(@gateway.notified).to eq('#twitter')
   end
 end

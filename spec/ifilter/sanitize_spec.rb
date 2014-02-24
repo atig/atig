@@ -10,16 +10,16 @@ describe Atig::IFilter::Sanitize do
   end
 
   it "should convert escape html" do
-    filtered("&lt; &gt; &quot;").should be_text("< > \"")
+    expect(filtered("&lt; &gt; &quot;")).to be_text("< > \"")
   end
 
   it "should convert whitespace" do
-    filtered("\r\n").should be_text(" ")
-    filtered("\r").should be_text(" ")
-    filtered("\n").should be_text(" ")
+    expect(filtered("\r\n")).to be_text(" ")
+    expect(filtered("\r")).to be_text(" ")
+    expect(filtered("\n")).to be_text(" ")
   end
 
   it "should delete \\000\\001 sequence" do
-    filtered("\000\001").should be_text("")
+    expect(filtered("\000\001")).to be_text("")
   end
 end

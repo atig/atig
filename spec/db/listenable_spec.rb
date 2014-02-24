@@ -24,9 +24,9 @@ describe Atig::Db::Listenable, "when it is called" do
   it "should call all listener" do
     @listeners.hi 1,2,3
 
-    @args.length.should == 3
+    expect(@args.length).to eq(3)
     1.upto(2) {|i|
-      @args[i].should == [1,2,3]
+      expect(@args[i]).to eq([1,2,3])
     }
   end
 end

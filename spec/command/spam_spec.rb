@@ -10,17 +10,17 @@ describe Atig::Command::Spam do
   end
 
   it "はspamコマンドを提供する" do
-    @gateway.names.should == %w(spam SPAM)
+    expect(@gateway.names).to eq(%w(spam SPAM))
   end
 
   it "は指定されたscreen_nameを通報する" do
     user = user(1,'examplespammer')
-    @api.
-      should_receive(:post).
+    expect(@api).
+      to receive(:post).
       with('report_spam',:screen_name=> 'examplespammer').
       and_return(user)
 
-    @channel.should_receive(:notify).with("Report examplespammer as SPAMMER")
+    expect(@channel).to receive(:notify).with("Report examplespammer as SPAMMER")
     call "#twitter", 'spam', %w(examplespammer)
   end
 end

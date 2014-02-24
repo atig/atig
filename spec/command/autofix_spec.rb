@@ -10,24 +10,24 @@ describe Atig::Command::Autofix do
     @opts.autofix = true
     target = status 'hello', 'id'=>'42'
     entry  = entry user(1,'mzp'), target, "entry", 1
-    @statuses.should_receive(:find_by_user).with(@me,:limit=>1).and_return([ entry ])
+    expect(@statuses).to receive(:find_by_user).with(@me,:limit=>1).and_return([ entry ])
   end
 
   it "should post normal tweet" do
     res = status('blah blah')
-    @api.should_receive(:post).with('statuses/update', {:status=>'blah blah'}).and_return(res)
+    expect(@api).to receive(:post).with('statuses/update', {:status=>'blah blah'}).and_return(res)
 
     call '#twitter', "autofix", %w(blah blah)
   end
 
   it "should delete old similar tweet" do
     res = status('hillo')
-    @api.should_receive(:post).with('statuses/update', {:status=>'hillo'}).and_return(res)
-    @api.should_receive(:post).with("statuses/destroy/42")
-    @statuses.should_receive(:remove_by_id).with(1)
+    expect(@api).to receive(:post).with('statuses/update', {:status=>'hillo'}).and_return(res)
+    expect(@api).to receive(:post).with("statuses/destroy/42")
+    expect(@statuses).to receive(:remove_by_id).with(1)
 
-    @channel.should_receive(:notify).with("Similar update in previous. Conclude that it has error.")
-    @channel.should_receive(:notify).with("And overwrite previous as new status: hillo")
+    expect(@channel).to receive(:notify).with("Similar update in previous. Conclude that it has error.")
+    expect(@channel).to receive(:notify).with("And overwrite previous as new status: hillo")
 
     call '#twitter', "autofix", %w(hillo)
   end

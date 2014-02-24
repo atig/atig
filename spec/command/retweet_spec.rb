@@ -7,10 +7,10 @@ describe Atig::Command::Retweet do
   include CommandHelper
   before do
     bitly =  double("Bitly")
-    bitly.stub(:shorten).and_return{|s|
+    allow(bitly).to receive(:shorten){|s|
       "[#{s}]"
     }
-    Atig::Bitly.stub(:no_login).and_return(bitly)
+    allow(Atig::Bitly).to receive(:no_login).and_return(bitly)
 
     @command = init Atig::Command::Retweet
 
@@ -24,42 +24,42 @@ describe Atig::Command::Retweet do
   end
 
   it "should have command name" do
-    @gateway.names.should == %w(ort rt retweet qt)
+    expect(@gateway.names).to eq(%w(ort rt retweet qt))
   end
 
   it "should post official retweet without comment" do
-    @api.should_receive(:post).with('statuses/retweet/1').and_return(@res)
+    expect(@api).to receive(:post).with('statuses/retweet/1').and_return(@res)
     call "#twitter", 'rt', %w(a)
-    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+    expect(@gateway.updated).to  eq([ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ])
   end
 
   it "should post official retweet without comment by screen name" do
-    @api.should_receive(:post).with('statuses/retweet/1').and_return(@res)
+    expect(@api).to receive(:post).with('statuses/retweet/1').and_return(@res)
     call "#twitter", 'rt', %w(mzp)
-    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+    expect(@gateway.updated).to  eq([ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ])
   end
 
   it "should post official retweet without comment by sid" do
-    @api.should_receive(:post).with('statuses/retweet/1').and_return(@res)
+    expect(@api).to receive(:post).with('statuses/retweet/1').and_return(@res)
     call "#twitter", 'rt', %w(mzp:a)
-    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+    expect(@gateway.updated).to  eq([ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ])
   end
 
   it "should post un-official retweet with comment" do
-    @api.should_receive(:post).with('statuses/update',:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah").and_return(@res)
+    expect(@api).to receive(:post).with('statuses/update',:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah").and_return(@res)
     call "#twitter", 'rt', %w(a aaa)
-    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+    expect(@gateway.updated).to  eq([ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ])
   end
 
   it "should post un-official retweet with comment by screen name" do
-    @api.should_receive(:post).with('statuses/update',:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah").and_return(@res)
+    expect(@api).to receive(:post).with('statuses/update',:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah").and_return(@res)
     call "#twitter", 'rt', %w(mzp aaa)
-    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+    expect(@gateway.updated).to  eq([ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ])
   end
 
   it "should post un-official retweet with long comment" do
-    @api.should_receive(:post).with('statuses/update',:status=> "#{'a' * 94} RT @mzp: b [https://twitter.com/mzp/status/1]").and_return(@res)
+    expect(@api).to receive(:post).with('statuses/update',:status=> "#{'a' * 94} RT @mzp: b [https://twitter.com/mzp/status/1]").and_return(@res)
     call "#twitter", 'rt', ['a', 'a' * 94 ]
-    @gateway.updated.should  == [ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ]
+    expect(@gateway.updated).to  eq([ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ])
   end
 end

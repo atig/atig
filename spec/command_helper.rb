@@ -88,7 +88,7 @@ module CommandHelper
   end
 
   def stub_status(key, hash)
-    @statuses.stub(key).and_return{|arg,*_|
+    allow(@statuses).to receive(key){|arg,*_|
       hash.fetch(arg, hash[:default])
     }
   end

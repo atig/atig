@@ -12,9 +12,9 @@ describe Atig::Command::Refresh do
   end
 
   it "should refresh all" do
-    @followings.should_receive(:invalidate)
-    @lists.should_receive(:invalidate).with(:all)
-    @channel.should_receive(:notify).with("refresh followings/lists...")
+    expect(@followings).to receive(:invalidate)
+    expect(@lists).to receive(:invalidate).with(:all)
+    expect(@channel).to receive(:notify).with("refresh followings/lists...")
 
     call '#twitter','refresh', []
   end

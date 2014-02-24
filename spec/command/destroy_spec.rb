@@ -12,9 +12,9 @@ describe Atig::Command::Destroy,"when status is not removed" do
 
   it "should specified other's status" do
     entry  = entry user(2,'other'), status('blah blah', 'id'=>'1')
-    @statuses.stub(:find_by_tid).with('b').and_return(entry)
+    allow(@statuses).to receive(:find_by_tid).with('b').and_return(entry)
 
-    @channel.should_receive(:notify).with("The status you specified by the ID tid is not yours.")
+    expect(@channel).to receive(:notify).with("The status you specified by the ID tid is not yours.")
     call "#twitter","destory",%w(b)
   end
 end
@@ -34,17 +34,17 @@ describe Atig::Command::Destroy,"when remove recently tweet" do
     stub_status(:find_by_screen_name,'mzp' => [ entry ], :default=>[])
 
     # api
-    @api.should_receive(:post).with("statuses/destroy/1")
+    expect(@api).to receive(:post).with("statuses/destroy/1")
 
     # notice
-    @channel.should_receive(:notify).with("Destroyed: blah blah")
+    expect(@channel).to receive(:notify).with("Destroyed: blah blah")
 
     # update topics
     new_entry  = entry @me, status('foo', 'id'=>'2')
-    @gateway.should_receive(:topic).with(new_entry)
+    expect(@gateway).to receive(:topic).with(new_entry)
 
-    @statuses.should_receive(:remove_by_id).with(1).and_return{
-      @statuses.should_receive(:find_by_screen_name).with(@me.screen_name,:limit=>1).and_return{
+    expect(@statuses).to receive(:remove_by_id).with(1){
+      expect(@statuses).to receive(:find_by_screen_name).with(@me.screen_name,:limit=>1){
         [ new_entry ]
       }
     }
@@ -78,13 +78,13 @@ describe Atig::Command::Destroy,"when remove old tweet" do
     stub_status(:find_by_screen_name, @db.me.screen_name => [ entry ], :default=>[])
 
     # api
-    @api.should_receive(:post).with("statuses/destroy/1")
+    expect(@api).to receive(:post).with("statuses/destroy/1")
 
     # notice
-    @channel.should_receive(:notify).with("Destroyed: blah blah")
+    expect(@channel).to receive(:notify).with("Destroyed: blah blah")
 
     # update topics
-    @statuses.should_receive(:remove_by_id).with(1)
+    expect(@statuses).to receive(:remove_by_id).with(1)
   end
 
   it "should specified by tid" do

@@ -9,74 +9,74 @@ describe Atig::Option do
   end
 
   it "should have bool property" do
-    @opt.a.should be_true
+    expect(@opt.a).to be_truthy
   end
 
   it "should have int property" do
-    @opt.b.should == 1
+    expect(@opt.b).to eq(1)
   end
 
   it "should have float property" do
-    @opt.c.should == 1.2
+    expect(@opt.c).to eq(1.2)
   end
 
   it "should have string property" do
-    @opt.d.should == 'foo'
+    expect(@opt.d).to eq('foo')
   end
 
   it "should not have other property" do
-    @opt.e.should == nil
+    expect(@opt.e).to eq(nil)
   end
 
   it "should update the value" do
     @opt.a = false
-    @opt.a.should be_false
+    expect(@opt.a).to be_falsey
   end
 
   it "should be accessed by [name]" do
-    @opt[:a].should be_true
-    @opt['a'].should be_true
+    expect(@opt[:a]).to be_truthy
+    expect(@opt['a']).to be_truthy
   end
 
   it "should be updated by [name]=" do
     @opt[:a] = false
 
-    @opt.a.should be_false
-    @opt[:a].should be_false
-    @opt['a'].should be_false
+    expect(@opt.a).to be_falsey
+    expect(@opt[:a]).to be_falsey
+    expect(@opt['a']).to be_falsey
   end
 
   it "should be updated by [name]=" do
     @opt['a'] = false
 
-    @opt.a.should be_false
-    @opt[:a].should be_false
-    @opt['a'].should be_false
+    expect(@opt.a).to be_falsey
+    expect(@opt[:a]).to be_falsey
+    expect(@opt['a']).to be_falsey
   end
 
   it "should be created by [name]=" do
     @opt['e'] = false
 
-    @opt.e.should be_false
-    @opt[:e].should be_false
-    @opt['e'].should be_false
+    expect(@opt.e).to be_falsey
+    expect(@opt[:e]).to be_falsey
+    expect(@opt['e']).to be_falsey
   end
 
   it "should be access to id" do
-    @opt.id.should be_nil
+    expect(@opt.id).to be_nil
     @opt.id = 1
-    @opt.id.should == 1
+    expect(@opt.id).to eq(1)
   end
 
   it "should have default value" do
-    @opt.api_base.should == 'https://api.twitter.com/1.1/'
+    expect(@opt.api_base).to eq('https://api.twitter.com/1.1/')
   end
 
   it "should list up all fields" do
-    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base stream_api_base search_api_base a b c d).sort
+    expect(@opt.fields.map{|x| x.to_s }.sort).to eq(%w(api_base stream_api_base search_api_base a b c d).sort)
 
     @opt.e = 1
-    @opt.fields.map{|x| x.to_s }.sort.should == %w(api_base search_api_base stream_api_base a b c d e).sort
+    expect(@opt.fields.map{|x| x.to_s }.sort).to eq(%w(api_base search_api_base stream_api_base a b c d e).sort)
   end
 end
 
@@ -86,6 +86,6 @@ describe Atig::Option,'with not default value' do
   end
 
   it "should be specified value" do
-    @opt.api_base.should == 'twitter.com'
+    expect(@opt.api_base).to eq('twitter.com')
   end
 end
