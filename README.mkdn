@@ -1,6 +1,8 @@
 Atig.rb - Another Twitter Irc Gateway
 ===========================================
 
+[![Gem Version](https://badge.fury.io/rb/atig.png)](https://rubygems.org/gems/atig) [![Code Climate](https://codeclimate.com/github/atig/atig.png)](https://codeclimate.com/github/atig/atig) [![Build Status](https://travis-ci.org/atig/atig.png)](https://travis-ci.org/atig/atig)
+
 OVERVIEW
 --------
 Atig.rb is Twitter Irc Gateway.
