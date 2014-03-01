@@ -173,7 +173,7 @@ describe Atig::Db::Statuses do
   end
 
   it "should cleanup" do
-    Atig::Db::Statuses::Size = 10 unless defined? Atig::Db::Statuses::Size # hack 
+    Atig::Db::Statuses::Size = 10 unless defined? Atig::Db::Statuses::Size # hack
     Atig::Db::Statuses::Size.times do|i|
       s = status i+100, 'a', Time.utc(2010,1,5)+i+1
       @db.add :status => s , :user => @alice  , :source => :srcB
