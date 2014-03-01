@@ -24,6 +24,16 @@ EOB
             separator ""
 
             separator "Options:"
+            on("--help", "show this help") do
+              puts help
+              exit
+            end
+
+            on("-v", "--version", "show version") do
+              puts version
+              exit
+            end
+
             on("-p", "--port [PORT=#{opts[:port]}]", "port number to listen") do |port|
               opts[:port] = port
             end
@@ -36,16 +46,16 @@ EOB
               opts[:log] = log
             end
 
-            on("--debug", "Enable debug mode") do |debug|
+            on("-d", "--debug", "Enable debug mode") do |debug|
               opts[:log]   ||= $stderr
               opts[:debug]   = true
             end
 
-            on("--tmpdir path", "temporary directory path") do |tmp|
+            on("-t", "--tmpdir path", "temporary directory path") do |tmp|
               opts[:tmpdir] = tmp
             end
 
-            on("--memprof", "Enable memory profiler") do|_|
+            on("-m", "--memprof", "Enable memory profiler") do|_|
               require 'memory_profiler'
               require 'fileutils'
               FileUtils.mkdir_p "log"
