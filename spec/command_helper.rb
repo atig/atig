@@ -66,7 +66,7 @@ module CommandHelper
   def init(klass)
     @log    = double 'log'
     @opts   = Atig::Option.new({})
-    context = OpenStruct.new :log=>@log, :opts=>@opts
+    context = OpenStruct.new log:@log, opts:@opts
 
     @channel    = double 'channel'
     @gateway    = FakeGateway.new @channel

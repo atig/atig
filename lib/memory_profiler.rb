@@ -16,7 +16,7 @@
 # each cycle.  You can then use 'diff' to spot which strings were added
 # between runs.
 class MemoryProfiler
-  DEFAULTS = {:delay => 10, :string_debug => false}
+  DEFAULTS = {delay: 10, string_debug: false}
 
   def self.start(opt={})
     opt = DEFAULTS.dup.merge(opt)
