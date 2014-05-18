@@ -1,7 +1,7 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
 class Hash
-  # { :f  => "v" }    #=> "f=v"
+  # { f: "v" }    #=> "f=v"
   # { "f" => [1, 2] } #=> "f=1&f=2"
   # { "f" => "" }     #=> "f="
   # { "f" => nil }    #=> "f"

@@ -20,15 +20,15 @@ module Atig
         api.delay(0) do|t|
           begin
             statuses = t.get("statuses/user_timeline",
-                             { :count => count, :screen_name => nick})
+                             { count: count, screen_name: nick})
             statuses.reverse_each do|status|
               db.statuses.transaction do|d|
-                d.add :status => status, :user => status.user, :source => :user
+                d.add status: status, user: status.user, source: :user
               end
             end
 
             db.statuses.
-              find_by_screen_name(nick, :limit=>count).
+              find_by_screen_name(nick, limit:count).
               reverse_each do|entry|
               gateway[target].message entry, Net::IRC::Constants::NOTICE
             end

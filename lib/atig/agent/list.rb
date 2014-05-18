@@ -18,7 +18,7 @@ module Atig
             if name == :all then
               full_update t
             else
-              @db.lists[name].update t.page("lists/members", :users, {:owner_screen_name => @db.me.screen_name, :slug => name})
+              @db.lists[name].update t.page("lists/members", :users, {owner_screen_name: @db.me.screen_name, slug: name})
             end
           end
         end
@@ -41,7 +41,7 @@ module Atig
                  end
           begin
             users[name] =
-              t.page("lists/members", :users, {:owner_screen_name => list.user.screen_name, :slug => list.slug})
+              t.page("lists/members", :users, {owner_screen_name: list.user.screen_name, slug: list.slug})
           rescue => e
             log :error, e.inspect
             users[name] =

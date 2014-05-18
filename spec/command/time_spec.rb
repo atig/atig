@@ -37,7 +37,7 @@ describe Atig::Command::Time do
   it "should show offset time via API" do
     expect(::Time).to receive(:now).and_return(Time.at(0))
     expect(@followings).to receive(:find_by_screen_name).with('mzp').and_return(nil)
-    expect(@api).to receive(:get).with('users/show', :screen_name=>'mzp').and_return(@user)
+    expect(@api).to receive(:get).with('users/show', screen_name:'mzp').and_return(@user)
     expect(@channel).
       to receive(:message).
       with(anything, Net::IRC::Constants::NOTICE){|s,_|

@@ -7,7 +7,7 @@ module Atig
       def initialize(context, gateway, db)
         super
 
-        db.statuses.find_all(:limit=>50).reverse_each {|entry|
+        db.statuses.find_all(limit:50).reverse_each {|entry|
           message entry
         }
 

@@ -20,7 +20,7 @@ end
 
 describe Atig::Db::Followings,"when updated users" do
   def user(id, name, protect, only)
-    OpenStruct.new(:id => id, :screen_name=>name, :protected=>protect, :only=>only)
+    OpenStruct.new(id: id, screen_name:name, protected:protect, only:only)
   end
 
   before do

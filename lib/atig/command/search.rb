@@ -17,7 +17,7 @@ module Atig
         end
 
         q = mesg.sub(/^#{command}\s+/, '')
-        opts = { :q => q }
+        opts = { q: q }
         while /^:(?:(lang)=(\w+))/ =~ args.first
            opts[$1] = $2
            q.sub!(/^#{args.first}\W+/, "")
@@ -35,7 +35,7 @@ module Atig
           db.statuses.transaction do|d|
             user = TwitterStruct.make('id'          => status.from_user_id,
                                       'screen_name' => status.from_user)
-            d.add :status => status, :user => user, :source => :user
+            d.add status: status, user: user, source: :user
           end
         end
 

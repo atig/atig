@@ -78,7 +78,7 @@ describe Atig::Command::Thread do
     user   = user 1, 'mzp'
     status = status '','user'=>user
     entry  = entry user,status,'new-entry'
-    expect(@statuses).to receive(:add).with(:status => status, :user => user, :source=>:thread){
+    expect(@statuses).to receive(:add).with(status: status, user: user, source: :thread){
       @entries << entry
     }
     expect(@api).to receive(:get).with('statuses/show/5').and_return(status)

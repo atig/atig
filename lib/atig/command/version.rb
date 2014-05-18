@@ -15,7 +15,7 @@ module Atig
         end
         nick,*_ = args
 
-        entries = db.statuses.find_by_screen_name(nick, :limit => 1)
+        entries = db.statuses.find_by_screen_name(nick, limit: 1)
         if entries && !entries.empty? then
           entry = TwitterStruct.make('user'   => entries.first.user,
                                      'status' => { 'text' =>
@@ -24,9 +24,9 @@ module Atig
         else
           api.delay(0) do|t|
             begin
-              user = t.get("users/show", { :screen_name => nick})
+              user = t.get("users/show", { screen_name: nick})
               db.statuses.transaction do|d|
-                d.add :user => user, :status => user.status, :source => :version
+                d.add user: user, status: user.status, source: :version
                 entry = TwitterStruct.make('user'   => user,
                                            'status' => { 'text' =>
                                              format(user.status.source) })

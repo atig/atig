@@ -31,17 +31,17 @@ module Atig
           return
         end
         text = mesg.split(" ", 2)[1]
-        q = gateway.output_message(:status => text)
+        q = gateway.output_message(status: text)
 
-        prev,*_ = db.statuses.find_by_user( db.me, :limit => 1)
+        prev,*_ = db.statuses.find_by_user( db.me, limit: 1)
 
         unless fix?(command, q[:status], prev) then
-          api.delay(0, :retry=>3) do|t|
+          api.delay(0, retry:3) do|t|
             ret = t.post("statuses/update", q)
             gateway.update_status ret, target
           end
         else
-          api.delay(0, :retry=>3) do|t|
+          api.delay(0, retry:3) do|t|
             yield "Similar update in previous. Conclude that it has error."
             yield "And overwrite previous as new status: #{q[:status]}"
 

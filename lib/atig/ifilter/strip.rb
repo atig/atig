@@ -8,7 +8,7 @@ module Atig
       end
 
       def call(status)
-        status.merge :text => status.text.sub(@rsuffix, "").strip
+        status.merge text: status.text.sub(@rsuffix, "").strip
       end
     end
   end

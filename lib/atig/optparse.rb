@@ -6,13 +6,13 @@ module Atig
     class << self
       def parse!(argv)
         opts = {
-          :port  => 16668,
-          :host  => "localhost",
-          :log   => nil,
-          :debug => false,
-          :foreground => false,
-          :tmpdir => ::Dir.tmpdir,
-          :conf => '~/.atig/config',
+          port: 16668,
+          host: "localhost",
+          log: nil,
+          debug: false,
+          foreground: false,
+          tmpdir: ::Dir.tmpdir,
+          conf: '~/.atig/config',
         }
 
         OptionParser.new do |parser|
@@ -59,7 +59,7 @@ EOB
               require 'memory_profiler'
               require 'fileutils'
               FileUtils.mkdir_p "log"
-              MemoryProfiler.start(:string_debug => true)
+              MemoryProfiler.start(string_debug: true)
             end
 
             on("-c","--conf [file=#{opts[:conf]}]", "atig configuration file; default is '~/.atig/config'") do|name|

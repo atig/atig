@@ -18,7 +18,7 @@ module Atig
       def call(status)
         target = short_url_regexp
         entities = (entities = status.entities).nil? ? [] : entities.urls
-        status.merge :text => status.text.gsub(target) {|url|
+        status.merge text: status.text.gsub(target) {|url|
           unless entities.nil? or entities.empty?
             @cache[url] ||= search_url_from_entities(url, entities)
             url = @cache[url] if @cache[url] =~ target

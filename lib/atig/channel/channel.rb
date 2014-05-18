@@ -5,7 +5,7 @@ module Atig
     class Channel
       def initialize(context, gateway, db)
         @db      = db
-        @channel = gateway.channel channel_name, :handler=>self
+        @channel = gateway.channel channel_name, handler:self
         @channel.join_me
 
         db.statuses.listen do|entry|

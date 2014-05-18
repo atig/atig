@@ -7,7 +7,7 @@ module Atig
       def self.call(status)
         return status unless status.retweeted_status
         rt = status.retweeted_status
-        status.merge :text => "#{Prefix}RT @#{rt.user.screen_name}: #{rt.text}"
+        status.merge text: "#{Prefix}RT @#{rt.user.screen_name}: #{rt.text}"
       end
     end
   end

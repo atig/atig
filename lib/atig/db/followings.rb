@@ -109,11 +109,11 @@ module Atig
             else
               db.execute("INSERT INTO users
                           VALUES(NULL, :screen_name, :user_id, :protected, :only, :data)",
-                         :screen_name => user.screen_name,
-                         :user_id     => user.id,
-                         :protected   => bool(user.protected),
-                         :only        => bool(user.only),
-                         :data        => @db.dump(user))
+                         screen_name: user.screen_name,
+                         user_id: user.id,
+                         protected: bool(user.protected),
+                         only: bool(user.only),
+                         data: @db.dump(user))
             end
           end
         end

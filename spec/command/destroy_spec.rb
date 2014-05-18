@@ -31,7 +31,7 @@ describe Atig::Command::Destroy,"when remove recently tweet" do
 
     stub_status(:find_by_tid,'a' => entry)
     stub_status(:find_by_sid,'mzp:a' => entry)
-    stub_status(:find_by_screen_name,'mzp' => [ entry ], :default=>[])
+    stub_status(:find_by_screen_name,'mzp' => [ entry ], default:[])
 
     # api
     expect(@api).to receive(:post).with("statuses/destroy/1")
@@ -75,7 +75,7 @@ describe Atig::Command::Destroy,"when remove old tweet" do
 
     stub_status(:find_by_tid,'a' => entry)
     stub_status(:find_by_sid,'mzp:a' => entry)
-    stub_status(:find_by_screen_name, @db.me.screen_name => [ entry ], :default=>[])
+    stub_status(:find_by_screen_name, @db.me.screen_name => [ entry ], default:[])
 
     # api
     expect(@api).to receive(:post).with("statuses/destroy/1")

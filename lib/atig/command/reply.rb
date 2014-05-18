@@ -21,8 +21,8 @@ module Atig
 
           text = "@#{name} #{text}" if text.nil? or not text.include?("@#{name}")
 
-          q = gateway.output_message(:status => text,
-                                     :in_reply_to_status_id => entry.status.id)
+          q = gateway.output_message(status: text,
+                                     in_reply_to_status_id: entry.status.id)
 
           api.delay(0) do|t|
             ret = t.post("statuses/update", q)

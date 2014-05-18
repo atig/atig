@@ -9,7 +9,7 @@ module Atig
 
       def call(q)
         if @opts.footer && !@opts.footer.empty? then
-          q.merge :status => "#{q[:status]} #{@opts.footer}"
+          q.merge status: "#{q[:status]} #{@opts.footer}"
         else
           q
         end

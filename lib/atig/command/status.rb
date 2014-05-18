@@ -15,14 +15,14 @@ module Atig
           return
         end
         text = mesg.split(" ", 2)[1]
-        previous,*_ = db.statuses.find_by_user( db.me, :limit => 1)
+        previous,*_ = db.statuses.find_by_user( db.me, limit: 1)
         if previous and
             ((::Time.now - ::Time.parse(previous.status.created_at)).to_i < 60*60*24 rescue true) and
             text.strip == previous.status.text.strip
           yield "You can't submit the same status twice in a row."
           return
         end
-        q = gateway.output_message(:status => text)
+        q = gateway.output_message(status: text)
 
         case tweet_invalid? q[:status]
         when :too_long
@@ -33,7 +33,7 @@ module Atig
           return
         end
 
-        api.delay(0, :retry=>3) do|t|
+        api.delay(0, retry:3) do|t|
           ret = t.post("statuses/update", q)
           gateway.update_status ret,target
         end

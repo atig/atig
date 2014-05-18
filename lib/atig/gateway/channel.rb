@@ -88,7 +88,7 @@ END
       private
 
       def run_filters(entry)
-        status = entry.status.merge(:tid=>entry.tid, :sid=>entry.sid)
+        status = entry.status.merge(tid:entry.tid, sid:entry.sid)
         @filters.inject(status) {|x, f| f.call x }.text
       end
 

@@ -15,18 +15,18 @@ module Atig
         log :info, "initialize"
 
         @api.repeat(600) do|t|
-          q = { :count => 200 }
+          q = { count: 200 }
           if @prev
-            q.update :since_id => @prev
+            q.update since_id: @prev
           else
-            q.update :count => 1
+            q.update count: 1
           end
           dms = t.get("direct_messages", q)
           log :debug, "You have #{dms.size} dm."
 
           dms.reverse_each do|dm|
             db.dms.transaction do|d|
-              d.add :status => dm, :user => dm.sender
+              d.add status: dm, user: dm.sender
             end
           end
         end

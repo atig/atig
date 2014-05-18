@@ -27,7 +27,7 @@ module Atig
       if @login and @key
         bitly.path  = "/shorten"
         bitly.query = {
-          :format => "json", :longUrl => url, :login => @login, :apiKey => @key,
+          format: "json", longUrl: url, login: @login, apiKey: @key,
         }.to_query_str(";")
         req = @http.req(:get, bitly, {})
         res = @http.http(bitly, 5, 10).request(req)

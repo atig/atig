@@ -15,7 +15,7 @@ module Atig
 
       def call(status)
         mesg = status[:status]
-        status.merge(:status => short_urls(mesg))
+        status.merge(status: short_urls(mesg))
       end
 
       def short_urls(mesg)

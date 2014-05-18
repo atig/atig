@@ -63,17 +63,17 @@ module Atig
           screen_name = opt[:user].screen_name
           sum   = db.get_first_value("SELECT sum(count) FROM id").to_i
           count = db.get_first_value("SELECT count      FROM id WHERE screen_name = ?", screen_name).to_i
-          entry = OpenStruct.new opt.merge(:tid => @roman.make(sum),
-                                           :sid => "#{screen_name}:#{@roman.make(count)}")
+          entry = OpenStruct.new opt.merge(tid: @roman.make(sum),
+                                           sid: "#{screen_name}:#{@roman.make(count)}")
           db.execute(%{INSERT INTO status
                       VALUES(NULL, :id, :tid, :sid, :screen_name, :user_id, :created_at, :data)},
-                     :id          => id,
-                     :tid         => entry.tid,
-                     :sid         => entry.sid,
-                     :screen_name => screen_name,
-                     :user_id     => opt[:user].id,
-                     :created_at  => Time.parse(opt[:status].created_at).to_i,
-                     :data        => @db.dump(entry))
+                     id: id,
+                     tid: entry.tid,
+                     sid: entry.sid,
+                     screen_name: screen_name,
+                     user_id: opt[:user].id,
+                     created_at: Time.parse(opt[:status].created_at).to_i,
+                     data: @db.dump(entry))
           if count == 0 then
             db.execute("INSERT INTO id VALUES(NULL,?,?)", screen_name, 1)
           else
@@ -130,7 +130,7 @@ module Atig
       private
       def find(lhs,rhs, opt={},&f)
         query  = "SELECT id,data FROM status WHERE #{lhs} = :rhs ORDER BY created_at DESC LIMIT :limit"
-        params = { :rhs => rhs, :limit => opt.fetch(:limit,20) }
+        params = { rhs: rhs, limit: opt.fetch(:limit,20) }
         res = []
 
         @db.execute do|db|

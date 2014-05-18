@@ -27,8 +27,8 @@ module Atig
 
       @nick  = nick
       @oauth = ::OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET, {
-                                       :site => site,
-                                       :proxy => ENV["HTTP_PROXY"] || ENV["http_proxy"]
+                                       site: site,
+                                       proxy: ENV["HTTP_PROXY"] || ENV["http_proxy"]
                                      })
 
       if @@profiles.key? @nick
@@ -47,7 +47,7 @@ module Atig
     end
 
     def verify(code)
-      @access = @request.get_access_token(:oauth_verifier => code)
+      @access = @request.get_access_token(oauth_verifier: code)
       if @access then
         @@profiles[@nick] = [ @access.token , @access.secret ]
       end

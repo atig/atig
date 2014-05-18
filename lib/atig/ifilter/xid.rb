@@ -20,7 +20,7 @@ module Atig
         unless xid and @opts.send(name)
           status
         else
-          status.merge :text => "#{status.text} #{@format % xid}"
+          status.merge text: "#{status.text} #{@format % xid}"
         end
       end
     end

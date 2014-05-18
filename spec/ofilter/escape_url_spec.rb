@@ -16,16 +16,16 @@ describe Atig::OFilter::EscapeUrl do
   end
 
   def filtered(text,opt={})
-    esc = Atig::OFilter::EscapeUrl.new(OpenStruct.new(:log=>@logger,:opts=>nil))
-    esc.call :status => text
+    esc = Atig::OFilter::EscapeUrl.new(OpenStruct.new(log:@logger,:opts=>nil))
+    esc.call status: text
   end
 
   it "through normal url" do
-    expect(filtered("http://example.com")).to eq({ :status => "http://example.com"})
+    expect(filtered("http://example.com")).to eq({ status: "http://example.com"})
   end
 
   it "escape only url" do
-    expect(filtered("あああ http://example.com/あああ")).to eq({ :status => "あああ http://example.com/%E3%81%82%E3%81%82%E3%81%82" })
+    expect(filtered("あああ http://example.com/あああ")).to eq({ status: "あああ http://example.com/%E3%81%82%E3%81%82%E3%81%82" })
   end
 end
 
@@ -39,12 +39,12 @@ if defined? ::Punycode then
     end
 
     def filtered(text,opt={})
-      esc = Atig::OFilter::EscapeUrl.new(OpenStruct.new(:log=>@logger,:opts=>nil))
-      esc.call :status => text
+      esc = Atig::OFilter::EscapeUrl.new(OpenStruct.new(log:@logger,:opts=>nil))
+      esc.call status: text
     end
 
     it "escape international URL" do
-      expect(filtered("http://あああ.com")).to eq({:status => "http://xn--l8jaa.com" })
+      expect(filtered("http://あああ.com")).to eq({status: "http://xn--l8jaa.com" })
     end
   end
 end

@@ -99,7 +99,7 @@ module Atig
       methods.each do |m|
         self.module_eval <<END
           def #{m}(path, query = {}, opts = {})
-            opts.update( :method => :#{m})
+            opts.update( method: :#{m})
             api path, query, opts
           end
 END

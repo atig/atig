@@ -8,7 +8,7 @@ module Atig
           status
         else
           t = Time.gm(*Time.parse(status.retweeted_status.created_at).to_a)
-          status.merge :text => "#{status.text} \x0310[#{t.strftime "%Y-%m-%d %H:%M"}]\x0F"
+          status.merge text: "#{status.text} \x0310[#{t.strftime "%Y-%m-%d %H:%M"}]\x0F"
         end
       end
     end

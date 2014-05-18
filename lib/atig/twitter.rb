@@ -17,8 +17,8 @@ module Atig
       r     = []
       cursor = -1
       1.upto(limit) do |num|
-        options = {:cursor => cursor}.merge(opts)
-        ret = api(path, options, { :authenticate => true })
+        options = {cursor: cursor}.merge(opts)
+        ret = api(path, options, { authenticate: true })
         r.concat ret[name]
         cursor = ret[:next_cursor]
         break if cursor.zero?
@@ -30,7 +30,7 @@ module Atig
       methods.each do |m|
         self.module_eval <<END
           def #{m}(path, query = {}, opts = {})
-            opts.update( :method => :#{m})
+            opts.update( method: :#{m})
             api path, query, opts
           end
 END

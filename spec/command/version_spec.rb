@@ -49,7 +49,7 @@ describe Atig::Command::Version do
   it "should show the source via API" do
     allow(@statuses).to receive(:find_by_screen_name).and_return(@status)
     expect(@statuses).to receive(:find_by_screen_name).with('mzp',:limit => 1).and_return(nil)
-    expect(@statuses).to receive(:add).with(:status => @status, :user => @user, :source=>:version)
+    expect(@statuses).to receive(:add).with(status: @status, user: @user, source: :version)
     expect(@api).to receive(:get).with('users/show',:screen_name=>'mzp').and_return(@user)
 
     expect(@channel).

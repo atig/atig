@@ -50,7 +50,7 @@ END
 
       def update_status(ret, target, msg='')
         @db.transaction do|db|
-          db.statuses.add(:source => :me, :status => ret, :user => ret.user )
+          db.statuses.add(source: :me, status: ret, user: ret.user )
         end
 
         msg = "(#{msg})" unless msg.empty?
@@ -58,12 +58,12 @@ END
       end
 
       def channel(name,opts={})
-        opts.update(:session => self,
-                    :name    => name,
-                    :filters => @ifilters,
-                    :prefix  => @prefix,
-                    :nick    => @nick,
-                    :opts    => @opts)
+        opts.update(session: self,
+                    name: name,
+                    filters: @ifilters,
+                    prefix: @prefix,
+                    nick: @nick,
+                    opts: @opts)
         channel = Channel.new opts
         @channels[name] = channel
         channel
@@ -111,7 +111,7 @@ END
         load_config
 
         @opts = Atig::Option.parse @real
-        context = OpenStruct.new(:log=>@log, :opts=>@opts)
+        context = OpenStruct.new(log:@log, opts:@opts)
 
         oauth = OAuth.new(context, @nick)
         unless oauth.verified? then
@@ -166,12 +166,12 @@ END
 
           post server_name, MODE, @nick, "+o"
 
-          @db = Atig::Db::Db.new context, :me=>me, :size=> 100, :tmpdir => @tmpdir
+          @db = Atig::Db::Db.new context, me:me, size: 100, tmpdir: @tmpdir
           run_new @@commands, context, self, @api, @db
           run_new @@agents  , context, @api, @db
           run_new @@channels, context, self, @db
 
-          @db.statuses.add :user => me, :source => :me, :status => me.status
+          @db.statuses.add user: me, source: :me, status: me.status
         end
       end
 

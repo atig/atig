@@ -12,14 +12,14 @@ module Atig
         def on_invite(api, nick)
           return if @name.include? '^'
 
-          api.post("lists/members/create", :screen_name => nick, :owner_screen_name => @db.me.screen_name, :slug => @name )
+          api.post("lists/members/create", screen_name: nick, owner_screen_name: @db.me.screen_name, slug: @name )
           @db.lists.invalidate @name
         end
 
         def on_kick(api, nick)
           return if @name.include? '^'
 
-          api.post("lists/members/destroy", :screen_name => nick, :owner_screen_name => @db.me.screen_name, :slug => @name )
+          api.post("lists/members/destroy", screen_name: nick, owner_screen_name: @db.me.screen_name, slug: @name )
           @db.lists.invalidate @name
         end
 
@@ -31,7 +31,7 @@ module Atig
 
       def initialize(context, gateway, db)
         @channels = Hash.new do|hash,name|
-          channel = gateway.channel "##{name}", :handler => Handler.new(db, name)
+          channel = gateway.channel "##{name}", handler: Handler.new(db, name)
           channel.join_me
           hash[name] = channel
         end

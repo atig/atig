@@ -7,26 +7,26 @@ require 'ostruct'
 describe Atig::OFilter::Footer do
   before do
     @opts   = OpenStruct.new
-    @filter = Atig::OFilter::Footer.new(OpenStruct.new(:opts=>@opts))
+    @filter = Atig::OFilter::Footer.new(OpenStruct.new(opts:@opts))
   end
 
   it "should pass through" do
-    expect(@filter.call(:status => 'hi')).to eq({
-      :status => "hi"
+    expect(@filter.call(status: 'hi')).to eq({
+      status: "hi"
     })
   end
 
   it "should append footer" do
     @opts.footer = '*tw*'
-    expect(@filter.call(:status => 'hi')).to eq({
-      :status => "hi *tw*"
+    expect(@filter.call(status: 'hi')).to eq({
+      status: "hi *tw*"
     })
   end
 
   it "should not append footer" do
     @opts.footer = false
-    expect(@filter.call(:status => 'hi')).to eq({
-      :status => "hi"
+    expect(@filter.call(status: 'hi')).to eq({
+      status: "hi"
     })
   end
 end

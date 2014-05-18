@@ -16,7 +16,7 @@ module Atig
         log :info, "initialize"
 
         @api.stream do|t|
-          options = context.opts.allreplies ? {:replies => :all} : {}
+          options = context.opts.allreplies ? {replies: :all} : {}
 
           t.watch('user', options) do |status|
 #            @log.debug status.inspect
@@ -24,11 +24,11 @@ module Atig
             if status.direct_message
               dm = status.direct_message
               db.dms.transaction do|d|
-                d.add :status => dm, :user => dm.sender
+                d.add status: dm, user: dm.sender
               end
             elsif status and status.user
               db.statuses.transaction do|d|
-                d.add :status => status, :user => status.user, :source => :user_stream
+                d.add status: status, user: status.user, source: :user_stream
               end
             elsif status and status.event
               case status.event

@@ -10,7 +10,7 @@ module Atig
       def call(q)
         return q unless @opts.ll
         lat, long = @opts.ll.split(",", 2)
-        q.merge :lat  => lat.to_f, :long => long.to_f
+        q.merge lat: lat.to_f, long: long.to_f
       end
     end
   end

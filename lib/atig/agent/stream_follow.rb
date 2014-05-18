@@ -24,10 +24,10 @@ module Atig
 
         @api.stream do|t|
           Thread.pass until @follows
-          t.watch('statuses/filter', :follow => @follows) do |status|
+          t.watch('statuses/filter', follow: @follows) do |status|
             if status and status.user
               db.transaction do|d|
-                d.statuses.add :status => status, :user => status.user, :source => :stream_follow
+                d.statuses.add status: status, user: status.user, source: :stream_follow
               end
             end
           end

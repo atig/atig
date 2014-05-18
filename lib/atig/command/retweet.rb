@@ -26,7 +26,7 @@ module Atig
           url = @bitly.shorten "https://twitter.com/#{entry.user.screen_name}/status/#{entry.status.id}"
           text = chars[0,140-url.size-1].join('') + ' ' + url
         end
-        q = gateway.output_message(:status => text)
+        q = gateway.output_message(status: text)
         api.delay(0) do|t|
           ret = t.post("statuses/update", q)
           gateway.update_status ret,target, "RT to #{entry.user.screen_name}: #{entry.status.text}"

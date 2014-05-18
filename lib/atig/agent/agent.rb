@@ -15,18 +15,18 @@ module Atig
         log :info, "initialize"
 
         @api.repeat( interval ) do|t|
-          q = { :count => 200 }
+          q = { count: 200 }
           if @prev
-            q.update :since_id => @prev
+            q.update since_id: @prev
           else
-            q.update :count => 20
+            q.update count: 20
           end
 
           sources = t.get( path, q)
 
           sources.reverse_each do|s|
             db.statuses.transaction do|d|
-              d.add :source => source, :status => s, :user => s.user
+              d.add source: source, status: s, user: s.user
             end
           end
 

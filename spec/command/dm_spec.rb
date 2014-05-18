@@ -15,7 +15,7 @@ describe Atig::Command::Dm do
 
   it "should post the status by API" do
     expect(@api).to receive(:post).with('direct_messages/new',
-                                    {:screen_name => 'mzp', :text => 'blah blah'})
+                                    {screen_name: 'mzp', text: 'blah blah'})
     expect(@channel).to receive(:notify).with("Sent message to mzp: blah blah")
     call '#twitter', "dm", %w(mzp blah blah)
   end

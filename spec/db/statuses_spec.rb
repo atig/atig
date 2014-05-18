@@ -6,11 +6,11 @@ require 'atig/db/statuses'
 
 describe Atig::Db::Statuses do
   def status(id, text, time)
-    OpenStruct.new(:id => id, :text => text, :created_at => time.strftime("%a %b %d %H:%M:%S +0000 %Y"))
+    OpenStruct.new(id: id, text: text, created_at: time.strftime("%a %b %d %H:%M:%S +0000 %Y"))
   end
 
   def user(name)
-    OpenStruct.new(:screen_name => name, :id => name)
+    OpenStruct.new(screen_name: name, id: name)
   end
 
   before do
@@ -26,9 +26,9 @@ describe Atig::Db::Statuses do
     @alice = user 'alice'
     @bob = user 'bob'
 
-    @db.add :status => @a , :user => @alice, :source => :srcA
-    @db.add :status => @b , :user => @bob  , :source => :srcB
-    @db.add :status => @c , :user => @alice, :source => :srcC
+    @db.add status: @a , user: @alice, source: :srcA
+    @db.add status: @b , user: @bob  , source: :srcB
+    @db.add status: @c , user: @alice, source: :srcC
   end
 
   after(:all) do
@@ -43,7 +43,7 @@ describe Atig::Db::Statuses do
     entry = nil
     @db.listen{|x| entry = x }
 
-    @db.add :status => @d, :user => @alice, :source => :timeline, :fuga => :hoge
+    @db.add status: @d, user: @alice, source: :timeline, fuga: :hoge
 
     expect(entry.source).to eq(:timeline)
     expect(entry.status).to eq(@d)
@@ -58,7 +58,7 @@ describe Atig::Db::Statuses do
     called = false
     @db.listen{|*_| called = true }
 
-    @db.add :status => @c, :user => @bob, :source => :timeline
+    @db.add status: @c, user: @bob, source: :timeline
     expect(called).to be_falsey
   end
 
@@ -73,7 +73,7 @@ describe Atig::Db::Statuses do
 
   it "should have unique tid" do
     db = Atig::Db::Statuses.new 'test.db'
-    db.add :status => @d , :user => @alice, :source => :srcA
+    db.add status: @d , user: @alice, source: :srcA
 
     a = @db.find_by_id(1)
     d = @db.find_by_id(4)
@@ -147,7 +147,7 @@ describe Atig::Db::Statuses do
   end
 
   it "should be found by screen_name with limit" do
-    xs = @db.find_by_screen_name('alice', :limit => 1)
+    xs = @db.find_by_screen_name('alice', limit: 1)
     expect(xs.size).to eq(1)
 
     a,_ = xs
@@ -165,7 +165,7 @@ describe Atig::Db::Statuses do
   it "should have uniq tid/sid when removed" do
     old = @db.find_by_id 3
     @db.remove_by_id 3
-    @db.add :status => @c , :user => @alice, :source => :src
+    @db.add status: @c , user: @alice, source: :src
     new = @db.find_by_id 3
 
     expect(old.tid).not_to eq(new.tid)
@@ -176,7 +176,7 @@ describe Atig::Db::Statuses do
     Atig::Db::Statuses::Size = 10 unless defined? Atig::Db::Statuses::Size # hack
     Atig::Db::Statuses::Size.times do|i|
       s = status i+100, 'a', Time.utc(2010,1,5)+i+1
-      @db.add :status => s , :user => @alice  , :source => :srcB
+      @db.add status: s , user: @alice  , source: :srcB
     end
     @db.cleanup
     expect(@db.find_by_status_id(@a.id)).to eq(nil)

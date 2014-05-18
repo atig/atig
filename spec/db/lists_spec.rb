@@ -5,7 +5,7 @@ require 'atig/db/lists'
 
 describe Atig::Db::Lists do
   def user(id, name, protect, only)
-    OpenStruct.new(:id => id, :screen_name=>name, :protected=>protect, :only=>only)
+    OpenStruct.new(id: id, screen_name:name, protected:protect, only:only)
   end
 
   before do

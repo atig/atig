@@ -15,14 +15,14 @@ describe Atig::Command::Autofix do
 
   it "should post normal tweet" do
     res = status('blah blah')
-    expect(@api).to receive(:post).with('statuses/update', {:status=>'blah blah'}).and_return(res)
+    expect(@api).to receive(:post).with('statuses/update', {status:'blah blah'}).and_return(res)
 
     call '#twitter', "autofix", %w(blah blah)
   end
 
   it "should delete old similar tweet" do
     res = status('hillo')
-    expect(@api).to receive(:post).with('statuses/update', {:status=>'hillo'}).and_return(res)
+    expect(@api).to receive(:post).with('statuses/update', {status:'hillo'}).and_return(res)
     expect(@api).to receive(:post).with("statuses/destroy/42")
     expect(@statuses).to receive(:remove_by_id).with(1)
 

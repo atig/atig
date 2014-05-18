@@ -9,10 +9,10 @@ module Atig
     def self.proxy=(proxy)
       if proxy =~ /\A(?:([^:@]+)(?::([^@]+))?@)?([^:]+)(?::(\d+))?\z/ then
         @@proxy = OpenStruct.new({
-                                   :user => $1,
-                                   :password => $2,
-                                   :address => $3,
-                                   :port => $4.to_i,
+                                   user: $1,
+                                   password: $2,
+                                   address: $3,
+                                   port: $4.to_i,
                                  })
       end
     end

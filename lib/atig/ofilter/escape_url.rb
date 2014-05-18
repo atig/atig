@@ -19,7 +19,7 @@ module Atig
       end
 
       def call(status)
-        status.merge(:status => escape_http_urls(status[:status]))
+        status.merge(status: escape_http_urls(status[:status]))
       end
 
       def exist_uri?(uri, limit = 1)

@@ -21,7 +21,7 @@ module Atig
           api.delay(0) do|t|
             status = t.get "statuses/show/#{id}"
             db.statuses.transaction do|d|
-              d.add :status => status, :user => status.user, :source => :thread
+              d.add status: status, user: status.user, source: :thread
               f.call d.find_by_status_id(id)
             end
           end
@@ -30,7 +30,7 @@ module Atig
 
       def find_status(db, tid_or_screen_name)
         find = lambda do|x|
-          xs = db.statuses.find_by_screen_name(x, :limit=>1)
+          xs = db.statuses.find_by_screen_name(x, limit:1)
           unless xs.empty? then
             xs.first
           else
