@@ -210,7 +210,7 @@ END
       def on_ctcp_action(target, mesg)
         command, *args = mesg.split(" ")
         last_match = nil
-        commond = command.to_s.downcase
+        command = command.to_s.downcase
         _, action = @ctcp_actions.find{|define, f|
           r = (define === command)
           last_match = Regexp.last_match
