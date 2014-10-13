@@ -47,7 +47,7 @@ module Atig
           end.map {|i| i['commit']['message'] }
         end
       end
-    rescue TypeError, Errno::ECONNREFUSED, Timeout::Error => e
+    rescue TypeError, Errno::ECONNREFUSED, Timeout::Error
       []
     end
 

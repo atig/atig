@@ -16,7 +16,7 @@ require 'atig/option'
 
 begin
   require 'continuation'
-rescue LoadError => e
+rescue LoadError
 end
 
 module Atig
