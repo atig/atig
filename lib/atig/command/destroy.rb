@@ -18,7 +18,7 @@ module Atig
           if entry = Info.find_status(db, tid)
             if entry.user.id == db.me.id
               api.delay(0) do|t|
-                res = t.post("statuses/destroy/#{entry.status.id}")
+                t.post("statuses/destroy/#{entry.status.id}")
                 yield "Destroyed: #{entry.status.text}"
 
                 db.statuses.transaction do|d|

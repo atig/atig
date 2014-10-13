@@ -29,8 +29,6 @@ module Atig
       uri.path += ".json" if path != "users/username_available"
       uri.query = query.to_query_str unless query.empty?
 
-      header      = {}
-
       begin
         ret = request(uri, opts)
       rescue OpenSSL::SSL::SSLError => e

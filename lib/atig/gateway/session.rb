@@ -244,7 +244,7 @@ END
       end
 
       def on_kick(m)
-        channel, nick, msg = *m.params
+        channel, nick, _ = *m.params
 
         if not nick.screen_name? or @db.me.screen_name.casecmp(nick).zero?
           post server_name, ERR_NOSUCHNICK, nick, "No such nick: #{nick}" # or yourself
