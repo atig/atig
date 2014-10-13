@@ -5,10 +5,12 @@ require 'atig/url_escape'
 module Atig
   class Search
     def search(query, options = {})
+      options[:q] = query
+
       search = URI("https://search.twitter.com")
       search.path = "/search.json"
-      options[:q] = query
       search.query = options.to_query_str
+
       http = Http.new nil
       req = http.req(:get, search)
       res = http.http(search, 5, 10).request(req)
