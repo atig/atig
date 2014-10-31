@@ -129,6 +129,8 @@ module Atig
 
       private
       def find(lhs,rhs, opt={},&f)
+        rhs.encoding!("UTF-8") if rhs.respond_to? :encoding!
+
         query  = "SELECT id,data FROM status WHERE #{lhs} = :rhs ORDER BY created_at DESC LIMIT :limit"
         params = { rhs: rhs, limit: opt.fetch(:limit,20) }
         res = []
