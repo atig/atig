@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 
+require 'timeout'
 require 'atig/basic_twitter'
 require 'atig/http'
 
@@ -56,7 +57,7 @@ END
     end
 
     def oauth(time, req)
-      timeout(time) do
+      Timeout.timeout(time) do
         headers = {}
         req.each{|k,v| headers[k] = v }
 
