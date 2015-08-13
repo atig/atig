@@ -18,7 +18,7 @@ module Atig
 
           if respond_to?(:timeout_interval) && timeout_interval > 0 then
             begin
-              timeout(timeout_interval){ f.call self }
+              Timeout.timeout(timeout_interval){ f.call self }
             rescue TimeoutError
               debug "transaction is timeout at #{src}"
             end
