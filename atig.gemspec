@@ -2,19 +2,20 @@
 require File.expand_path('../lib/atig/version', __FILE__)
 
 Gem::Specification.new do |gem|
+  gem.name          = "atig"
+  gem.version       = Atig::VERSION
   gem.authors       = ["MIZUNO Hiroki", "SHIBATA Hiroshi", ]
   gem.email         = ["mzp@ocaml.jp", "shibata.hiroshi@gmail.com"]
-  gem.description   = %q{Atig.rb is Twitter Irc Gateway.}
+
   gem.summary       = %q{Atig.rb is forked from cho45's tig.rb. We improve some features of tig.rb.}
+  gem.description   = %q{Atig.rb is Twitter Irc Gateway.}
   gem.homepage      = "https://github.com/atig/atig"
 
-  gem.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
-  gem.files         = `git ls-files`.split("\n")
-  gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
-  gem.name          = "atig"
+  gem.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
+  gem.bindir        = "exe"
+  gem.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   gem.require_paths = ["lib"]
-  gem.version       = Atig::VERSION
-
+  gem.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   gem.required_ruby_version = Gem::Requirement.new(">= 1.9.3")
 
   gem.add_dependency 'sqlite3', ['>= 1.3.2']
