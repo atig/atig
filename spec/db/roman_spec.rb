@@ -1,6 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
-require File.expand_path( '../../spec_helper', __FILE__ )
 require 'atig/db/roman'
 
 describe Atig::Db::Roman do
@@ -14,4 +13,3 @@ describe Atig::Db::Roman do
     expect(@roman.make(2)).to eq('u')
   end
 end
-

@@ -1,6 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
-require File.expand_path( '../../spec_helper', __FILE__ )
 require 'atig/command/retweet'
 
 describe Atig::Command::Retweet do

@@ -1,6 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
-require File.expand_path( '../spec_helper', File.dirname(__FILE__))
 require 'atig/command/option'
 
 describe Atig::Command::Option do
