@@ -25,7 +25,7 @@ GEM
     json (1.8.3)
     mime-types (2.6.2)
     net-irc (0.0.9)
-    netrc (0.10.3)
+    netrc (0.11.0)
     oauth (0.4.7)
     rake (10.4.2)
     rest-client (1.8.0)
