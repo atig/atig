@@ -32,7 +32,7 @@ module Atig
             messages[0, 3].each do |m|
               @channel.notify "  \002#{m[/.+/]}\017"
             end
-            @channel.notify("  ... and more. check it: http://mzp.github.io/atig/") if messages.size > 3
+            @channel.notify("  ... and more. check it: https://atig.github.io/") if messages.size > 3
           end
           sleep (3*60*60)
         end if UpdateChecker.git_repos?
