@@ -1,7 +1,7 @@
 Atig.rb - Another Twitter Irc Gateway
 ===========================================
 
-[![Gem Version](https://badge.fury.io/rb/atig.png)](https://rubygems.org/gems/atig) [![Code Climate](https://codeclimate.com/github/atig/atig.png)](https://codeclimate.com/github/atig/atig) [![Build Status](https://travis-ci.org/atig/atig.png)](https://travis-ci.org/atig/atig)
+[![Gem Version](https://badge.fury.io/rb/atig.svg)](https://rubygems.org/gems/atig) [![Code Climate](https://codeclimate.com/github/atig/atig.svg)](https://codeclimate.com/github/atig/atig) [![Build Status](https://travis-ci.org/atig/atig.svg)](https://travis-ci.org/atig/atig)
 
 OVERVIEW
 --------
