@@ -5,4 +5,5 @@ rvm:
   - 2.2
   - ruby-head
 
+before_install: gem update --system
 script: bundle exec rake spec
