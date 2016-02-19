@@ -50,4 +50,4 @@ MIZUNO "mzp" Hiroki (mzp@happyabc.org)
 
 AVAILABILITY
 ------------
-The complete atig.rb distribution can be accessed at this[https://atig.github.io/]..
+The complete atig.rb distribution can be accessed at [this](https://atig.github.io/)..
