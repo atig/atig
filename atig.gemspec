@@ -18,10 +18,10 @@ Gem::Specification.new do |spec|
   spec.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
   spec.required_ruby_version = Gem::Requirement.new(">= 1.9.3")
 
-  spec.add_dependency 'sqlite3', ['>= 1.3.2']
-  spec.add_dependency 'net-irc', ['>= 0']
-  spec.add_dependency 'oauth', ['>= 0']
-  spec.add_dependency 'twitter-text', ['~> 1.7.0']
+  spec.add_dependency 'sqlite3', '>= 1.3.2'
+  spec.add_dependency 'net-irc'
+  spec.add_dependency 'oauth'
+  spec.add_dependency 'twitter-text'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
