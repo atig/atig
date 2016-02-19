@@ -6,5 +6,7 @@ rvm:
   - 2.3.0
   - ruby-head
 
-before_install: gem update --system
+before_install:
+  - gem update --system
+  - gem update bundler --no-document
 script: bundle exec rake spec
