@@ -14,7 +14,7 @@ describe Atig::Command::Destroy,"when status is not removed" do
     allow(@statuses).to receive(:find_by_tid).with('b').and_return(entry)
 
     expect(@channel).to receive(:notify).with("The status you specified by the ID tid is not yours.")
-    call "#twitter","destory",%w(b)
+    call "#twitter","destroy",%w(b)
   end
 end
 
@@ -50,15 +50,15 @@ describe Atig::Command::Destroy,"when remove recently tweet" do
   end
 
   it "should specified by tid" do
-    call "#twitter","destory",%w(a)
+    call "#twitter","destroy",%w(a)
   end
 
   it "should remove status by user" do
-    call "#twitter","destory",%w(mzp)
+    call "#twitter","destroy",%w(mzp)
   end
 
   it "should remove status by sid" do
-    call "#twitter","destory",%w(mzp:a)
+    call "#twitter","destroy",%w(mzp:a)
   end
 end
 
@@ -87,10 +87,10 @@ describe Atig::Command::Destroy,"when remove old tweet" do
   end
 
   it "should specified by tid" do
-    call "#twitter","destory",%w(a)
+    call "#twitter","destroy",%w(a)
   end
 
   it "should remove status by sid" do
-    call "#twitter","destory",%w(mzp:a)
+    call "#twitter","destroy",%w(mzp:a)
   end
 end

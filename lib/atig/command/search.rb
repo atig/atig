@@ -3,7 +3,7 @@
 require 'atig/command/command'
 require 'atig/search'
 
-# originally developped by xeres
+# originally developed by xeres
 # http://blog.xeres.jp/2010/06/04/atig_rb-tweet-search/
 module Atig
   module Command

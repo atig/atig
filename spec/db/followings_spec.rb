@@ -12,7 +12,7 @@ describe Atig::Db::Followings,"when it is empty" do
     FileUtils.rm_f 'following.test.db'
   end
 
-  it "should be emtpy" do
+  it "should be empty" do
     expect(@db.empty?).to be_truthy
   end
 end
