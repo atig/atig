@@ -5,7 +5,7 @@ require 'twitter-text'
 module Atig
   module Command
     class Status < Atig::Command::Command
-      include ::Twitter::Validation
+      include ::Twitter::TwitterText::Validation
 
       def command_name; %w(status) end
 
@@ -37,6 +37,7 @@ module Atig
           ret = t.post("statuses/update", q)
           gateway.update_status ret,target
         end
+        
       end
     end
   end
