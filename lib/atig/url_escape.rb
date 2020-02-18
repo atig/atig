@@ -36,18 +36,6 @@ class String
 end
 
 module URI::Escape
-  alias :_orig_escape :escape
-
-  if defined? ::RUBY_REVISION and RUBY_REVISION < 24544
-		# URI.escape("あ１") #=> "%E3%81%82\xEF\xBC\x91"
-    # URI("file:///４")  #=> #<URI::Generic:0x9d09db0 URL:file:/４>
-    #   "\\d" -> "[0-9]" for Ruby 1.9
-    def escape str, unsafe = %r{[^-_.!~*'()a-zA-Z0-9;/?:@&=+$,\[\]]} #'
-      _orig_escape(str, unsafe)
-    end
-    alias :encode :escape
-  end
-
   def encode_component(str, unsafe = ::OAuth::RESERVED_CHARACTERS)
     _orig_escape(str, unsafe).tr(" ", "+")
   end
