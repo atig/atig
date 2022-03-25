@@ -7,9 +7,9 @@ if defined? ::Encoding
     module Helper
       def escape(value)
         begin
-          Addressable::URI.encode_component(value.to_s, OAuth::RESERVED_CHARACTERS)
+          URI::escape(value.to_s, OAuth::RESERVED_CHARACTERS)
         rescue ArgumentError
-          Addressable::URI.encode_component(
+          URI::escape(
             value.to_s.force_encoding(Encoding::UTF_8),
             OAuth::RESERVED_CHARACTERS
           )

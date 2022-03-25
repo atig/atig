@@ -1,7 +1,5 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
-require 'addressable'
-
 class Hash
   # { f: "v" }    #=> "f=v"
   # { "f" => [1, 2] } #=> "f=1&f=2"
@@ -9,12 +7,12 @@ class Hash
   # { "f" => nil }    #=> "f"
   def to_query_str separator = "&"
     inject([]) do |r, (k, v)|
-      k = Addressable::URI.encode_component k.to_s
+      k = URI.encode_component k.to_s
       (v.is_a?(Array) ? v : [v]).each do |i|
         if i.nil?
           r << k
         else
-          r << "#{k}=#{Addressable::URI.encode_component i.to_s}"
+          r << "#{k}=#{URI.encode_component i.to_s}"
         end
       end
       r
@@ -35,13 +33,26 @@ class String
     return self unless respond_to? :force_encoding
     force_encoding enc
   end
+end
 
-  def rstrip_url
-    	self.sub(%r{
-    		(?: ( / [^/?#()]* (?: \( [^/?#()]* \) [^/?#()]* )* ) \) [^/?#()]*
-    		  | \.
-    		) \z
-    	}x, "\\1")
+module URI::Escape
+  require 'addressable'
+  alias :_orig_escape :escape
+
+  def escape str, unsafe = %r{[^-_.!~*'()a-zA-Z0-9;/?:@&=+$,\[\]]} #'
+    Addressable::URI.encode_component(str, unsafe)
+  end
+  alias :encode :escape
+
+  def encode_component(str, unsafe = ::OAuth::RESERVED_CHARACTERS)
+    Addressable::URI.encode_component(str, unsafe).tr(" ", "+")
   end
 
+  def rstrip str
+		str.sub(%r{
+			(?: ( / [^/?#()]* (?: \( [^/?#()]* \) [^/?#()]* )* ) \) [^/?#()]*
+			  | \.
+			) \z
+		}x, "\\1")
+  end
 end

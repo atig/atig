@@ -1,7 +1,6 @@
 # -*- mode:ruby; coding:utf-8 -*-
 
 require 'atig/bitly'
-require 'atig/url_escape'
 
 module Atig
   module OFilter
@@ -32,7 +31,7 @@ module Atig
                     return mesg
                   end
         mesg.gsub(URI.regexp(%w[http https])) do|url|
-          if url.rstrip_url.size < @len then
+          if URI.rstrip(url).size < @len then
             url
           else
             shorten.shorten url
