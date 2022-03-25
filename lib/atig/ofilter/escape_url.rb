@@ -77,26 +77,25 @@ module Atig
         text.split(/[\s<>]+/).each do |str|
           next if /%[0-9A-Fa-f]{2}/ === str
           # URI::UNSAFE + "#"
-          escaped_str = URI.escape(str, %r{[^-_.!~*'()a-zA-Z0-9;/?:@&=+$,\[\]#]}) #'
-          URI.extract(escaped_str, %w[http https]).each do |url|
-            uri = URI(URI.rstrip(url))
+          escaped_str = Addressable::URI.encode_component(str, %r{[^-_.!~*'()a-zA-Z0-9;/?:@&=+$,\[\]#]}) #'
+          URI::Parser.new.extract(escaped_str, %w[http https]).each do |url|
+            uri = URI(url.rstrip_url)
             if not urls.include?(uri.to_s) and self.exist_uri?(uri)
               urls << uri.to_s
             end
           end if escaped_str != str
         end
         urls.each do |url|
-          unescaped_url = URI.unescape(url).encoding!("UTF-8")
+          unescaped_url = Addressable::URI.unencode_component(url).encoding!("UTF-8")
           text.gsub!(unescaped_url, url)
         end
         log :info, "Percent encoded: #{text}" if text != original_text
 
         text.encoding!("UTF-8")
-      rescue => e
-        log :error, e
-        text
+      # rescue => e
+      #   log :error, e
+      #   text
       end
     end
   end
 end
-
