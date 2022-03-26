@@ -6,17 +6,7 @@ class Hash
   # { "f" => "" }     #=> "f="
   # { "f" => nil }    #=> "f"
   def to_query_str separator = "&"
-    inject([]) do |r, (k, v)|
-      k = URI.encode_component k.to_s
-      (v.is_a?(Array) ? v : [v]).each do |i|
-        if i.nil?
-          r << k
-        else
-          r << "#{k}=#{URI.encode_component i.to_s}"
-        end
-      end
-      r
-    end.join separator
+    Atig::UrlEscape.encode_www_form(self, separator: separator)
   end
 end
 
@@ -35,23 +25,48 @@ class String
   end
 end
 
-module URI::Escape
-  alias :_orig_escape :escape
+module Atig
+  module UrlEscape
+    tblencwwwcomp_ = ::URI::TBLENCWWWCOMP_.dup
+    tblencwwwcomp_[-' '] = -'%20'
+    TBLENCWWWCOMP_ = tblencwwwcomp_.freeze
 
-  if defined? ::RUBY_REVISION and RUBY_REVISION < 24544
-		# URI.escape("あ１") #=> "%E3%81%82\xEF\xBC\x91"
-    # URI("file:///４")  #=> #<URI::Generic:0x9d09db0 URL:file:/４>
-    #   "\\d" -> "[0-9]" for Ruby 1.9
-    def escape str, unsafe = %r{[^-_.!~*'()a-zA-Z0-9;/?:@&=+$,\[\]]} #'
-      _orig_escape(str, unsafe)
+    def self.encode_www_form_component(str, enc=nil)
+      str = str.to_s.dup
+      if str.encoding != Encoding::ASCII_8BIT
+        if enc && enc != Encoding::ASCII_8BIT
+          str.encode!(Encoding::UTF_8, invalid: :replace, undef: :replace)
+          str.encode!(enc, fallback: ->(x){"&##{x.ord};"})
+        end
+        str.force_encoding(Encoding::ASCII_8BIT)
+      end
+      str.gsub!(/[^~\-.0-9A-Z_a-z]/, TBLENCWWWCOMP_)
+      str.force_encoding(Encoding::US_ASCII)
     end
-    alias :encode :escape
-  end
 
-  def encode_component(str, unsafe = ::OAuth::RESERVED_CHARACTERS)
-    _orig_escape(str, unsafe).tr(" ", "+")
+    def self.encode_www_form(enum, enc=nil, separator: -'&')
+      enum.map do |k,v|
+        if v.nil?
+          encode_www_form_component(k, enc)
+        elsif v.respond_to?(:to_ary)
+          v.to_ary.map do |w|
+            str = encode_www_form_component(k, enc)
+            unless w.nil?
+              str << '='
+              str << encode_www_form_component(w, enc)
+            end
+          end.join(separator)
+        else
+          str = encode_www_form_component(k, enc)
+          str << '='
+          str << encode_www_form_component(v, enc)
+        end
+      end.join(separator)
+    end
   end
+end
 
+module URI
   def rstrip str
 		str.sub(%r{
 			(?: ( / [^/?#()]* (?: \( [^/?#()]* \) [^/?#()]* )* ) \) [^/?#()]*
