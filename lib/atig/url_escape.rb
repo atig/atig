@@ -31,7 +31,9 @@ module Atig
     tblencwwwcomp_[-' '] = -'%20'
     TBLENCWWWCOMP_ = tblencwwwcomp_.freeze
 
-    def self.encode_www_form_component(str, enc=nil)
+    module_function
+
+    def encode_www_form_component(str, enc=nil)
       str = str.to_s.dup
       if str.encoding != Encoding::ASCII_8BIT
         if enc && enc != Encoding::ASCII_8BIT
@@ -44,7 +46,7 @@ module Atig
       str.force_encoding(Encoding::US_ASCII)
     end
 
-    def self.encode_www_form(enum, enc=nil, separator: -'&')
+    def encode_www_form(enum, enc=nil, separator: -'&')
       enum.map do |k,v|
         if v.nil?
           encode_www_form_component(k, enc)
@@ -63,15 +65,27 @@ module Atig
         end
       end.join(separator)
     end
-  end
-end
 
-module URI
-  def rstrip str
+    def rstrip str
 		str.sub(%r{
 			(?: ( / [^/?#()]* (?: \( [^/?#()]* \) [^/?#()]* )* ) \) [^/?#()]*
 			  | \.
 			) \z
 		}x, "\\1")
+    end
+
+    def escape(string, unsafe)
+      encoding = string.encoding
+      string.b.gsub(unsafe) do |m|
+        '%' + m.unpack('H2' * m.bytesize).join('%').upcase
+      end.tr(' ', '+').force_encoding(encoding)
+    end
+
+    def unescape(string, encoding=string.encoding)
+      str=string.tr('+', ' ').b.gsub(/((?:%[0-9a-fA-F]{2})+)/) do |m|
+        [m.delete('%')].pack('H*')
+      end.force_encoding(encoding)
+      str.valid_encoding? ? str : str.force_encoding(string.encoding)
+    end
   end
 end
