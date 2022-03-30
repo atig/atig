@@ -123,7 +123,7 @@ module Atig
           unless created_at.empty? then
             db.execute "DELETE FROM status WHERE created_at < ?", created_at.first
           end
-          db.execute "VACUUM status"
+          db.execute "VACUUM"
         end
       end
 

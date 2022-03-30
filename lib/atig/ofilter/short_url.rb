@@ -31,7 +31,7 @@ module Atig
                     return mesg
                   end
         mesg.gsub(URI.regexp(%w[http https])) do|url|
-          if URI.rstrip(url).size < @len then
+          if Atig::UrlEscape.rstrip(url).size < @len then
             url
           else
             shorten.shorten url
