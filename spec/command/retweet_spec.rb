@@ -45,19 +45,19 @@ describe Atig::Command::Retweet do
   end
 
   it "should post un-official retweet with comment" do
-    expect(@api).to receive(:post).with('statuses/update',:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah").and_return(@res)
+    expect(@api).to receive(:post).with('statuses/update',{:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah"}).and_return(@res)
     call "#twitter", 'rt', %w(a aaa)
     expect(@gateway.updated).to  eq([ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ])
   end
 
   it "should post un-official retweet with comment by screen name" do
-    expect(@api).to receive(:post).with('statuses/update',:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah").and_return(@res)
+    expect(@api).to receive(:post).with('statuses/update',{:status=> "aaa RT @mzp: blah blah blah blah blah blah blah blah"}).and_return(@res)
     call "#twitter", 'rt', %w(mzp aaa)
     expect(@gateway.updated).to  eq([ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ])
   end
 
   it "should post un-official retweet with long comment" do
-    expect(@api).to receive(:post).with('statuses/update',:status=> "#{'a' * 94} RT @mzp: b [https://twitter.com/mzp/status/1]").and_return(@res)
+    expect(@api).to receive(:post).with('statuses/update',{:status=> "#{'a' * 94} RT @mzp: b [https://twitter.com/mzp/status/1]"}).and_return(@res)
     call "#twitter", 'rt', ['a', 'a' * 94 ]
     expect(@gateway.updated).to  eq([ @res, '#twitter', 'RT to mzp: blah blah blah blah blah blah blah blah' ])
   end

@@ -18,7 +18,7 @@ describe Atig::Command::User do
     baz = entry user(1,'mzp'),status('baz')
     expect(@api).
       to receive(:get).
-      with('statuses/user_timeline',:count=>20,:screen_name=>'mzp').
+      with('statuses/user_timeline',{:count=>20,:screen_name=>'mzp'}).
       and_return([foo, bar, baz])
     expect(@statuses).to receive(:add).with(any_args).at_least(3)
     expect(@statuses).
@@ -35,7 +35,7 @@ describe Atig::Command::User do
     baz = entry user(1,'mzp'),status('baz')
     expect(@api).
       to receive(:get).
-      with('statuses/user_timeline',:count=>200,:screen_name=>'mzp').
+      with('statuses/user_timeline',{:count=>200,:screen_name=>'mzp'}).
       and_return([foo, bar, baz])
     expect(@statuses).to receive(:add).with(any_args).at_least(3)
     expect(@statuses).
