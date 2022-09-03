@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+
+require 'atig/url_escape'
+
 if defined? ::Encoding
   # エンコーディングの違いのせいで、
   # 日本語の文字列をpostパラメータに含めようとするとエラーが出ます。
@@ -7,9 +10,9 @@ if defined? ::Encoding
     module Helper
       def escape(value)
         begin
-          URI::escape(value.to_s, OAuth::RESERVED_CHARACTERS)
+          Atig::UrlEscape.escape(value.to_s, OAuth::RESERVED_CHARACTERS)
         rescue ArgumentError
-          URI::escape(
+          Atig::UrlEscape.escape(
             value.to_s.force_encoding(Encoding::UTF_8),
             OAuth::RESERVED_CHARACTERS
           )
