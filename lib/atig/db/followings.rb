@@ -100,11 +100,11 @@ module Atig
             id = db.get_first_value('SELECT id FROM users WHERE user_id = ? LIMIT 1', user.id)
             if id then
               db.execute("UPDATE users SET screen_name = ?, protected = ?, only = ?, data = ? WHERE id = ?",
-                         user.screen_name,
-                         bool(user.protected),
-                         bool(user.only),
-                         @db.dump(user),
-                         id)
+                         [user.screen_name,
+                          bool(user.protected),
+                          bool(user.only),
+                          @db.dump(user),
+                          id])
             else
               db.execute("INSERT INTO users
                           VALUES(NULL, :screen_name, :user_id, :protected, :only, :data)",
