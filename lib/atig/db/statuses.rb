@@ -4,7 +4,6 @@ require 'atig/db/transaction'
 require 'sqlite3'
 require 'atig/db/roman'
 require 'atig/db/sql'
-require 'base64'
 
 class OpenStruct
   def id; method_missing(:id) end
