@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
     runs-on: ${{ matrix.os }}
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v7
     - name: Install dependencies
       run: sudo apt-get update -qqy && sudo apt-get install -qqy libidn11-dev
     - name: Set up Ruby
