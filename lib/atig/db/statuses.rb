@@ -4,7 +4,6 @@ require 'atig/db/transaction'
 require 'sqlite3'
 require 'atig/db/roman'
 require 'atig/db/sql'
-require 'base64'
 
 class OpenStruct
   def id; method_missing(:id) end
@@ -75,9 +74,9 @@ module Atig
                      created_at: Time.parse(opt[:status].created_at).to_i,
                      data: @db.dump(entry))
           if count == 0 then
-            db.execute("INSERT INTO id VALUES(NULL,?,?)", screen_name, 1)
+            db.execute("INSERT INTO id VALUES(NULL,?,?)", [screen_name, 1])
           else
-            db.execute("UPDATE id SET count = ? WHERE screen_name = ?", count + 1, screen_name)
+            db.execute("UPDATE id SET count = ? WHERE screen_name = ?", [count + 1, screen_name])
           end
           notify entry
         end

@@ -22,6 +22,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'net-irc'
   spec.add_dependency 'oauth'
   spec.add_dependency 'twitter-text'
+  spec.add_dependency 'ostruct'
+  spec.add_dependency 'logger'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
